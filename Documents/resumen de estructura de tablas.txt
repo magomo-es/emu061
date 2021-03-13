@@ -1,0 +1,145 @@
+OK -> sexes
+  `id` INT NOT NULL PRIMARY KEY,
+  `sexe` VARCHAR(45) NOT NULL UNIQUE,
+
+
+OK -> tipus_incidencies
+  `id` INT NOT NULL,
+  `tipus` VARCHAR(45) NOT NULL UNIQUE,
+  `video` VARCHAR(255) NOT NULL,
+
+
+OK -> tipus_alertants
+  `id` INT NOT NULL PRIMARY KEY,
+  `tipus` VARCHAR(45) NOT NULL UNIQUE,
+
+
+OK -> provincies
+  `id` INT NOT NULL PRIMARY KEY,
+  `nom` VARCHAR(45) NOT NULL,
+
+
+OK -> rols
+  `id` INT NOT NULL PRIMARY KEY,
+  `nom` VARCHAR(45) NOT NULL,
+
+
+OK -> tipus_recursos
+  `id` INT NOT NULL PRIMARY KEY,
+  `tipus` VARCHAR(45) NOT NULL UNIQUE,
+
+
+
+
+OK -> comarques
+  `id` INT NOT NULL PRIMARY KEY,
+  `nom` VARCHAR(45) NULL,
+  `provincies_id` INT NOT NULL INDEX,
+FOREIGN KEY (`provincies_id`) REFERENCES `provincies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+OK -> municipis
+  `id` INT NOT NULL PRIMARY KEY,
+  `nom` VARCHAR(45) NULL,
+  `comarques_id` INT NOT NULL INDEX,
+FOREIGN KEY (`comarques_id`) REFERENCES `comarques` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+OK -> recursos
+  `id` INT NOT NULL PRIMARY KEY,
+  `codi` VARCHAR(45) NOT NULL,
+  `actiu` TINYINT NOT NULL,
+  `tipus_recursos_id` INT NOT NULL INDEX,
+FOREIGN KEY (`tipus_recursos_id`) REFERENCES `tipus_recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+OK -> afectats
+  `id` INT NOT NULL PRIMARY KEY,
+  `telefon` INT(10) NOT NULL,
+  `cip` VARCHAR(45) NULL,
+  `nom` VARCHAR(45) NULL,
+  `cognoms` VARCHAR(45) NULL,
+  `edat` VARCHAR(45) NULL,
+  `te_cip` TINYINT NULL,
+  `sexes_id` INT NOT NULL INDEX,
+FOREIGN KEY (`sexes_id`) REFERENCES `sexes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+
+
+OK -> alertants
+  `id` INT NOT NULL PRIMARY KEY,
+  `telefon` INT(10) NOT NULL,
+  `nom` VARCHAR(150) NULL,
+  `cognoms` VARCHAR(150) NULL,
+  `adreca` VARCHAR(150) NULL,
+  `municipis_id` INT NULL INDEX,
+  `tipus_alertants_id` INT NOT NULL INDEX,
+FOREIGN KEY (`tipus_alertants_id`) REFERENCES `tipus_alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+OK -> usuaris
+  `id` INT NOT NULL PRIMARY KEY,
+  `username` VARCHAR(45) NOT NULL,
+  `contrasenya` VARCHAR(256) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `nom` VARCHAR(45) NOT NULL,
+  `cognoms` VARCHAR(45) NOT NULL,
+  `rols_id` INT NOT NULL INDEX,
+  `recursos_id` INT NOT NULL INDEX,
+FOREIGN KEY (`rols_id`) REFERENCES `rols` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+
+
+OK -> incidencies
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `num_incident` INT NOT NULL UNIQUE,
+  `data` DATE NOT NULL,
+  `hora` TIME NOT NULL,
+  `telefon_alertant` INT(10) NOT NULL,
+  `adreca` VARCHAR(150) NOT NULL,
+  `adreca_complement` VARCHAR(150) NULL,
+  `descripcio` VARCHAR(256) NOT NULL,
+  `nom_metge` VARCHAR(45) NULL,
+  `tipus_incidencies_id` INT NOT NULL INDEX,
+  `alertants_id` INT NOT NULL INDEX,
+  `municipis_id` INT NOT NULL INDEX,
+  `usuaris_id` INT NOT NULL INDEX
+FOREIGN KEY (`tipus_incidencies_id`) REFERENCES `tipus_incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+FOREIGN KEY (`alertants_id`) REFERENCES `alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+FOREIGN KEY (`usuaris_id`) REFERENCES `usuaris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+
+
+incidencies_has_afectats
+  `incidencies_id` INT NOT NULL INDEX,
+  `afectats_id` INT NOT NULL INDEX,
+PRIMARY KEY (`incidencies_id`, `afectats_id`),
+FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+
+
+incidencies_has_recursos
+  `incidencies_id` INT NOT NULL INDEX,
+  `recursos_id` INT NOT NULL INDEX,
+  `hora_activacio` DATETIME NULL,
+  `hora_mobilitzacio` DATETIME NULL,
+  `hora_assistencia` DATETIME NULL,
+  `hora_transport` DATETIME NULL,
+  `hora_arribada_hospital` DATETIME NULL,
+  `hora_transferencia` DATETIME NULL,
+  `hora_finalitzacio` DATETIME NULL,
+  `prioritat` INT NULL,
+  `desti` VARCHAR(100) NULL,
+PRIMARY KEY (`incidencies_id`, `recursos_id`),
+FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
