@@ -1,11 +1,8 @@
-@extends('layouts.main')
+@extends('_layouts.main')
 
-@section('pageTitle', 'Inicio | CEP')
+@section('pageTitle', 'Inicio | emu061 - Emulador de Sistema de Emergencias 061')
 
 @section('pageContent')
-
-<img src="{{ asset('/img/logo.jfif') }}" />
-
 @endsection
 
 

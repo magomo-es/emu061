@@ -31,11 +31,11 @@ class RolController extends Controller
         //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
         */
 
-        $objetcsAry = Rol::orderBy('nom')->paginate(5);
+        $objectsAry = Rol::orderBy('nom')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.rol.index', compact('objectsAry') );
     }
 
 
@@ -48,7 +48,7 @@ class RolController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.rol.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -118,8 +118,8 @@ class RolController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.rol.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );

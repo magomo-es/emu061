@@ -31,11 +31,11 @@ class SexeController extends Controller
         //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
         */
 
-        $objetcsAry = Sexe::orderBy('nom')->paginate(5);
+        $objectsAry = Sexe::orderBy('sexe')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.sexe.index', compact('objectsAry') );
     }
 
 
@@ -48,8 +48,7 @@ class SexeController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
+        return view( 'admin.sexe.create', [
             'insert'=>true
             ] );
 
@@ -66,14 +65,10 @@ class SexeController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xsexe ) ) {
 
             $theobj = new Sexe;
-
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->sexe = $request->xsexe;
 
             try {
                 $theobj->save();
@@ -117,9 +112,8 @@ class SexeController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
+        return view('admin.sexe.edit', [
+            'theobj'=>$theobj,
             'insert'=>true
             ] );
     }
@@ -137,12 +131,9 @@ class SexeController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xsexe ) ) {
 
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->sexe = $request->xsexe;
 
             try {
                 $theobj->save();

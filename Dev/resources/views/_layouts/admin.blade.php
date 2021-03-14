@@ -28,24 +28,69 @@
 
         <nav class="navbar navbar-expand-lg bg-primary">
 
-            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.jfif') }}" style="max-width: 140px;" /></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" style="max-height: 50px;" /></a>
 
-            <h5 class="text-white px-4 m-0">Aprenentatge Basat en Projectes</h5>
+            <h5 class="text-white px-4 m-0">Administració</h5>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
 
               <ul class="navbar-nav mr-auto">
 
-                <li class="nav-item dropdown">
+                <li class="nav-item">
 
-                  <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dades Mestres</a>
-
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ url('cicles') }}">Cicles</a>
-                    <a class="dropdown-item" href="{{ url('cursos') }}">Cursos</a>
-                  </div>
+                    <a class="nav-link text-white"  href="{{ url('admin/incidencies') }}" role="button">Incidencies</a>
 
                 </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link text-white"  href="{{ url('admin/afectats') }}" role="button">Afectats</a>
+
+                  </li>
+
+                  <li class="nav-item">
+
+                    <a class="nav-link text-white"  href="{{ url('admin/alertants') }}" role="button">Alertants</a>
+
+                  </li>
+
+                  <li class="nav-item">
+
+                    <a class="nav-link text-white"  href="{{ url('admin/recursos') }}" role="button">Recursos</a>
+
+                  </li>
+
+                  <li class="nav-item">
+
+                    <a class="nav-link text-white"  href="{{ url('admin/usuaris') }}" role="button">Usuaris</a>
+
+                  </li>
+
+                  <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Taules Tipus</a>
+
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ url('admin/tipus_alertants') }}">Tipus Alertants</a>
+                      <a class="dropdown-item" href="{{ url('admin/tipus_incidencies') }}">Tipus Incidencies</a>
+                      <a class="dropdown-item" href="{{ url('admin/tipus_recursos') }}">Tipus Recursos</a>
+                    </div>
+
+                  </li>
+
+                  <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Altres taules</a>
+
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ url('admin/rols') }}">Rols</a>
+                      <a class="dropdown-item" href="{{ url('admin/municipis') }}">Municipis</a>
+                      <a class="dropdown-item" href="{{ url('admin/comarques') }}">Comarques</a>
+                      <a class="dropdown-item" href="{{ url('admin/provincies') }}">Provincies</a>
+                      <a class="dropdown-item" href="{{ url('admin/sexes') }}">Sexes</a>
+                    </div>
+
+                  </li>
 
               </ul>
 

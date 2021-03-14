@@ -28,28 +28,9 @@
 
         <nav class="navbar navbar-expand-lg bg-primary">
 
-            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.jfif') }}" style="max-width: 140px;" /></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" style="max-height: 50px;" /></a>
 
-            <h5 class="text-white px-4 m-0">Aprenentatge Basat en Projectes</h5>
-
-            <div class="collapse navbar-collapse" id="navbarColor01">
-
-              <ul class="navbar-nav mr-auto">
-
-                <li class="nav-item dropdown">
-
-                  <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dades Mestres</a>
-
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ url('cicles') }}">Cicles</a>
-                    <a class="dropdown-item" href="{{ url('cursos') }}">Cursos</a>
-                  </div>
-
-                </li>
-
-              </ul>
-
-            </div>
+            <h5 class="text-white px-4 m-0">Operadors</h5>
 
         </nav>
 

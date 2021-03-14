@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Utility;
-use Illuminate\Database\QueryException;
 use App\Models\Recurs;
+use App\Classes\Utility;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class RecursController extends Controller
 {
@@ -31,11 +31,11 @@ class RecursController extends Controller
         //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
         */
 
-        $objetcsAry = Recurs::orderBy('nom')->paginate(5);
+        $objectsAry = Recurs::orderBy('codi')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.recurs.index', compact('objectsAry') );
     }
 
 
@@ -48,7 +48,7 @@ class RecursController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.recurs.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -79,18 +79,18 @@ class RecursController extends Controller
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [RecursoController::class, 'index'] );
+                $response = redirect()->action( [RecursController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [RecursoController::class, 'create'] )->withInput();
+                $response = redirect()->action( [RecursController::class, 'create'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
             // redirecciona si no estan completos los datos
-            $response = redirect()->action( [RecursoController::class, 'create'] )->withInput();
+            $response = redirect()->action( [RecursController::class, 'create'] )->withInput();
 
         }
 
@@ -118,8 +118,8 @@ class RecursController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.recurs.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -148,18 +148,18 @@ class RecursController extends Controller
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [RecursoController::class, 'index'] );
+                $response = redirect()->action( [RecursController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [RecursoController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [RecursController::class, 'edit'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
 
-            $response = redirect()->action( [RecursoController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [RecursController::class, 'edit'] )->withInput();
 
         }
 
@@ -183,6 +183,6 @@ class RecursController extends Controller
             $request->session()->flash('error', Utility::errorMessage($ex) );
         }
 
-        return redirect()->action( [RecursoController::class, 'index'] );
+        return redirect()->action( [RecursController::class, 'index'] );
     }
 }

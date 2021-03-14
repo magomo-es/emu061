@@ -31,11 +31,11 @@ class TipusAlertantController extends Controller
         //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
         */
 
-        $objetcsAry = TipusAlertant::orderBy('nom')->paginate(5);
+        $objectsAry = TipusAlertant::orderBy('tipus')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.tipusalertant.index', compact('objectsAry') );
     }
 
 
@@ -48,7 +48,7 @@ class TipusAlertantController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.tipusalertant.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -118,8 +118,8 @@ class TipusAlertantController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.tipusalertant.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );

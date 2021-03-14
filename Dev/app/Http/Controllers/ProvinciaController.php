@@ -31,11 +31,11 @@ class ProvinciaController extends Controller
         //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
         */
 
-        $objetcsAry = Provincia::orderBy('nom')->paginate(5);
+        $objectsAry = Provincia::orderBy('nom')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.provincia.index', compact('objectsAry') );
     }
 
 
@@ -48,7 +48,7 @@ class ProvinciaController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.provincia.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -118,8 +118,8 @@ class ProvinciaController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.provincia.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );

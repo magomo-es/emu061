@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\Utility;
 use Illuminate\Database\QueryException;
 use App\Models\Comarca;
+use App\Models\Provincia;
 use Illuminate\Http\Request;
 
 class ComarcaController extends Controller
@@ -16,26 +17,24 @@ class ComarcaController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Comarca::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Comarca::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Comarca::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Comarca::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objetcsAry = Comarca::orderBy('nom')->paginate(5);
+        echo '<script>console.log("index method ('.$request->input('srchfilter1').' / '.$request->input('srchfilter2').')")</script>';
+        // - - - - - search block =>
+        $searchFilter1 = ($request->input('srchfilter1')>0);
+        if ( $searchFilter1 ) {
+            $objectsAry = Comarca::where('provincies_id','=', $request->input('srchfilter1'))
+                ->orderBy('nom')
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            $objectsAry = Comarca::orderBy('nom')->paginate(10);
+        }
+
+        $provinciesAry = Provincia::orderBy('nom')->get();
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.comarca.index', compact('objectsAry','provinciesAry') );
     }
 
 
@@ -48,7 +47,7 @@ class ComarcaController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.comarca.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -118,8 +117,8 @@ class ComarcaController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.comarca.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );

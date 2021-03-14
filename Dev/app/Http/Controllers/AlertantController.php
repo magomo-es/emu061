@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Classes\Utility;
 use Illuminate\Database\QueryException;
 use App\Models\Alertant;
+use App\Models\Municipi;
+use App\Models\TipusAlertant;
 use Illuminate\Http\Request;
 
 class AlertantController extends Controller
@@ -16,26 +18,38 @@ class AlertantController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Alertant::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Alertant::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Alertant::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Alertant::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objetcsAry = Alertant::orderBy('nom')->paginate(5);
+        echo '<script>console.log("index method ('.$request->input('srchfilter1').' / '.$request->input('srchfilter2').')")</script>';
+        // - - - - - search block =>
+        $searchActive = ($request->input('srchactiu')=='actiu');
+        $searchFilter1 = ($request->input('srchfilter1')>0);
+        $searchFilter2 = ($request->input('srchfilter2')>0);
+        if ( $searchFilter1 && $searchFilter2 ) {
+            $objectsAry = Alertant::where('tipus_alertants_id','=', $request->input('srchfilter1'))
+                ->where('municipis_id','=', $request->input('srchfilter2'))
+                ->orderBy('nom')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ( $searchFilter1 && !$searchFilter2 ) {
+            $objectsAry = Alertant::where('tipus_alertants_id','=', $request->input('srchfilter1'))
+                ->orderBy('nom')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ( !$searchFilter1 && $searchFilter2 ) {
+            $objectsAry = Alertant::where('municipis_id','=', $request->input('srchfilter2'))
+                ->orderBy('nom')
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            $objectsAry = Alertant::orderBy('nom')->paginate(10);
+        }
+
+        $municipisAry = Municipi::orderBy('nom')->get();
+        $tipusAry = TipusAlertant::orderBy('tipus')->get();
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.alertant.index', compact('objectsAry','municipisAry','tipusAry') );
     }
 
 
@@ -48,7 +62,7 @@ class AlertantController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.alertant.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -118,8 +132,8 @@ class AlertantController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.alertant.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );

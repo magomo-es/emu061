@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comarca;
 use App\Classes\Utility;
-use Illuminate\Database\QueryException;
 use App\Models\Municipi;
+use App\Models\Provincia;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class MunicipiController extends Controller
 {
@@ -16,26 +18,26 @@ class MunicipiController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Municipi::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Municipi::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Municipi::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Municipi::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objetcsAry = Municipi::orderBy('nom')->paginate(5);
+        echo '<script>console.log("index method ('.$request->input('srchfilter1').' / '.$request->input('srchfilter2').')")</script>';
+        // - - - - - search block =>
+        $searchFilter1 = ($request->input('srchfilter1')>0);
+        if ( $searchFilter1 ) {
+            $objectsAry = Municipi::where('comarques_id','=', $request->input('srchfilter1'))
+                ->orderBy('nom')
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            $objectsAry = Municipi::orderBy('nom')->paginate(10);
+        }
+
+        $comarquesAry = Comarca::orderBy('nom')->get();
+
+        $provinciesAry = Provincia::get();
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.municipi.index', compact('objectsAry','comarquesAry','provinciesAry') );
     }
 
 
@@ -48,7 +50,7 @@ class MunicipiController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
+        return view( 'admin.municipi.create', [
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
@@ -118,8 +120,8 @@ class MunicipiController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
+        return view('admin.municipi.edit', [
+            'theobj'=>$theobj,
             //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );

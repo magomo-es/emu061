@@ -7,7 +7,7 @@ use Illuminate\Database\QueryException;
 use App\Models\TipusRecurs;
 use Illuminate\Http\Request;
 
-class TipusRecursoController extends Controller
+class TipusRecursController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,11 +31,11 @@ class TipusRecursoController extends Controller
         //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
         */
 
-        $objetcsAry = TipusRecurs::orderBy('nom')->paginate(5);
+        $objectsAry = TipusRecurs::orderBy('tipus')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.provincia.index', compact('objetcsAry') );
+        return view('admin.tipusrecurs.index', compact('objectsAry') );
     }
 
 
@@ -48,8 +48,8 @@ class TipusRecursoController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'cursos.create', [
-            'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
+        return view( 'admin.tipusrecurs.create', [
+            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
 
@@ -118,9 +118,9 @@ class TipusRecursoController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('cursos.edit', [
-            'curs'=>$theobj,
-            'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
+        return view('admin.tipusrecurs.edit', [
+            'theobj'=>$theobj,
+            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
             'insert'=>true
             ] );
     }
