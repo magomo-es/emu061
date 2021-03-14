@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class alertants extends Model
+class Comarca extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'alertants';
+    protected $table = 'comarques';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,34 +21,23 @@ class alertants extends Model
     public $timestamps = false;
 
     /**
-     * Get the user t //hat owns the alertants
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function tipus_alertant() //: BelongsTo
-    {
-        return $this->belongsTo(tipus_alertants::class, 'tipus_alertants_id');
-    }
-
-    /**
-     * Get the user that owns the alertants
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function municipi() //: BelongsTo
-    {
-        return $this->belongsTo(municipis::class, 'municipis_id');
-    }
-
-    /**
-     * Get all of the comments for the alertants
+     * Get all of the comments for the comarques
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function incidencies() //: HasMany
+    public function municipis() //: HasMany
     {
-        return $this->hasMany(incidencies::class, 'alertants_id');
+        return $this->hasMany(Municipi::class, 'comarques_id');
     }
 
+    /**
+     * Get the user that owns the comarques
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function provincia() //: BelongsTo
+    {
+        return $this->belongsTo(Provincia::class, 'provincies_id');
+    }
 
 }

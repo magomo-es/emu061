@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sexes extends Model
+class TipusIncidencia extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'sexes';
+    protected $table = 'tipus_incidencies';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,13 +21,13 @@ class sexes extends Model
     public $timestamps = false;
 
     /**
-     * Get all of the comments f //or the sexes
+     * Get all of the comments for the tipus_incidencies
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function afectats() //: HasMany
+    public function incidencies() //: HasMany
     {
-        return $this->hasMany(afectats::class, 'sexes_id');
+        return $this->hasMany(Incidencia::class, 'tipus_incidencies_id');
     }
 
 }

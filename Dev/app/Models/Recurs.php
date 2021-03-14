@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class alertants extends Model
+class Recurs extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'alertants';
+    protected $table = 'recursos';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,34 +21,33 @@ class alertants extends Model
     public $timestamps = false;
 
     /**
-     * Get the user t //hat owns the alertants
+     * Get the user that owns the recursos
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tipus_alertant() //: BelongsTo
+    public function tipus_recurso() //: BelongsTo
     {
-        return $this->belongsTo(tipus_alertants::class, 'tipus_alertants_id');
+        return $this->belongsTo(TipusRecurs::class, 'tipus_recursos_id');
     }
 
     /**
-     * Get the user that owns the alertants
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function municipi() //: BelongsTo
-    {
-        return $this->belongsTo(municipis::class, 'municipis_id');
-    }
-
-    /**
-     * Get all of the comments for the alertants
+     * Get all of the comments for the recursos
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function incidencies() //: HasMany
+    public function usuaris() //: HasMany
     {
-        return $this->hasMany(incidencies::class, 'alertants_id');
+        return $this->hasMany(Usuari::class, 'recursos_id');
     }
 
+    /**
+     * The roles that belong to the recursos
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function incidencies() //: BelongsToMany
+    {
+        return $this->belongsToMany(Incidencia::class, 'incidencies_has_recursos', 'recursos_id', 'incidencies_id');
+    }
 
 }

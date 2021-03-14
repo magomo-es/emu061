@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class provincies extends Model
+class TipusAlertant extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'provincies';
+    protected $table = 'tipus_alertants';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,14 +21,13 @@ class provincies extends Model
     public $timestamps = false;
 
     /**
-     * Get all of the comments for the provincies
+     * Get all of the comments for the tipus_alertants
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comarques() //: HasMany
+    public function alertants() //: HasMany
     {
-        return $this->hasMany(comarques::class, 'provincies_id');
+        return $this->hasMany(Alertant::class, 'tipus_alertants_id');
     }
-
 
 }

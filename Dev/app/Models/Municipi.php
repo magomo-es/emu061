@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class municipis extends Model
+class Municipi extends Model
 {
     // - - - - - - - - - - especifica tabla
     protected $table = 'municipis';
@@ -27,7 +27,7 @@ class municipis extends Model
      */
     public function comarca() //: BelongsTo
     {
-        return $this->belongsTo(comarques::class, 'comarques_id');
+        return $this->belongsTo(Comarca::class, 'comarques_id');
     }
 
     /**

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tipus_alertants extends Model
+class TipusRecurs extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'tipus_alertants';
+    protected $table = 'tipus_recursos';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,13 +21,13 @@ class tipus_alertants extends Model
     public $timestamps = false;
 
     /**
-     * Get all of the comments for the tipus_alertants
+     * Get all of the comments f //or the tipus_recursos
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function alertants() //: HasMany
+    public function recursos() //: HasMany
     {
-        return $this->hasMany(alertants::class, 'tipus_alertants_id');
+        return $this->hasMany(Recurs::class, 'tipus_recursos_id');
     }
 
 }

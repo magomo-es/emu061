@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sexes extends Model
+class Alertant extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'sexes';
+    protected $table = 'alertants';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,13 +21,34 @@ class sexes extends Model
     public $timestamps = false;
 
     /**
-     * Get all of the comments f //or the sexes
+     * Get the user t //hat owns the alertants
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tipus_alertant() //: BelongsTo
+    {
+        return $this->belongsTo(TipusAlertant::class, 'tipus_alertants_id');
+    }
+
+    /**
+     * Get the user that owns the alertants
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function municipi() //: BelongsTo
+    {
+        return $this->belongsTo(Municipi::class, 'municipis_id');
+    }
+
+    /**
+     * Get all of the comments for the alertants
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function afectats() //: HasMany
+    public function incidencies() //: HasMany
     {
-        return $this->hasMany(afectats::class, 'sexes_id');
+        return $this->hasMany(Incidencia::class, 'alertants_id');
     }
+
 
 }

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class afectats extends Model
+class Usuari extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'afectats';
+    protected $table = 'usuaris';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,23 +21,33 @@ class afectats extends Model
     public $timestamps = false;
 
     /**
-     * Get the user that owns the afectats
+     * Get the user that owns the usuaris
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sexe() //: BelongsTo
+    public function rol() //: BelongsTo
     {
-        return $this->belongsTo(sexes::class, 'sexes_id');
+        return $this->belongsTo(Rol::class, 'rols_id');
     }
 
     /**
-     * The roles that belong to the afectats
+     * Get the user that owns the usuaris
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function incidencies() //: BelongsToMany
+    public function recurso() //: BelongsTo
     {
-        return $this->incidencies(Role::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
+        return $this->belongsTo(Recurs::class, 'recursos_id');
+    }
+
+    /**
+     * Get all of the comments for the usuaris
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function incidencies() //: HasMany
+    {
+        return $this->hasMany(Incidencia::class, 'usuaris_id');
     }
 
 }

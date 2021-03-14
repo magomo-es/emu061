@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class incidencies extends Model
+class Incidencia extends Model
 {
     // - - - - - - - - - - especifica tabla
     protected $table = 'incidencies';
@@ -27,7 +27,7 @@ class incidencies extends Model
      */
     public function tipus_incidencia() //: BelongsTo
     {
-        return $this->belongsTo(tipus_incidencies::class, 'tipus_incidencies_id');
+        return $this->belongsTo(TipusIncidencia::class, 'tipus_incidencies_id');
     }
 
     /**
@@ -37,7 +37,7 @@ class incidencies extends Model
      */
     public function alertant() //: BelongsTo
     {
-        return $this->belongsTo(alertants::class, 'alertants_id');
+        return $this->belongsTo(Alertant::class, 'alertants_id');
     }
 
     /**
@@ -47,7 +47,7 @@ class incidencies extends Model
      */
     public function municipi() //: BelongsTo
     {
-        return $this->belongsTo(municipis::class, 'municipis_id');
+        return $this->belongsTo(Municipi::class, 'municipis_id');
     }
 
     /**
@@ -57,7 +57,7 @@ class incidencies extends Model
      */
     public function usuari() //: BelongsTo
     {
-        return $this->belongsTo(usuaris::class, 'usuaris_id');
+        return $this->belongsTo(Usuari::class, 'usuaris_id');
     }
 
     /**
@@ -67,7 +67,7 @@ class incidencies extends Model
      */
     public function afectats() //: BelongsToMany
     {
-        return $this->belongsToMany(afectats::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
+        return $this->belongsToMany(Afectat::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
     }
 
     /**
@@ -77,6 +77,6 @@ class incidencies extends Model
      */
     public function recursos() //: BelongsToMany
     {
-        return $this->belongsToMany(recursos::class, 'incidencies_has_recursos', 'recursos_id', 'incidencies_id');
+        return $this->belongsToMany(Recurs::class, 'incidencies_has_recursos', 'recursos_id', 'incidencies_id');
     }
 }

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class provincies extends Model
+class Rol extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'provincies';
+    protected $table = 'rols';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,14 +21,13 @@ class provincies extends Model
     public $timestamps = false;
 
     /**
-     * Get all of the comments for the provincies
+     * Get all of the comments f //or the rols
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comarques() //: HasMany
+    public function usuaris() //: HasMany
     {
-        return $this->hasMany(comarques::class, 'provincies_id');
+        return $this->hasMany(Usuari::class, 'rols_id');
     }
-
 
 }

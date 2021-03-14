@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class afectats extends Model
+class Provincia extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'afectats';
+    protected $table = 'provincies';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,23 +21,14 @@ class afectats extends Model
     public $timestamps = false;
 
     /**
-     * Get the user that owns the afectats
+     * Get all of the comments for the provincies
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function sexe() //: BelongsTo
+    public function comarques() //: HasMany
     {
-        return $this->belongsTo(sexes::class, 'sexes_id');
+        return $this->hasMany(Comarca::class, 'provincies_id');
     }
 
-    /**
-     * The roles that belong to the afectats
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function incidencies() //: BelongsToMany
-    {
-        return $this->incidencies(Role::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
-    }
 
 }
