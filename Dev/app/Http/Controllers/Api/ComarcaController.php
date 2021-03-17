@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ComarcaResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/cursos
-// CALL show http://localhost:8000/api/cursos/1
+// CALL index http://localhost:8000/api/comarca
+// CALL show http://localhost:8000/api/comarca/1
 
 class ComarcaController extends Controller
 {
