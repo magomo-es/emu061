@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TipusAlertantResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/tipusalertant
-// CALL show http://localhost:8000/api/tipusalertant/1
+// CALL index http://localhost:8000/admin/api/tipusalertant
+// CALL show http://localhost:8000/admin/api/tipusalertant/1
 
 class TipusAlertantController extends Controller
 {

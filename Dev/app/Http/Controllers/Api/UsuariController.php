@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UsuariResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/usuari
-// CALL show http://localhost:8000/api/usuari/1
+// CALL index http://localhost:8000/admin/api/usuari
+// CALL show http://localhost:8000/admin/api/usuari/1
 
 class UsuariController extends Controller
 {

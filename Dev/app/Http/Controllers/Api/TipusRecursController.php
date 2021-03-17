@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TipusRecursResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/tipusrecurs
-// CALL show http://localhost:8000/api/tipusrecurs/1
+// CALL index http://localhost:8000/admin/api/tipusrecurs
+// CALL show http://localhost:8000/admin/api/tipusrecurs/1
 
 class TipusRecursController extends Controller
 {

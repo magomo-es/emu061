@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MunicipiResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/municipi
-// CALL show http://localhost:8000/api/municipi/1
+// CALL index http://localhost:8000/admin/api/municipi
+// CALL show http://localhost:8000/admin/api/municipi/1
 
 class MunicipiController extends Controller
 {

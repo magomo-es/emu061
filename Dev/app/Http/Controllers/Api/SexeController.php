@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\SexeResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/sexe
-// CALL show http://localhost:8000/api/sexe/1
+// CALL index http://localhost:8000/admin/api/sexe
+// CALL show http://localhost:8000/admin/api/sexe/1
 
 class SexeController extends Controller
 {

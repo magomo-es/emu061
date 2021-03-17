@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RolResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/rol
-// CALL show http://localhost:8000/api/rol/1
+// CALL index http://localhost:8000/admin/api/rol
+// CALL show http://localhost:8000/admin/api/rol/1
 
 class RolController extends Controller
 {

@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RecursResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/recurs
-// CALL show http://localhost:8000/api/recurs/1
+// CALL index http://localhost:8000/admin/api/recurs
+// CALL show http://localhost:8000/admin/api/recurs/1
 
 class RecursController extends Controller
 {

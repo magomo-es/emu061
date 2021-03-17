@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AfectatResource;
 use Illuminate\Database\QueryException;
 
-// CALL index http://localhost:8000/api/afectat
-// CALL show http://localhost:8000/api/afectat/1
+// CALL index http://localhost:8000/admin/api/afectat
+// CALL show http://localhost:8000/admin/api/afectat/1
 
 class AfectatController extends Controller
 {

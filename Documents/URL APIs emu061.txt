@@ -1,0 +1,80 @@
+GET	http://app.emu061.es/api/admin/afectats
+POST	http://app.emu061.es/api/admin/afectats
+GET	http://app.emu061.es/api/admin/afectats/1
+PUT	http://app.emu061.es/api/admin/afectats/1
+DELETE	http://app.emu061.es/api/admin/afectats/1
+
+GET	http://app.emu061.es/api/admin/alertants
+POST	http://app.emu061.es/api/admin/alertants
+GET	http://app.emu061.es/api/admin/alertants/1
+PUT	http://app.emu061.es/api/admin/alertants/1
+DELETE	http://app.emu061.es/api/admin/alertants/1
+
+GET	http://app.emu061.es/api/admin/comarques
+POST	http://app.emu061.es/api/admin/comarques
+GET	http://app.emu061.es/api/admin/comarques/{theobj}
+PUT	http://app.emu061.es/api/admin/comarques/{theobj}
+DELETE	http://app.emu061.es/api/admin/comarques/{theobj}
+
+GET	http://app.emu061.es/api/admin/incidencies
+POST	http://app.emu061.es/api/admin/incidencies
+PUT	http://app.emu061.es/api/admin/incidencies/{theobj}
+DELETE	http://app.emu061.es/api/admin/incidencies/{theobj}
+GET	http://app.emu061.es/api/admin/incidencies/{theobj}
+
+GET	http://app.emu061.es/api/admin/municipis
+POST	http://app.emu061.es/api/admin/municipis
+GET	http://app.emu061.es/api/admin/municipis/{theobj}
+PUT	http://app.emu061.es/api/admin/municipis/{theobj}
+DELETE	http://app.emu061.es/api/admin/municipis/{theobj}
+
+GET	http://app.emu061.es/api/admin/provincies
+POST	http://app.emu061.es/api/admin/provincies
+GET	http://app.emu061.es/api/admin/provincies/{theobj}
+PUT	http://app.emu061.es/api/admin/provincies/{theobj}
+DELETE	http://app.emu061.es/api/admin/provincies/{theobj}
+
+POST	http://app.emu061.es/api/admin/recursos
+GET	http://app.emu061.es/api/admin/recursos
+GET	http://app.emu061.es/api/admin/recursos/{theobj}
+PUT	http://app.emu061.es/api/admin/recursos/{theobj}
+DELETE	http://app.emu061.es/api/admin/recursos/{theobj}
+
+GET	http://app.emu061.es/api/admin/rols
+POST	http://app.emu061.es/api/admin/rols
+PUT	http://app.emu061.es/api/admin/rols/{theobj}
+DELETE	http://app.emu061.es/api/admin/rols/{theobj}
+GET	http://app.emu061.es/api/admin/rols/{theobj}
+
+POST	http://app.emu061.es/api/admin/sexes
+GET	http://app.emu061.es/api/admin/sexes
+PUT	http://app.emu061.es/api/admin/sexes/{theobj}
+GET	http://app.emu061.es/api/admin/sexes/{theobj}
+DELETE	http://app.emu061.es/api/admin/sexes/{theobj}
+
+POST	http://app.emu061.es/api/admin/tipus_alertants
+GET	http://app.emu061.es/api/admin/tipus_alertants
+DELETE	http://app.emu061.es/api/admin/tipus_alertants/{theobj}
+GET	http://app.emu061.es/api/admin/tipus_alertants/{theobj}
+PUT	http://app.emu061.es/api/admin/tipus_alertants/{theobj}
+
+GET	http://app.emu061.es/api/admin/tipus_incidencies
+POST	http://app.emu061.es/api/admin/tipus_incidencies
+GET	http://app.emu061.es/api/admin/tipus_incidencies/{theobj}
+PUT	http://app.emu061.es/api/admin/tipus_incidencies/{theobj}
+DELETE	http://app.emu061.es/api/admin/tipus_incidencies/{theobj}
+
+GET	http://app.emu061.es/api/admin/tipus_recursos
+POST	http://app.emu061.es/api/admin/tipus_recursos
+GET	http://app.emu061.es/api/admin/tipus_recursos/{theobj}
+DELETE	http://app.emu061.es/api/admin/tipus_recursos/{theobj}
+PUT	http://app.emu061.es/api/admin/tipus_recursos/{theobj}
+
+GET	http://app.emu061.es/api/admin/usuaris
+POST	http://app.emu061.es/api/admin/usuaris
+GET	http://app.emu061.es/api/admin/usuaris/{theobj}
+PUT	http://app.emu061.es/api/admin/usuaris/{theobj}
+DELETE	http://app.emu061.es/api/admin/usuaris/{theobj}
+
+GET	http://app.emu061.es/api/user
+
