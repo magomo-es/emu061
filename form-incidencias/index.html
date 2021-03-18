@@ -96,6 +96,15 @@
                     <textarea class="form-control" id="descFormControlTextarea1" rows="2"></textarea>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="edad" class="col-form-label">Recurso:</label>
+                <div class="col-sm-2">
+                    <select class="custom-select" name="recurso" id="recurso">
+                        <option value="h">Ambulancia</option>
+                        <option value="m">Helicoptero</option>
+                    </select>
+                </div>
+            </div>
         </form>
         <script src="test.js"></script>
             <!-- Button trigger modal -->
@@ -181,28 +190,57 @@
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Denunciante</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Alertante</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
+                            <div class="col-sm-2">
                             <label for="desc" class="col-form-label">Telefono:</label>
-                            
+                            </div>
+
                             <div class="col-sm-10">
                                 <input class="form-control" type="text" name="desc" id="desc" value="639286451" readonly> 
                             </div>
                         </div>
                         <div class="form-group row">
+                            <div class="col-sm-2">
                             <label for="desc" class="col-form-label">Nombre:</label>
-                            
+                            </div>
                             <div class="col-sm-10">
-                                <input class="form-control" type="text" name="desc" id="desc" value="Mario">
+                                <input class="form-control" type="text" name="desc" id="desc" value="Montserrat">
                             </div>
                         </div>
                         <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="desc" class="col-form-label">Apellidos:</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="desc" id="desc" value="Ochoa Ramon">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="desc" class="col-form-label">Direccion:</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="desc" id="desc" value="Calle Falsa 123">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="desc" class="col-form-label">Municipio:</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="desc" id="desc" value="Montcada">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
                             <label for="desc" class="col-form-label">VIP:</label>
+                            </div>
                             <div class="col-sm-10">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked disabled>
