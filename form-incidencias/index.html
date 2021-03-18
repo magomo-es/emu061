@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incidencias</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style/index.css">
+</head>
+<body>
+
+    <div class="container mt-3" style="max-width: 1800px !important;">
+
+        <form action="">
+
+            <div class="form-group row">
+                <label for="txtNum" class="col-form-label">Número:</label>
+                
+                <div class="col-sm-1">
+                    <input class="form-control" type="text" name="txtNum" id="txtNum" value="0000" disabled>
+                </div>
+
+                <div class="cont-vip">
+                    <a href="">
+                        <div class="circle"></div>
+                        <span>VIP</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="date" class="col-form-label">Fecha:</label>
+                
+                <div class="col-sm-2">
+                    <input class="form-control" type="date" name="date" id="date">
+                </div>
+
+                <label for="hour" class="col-form-label">Hora:</label>
+                
+                <div class="col-sm-2">
+                    <input class="form-control" type="text" name="hour" id="hour">
+                </div>
+
+                <label for="municipio" class="col-form-label">Municipio:</label>
+                
+                <div class="col-sm-2">
+                    <select class="custom-select" name="municipio" id="">
+                        <option value="Hola">Hola</option>
+                    </select>
+                </div>
+
+                <label for="comarca" class="col-form-label">Comarca:</label>
+                
+                <div class="col-sm-2">
+                    <select class="custom-select" name="comarca" id="comarca">
+                        <option value="Hola">Hola</option>
+                    </select>
+                </div>
+
+                <label for="provincia" class="col-form-label">Provincia:</label>
+                
+                <div class="col-sm-2">
+                    <select class="custom-select" name="provincia" id="provincia">
+                        <option value="Hola">Hola</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="desc" class="col-form-label">Descripción:</label>
+                
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" name="desc" id="desc">
+                </div>
+
+                <label for="compl_desc" class="col-form-label">Compl.:</label>
+                
+                <div class="col-sm-6">
+                    <input class="form-control" type="text" name="compl_desc" id="compl_desc">
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+    
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+</html>

@@ -1,0 +1,22 @@
+.cont-vip
+{
+    width: 40px;
+    height: 37px;
+    margin-left: 37%;
+}
+
+.circle
+{
+    background-color: rgb(27, 220, 27);
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin-top: 14px;
+}
+
+.cont-vip span
+{
+    color: black;
+    float: right;
+    margin-top: -17px;
+}
