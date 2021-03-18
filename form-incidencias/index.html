@@ -22,11 +22,18 @@
                 <div class="col-sm-1">
                     <input class="form-control" type="text" name="txtNum" id="txtNum" value="0000" disabled>
                 </div>
+                <img src="information.png" width="25" height="25" style="margin-top: 5px;">
+                <img src="video.png" width="25" height="25" style="margin-top: 5px; margin-left: 3px;">
 
                 <div class="cont-vip">
-                    <a href="">
+                    <a href="" data-toggle="modal" data-target="#exampleModal2">
                         <div class="circle"></div>
                         <span>VIP</span>
+                    </a>
+                </div>
+                <div class="user">
+                    <a href="">
+                        <img src="user.png" width="40" height="40">
                     </a>
                 </div>
             </div>
@@ -48,7 +55,7 @@
                 
                 <div class="col-sm-2">
                     <select class="custom-select" name="municipio" id="">
-                        <option value="Hola">Hola</option>
+                        <option value="Hola">Montcada i Reixac</option>
                     </select>
                 </div>
 
@@ -56,7 +63,7 @@
                 
                 <div class="col-sm-2">
                     <select class="custom-select" name="comarca" id="comarca">
-                        <option value="Hola">Hola</option>
+                        <option value="Hola">Vallés Occidental</option>
                     </select>
                 </div>
 
@@ -64,13 +71,13 @@
                 
                 <div class="col-sm-2">
                     <select class="custom-select" name="provincia" id="provincia">
-                        <option value="Hola">Hola</option>
+                        <option value="Hola">Barcelona</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="desc" class="col-form-label">Descripción:</label>
+                <label for="desc" class="col-form-label">Direccion:</label>
                 
                 <div class="col-sm-5">
                     <input class="form-control" type="text" name="desc" id="desc">
@@ -83,11 +90,167 @@
                 </div>
             </div>
 
-
+            <div class="form-group row">
+                <label for="descFormControlTextarea1" class="form-label">Descripcion:</label>
+                <div class="col-sm-12">
+                    <textarea class="form-control" id="descFormControlTextarea1" rows="2"></textarea>
+                </div>
+            </div>
         </form>
+        <script src="test.js"></script>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                + Afectado
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Añadir Afectado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="desc" class="col-form-label">Telefono:</label>
+                            </div>
 
-    </div>
-    
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="desc" id="desc">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="desc" class="col-form-label">CIP:</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="desc" id="desc">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="desc" class="col-form-label">Nombre:</label>
+                        </div>
+
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="desc" id="desc">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="apellidos" class="col-form-label">Apellidos:</label>
+                        </div>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="apellidos" id="apellidos">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                            <label for="edad" class="col-form-label">Edad:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" name="edad" id="edad">
+                            </div>
+                            
+                            <label for="desc" class="col-form-label">Sexo:</label>
+                     
+                            <div class="col-sm-4">
+                                <select class="custom-select" name="sexo" id="sexo">
+                                    <option value="h">Hombre</option>
+                                    <option value="m">Mujer</option>
+                                    <option value="nb">No-Binario</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Modal2 -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Denunciante</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="desc" class="col-form-label">Telefono:</label>
+                            
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="desc" id="desc" value="639286451" readonly> 
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="desc" class="col-form-label">Nombre:</label>
+                            
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="desc" id="desc" value="Mario">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="desc" class="col-form-label">VIP:</label>
+                            <div class="col-sm-10">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked disabled>
+                            <label class="form-check-label" for="inlineRadio1">Si</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" disabled>
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">CIP</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mario</td>
+                    <td>De La Torre Ochoa</td>
+                    <td>TOOC 372473294832</td>
+                  </tr>
+                  <tr>
+                    <td>Rodolfo</td>
+                    <td>Gallardo Ibarra</td>
+                    <td>GAIB 494357643785</td>
+                  </tr>
+                  <tr>
+                    <td>Marcelo</td>
+                    <td>Goncevatt Monti</td>
+                    <td>GOMO 945743597348</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
