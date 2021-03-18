@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<header>
+    <style>
+
+        .theblock {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transition: margin-top 2s; 
+            background-color: #ccc;
+            z-index: 0;
+        }
+
+        .keyblock { 
+            text-align: center; 
+            vertical-align: middle;
+        }
+
+        .oneblock { 
+            text-align: center; 
+            display: table-cell; 
+            vertical-align: middle;
+        }
+
+        .mainman { width: 100%; max-width: 1064px; margin: 15% auto 0; }
+
+        .boxman { width: 100%; max-width: 1064px; margin: 50px auto 0; }
+
+		.maintitle { 
+            margin: 0; 
+            text-align: center; 
+            font-family: arial; 
+            letter-spacing: 10px; 
+            font-weight: bold; 
+            font-size: 10vw; 
+            color: #0a3f6f; 
+            text-shadow: 02px 2px 10px #000; 
+            animation-name: lightingEffect;
+            animation-duration: 3s;
+            animation-iteration-count:infinite;
+        }
+
+        @keyframes lightingEffect {
+          0%   { color: #1162ac; }
+          50%  { color: #9ac8f3; }
+          100% { color: #1162ac; }
+        }
+
+		.boxtitle { 
+            margin: 0 0 40px;
+            text-align: left;
+            font-family: arial;
+            letter-spacing: 4px;
+            font-weight: bold;
+            font-size: 3.5vw;
+            color: #fff;
+            text-shadow: 02px 2px 4px #000;
+        }
+
+        .boxsubtitle { 
+            margin: 0; 
+            text-align: center; 
+            font-family: arial; 
+            letter-spacing: 3px; 
+            font-weight: bold; 
+            font-size: 1.5vw; 
+            color: #333; 
+        }
+
+        .boxcontent { 
+            margin: 0; 
+            text-align: center; 
+            font-family: arial; 
+            letter-spacing: 3px; 
+            font-weight: normal; 
+            font-size: 1.2vw; 
+            color: #333;
+            letter-spacing: 1px;
+            line-height: 120%;
+        }
+
+        .navButton {
+            cursor: pointer;
+            position: fixed;
+            bottom: 50px;
+            background-color: transparent;
+            border-bottom: solid #fff 3px;
+            padding: 10px;
+            border-radius: 20%;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .nextButton {
+            right: 50px;
+        }
+
+        .prevButton {
+            left: 50px;
+        }
+
+    </style>
+</header>
+<body style="display: block; overflow: hidden; width: 100%; height: 100vh; margin: 0; padding: 0;">
+    <script>
+
+        function newBlock(xposition, xbefore, xafter, xcolor, xtitle, xsubtitle, xcontent, xismain) {
+            return bloque = {
+                position: xposition,
+                before: xbefore,
+                after: xafter,
+                color: xcolor,
+                title: xtitle,
+                subtitle: xsubtitle,
+                content: xcontent,
+                ismain: xismain,
+                getTitle: function() { return this.title; },
+                getContent: function() { return this.content; }
+            };
+        }
+    
+        function createBlocks(item, index) {
+            var container = document.getElementsByTagName("BODY")[0];
+            var tmpobj = document.createElement("DIV");
+            tmpobj.id = 'bloque_' + index;
+            tmpobj.classList.add('theblock');
+            if (item.ismain) { tmpobj.classList.add('keyblock'); } else { tmpobj.classList.add('oneblock'); }
+            //tmpobj.addEventListener( "click", function() { changeBox(tmpobj); } );
+            tmpobj.style.zIndex = ((item.ismain)?'10':'0');
+            tmpobj.style.background = 'radial-gradient(circle, ' + item.color + ', black)';
+            tmpobj.dataset.position = item.position;
+            tmpobj.dataset.before = item.before;
+            tmpobj.dataset.after = item.after;
+            tmpobj.dataset.color = item.color;
+            tmpobj.innerHTML = '<div class="'+((item.ismain)?'mainman':'boxman')+'">'+
+                '<h1 class="'+((item.ismain)?'maintitle':'boxtitle')+'">'+item.title+'</h1>'+
+                '<h6 class="boxsubtitle">'+item.subtitle+'</h6>'+
+                '<div class="boxcontent">'+item.content+'</div>'+
+                '</div>'+ 
+                ((tmpobj.dataset.before>=0)?'<button class="navButton prevButton" onClick="prevButton(this.parentElement)">back</button>':'')+
+                ((tmpobj.dataset.after>=0)?'<button class="navButton nextButton" onClick="nextButton(this.parentElement)">next</button>':'');
+
+            container.appendChild(tmpobj);
+            if (item.ismain) { activeBlock = tmpobj; }
+        }
+    
+        function changeBox(theobj) {
+            setTimeout( function(theobj){ 
+                activeBlock.style.zIndex='-1'; 
+                theobj.style.zIndex='1';  
+                activeBlock = theobj; 
+            }, 1000, theobj);
+            theobj.style.opacity = '0';
+        }
+    
+        function nextButton(theobj) {
+            tmpnxt = document.getElementById('bloque_' + theobj.dataset.after);
+            tmpnxt.style.zIndex='5';
+            tmpnxt.style.opacity = '1';
+            setTimeout( function( theobj, tmpnxt ) { 
+                tmpnxt.style.zIndex='10'; 
+                theobj.style.zIndex='0';  
+                activeBlock = tmpnxt; 
+                }, 1000, theobj, tmpnxt
+            );
+            theobj.style.opacity = '0';
+        }
+
+        function prevButton(theobj) {
+            tmpprv = document.getElementById('bloque_' + theobj.dataset.before);
+            tmpprv.style.zIndex='5';
+            tmpprv.style.opacity = '1';
+            setTimeout( function( theobj, tmpprv ) { 
+                tmpprv.style.zIndex='10'; 
+                theobj.style.zIndex='0';  
+                activeBlock = tmpprv; 
+                }, 1000, theobj, tmpprv
+            );
+            theobj.style.opacity = '0';
+        }        
+
+        var activeBlock;
+    
+        var blockAry = [];
+        blockAry.push( newBlock( 0, -1, 1, '#1162ac', 'EMU061', 'Emulador de Emergencias 061', '', true ) );
+        blockAry.push( newBlock( 1, 0, 2, '#db6708', 'Proyecto Broggi', 'Emulador de Emergencias 061', '', false ) );
+        blockAry.push( newBlock( 2, 1, 3, '#078827', 'Documentacion Proyecto', '', '', false ) );
+        blockAry.push( newBlock( 3, 2, 4, '#db6708', 'El Equipo \"DAM2T SurvivorsE\"', '', '', false ) );
+        blockAry.push( newBlock( 4, 3, -1, '#078827', 'Contactanos', '', '', false ) );
+    
+        blockAry.forEach( createBlocks );
+    
+    </script>
+</body>
+
+</html>
