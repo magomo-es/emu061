@@ -1,4 +1,4 @@
-function newBlock(xposition, xbefore, xafter, xcolor, xtitle, xsubtitle, xcontent, xismain) {
+function newBlock(xposition, xbefore, xafter, xcolor, xtitle, xsubtitle, xcontent, xismain, xisimage) {
   return bloque = {
       position: xposition,
       before: xbefore,
@@ -8,6 +8,7 @@ function newBlock(xposition, xbefore, xafter, xcolor, xtitle, xsubtitle, xconten
       subtitle: xsubtitle,
       content: xcontent,
       ismain: xismain,
+      isimage: xisimage,
       getTitle: function() { return this.title; },
       getContent: function() { return this.content; }
   };
@@ -26,7 +27,8 @@ function createBlocks(item, index) {
   tmpobj.dataset.before = item.before;
   tmpobj.dataset.after = item.after;
   tmpobj.dataset.color = item.color;
-  tmpobj.innerHTML = '<div class="'+((item.ismain)?'mainman':'boxman')+'">'+
+  tmpobj.innerHTML = '<div class="theman '+((item.ismain)?'mainman':'boxman')+'"'+
+      ((item.isimage)?' style="background-image: url(images/blockImage'+item.position+'.png);"':'') + '>'+
       '<h1 class="'+((item.ismain)?'maintitle':'boxtitle')+'">'+item.title+'</h1>'+
       '<h6 class="'+((item.ismain)?'mainsubtitle':'boxsubtitle')+'">'+item.subtitle+'</h6>'+
       '<div class="boxcontent">'+item.content+'</div>'+
@@ -42,13 +44,13 @@ function changeBox(theobj) {
   if (theobj.dataset.position!=activeBlock.dataset.position) {
     theobj.style.zIndex='5';
     theobj.style.opacity = '1';
-    setTimeout( function( activeBlock, theobj ) { 
+    setTimeout( function( objnxt, theobj ) { 
       theobj.style.zIndex='10'; 
-      activeBlock.style.zIndex='0';  
-      activeBlock = theobj; 
+      objnxt.style.zIndex='0';  
       }, 1000, activeBlock, theobj
     );
     activeBlock.style.opacity = '0';
+    activeBlock = theobj; 
   }
 }
 
@@ -59,10 +61,10 @@ function nextButton(theobj) {
   setTimeout( function( theobj, tmpnxt ) { 
       tmpnxt.style.zIndex='10'; 
       theobj.style.zIndex='0';  
-      activeBlock = tmpnxt; 
       }, 1000, theobj, tmpnxt
   );
   theobj.style.opacity = '0';
+  activeBlock = tmpnxt; 
 }
 
 function prevButton(theobj) {
@@ -72,8 +74,8 @@ function prevButton(theobj) {
   setTimeout( function( theobj, tmpprv ) { 
       tmpprv.style.zIndex='10'; 
       theobj.style.zIndex='0';  
-      activeBlock = tmpprv; 
       }, 1000, theobj, tmpprv
   );
   theobj.style.opacity = '0';
+  activeBlock = tmpprv; 
 }
