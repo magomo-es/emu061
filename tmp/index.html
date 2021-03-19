@@ -11,10 +11,20 @@
 <meta name="Revisit" content="7 days" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
-<link type="text/css" rel="stylesheet" href="/css/style.css" />
-<script src="/js/scripts.js"></script>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+<script src="js/scripts.js"></script>
 </head>
 <body>
+    <img src="images/logo_emu061_white.png" style="position: fixed; top: 20px; left: 20px; max-width: 50px; height: auto; z-index: 99;" />
+    <div style="position: fixed; top: 20px; right: 20px; width: auto; height: auto; z-index: 99; color: #fff;">
+    <ul id="mainnavbar">
+        <li class="mainnavbaritem" onclick="changeBox(document.getElementById('bloque_0'))">EMU061</li>
+        <li class="mainnavbaritem" onclick="changeBox(document.getElementById('bloque_1'))">Proyecto</li>
+        <li class="mainnavbaritem" onclick="changeBox(document.getElementById('bloque_2'))">Documentación</li>
+        <li class="mainnavbaritem" onclick="changeBox(document.getElementById('bloque_3'))">Equipo</li>
+        <li class="mainnavbaritem" onclick="changeBox(document.getElementById('bloque_4'))">Contáctanos</li>
+    </ul>
+    </div>
 <script>
 var activeBlock;
 var blockAry = [];

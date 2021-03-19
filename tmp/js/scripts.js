@@ -39,12 +39,17 @@ function createBlocks(item, index) {
 }
 
 function changeBox(theobj) {
-  setTimeout( function(theobj){ 
-      activeBlock.style.zIndex='-1'; 
-      theobj.style.zIndex='10';  
+  if (theobj.dataset.position!=activeBlock.dataset.position) {
+    theobj.style.zIndex='5';
+    theobj.style.opacity = '1';
+    setTimeout( function( activeBlock, theobj ) { 
+      theobj.style.zIndex='10'; 
+      activeBlock.style.zIndex='0';  
       activeBlock = theobj; 
-  }, 1000, theobj);
-  theobj.style.opacity = '0';
+      }, 1000, activeBlock, theobj
+    );
+    activeBlock.style.opacity = '0';
+  }
 }
 
 function nextButton(theobj) {

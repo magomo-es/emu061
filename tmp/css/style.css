@@ -7,6 +7,25 @@ body {
     padding: 0;
 }
 
+#mainnavbar { list-style: none; padding: 0; margin: 0; }
+
+.mainnavbaritem { 
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    margin: 0 0 0 10px;
+    font-family: Arial;
+    font-size: 14px;
+    letter-spacing: 2px;
+    border-top: 1px dotted;
+}
+
+mainnavbaritem:active { color: inherit; }
+mainnavbaritem:visited { color: inherit; }
+mainnavbaritem:hover { color: inherit; }
+mainnavbaritem:link { color: inherit; }
+
+
 .theblock {
     position: fixed; 
     top: 0;
