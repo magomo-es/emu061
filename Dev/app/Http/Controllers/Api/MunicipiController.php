@@ -113,6 +113,15 @@ class MunicipiController extends Controller
         return MunicipiResource::collection($objectsAry);
     }
 
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function themunicipi(Municipi $theobj)
+    {
+        $objectsAry = Municipi::with(['comarca'])->with(['provincia'])->find($theobj->id);
+        return (new MunicipiResource($objectsAry))->response()->setStatusCode(200);
+    }
 
 }

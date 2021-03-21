@@ -50,5 +50,6 @@ Route::apiResource('admin/sexes', SexeController::class)->parameters(['sexes' =>
 
 
 Route::get( 'municipis', [MunicipiController::class, 'fullmunicipis'] );
+Route::get( 'municipi/{theobj}', [MunicipiController::class, 'themunicipi'] );
 Route::get( 'centressanitaris', [AlertantController::class, 'centressanitaris'] );
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\TipusRecursResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,16 @@ class Afectat extends Model
     public function sexe() //: BelongsTo
     {
         return $this->belongsTo(Sexe::class, 'sexes_id');
+    }
+
+    /**
+     * Get the user that owns the Afectat
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tipus_recurs() //: BelongsTo
+    {
+        return $this->belongsTo(TipusRecurs::class, 'tipus_recursos_id');
     }
 
     /**
