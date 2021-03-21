@@ -34,7 +34,7 @@ class AfectatController extends Controller
     public function store(Request $request)
     {
         $theobj = new Afectat;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new AfectatResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class AfectatController extends Controller
      */
     public function update(Request $request, Afectat $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new AfectatResource($theobj))->response()->setStatusCode(201);

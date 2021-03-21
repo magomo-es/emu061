@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Sexe;
 use App\Classes\Utility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SexeResource;
 use Illuminate\Database\QueryException;
@@ -34,7 +35,7 @@ class SexeController extends Controller
     public function store(Request $request)
     {
         $theobj = new Sexe;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new SexeResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +68,7 @@ class SexeController extends Controller
      */
     public function update(Request $request, Sexe $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new SexeResource($theobj))->response()->setStatusCode(201);

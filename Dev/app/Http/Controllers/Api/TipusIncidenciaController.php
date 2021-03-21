@@ -34,7 +34,7 @@ class TipusIncidenciaController extends Controller
     public function store(Request $request)
     {
         $theobj = new TipusIncidencia;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new TipusIncidenciaResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class TipusIncidenciaController extends Controller
      */
     public function update(Request $request, TipusIncidencia $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new TipusIncidenciaResource($theobj))->response()->setStatusCode(201);

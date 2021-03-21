@@ -35,7 +35,7 @@ class MunicipiController extends Controller
     public function store(Request $request)
     {
         $theobj = new Municipi;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new MunicipiResource($theobj))->response()->setStatusCode(201);
@@ -68,7 +68,7 @@ class MunicipiController extends Controller
      */
     public function update(Request $request, Municipi $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new MunicipiResource($theobj))->response()->setStatusCode(201);
@@ -95,4 +95,24 @@ class MunicipiController extends Controller
         }
         return $response;
     }
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullmunicipis()
+    {
+        $objectsAry = Municipi::with(['comarca'])->with(['provincia'])->orderBy('nom')->get();
+        return MunicipiResource::collection($objectsAry);
+    }
+
+
+
 }

@@ -47,3 +47,8 @@ Route::apiResource('admin/municipis', MunicipiController::class)->parameters(['m
 Route::apiResource('admin/comarques', ComarcaController::class)->parameters(['comarques' => 'theobj']);
 Route::apiResource('admin/provincies', ProvinciaController::class)->parameters(['provincies' => 'theobj']);
 Route::apiResource('admin/sexes', SexeController::class)->parameters(['sexes' => 'theobj']);
+
+
+Route::get( 'municipis', [MunicipiController::class, 'fullmunicipis'] );
+Route::get( 'centressanitaris', [AlertantController::class, 'centressanitaris'] );
+

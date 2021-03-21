@@ -34,7 +34,7 @@ class TipusAlertantController extends Controller
     public function store(Request $request)
     {
         $theobj = new TipusAlertant;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new TipusAlertantResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class TipusAlertantController extends Controller
      */
     public function update(Request $request, TipusAlertant $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new TipusAlertantResource($theobj))->response()->setStatusCode(201);

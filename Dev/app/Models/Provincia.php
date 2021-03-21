@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Comarca;
+use App\Models\Municipi;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Provincia extends Model
 {
@@ -30,5 +32,13 @@ class Provincia extends Model
         return $this->hasMany(Comarca::class, 'provincies_id');
     }
 
+
+    /**
+     * Get all of the deployments for the project.
+     */
+    public function municipis()
+    {
+        return $this->hasManyThrough(Municipi::class, Comarca::class);
+    }
 
 }

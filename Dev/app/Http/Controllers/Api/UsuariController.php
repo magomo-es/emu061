@@ -34,7 +34,7 @@ class UsuariController extends Controller
     public function store(Request $request)
     {
         $theobj = new Usuari;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new UsuariResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class UsuariController extends Controller
      */
     public function update(Request $request, Usuari $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new UsuariResource($theobj))->response()->setStatusCode(201);

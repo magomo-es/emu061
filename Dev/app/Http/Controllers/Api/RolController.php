@@ -34,7 +34,7 @@ class RolController extends Controller
     public function store(Request $request)
     {
         $theobj = new Rol;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new RolResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class RolController extends Controller
      */
     public function update(Request $request, Rol $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new RolResource($theobj))->response()->setStatusCode(201);

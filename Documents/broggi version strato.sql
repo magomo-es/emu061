@@ -1,302 +1,239 @@
-
 -- -----------------------------------------------------
 -- Table `tipus_incidencies`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tipus_incidencies` ;
+DROP TABLE IF EXISTS `tipus_incidencies`;
 
 CREATE TABLE IF NOT EXISTS `tipus_incidencies` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `tipus` VARCHAR(45) NOT NULL,
   `video` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC))
+  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC)
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `tipus_alertants`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tipus_alertants` ;
+DROP TABLE IF EXISTS `tipus_alertants`;
 
 CREATE TABLE IF NOT EXISTS `tipus_alertants` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `tipus` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC))
+  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC)
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `provincies`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `provincies` ;
+DROP TABLE IF EXISTS `provincies`;
 
 CREATE TABLE IF NOT EXISTS `provincies` (
-  `id` INT NOT NULL,
-  `nom` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom` VARCHAR(45) NOT NULL
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `comarques`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `comarques` ;
+DROP TABLE IF EXISTS `comarques`;
 
 CREATE TABLE IF NOT EXISTS `comarques` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
-  `provincies_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `provincies_id` INT UNSIGNED NOT NULL,
   INDEX `fk_comarques_provincies1_idx` (`provincies_id` ASC),
-  CONSTRAINT `fk_comarques_provincies1`
-    FOREIGN KEY (`provincies_id`)
-    REFERENCES `provincies` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_comarques_provincies1` FOREIGN KEY (`provincies_id`) REFERENCES `provincies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `municipis`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `municipis` ;
+DROP TABLE IF EXISTS `municipis`;
 
 CREATE TABLE IF NOT EXISTS `municipis` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
-  `comarques_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `comarques_id` INT UNSIGNED NOT NULL,
   INDEX `fk_municipis_comarques1_idx` (`comarques_id` ASC),
-  CONSTRAINT `fk_municipis_comarques1`
-    FOREIGN KEY (`comarques_id`)
-    REFERENCES `comarques` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_municipis_comarques1` FOREIGN KEY (`comarques_id`)REFERENCES `comarques` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `alertants`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `alertants` ;
+DROP TABLE IF EXISTS `alertants`;
 
 CREATE TABLE IF NOT EXISTS `alertants` (
-  `id` INT NOT NULL,
-  `telefon` INT(10) NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `telefon` INT UNSIGNED NOT NULL,
   `nom` VARCHAR(150) NULL,
   `cognoms` VARCHAR(150) NULL,
   `adreca` VARCHAR(150) NULL,
-  `municipis_id` INT NULL,
-  `tipus_alertants_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `municipis_id` INT UNSIGNED NULL,
+  `tipus_alertants_id` INT UNSIGNED NOT NULL,
   INDEX `fk_alertants_tipus_alertants1_idx` (`tipus_alertants_id` ASC),
   INDEX `fk_alertants_municipis1_idx` (`municipis_id` ASC),
-  CONSTRAINT `fk_alertants_tipus_alertants1`
-    FOREIGN KEY (`tipus_alertants_id`)
-    REFERENCES `tipus_alertants` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_alertants_municipis1`
-    FOREIGN KEY (`municipis_id`)
-    REFERENCES `municipis` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_alertants_tipus_alertants1` FOREIGN KEY (`tipus_alertants_id`) REFERENCES `tipus_alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alertants_municipis1` FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `rols`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `rols` ;
+DROP TABLE IF EXISTS `rols`;
 
 CREATE TABLE IF NOT EXISTS `rols` (
-  `id` INT NOT NULL,
-  `nom` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom` VARCHAR(45) NOT NULL
+)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `tipus_recursos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tipus_recursos` ;
+DROP TABLE IF EXISTS `tipus_recursos`;
 
 CREATE TABLE IF NOT EXISTS `tipus_recursos` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `tipus` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC))
+  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC)
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `recursos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `recursos` ;
+DROP TABLE IF EXISTS `recursos`;
 
 CREATE TABLE IF NOT EXISTS `recursos` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `codi` VARCHAR(45) NOT NULL,
-  `actiu` TINYINT NOT NULL,
-  `tipus_recursos_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `actiu` TINYINT UNSIGNED NOT NULL,
+  `tipus_recursos_id` INT UNSIGNED NOT NULL,
   INDEX `fk_recursos_tipus_recursos1_idx` (`tipus_recursos_id` ASC),
-  CONSTRAINT `fk_recursos_tipus_recursos1`
-    FOREIGN KEY (`tipus_recursos_id`)
-    REFERENCES `tipus_recursos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_recursos_tipus_recursos1` FOREIGN KEY (`tipus_recursos_id`) REFERENCES `tipus_recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `usuaris`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `usuaris` ;
+DROP TABLE IF EXISTS `usuaris`;
 
 CREATE TABLE IF NOT EXISTS `usuaris` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `contrasenya` VARCHAR(256) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `cognoms` VARCHAR(45) NOT NULL,
-  `rols_id` INT NOT NULL,
-  `recursos_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `rols_id` INT UNSIGNED NOT NULL,
+  `recursos_id` INT UNSIGNED NOT NULL,
   INDEX `fk_usuaris_rols1_idx` (`rols_id` ASC),
   INDEX `fk_usuaris_recursos1_idx` (`recursos_id` ASC),
-  CONSTRAINT `fk_usuaris_rols1`
-    FOREIGN KEY (`rols_id`)
-    REFERENCES `rols` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuaris_recursos1`
-    FOREIGN KEY (`recursos_id`)
-    REFERENCES `recursos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_usuaris_rols1` FOREIGN KEY (`rols_id`) REFERENCES `rols` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuaris_recursos1` FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `incidencies`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `incidencies` ;
+DROP TABLE IF EXISTS `incidencies`;
 
 CREATE TABLE IF NOT EXISTS `incidencies` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `num_incident` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `num_incident` INT UNSIGNED NOT NULL,
   `data` DATE NOT NULL,
   `hora` TIME NOT NULL,
-  `telefon_alertant` INT(10) NOT NULL,
+  `telefon_alertant` INT NOT NULL,
   `adreca` VARCHAR(150) NOT NULL,
   `adreca_complement` VARCHAR(150) NULL,
-  `descripcio` VARCHAR(256) NOT NULL,
-  `nom_metge` VARCHAR(45) NULL,
-  `tipus_incidencies_id` INT NOT NULL,
-  `alertants_id` INT NOT NULL,
-  `municipis_id` INT NOT NULL,
-  `usuaris_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `descripcio` TEXT NOT NULL,
+  `nom_metge` VARCHAR(80) NULL,
+  `tipus_incidencies_id` INT UNSIGNED NOT NULL,
+  `alertants_id` INT UNSIGNED NOT NULL,
+  `municipis_id` INT UNSIGNED NOT NULL,
+  `usuaris_id` INT UNSIGNED NOT NULL,
   UNIQUE INDEX `num_incident_UNIQUE` (`num_incident` ASC),
   INDEX `fk_incidencies_tipus_incidents1_idx` (`tipus_incidencies_id` ASC),
   INDEX `fk_incidencies_alertants1_idx` (`alertants_id` ASC),
   INDEX `fk_incidencies_municipis1_idx` (`municipis_id` ASC),
   INDEX `fk_incidencies_usuaris1_idx` (`usuaris_id` ASC),
-  CONSTRAINT `fk_incidencies_tipus_incidents1`
-    FOREIGN KEY (`tipus_incidencies_id`)
-    REFERENCES `tipus_incidencies` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incidencies_alertants1`
-    FOREIGN KEY (`alertants_id`)
-    REFERENCES `alertants` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incidencies_municipis1`
-    FOREIGN KEY (`municipis_id`)
-    REFERENCES `municipis` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incidencies_usuaris1`
-    FOREIGN KEY (`usuaris_id`)
-    REFERENCES `usuaris` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_incidencies_tipus_incidents1` FOREIGN KEY (`tipus_incidencies_id`) REFERENCES `tipus_incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_alertants1` FOREIGN KEY (`alertants_id`) REFERENCES `alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_municipis1` FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_usuaris1` FOREIGN KEY (`usuaris_id`) REFERENCES `usuaris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `sexes`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sexes` ;
+DROP TABLE IF EXISTS `sexes`;
 
 CREATE TABLE IF NOT EXISTS `sexes` (
-  `id` INT NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `sexe` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `sexe_UNIQUE` (`sexe` ASC))
+  UNIQUE INDEX `sexe_UNIQUE` (`sexe` ASC)
+)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `afectats`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `afectats` ;
+DROP TABLE IF EXISTS `afectats`;
 
 CREATE TABLE IF NOT EXISTS `afectats` (
-  `id` INT NOT NULL,
-  `telefon` INT(10) NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `telefon` INT NOT NULL,
   `cip` VARCHAR(45) NULL,
   `nom` VARCHAR(45) NULL,
   `cognoms` VARCHAR(45) NULL,
   `edat` VARCHAR(45) NULL,
-  `te_cip` TINYINT NULL,
-  `sexes_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  `te_cip` TINYINT UNSIGNED NULL,
+  `sexes_id` INT UNSIGNED NOT NULL,
+  `descripcio` VARCHAR(45) NULL,
+  `tipus_recursos_id` INT,
   INDEX `fk_afectats_sexes1_idx` (`sexes_id` ASC),
-  CONSTRAINT `fk_afectats_sexes1`
-    FOREIGN KEY (`sexes_id`)
-    REFERENCES `sexes` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_afectats_sexes1` FOREIGN KEY (`sexes_id`) REFERENCES `sexes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `incidencies_has_afectats`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `incidencies_has_afectats` ;
+DROP TABLE IF EXISTS `incidencies_has_afectats`;
 
 CREATE TABLE IF NOT EXISTS `incidencies_has_afectats` (
-  `incidencies_id` INT NOT NULL,
-  `afectats_id` INT NOT NULL,
+  `incidencies_id` INT UNSIGNED NOT NULL,
+  `afectats_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`incidencies_id`, `afectats_id`),
   INDEX `fk_incidencies_has_afectats_afectats1_idx` (`afectats_id` ASC),
   INDEX `fk_incidencies_has_afectats_incidencies_idx` (`incidencies_id` ASC),
-  CONSTRAINT `fk_incidencies_has_afectats_incidencies`
-    FOREIGN KEY (`incidencies_id`)
-    REFERENCES `incidencies` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incidencies_has_afectats_afectats1`
-    FOREIGN KEY (`afectats_id`)
-    REFERENCES `afectats` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  CONSTRAINT `fk_incidencies_has_afectats_incidencies` FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_has_afectats_afectats1` FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `incidencies_has_recursos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `incidencies_has_recursos` ;
+DROP TABLE IF EXISTS `incidencies_has_recursos`;
 
 CREATE TABLE IF NOT EXISTS `incidencies_has_recursos` (
-  `incidencies_id` INT NOT NULL,
-  `recursos_id` INT NOT NULL,
+  `incidencies_id` INT UNSIGNED NOT NULL,
+  `recursos_id` INT UNSIGNED NOT NULL,
+  `afectats_id` INT UNSIGNED NOT NULL,
   `hora_activacio` DATETIME NULL,
   `hora_mobilitzacio` DATETIME NULL,
   `hora_assistencia` DATETIME NULL,
@@ -304,23 +241,21 @@ CREATE TABLE IF NOT EXISTS `incidencies_has_recursos` (
   `hora_arribada_hospital` DATETIME NULL,
   `hora_transferencia` DATETIME NULL,
   `hora_finalitzacio` DATETIME NULL,
-  `prioritat` INT NULL,
+  `prioritat` INT UNSIGNED NULL,
   `desti` VARCHAR(100) NULL,
-  PRIMARY KEY (`incidencies_id`, `recursos_id`),
+  `desti_alertant_id` INT,
+  PRIMARY KEY (`incidencies_id`, `recursos_id`, `afectats_id`),
   INDEX `fk_incidencies_has_recursos_recursos1_idx` (`recursos_id` ASC),
   INDEX `fk_incidencies_has_recursos_incidencies1_idx` (`incidencies_id` ASC),
-  CONSTRAINT `fk_incidencies_has_recursos_incidencies1`
-    FOREIGN KEY (`incidencies_id`)
-    REFERENCES `incidencies` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_incidencies_has_recursos_recursos1`
-    FOREIGN KEY (`recursos_id`)
-    REFERENCES `recursos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  INDEX `fk_incidencies_has_recursos_afectats1_idx` (`afectats_id` ASC),
+  CONSTRAINT `fk_incidencies_has_recursos_incidencies1` FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_has_recursos_recursos1` FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_has_recursos_afectats1` FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
 ENGINE = InnoDB
 COMMENT = '	';
+
+
 
 
 
@@ -329,49 +264,36 @@ COMMENT = '	';
 -- Data for table `tipus_incidencies`
 -- -----------------------------------------------------
 
-
 INSERT INTO `tipus_incidencies` (`id`, `tipus`, `video`) VALUES (1, 'Accident', DEFAULT);
 INSERT INTO `tipus_incidencies` (`id`, `tipus`, `video`) VALUES (2, 'Traumatisme', DEFAULT);
 INSERT INTO `tipus_incidencies` (`id`, `tipus`, `video`) VALUES (3, 'Malaltia lloc públic', DEFAULT);
 INSERT INTO `tipus_incidencies` (`id`, `tipus`, `video`) VALUES (4, 'Malaltia domicili', DEFAULT);
 INSERT INTO `tipus_incidencies` (`id`, `tipus`, `video`) VALUES (5, 'Consulta mèdica', DEFAULT);
 INSERT INTO `tipus_incidencies` (`id`, `tipus`, `video`) VALUES (6, 'Transport sanitari', DEFAULT);
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `tipus_alertants`
 -- -----------------------------------------------------
-
-
 INSERT INTO `tipus_alertants` (`id`, `tipus`) VALUES (1, 'Centre sanitari');
 INSERT INTO `tipus_alertants` (`id`, `tipus`) VALUES (2, 'Afectat');
 INSERT INTO `tipus_alertants` (`id`, `tipus`) VALUES (3, 'Entorn afectat');
 INSERT INTO `tipus_alertants` (`id`, `tipus`) VALUES (4, 'VIP');
 INSERT INTO `tipus_alertants` (`id`, `tipus`) VALUES (5, 'Accidental');
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `provincies`
 -- -----------------------------------------------------
-
-
 INSERT INTO `provincies` (`id`, `nom`) VALUES (1, 'Barcelona');
 INSERT INTO `provincies` (`id`, `nom`) VALUES (2, 'Girona');
 INSERT INTO `provincies` (`id`, `nom`) VALUES (3, 'Lleida');
 INSERT INTO `provincies` (`id`, `nom`) VALUES (4, 'Tarragona');
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `comarques`
 -- -----------------------------------------------------
-
-
 INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (1, 'Alt Camp', 4);
 INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (2, 'Alt Empordà', 2);
 INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (3, 'Alt Penedès', 1);
@@ -416,15 +338,11 @@ INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (42, 'Urgell', 3);
 INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (43, 'Vallès Occidental', 1);
 INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (44, 'Vallès Oriental', 1);
 INSERT INTO `comarques` (`id`, `nom`, `provincies_id`) VALUES (45, 'Pallars Sobirà', 3);
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `municipis`
 -- -----------------------------------------------------
-
-
 INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (1, 'Abella de la Conca', 30);
 INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (2, 'Abrera', 12);
 INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (3, 'Àger', 27);
@@ -1372,15 +1290,11 @@ INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (944, 'Vinebre', 34
 INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (945, 'Vinyols i els Arcs', 9);
 INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (946, 'Viver i Serrateix', 16);
 INSERT INTO `municipis` (`id`, `nom`, `comarques_id`) VALUES (947, 'Xerta', 10);
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `alertants`
 -- -----------------------------------------------------
-
-
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (1, 973350050, 'Fundació Sant Hospital', '', 'Pg. de Joan Brudieu, 8', 782, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (2, 972880150, 'Hospital de Puigcerdà', '', 'Pl. de Santa Maria, 1', 592, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (3, 973652255, 'Hospital Comarcal del Pallars', '', 'Pau Casals, 5', 851, 1);
@@ -1396,7 +1310,7 @@ INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (13, 977295800, 'Hospital Universitari Joan XXIII de Tarragona', '', 'Dr. Mallafré i Guasch, 4', 807, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (14, 977519100, 'Hospital Verge de la Cinta de Tortosa', '', 'Esplanetes, 44-58', 848, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (15, 977588200, 'Clínica Terres de l\'Ebre', '', 'Pl. Joaquim Bau, 6-8', 848, 1);
-INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (16, 977700050, 'Hospital Comarcal d\'Amposta', '', 'Jacint Verdaguer, 11', 52, 1);
+INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (16, 977700050, 'Hospital Comarcal d\'Amposta', '', 'JacINT UNSIGNED Verdaguer, 11', 52, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (17, 977401674, 'Hospital Comarcal Móra d\'Ebre', '', 'Benet i Messeguer, s/n', 472, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (18, 972501400, 'Hospital de Figueres', '', 'Ronda del Rector Arolas, s/n', 290, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (19, 972600160, 'Hospital de Palamós', '', 'Hospital, 36', 515, 1);
@@ -1419,7 +1333,7 @@ INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (36, 936615208, 'Hospital General. Parc Sanitari Sant Joan de Déu', '', 'Camí Vell de la Colònia, 25', 661, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (37, 936590111, 'Hospital de Viladecans', '', 'Av. de Gavà, 38', 898, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (38, 932532100, 'Hospital Sant Joan de Déu', '', 'Pg. de Sant Joan de Déu, 2', 270, 1);
-INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (39, 935531200, 'Hospital de Sant Joan Despí Moisès Broggi', '', 'Jacint Verdaguer, 90', 695, 1);
+INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (39, 935531200, 'Hospital de Sant Joan Despí Moisès Broggi', '', 'JacINT UNSIGNED Verdaguer, 90', 695, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (40, 932483000, 'Hospital del Mar', '', 'Pg. Marítim, 25-29', 91, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (41, 933069900, 'Hospital Plató', '', 'Plató, 21', 91, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (42, 933674100, 'Hospital de l\'Esperança', '', 'Sant Josep de la Muntanya, 12', 91, 1);
@@ -1450,42 +1364,28 @@ INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (67, 935760300, 'Fundació Privada Hospital de Mollet', '', 'Sant Llorenç, 39', 444, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (68, 938425000, 'Hospital General de Granollers', '', 'Av. de Francesc Ribas, s/n', 341, 1);
 INSERT INTO `alertants` (`id`, `telefon`, `nom`, `cognoms`, `adreca`, `municipis_id`, `tipus_alertants_id`) VALUES (69, 938670617, 'Hospital de Sant Celoni', '', 'Av. de l\'Hospital, 19', 665, 1);
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `rols`
 -- -----------------------------------------------------
-
-
 INSERT INTO `rols` (`id`, `nom`) VALUES (1, 'Administrador');
 INSERT INTO `rols` (`id`, `nom`) VALUES (2, 'CECOS');
 INSERT INTO `rols` (`id`, `nom`) VALUES (3, 'Recurs');
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `tipus_recursos`
 -- -----------------------------------------------------
-
-
 INSERT INTO `tipus_recursos` (`id`, `tipus`) VALUES (1, 'Amb. Medicalitzada-Mike');
 INSERT INTO `tipus_recursos` (`id`, `tipus`) VALUES (2, 'Amb. Sanitaritzada-India');
 INSERT INTO `tipus_recursos` (`id`, `tipus`) VALUES (3, 'Amb. Assitencial-Tango');
 INSERT INTO `tipus_recursos` (`id`, `tipus`) VALUES (4, 'Helicopter medicalitzat');
-
 COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `sexes`
 -- -----------------------------------------------------
-
-
 INSERT INTO `sexes` (`id`, `sexe`) VALUES (1, 'Home');
 INSERT INTO `sexes` (`id`, `sexe`) VALUES (2, 'Dona');
-
 COMMIT;
-

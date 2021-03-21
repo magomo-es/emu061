@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Comarca;
+use App\Models\Provincia;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Municipi extends Model
 {
@@ -37,7 +39,7 @@ class Municipi extends Model
      */
     public function alertants() //: HasMany
     {
-        return $this->hasMany(alertants::class, 'municipis_id');
+        return $this->hasMany(Alertant::class, 'municipis_id');
     }
 
     /**
@@ -47,7 +49,24 @@ class Municipi extends Model
      */
     public function incidencies() //: HasMany
     {
-        return $this->hasMany(incidencies::class, 'municipis_id');
+        return $this->hasMany(Incidencia::class, 'municipis_id');
+    }
+
+
+    /**
+     * Get the Municipis
+     */
+    public function provincia()
+    {
+        return $this->hasOneThrough(
+            Provincia::class,
+            Comarca::class,
+            'id', // comarques.id as KEY
+            'id', // provincies.id en JOIN
+            'comarques_id', // Local key on the mechanics table...
+            'provincies_id' // Local key on the cars table...
+        );
+
     }
 
 

@@ -35,9 +35,14 @@ function createBlocks(item, index) {
       '</div>'+ 
       ((tmpobj.dataset.before>=0)?'<button class="navButton prevButton" onClick="prevButton(this.parentElement)">back</button>':'')+
       ((tmpobj.dataset.after>=0)?'<button class="navButton nextButton" onClick="nextButton(this.parentElement)">next</button>':'');
-
   container.appendChild(tmpobj);
   if (item.ismain) { activeBlock = tmpobj; }
+  // navmenu
+  var tmpitm = document.createElement("LI");
+  tmpitm.classList.add('mainnavbaritem');
+  tmpitm.addEventListener( "click", function() { changeBox(document.getElementById(tmpobj.id)); } );
+  tmpitm.innerHTML = item.title;
+  document.getElementById('mainnavbar').appendChild(tmpitm);
 }
 
 function changeBox(theobj) {
@@ -47,7 +52,7 @@ function changeBox(theobj) {
     setTimeout( function( objnxt, theobj ) { 
       theobj.style.zIndex='10'; 
       objnxt.style.zIndex='0';  
-      }, 1000, activeBlock, theobj
+      }, 800, activeBlock, theobj
     );
     activeBlock.style.opacity = '0';
     activeBlock = theobj; 
@@ -61,7 +66,7 @@ function nextButton(theobj) {
   setTimeout( function( theobj, tmpnxt ) { 
       tmpnxt.style.zIndex='10'; 
       theobj.style.zIndex='0';  
-      }, 1000, theobj, tmpnxt
+      }, 800, theobj, tmpnxt
   );
   theobj.style.opacity = '0';
   activeBlock = tmpnxt; 
@@ -74,7 +79,7 @@ function prevButton(theobj) {
   setTimeout( function( theobj, tmpprv ) { 
       tmpprv.style.zIndex='10'; 
       theobj.style.zIndex='0';  
-      }, 1000, theobj, tmpprv
+      }, 800, theobj, tmpprv
   );
   theobj.style.opacity = '0';
   activeBlock = tmpprv; 

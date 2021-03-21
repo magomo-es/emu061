@@ -34,7 +34,7 @@ class AlertantController extends Controller
     public function store(Request $request)
     {
         $theobj = new Alertant;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new AlertantResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class AlertantController extends Controller
      */
     public function update(Request $request, Alertant $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new AlertantResource($theobj))->response()->setStatusCode(201);
@@ -94,4 +94,22 @@ class AlertantController extends Controller
         }
         return $response;
     }
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function centressanitaris()
+    {
+        $objectsAry = Alertant::where('tipus_alertants_id','=', 1)->orderBy('nom')->get();
+        return AlertantResource::collection($objectsAry);
+    }
+
+
+
 }

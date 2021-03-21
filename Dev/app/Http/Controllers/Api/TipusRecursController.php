@@ -34,7 +34,7 @@ class TipusRecursController extends Controller
     public function store(Request $request)
     {
         $theobj = new TipusRecurs;
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new TipusRecursResource($theobj))->response()->setStatusCode(201);
@@ -67,7 +67,7 @@ class TipusRecursController extends Controller
      */
     public function update(Request $request, TipusRecurs $theobj)
     {
-        foreach( $request as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+        foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
             $response = (new TipusRecursResource($theobj))->response()->setStatusCode(201);

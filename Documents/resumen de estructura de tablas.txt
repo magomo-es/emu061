@@ -1,134 +1,123 @@
-OK -> sexes
-  `id` INT NOT NULL PRIMARY KEY,
-  `sexe` VARCHAR(45) NOT NULL UNIQUE,
-
-
 OK -> tipus_incidencies
-  `id` INT NOT NULL,
-  `tipus` VARCHAR(45) NOT NULL UNIQUE,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `tipus` VARCHAR(45) NOT NULL,
   `video` VARCHAR(255) NOT NULL,
-
+  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC)
 
 OK -> tipus_alertants
-  `id` INT NOT NULL PRIMARY KEY,
-  `tipus` VARCHAR(45) NOT NULL UNIQUE,
-
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `tipus` VARCHAR(45) NOT NULL,
+  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC)
 
 OK -> provincies
-  `id` INT NOT NULL PRIMARY KEY,
-  `nom` VARCHAR(45) NOT NULL,
-
-
-OK -> rols
-  `id` INT NOT NULL PRIMARY KEY,
-  `nom` VARCHAR(45) NOT NULL,
-
-
-OK -> tipus_recursos
-  `id` INT NOT NULL PRIMARY KEY,
-  `tipus` VARCHAR(45) NOT NULL UNIQUE,
-
-
-
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom` VARCHAR(45) NOT NULL
 
 OK -> comarques
-  `id` INT NOT NULL PRIMARY KEY,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
-  `provincies_id` INT NOT NULL INDEX,
-FOREIGN KEY (`provincies_id`) REFERENCES `provincies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
+  `provincies_id` INT UNSIGNED NOT NULL,
+  INDEX `fk_comarques_provincies1_idx` (`provincies_id` ASC),
+  CONSTRAINT `fk_comarques_provincies1` FOREIGN KEY (`provincies_id`) REFERENCES `provincies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 OK -> municipis
-  `id` INT NOT NULL PRIMARY KEY,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
-  `comarques_id` INT NOT NULL INDEX,
-FOREIGN KEY (`comarques_id`) REFERENCES `comarques` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
-
-OK -> recursos
-  `id` INT NOT NULL PRIMARY KEY,
-  `codi` VARCHAR(45) NOT NULL,
-  `actiu` TINYINT NOT NULL,
-  `tipus_recursos_id` INT NOT NULL INDEX,
-FOREIGN KEY (`tipus_recursos_id`) REFERENCES `tipus_recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
-
-OK -> afectats
-  `id` INT NOT NULL PRIMARY KEY,
-  `telefon` INT(10) NOT NULL,
-  `cip` VARCHAR(45) NULL,
-  `nom` VARCHAR(45) NULL,
-  `cognoms` VARCHAR(45) NULL,
-  `edat` VARCHAR(45) NULL,
-  `te_cip` TINYINT NULL,
-  `sexes_id` INT NOT NULL INDEX,
-FOREIGN KEY (`sexes_id`) REFERENCES `sexes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
-
-
+  `comarques_id` INT UNSIGNED NOT NULL,
+  INDEX `fk_municipis_comarques1_idx` (`comarques_id` ASC),
+  CONSTRAINT `fk_municipis_comarques1` FOREIGN KEY (`comarques_id`)REFERENCES `comarques` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION
 
 OK -> alertants
-  `id` INT NOT NULL PRIMARY KEY,
-  `telefon` INT(10) NOT NULL,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `telefon` INT UNSIGNED NOT NULL,
   `nom` VARCHAR(150) NULL,
   `cognoms` VARCHAR(150) NULL,
   `adreca` VARCHAR(150) NULL,
-  `municipis_id` INT NULL INDEX,
-  `tipus_alertants_id` INT NOT NULL INDEX,
-FOREIGN KEY (`tipus_alertants_id`) REFERENCES `tipus_alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `municipis_id` INT UNSIGNED NULL,
+  `tipus_alertants_id` INT UNSIGNED NOT NULL,
+  INDEX `fk_alertants_tipus_alertants1_idx` (`tipus_alertants_id` ASC),
+  INDEX `fk_alertants_municipis1_idx` (`municipis_id` ASC),
+  CONSTRAINT `fk_alertants_tipus_alertants1` FOREIGN KEY (`tipus_alertants_id`) REFERENCES `tipus_alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alertants_municipis1` FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
+OK -> rols
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `nom` VARCHAR(45) NOT NULL
+
+OK -> tipus_recursos
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `tipus` VARCHAR(45) NOT NULL,
+  UNIQUE INDEX `tipus_UNIQUE` (`tipus` ASC)
+
+OK -> recursos
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `codi` VARCHAR(45) NOT NULL,
+  `actiu` TINYINT UNSIGNED NOT NULL,
+  `tipus_recursos_id` INT UNSIGNED NOT NULL,
+  INDEX `fk_recursos_tipus_recursos1_idx` (`tipus_recursos_id` ASC),
+  CONSTRAINT `fk_recursos_tipus_recursos1` FOREIGN KEY (`tipus_recursos_id`) REFERENCES `tipus_recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 OK -> usuaris
-  `id` INT NOT NULL PRIMARY KEY,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `contrasenya` VARCHAR(256) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `cognoms` VARCHAR(45) NOT NULL,
-  `rols_id` INT NOT NULL INDEX,
-  `recursos_id` INT NOT NULL INDEX,
-FOREIGN KEY (`rols_id`) REFERENCES `rols` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
-
-
+  `rols_id` INT UNSIGNED NOT NULL,
+  `recursos_id` INT UNSIGNED NOT NULL,
+  INDEX `fk_usuaris_rols1_idx` (`rols_id` ASC),
+  INDEX `fk_usuaris_recursos1_idx` (`recursos_id` ASC),
+  CONSTRAINT `fk_usuaris_rols1` FOREIGN KEY (`rols_id`) REFERENCES `rols` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuaris_recursos1` FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 OK -> incidencies
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `num_incident` INT NOT NULL UNIQUE,
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `num_incident` INT UNSIGNED NOT NULL,
   `data` DATE NOT NULL,
   `hora` TIME NOT NULL,
-  `telefon_alertant` INT(10) NOT NULL,
+  `telefon_alertant` INT NOT NULL,
   `adreca` VARCHAR(150) NOT NULL,
   `adreca_complement` VARCHAR(150) NULL,
-  `descripcio` VARCHAR(256) NOT NULL,
-  `nom_metge` VARCHAR(45) NULL,
-  `tipus_incidencies_id` INT NOT NULL INDEX,
-  `alertants_id` INT NOT NULL INDEX,
-  `municipis_id` INT NOT NULL INDEX,
-  `usuaris_id` INT NOT NULL INDEX
-FOREIGN KEY (`tipus_incidencies_id`) REFERENCES `tipus_incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-FOREIGN KEY (`alertants_id`) REFERENCES `alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-FOREIGN KEY (`usuaris_id`) REFERENCES `usuaris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `descripcio` TEXT NOT NULL,
+  `nom_metge` VARCHAR(80) NULL,
+  `tipus_incidencies_id` INT UNSIGNED NOT NULL,
+  `alertants_id` INT UNSIGNED NOT NULL,
+  `municipis_id` INT UNSIGNED NOT NULL,
+  `usuaris_id` INT UNSIGNED NOT NULL,
+  UNIQUE INDEX `num_incident_UNIQUE` (`num_incident` ASC),
+  INDEX `fk_incidencies_tipus_incidents1_idx` (`tipus_incidencies_id` ASC),
+  INDEX `fk_incidencies_alertants1_idx` (`alertants_id` ASC),
+  INDEX `fk_incidencies_municipis1_idx` (`municipis_id` ASC),
+  INDEX `fk_incidencies_usuaris1_idx` (`usuaris_id` ASC),
+  CONSTRAINT `fk_incidencies_tipus_incidents1` FOREIGN KEY (`tipus_incidencies_id`) REFERENCES `tipus_incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_alertants1` FOREIGN KEY (`alertants_id`) REFERENCES `alertants` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_municipis1` FOREIGN KEY (`municipis_id`) REFERENCES `municipis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_usuaris1` FOREIGN KEY (`usuaris_id`) REFERENCES `usuaris` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
+OK -> sexes
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `sexe` VARCHAR(45) NOT NULL,
+  UNIQUE INDEX `sexe_UNIQUE` (`sexe` ASC)
 
+!!!!!!! -> afectats
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `telefon` INT NOT NULL,
+  `cip` VARCHAR(45) NULL,
+  `nom` VARCHAR(45) NULL,
+  `cognoms` VARCHAR(45) NULL,
+  `edat` VARCHAR(45) NULL,
+  `te_cip` TINYINT UNSIGNED NULL,
+  `sexes_id` INT UNSIGNED NOT NULL,
+-->  `descripcio` VARCHAR(45) NULL,
+-->  `tipus_recursos_id` INT,
+  INDEX `fk_afectats_sexes1_idx` (`sexes_id` ASC),
+  CONSTRAINT `fk_afectats_sexes1` FOREIGN KEY (`sexes_id`) REFERENCES `sexes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
-
-incidencies_has_afectats
-  `incidencies_id` INT NOT NULL INDEX,
-  `afectats_id` INT NOT NULL INDEX,
-PRIMARY KEY (`incidencies_id`, `afectats_id`),
-FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
-
-
-
-incidencies_has_recursos
-  `incidencies_id` INT NOT NULL INDEX,
-  `recursos_id` INT NOT NULL INDEX,
+!!!!!!! -> incidencies_has_recursos
+  `incidencies_id` INT UNSIGNED NOT NULL,
+  `recursos_id` INT UNSIGNED NOT NULL,
+-->   `afectats_id` INT UNSIGNED NOT NULL,
   `hora_activacio` DATETIME NULL,
   `hora_mobilitzacio` DATETIME NULL,
   `hora_assistencia` DATETIME NULL,
@@ -136,10 +125,53 @@ incidencies_has_recursos
   `hora_arribada_hospital` DATETIME NULL,
   `hora_transferencia` DATETIME NULL,
   `hora_finalitzacio` DATETIME NULL,
-  `prioritat` INT NULL,
-  `desti` VARCHAR(100) NULL,
-PRIMARY KEY (`incidencies_id`, `recursos_id`),
-FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `prioritat` INT UNSIGNED NULL,
+-->   `desti` VARCHAR(100) NULL,
+-->   `desti_alertant_id` INT,
+-->  PRIMARY KEY (`incidencies_id`, `recursos_id`, `afectats_id`),
+  INDEX `fk_incidencies_has_recursos_recursos1_idx` (`recursos_id` ASC),
+  INDEX `fk_incidencies_has_recursos_incidencies1_idx` (`incidencies_id` ASC),
+-->  INDEX `fk_incidencies_has_recursos_afectats1_idx` (`afectats_id` ASC),
+  CONSTRAINT `fk_incidencies_has_recursos_incidencies1` FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_has_recursos_recursos1` FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+-->  CONSTRAINT `fk_incidencies_has_recursos_afectats1` FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 
+
+
+
+
+
+
+
+FormElements
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `title` VARCHAR(250),
+  `description` TEXT,
+  `tagid` VARCHAR(50)
+
+Videos
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `title` VARCHAR(250),
+  `description` TEXT,
+  `filename` VARCHAR(100)
+
+PlayVideoByCaller
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `title` VARCHAR(250),
+  `id_formelement` INT UNSIGNED NOT NULL,
+  `id_video` INT UNSIGNED NOT NULL,
+  `start` INT UNSIGNED,
+  `ends` INT UNSIGNED,
+  `playevent` TINYINT UNSIGNED,
+  CONSTRAINT `fk_formelement1` FOREIGN KEY (`id_formelement`) REFERENCES `FormElements` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_video1` FOREIGN KEY (`id_video`) REFERENCES `Videos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+
+VideoEvents
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_video` INT UNSIGNED NOT NULL,  
+  `ontime` INT UNSIGNED,
+  `timeout` INT UNSIGNED,
+  `type` TINYINT UNSIGNED,
+  `jsondata` VARCHAR(250),
+  CONSTRAINT `fk_video2` FOREIGN KEY (`id_video`) REFERENCES `Videos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
