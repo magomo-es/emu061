@@ -100,7 +100,7 @@ OK -> sexes
   `sexe` VARCHAR(45) NOT NULL,
   UNIQUE INDEX `sexe_UNIQUE` (`sexe` ASC)
 
-!!!!!!! -> afectats
+OK -> afectats
   `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `telefon` INT NOT NULL,
   `cip` VARCHAR(45) NULL,
@@ -109,15 +109,24 @@ OK -> sexes
   `edat` VARCHAR(45) NULL,
   `te_cip` TINYINT UNSIGNED NULL,
   `sexes_id` INT UNSIGNED NOT NULL,
--->  `descripcio` VARCHAR(45) NULL,
--->  `tipus_recursos_id` INT,
+  `descripcio` VARCHAR(45) NULL,
+  `tipus_recursos_id` INT,
   INDEX `fk_afectats_sexes1_idx` (`sexes_id` ASC),
   CONSTRAINT `fk_afectats_sexes1` FOREIGN KEY (`sexes_id`) REFERENCES `sexes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
-!!!!!!! -> incidencies_has_recursos
+OK -> incidencies_has_afectats
+  `incidencies_id` INT UNSIGNED NOT NULL,
+  `afectats_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`incidencies_id`, `afectats_id`),
+  INDEX `fk_incidencies_has_afectats_afectats1_idx` (`afectats_id` ASC),
+  INDEX `fk_incidencies_has_afectats_incidencies_idx` (`incidencies_id` ASC),
+  CONSTRAINT `fk_incidencies_has_afectats_incidencies` FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_incidencies_has_afectats_afectats1` FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+OK -> incidencies_has_recursos
   `incidencies_id` INT UNSIGNED NOT NULL,
   `recursos_id` INT UNSIGNED NOT NULL,
--->   `afectats_id` INT UNSIGNED NOT NULL,
+  `afectats_id` INT UNSIGNED NOT NULL,
   `hora_activacio` DATETIME NULL,
   `hora_mobilitzacio` DATETIME NULL,
   `hora_assistencia` DATETIME NULL,
@@ -126,16 +135,15 @@ OK -> sexes
   `hora_transferencia` DATETIME NULL,
   `hora_finalitzacio` DATETIME NULL,
   `prioritat` INT UNSIGNED NULL,
--->   `desti` VARCHAR(100) NULL,
--->   `desti_alertant_id` INT,
--->  PRIMARY KEY (`incidencies_id`, `recursos_id`, `afectats_id`),
+  `desti` VARCHAR(100) NULL,
+  `desti_alertant_id` INT,
+  PRIMARY KEY (`incidencies_id`, `recursos_id`, `afectats_id`),
   INDEX `fk_incidencies_has_recursos_recursos1_idx` (`recursos_id` ASC),
   INDEX `fk_incidencies_has_recursos_incidencies1_idx` (`incidencies_id` ASC),
--->  INDEX `fk_incidencies_has_recursos_afectats1_idx` (`afectats_id` ASC),
+  INDEX `fk_incidencies_has_recursos_afectats1_idx` (`afectats_id` ASC),
   CONSTRAINT `fk_incidencies_has_recursos_incidencies1` FOREIGN KEY (`incidencies_id`) REFERENCES `incidencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_incidencies_has_recursos_recursos1` FOREIGN KEY (`recursos_id`) REFERENCES `recursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
--->  CONSTRAINT `fk_incidencies_has_recursos_afectats1` FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
+  CONSTRAINT `fk_incidencies_has_recursos_afectats1` FOREIGN KEY (`afectats_id`) REFERENCES `afectats` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 
 

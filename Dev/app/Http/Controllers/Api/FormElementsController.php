@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\TipusIncidencia;
-use App\Classes\Utility;
+use App\Models\FormElements;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TipusIncidenciaResource;
-use Illuminate\Database\QueryException;
+use App\Http\Resources\FormElementsResource;
 
-// CALL index http://localhost:8000/admin/api/tipusincidencia
-// CALL show http://localhost:8000/admin/api/tipusincidencia/1
-
-class TipusIncidenciaController extends Controller
+class FormElementsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $objectsAry = TipusIncidencia::all();
-        return TipusIncidenciaResource::collection($objectsAry);
+        $objectsAry = FormElements::all();
+        return FormElementsResource::collection($objectsAry);
     }
 
     /**
@@ -34,11 +29,11 @@ class TipusIncidenciaController extends Controller
     public function store(Request $request)
     {
 /*
-        $theobj = new TipusIncidencia;
+        $theobj = new Comarca;
         foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
-            $response = (new TipusIncidenciaResource($theobj))->response()->setStatusCode(201);
+            $response = (new ComarcaResource($theobj))->response()->setStatusCode(201);
         } catch( QueryException $ex ) {
             $mensaje = Utility::errorMessage($ex);
             $response = \response()->json(['error'=>$mensaje], 400);
@@ -50,30 +45,30 @@ class TipusIncidenciaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TipusIncidencia  $tipus_incidencies
+     * @param  \App\Models\FormElementsResource  $theobj
      * @return \Illuminate\Http\Response
      */
-    public function show(TipusIncidencia $theobj)
+    public function show(FormElements $theobj)
     {
         // para asociar ( dependencias a objeto )
-        // $theobj = TipusIncidencia::with('otratabla')->find($theobj->campoenlace);
-        return new TipusIncidenciaResource($theobj);
+        // $theobj = Comarca::with('otratabla')->find($theobj->campoenlace);
+        return new FormElementsResource($theobj);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TipusIncidencia  $tipus_incidencies
+     * @param  \App\Models\FormElementsResource  $theobj
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipusIncidencia $theobj)
+    public function update(Request $request, FormElements $theobj)
     {
 /*
         foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
-            $response = (new TipusIncidenciaResource($theobj))->response()->setStatusCode(201);
+            $response = (new ComarcaResource($theobj))->response()->setStatusCode(201);
         } catch( QueryException $ex ) {
             $mensaje = Utility::errorMessage($ex);
             $response = \response()->json(['error'=>$mensaje], 400);
@@ -82,14 +77,13 @@ class TipusIncidenciaController extends Controller
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TipusIncidencia  $tipus_incidencies
+     * @param  \App\Models\FormElementsResource  $theobj
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, TipusIncidencia $theobj)
+    public function destroy(FormElements $theobj)
     {
 /*
         try {

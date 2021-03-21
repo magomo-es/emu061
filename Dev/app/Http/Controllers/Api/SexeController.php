@@ -34,6 +34,7 @@ class SexeController extends Controller
      */
     public function store(Request $request)
     {
+/*
         $theobj = new Sexe;
         foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
@@ -44,6 +45,7 @@ class SexeController extends Controller
             $response = \response()->json(['error'=>$mensaje], 400);
         }
         return $response;
+*/      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
 
     /**
@@ -68,6 +70,7 @@ class SexeController extends Controller
      */
     public function update(Request $request, Sexe $theobj)
     {
+/*
         foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
         try {
             $theobj->save();
@@ -77,6 +80,7 @@ class SexeController extends Controller
             $response = \response()->json(['error'=>$mensaje], 400);
         }
         return $response;
+*/      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
 
     /**
@@ -87,6 +91,7 @@ class SexeController extends Controller
      */
     public function destroy(Request $request, Sexe $theobj)
     {
+/*
         try {
             $theobj->delete();
             $response = \response()->json(['message'=>'Registre esborrat correctament'], 200);
@@ -94,5 +99,6 @@ class SexeController extends Controller
             $response = \response()->json(['error'=>Utility::errorMessage($ex)], 400);
         }
         return $response;
+*/      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
 }
