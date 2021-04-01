@@ -15,8 +15,8 @@ blockAry.push( newBlock( 2, 1, 3, '#D9D608', 'Documentación', 'Soporte document
     '<li><a href="https://github.com/magomo-es/emu061/blob/master/Documents/Proyecto_Descripcion.pdf" target="_blank">Presentacion</a></li></ul>', 
     false, true ) );
 blockAry.push( newBlock( 3, 2, 4, '#D90808', 'Equipo', '\"DAM2T Survivors\"', 
-    '<ul><li>Rodolfo Gallardo</li>'+
-    '<li>Mario de la Torre</li>'+
+    '<ul><li><a href="https://gallardoibarrarodo.wixsite.com/rufuus06" target="_blank">Rodolfo Gallardo</a></li>'+
+    '<li><a href="https://mdelatorreochoa.wixsite.com/misitio" target="_blank">Mario de la Torre</a></li>'+
     '<li><a href="http://magomo.es" target="_blank">Marcelo Goncevatt</a></li></ul>', 
     false, true ) );
 blockAry.push( newBlock( 4, 3, -1, '#078827', 'Contáctanos', 'Para más info, contratos y expediciones', 'hello@emu061.es', 
