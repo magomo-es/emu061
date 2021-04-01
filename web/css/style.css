@@ -176,6 +176,25 @@ mainnavbaritem:link { color: inherit; }
 }
 
 
+#equipoul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15%;
+    grid-auto-rows: minmax(100px, auto);
+    margin: 0;
+    padding: 0;
+}
+
+#equipoul li { display: block; text-align: center; max-width: auto; margin: 0 auto; }
+
+#equipoul li img { 
+    display: block;
+    width: 100%; 
+    height: auto;
+    margin: 0 0 10px;
+    border-radius: 50%;
+    opacity: .5;
+}
 
 @media only screen and (max-width: 1150px) { 
 
@@ -255,5 +274,16 @@ mainnavbaritem:link { color: inherit; }
         font-size: 14px; 
         letter-spacing: 1px;
     }
+
+    #equipoul {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+        grid-auto-rows: minmax(0, auto);
+    }
+
+    #equipoul li img { max-width: 15vh; }
+
+    #equipoul li a { font-size: small; text-align: center; }
 
 }
