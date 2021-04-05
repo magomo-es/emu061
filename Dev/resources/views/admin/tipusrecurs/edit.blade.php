@@ -4,7 +4,7 @@
 
 @section('pageContent')
 
-@include('partials.mensajes')
+@include('_partials.mensajes')
 
 <div class="card">
 
@@ -12,43 +12,21 @@
 
     <div class="card-body">
 
-        <form action="{{ action( [App\Http\Controllers\CicleController::class, 'update'], ['cicle' => $cicle->id] ) }}" method="POST">
+        <form action="{{ action( [App\Http\Controllers\TipusRecursController::class, 'update'], ['theobj' => $theobj->id] ) }}" method="POST">
 
             @csrf
             @method('PUT')
 
             <div class="form-group row">
-                <label for="xsigles" class="col-sm-2 col-form-label">Sigles</label>
+                <label for="xtipus" class="col-sm-2 col-form-label">Tipus</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="xsigles" name="xsigles" value="{{ (old('xsigles')) ? old('xsigles') : $cicle->sigles }}">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="xnom" class="col-sm-2 col-form-label">Nom</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="xnom" name="xnom" value="{{ (old('xnom')) ? old('xnom') : $cicle->nom }}">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="xdescripcio" class="col-sm-2 col-form-label">Descripcio</label>
-                <div class="col-sm-10">
-                    <textarea type="text" class="form-control" id="xdescripcio" name="xdescripcio" rows="5">{{ (old('xdescripcio')) ? old('xdescripcio') : $cicle->descripcio }}
-                    </textarea>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="xactiu" class="col-sm-2 col-form-label">Actiu</label>
-                <div class="col-sm-10 pl-2">
-                    <input class="form-check-input ml-1" type="checkbox" value="1" id="xactiu" name="xactiu" {{ (((old('xactiu')) ? old('xactiu') : $cicle->actiu)==1)?'checked':'' }}>
+                    <input type="text" class="form-control" id="xtipus" name="xtipus" value="{{ $theobj->tipus }}">
                 </div>
             </div>
 
             <div class="text-right">
 
-                <a class="btn btn-secondary" href="/cicles">Cancel.lar</a>
+                <a class="btn btn-secondary" href="{{ action( [App\Http\Controllers\TipusRecursController::class, 'index'] ) }}">Cancel.lar</a>
                 <button type="submit" class="btn btn-dark">Aceptar</button>
 
             </div>

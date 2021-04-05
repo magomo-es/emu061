@@ -16,26 +16,11 @@ class TipusAlertantController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = TipusAlertant::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = TipusAlertant::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = TipusAlertant::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = TipusAlertant::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
         $objectsAry = TipusAlertant::orderBy('tipus')->paginate(10);
-
         $request->session()->flashInput($request->input());
-
         return view('admin.tipusalertant.index', compact('objectsAry') );
+
     }
 
 
@@ -46,12 +31,9 @@ class TipusAlertantController extends Controller
      */
     public function create()
     {
-        echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.tipusalertant.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("create method")</script>';
+        return view( 'admin.tipusalertant.create' );
 
     }
 
@@ -65,16 +47,11 @@ class TipusAlertantController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
-
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xtipus ) ) {
 
             $theobj = new TipusAlertant;
 
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->tipus = $request->xtipus;
 
             try {
                 $theobj->save();
@@ -88,8 +65,7 @@ class TipusAlertantController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Tipus inexistent' );
             $response = redirect()->action( [TipusAlertantController::class, 'create'] )->withInput();
 
         }
@@ -116,13 +92,10 @@ class TipusAlertantController extends Controller
      */
     public function edit(TipusAlertant $theobj)
     {
-        echo '<script>console.log("edit method")</script>';
 
-        return view('admin.tipusalertant.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("edit method")</script>';
+        return view('admin.tipusalertant.edit', ['theobj'=>$theobj] );
+
     }
 
     /**
@@ -134,16 +107,12 @@ class TipusAlertantController extends Controller
      */
     public function update(Request $request, TipusAlertant $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        if ( !empty( $request->xtipus ) ) {
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->tipus = $request->xtipus;
 
             try {
                 $theobj->save();
@@ -157,8 +126,7 @@ class TipusAlertantController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Tipus inexistent' );
             $response = redirect()->action( [TipusAlertantController::class, 'edit'] )->withInput();
 
         }

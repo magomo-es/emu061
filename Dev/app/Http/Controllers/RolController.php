@@ -16,20 +16,6 @@ class RolController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Rol::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Rol::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Rol::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Rol::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
         $objectsAry = Rol::orderBy('nom')->paginate(10);
 
@@ -48,10 +34,7 @@ class RolController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.rol.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        return view( 'admin.rol.create', ['insert'=>true] );
 
     }
 
@@ -67,14 +50,11 @@ class RolController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
             $theobj = new Rol;
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
 
             try {
                 $theobj->save();
@@ -118,11 +98,7 @@ class RolController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('admin.rol.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        return view('admin.rol.edit', ['theobj'=>$theobj,'insert'=>false] );
     }
 
     /**
@@ -138,12 +114,9 @@ class RolController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
 
             try {
                 $theobj->save();
@@ -157,8 +130,7 @@ class RolController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [RolController::class, 'edit'] )->withInput();
 
         }

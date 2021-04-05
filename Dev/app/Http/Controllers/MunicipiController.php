@@ -30,14 +30,13 @@ class MunicipiController extends Controller
         } else {
             $objectsAry = Municipi::orderBy('nom')->paginate(10);
         }
+        // - - - - - search block //
 
         $comarquesAry = Comarca::orderBy('nom')->get();
-
         $provinciesAry = Provincia::get();
-
         $request->session()->flashInput($request->input());
-
         return view('admin.municipi.index', compact('objectsAry','comarquesAry','provinciesAry') );
+
     }
 
 
@@ -48,12 +47,11 @@ class MunicipiController extends Controller
      */
     public function create()
     {
-        echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.municipi.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("create method")</script>';
+        $comarquesAry = Comarca::orderBy('nom')->get();
+        $provinciesAry = Provincia::get();
+        return view( 'admin.municipi.create', compact('comarquesAry','provinciesAry') );
 
     }
 
@@ -65,18 +63,16 @@ class MunicipiController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
-
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
             $theobj = new Municipi;
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->comarques_id = $request->xcomarquesid;
+
 
             try {
                 $theobj->save();
@@ -90,8 +86,7 @@ class MunicipiController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [MunicipiController::class, 'create'] )->withInput();
 
         }
@@ -119,12 +114,10 @@ class MunicipiController extends Controller
     public function edit(Municipi $theobj)
     {
         echo '<script>console.log("edit method")</script>';
+        $comarquesAry = Comarca::orderBy('nom')->get();
+        $provinciesAry = Provincia::get();
+        return view('admin.municipi.edit', compact('theobj','comarquesAry','provinciesAry') );
 
-        return view('admin.municipi.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
     }
 
     /**
@@ -138,14 +131,10 @@ class MunicipiController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        if ( !empty( $request->xnom ) ) {
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->comarques_id = $request->xcomarquesid;
 
             try {
                 $theobj->save();
@@ -159,8 +148,7 @@ class MunicipiController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [MunicipiController::class, 'edit'] )->withInput();
 
         }

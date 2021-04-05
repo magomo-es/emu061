@@ -42,14 +42,14 @@
                             </form>
                         </div>
 
-                        <div class="btn-group ml-1" role="group">
+                        {{-- <div class="btn-group ml-1" role="group">
 
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#boxModal"
                              data-idelement="{{ $theobject->tipus }}"
                              data-action="{{ action([App\Http\Controllers\TipusIncidenciaController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
                              ><i class="fas fa-trash"></i> Esborrar</button>
 
-                        </div>
+                        </div> --}}
 
                     </td>
                 </tr>

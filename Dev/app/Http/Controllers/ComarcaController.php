@@ -19,16 +19,22 @@ class ComarcaController extends Controller
     {
 
         echo '<script>console.log("index method ('.$request->input('srchfilter1').' / '.$request->input('srchfilter2').')")</script>';
+
         // - - - - - search block =>
         $searchFilter1 = ($request->input('srchfilter1')>0);
         if ( $searchFilter1 ) {
+
             $objectsAry = Comarca::where('provincies_id','=', $request->input('srchfilter1'))
                 ->orderBy('nom')
                 ->paginate(10)
                 ->withQueryString();
+
         } else {
+
             $objectsAry = Comarca::orderBy('nom')->paginate(10);
+
         }
+        // - - - - - search block //
 
         $provinciesAry = Provincia::orderBy('nom')->get();
 
@@ -46,11 +52,8 @@ class ComarcaController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-
-        return view( 'admin.comarca.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        $provinciesAry = Provincia::orderBy('nom')->get();
+        return view( 'admin.comarca.create', compact('provinciesAry') );
 
     }
 
@@ -66,14 +69,12 @@ class ComarcaController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
             $theobj = new Comarca;
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->provincies_id = $request->xprovinciesid;
 
             try {
                 $theobj->save();
@@ -87,8 +88,7 @@ class ComarcaController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [ComarcaController::class, 'create'] )->withInput();
 
         }
@@ -116,12 +116,8 @@ class ComarcaController extends Controller
     public function edit(Comarca $theobj)
     {
         echo '<script>console.log("edit method")</script>';
-
-        return view('admin.comarca.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        $provinciesAry = Provincia::orderBy('nom')->get();
+        return view( 'admin.comarca.edit', compact('theobj','provinciesAry') );
     }
 
     /**
@@ -137,12 +133,10 @@ class ComarcaController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->provincies_id = $request->xprovinciesid;
 
             try {
                 $theobj->save();
@@ -156,8 +150,7 @@ class ComarcaController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [ComarcaController::class, 'edit'] )->withInput();
 
         }

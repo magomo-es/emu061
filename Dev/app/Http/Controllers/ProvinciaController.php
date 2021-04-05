@@ -16,25 +16,9 @@ class ProvinciaController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Provincia::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Provincia::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Provincia::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Provincia::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
         $objectsAry = Provincia::orderBy('nom')->paginate(10);
-
         $request->session()->flashInput($request->input());
-
         return view('admin.provincia.index', compact('objectsAry') );
     }
 
@@ -47,11 +31,7 @@ class ProvinciaController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-
-        return view( 'admin.provincia.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        return view( 'admin.provincia.create', ['insert'=>true] );
 
     }
 
@@ -67,14 +47,11 @@ class ProvinciaController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
             $theobj = new Provincia;
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
 
             try {
                 $theobj->save();
@@ -88,8 +65,7 @@ class ProvinciaController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [ProvinciaController::class, 'create'] )->withInput();
 
         }
@@ -120,8 +96,7 @@ class ProvinciaController extends Controller
 
         return view('admin.provincia.edit', [
             'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
+            'insert'=>false
             ] );
     }
 
@@ -138,12 +113,9 @@ class ProvinciaController extends Controller
 
         $isOk = true;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnom ) ) {
 
-            $theobj->sigles = $request->xsigles;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
 
             try {
                 $theobj->save();
@@ -157,8 +129,7 @@ class ProvinciaController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Nom inexistent' );
             $response = redirect()->action( [ProvinciaController::class, 'edit'] )->withInput();
 
         }
