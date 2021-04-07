@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Utility;
-use Illuminate\Database\QueryException;
+use App\Models\Rol;
+use App\Models\Recurs;
 use App\Models\Usuari;
+use App\Classes\Utility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 
 class UsuariController extends Controller
 {
@@ -16,26 +20,44 @@ class UsuariController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Usuari::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Usuari::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Usuari::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Usuari::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objectsAry = Usuari::orderBy('username')->paginate(10);
+        // - - - - - search block =>
+        $searchRol = ( $request->input('srchrol') > 0 );
+        $searchName = ( strlen( $request->input('srchname') ) > 0 );
+        if ( $searchRol && $searchName ) {
+            echo '<script>console.log(" search by searchRol && searchName")</script>';
+            $objectsAry = Usuari::where( 'rols_id','=', $request->input('srchrol') )
+                ->where( 'username', 'like', '%'.$request->input('srchname').'%' )
+                ->orderBy('username')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ( $searchRol && !$searchName ) {
+            echo '<script>console.log(" search by searchRol")</script>';
+            $objectsAry = Usuari::where( 'rols_id','=', $request->input('srchrol') )
+                ->orderBy('username')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ( !$searchRol && $searchName ) {
+            echo '<script>console.log(" search by searchName")</script>';
+            $objectsAry = Usuari::where('username', 'like', '%'.$request->input('srchname').'%')
+                ->orderBy('username')
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            echo '<script>console.log(" No search !")</script>';
+            $objectsAry = Usuari::orderBy('username')
+                ->paginate(10);
+        }
+        // - - - - - search block //
+
+        $recursosAry = Recurs::orderBy('codi')->get();
+
+        $rolsAry = Rol::orderBy('nom')->get();
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.usuari.index', compact('objectsAry') );
+        return view('admin.usuari.index', compact('objectsAry', 'recursosAry', 'rolsAry') );
+
     }
 
 
@@ -46,12 +68,11 @@ class UsuariController extends Controller
      */
     public function create()
     {
-        echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.usuari.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("create method")</script>';
+        $recursosAry = Recurs::orderBy('codi')->get();
+        $rolsAry = Rol::orderBy('nom')->get();
+        return view('admin.usuari.create', compact( 'recursosAry', 'rolsAry' ) );
 
     }
 
@@ -63,18 +84,25 @@ class UsuariController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
-
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xusername )
+            && !empty( $request->xcontrasenya )
+            && !empty( $request->xemail)
+            && !empty( $request->xnom )
+            && !empty( $request->xcognoms )
+            && !empty( $request->xrolsid ) ) {
 
             $theobj = new Usuari;
 
-            $theobj->sigles = $request->xsigles;
+            $theobj->username = $request->xusername;
+            $theobj->contrasenya = \bcrypt($request->xcontrasenya);
+            $theobj->email = $request->xemail;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->cognoms = $request->xcognoms;
+            $theobj->rols_id = $request->xrolsid;
+            $theobj->recursos_id = $request->xrecursosid;
 
             try {
                 $theobj->save();
@@ -88,8 +116,7 @@ class UsuariController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Username, Contrasenya, Email, Nom i/o Cognoms inexistents' );
             $response = redirect()->action( [UsuariController::class, 'create'] )->withInput();
 
         }
@@ -116,13 +143,12 @@ class UsuariController extends Controller
      */
     public function edit(Usuari $theobj)
     {
-        echo '<script>console.log("edit method")</script>';
 
-        return view('admin.usuari.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("edit method")</script>';
+        $recursosAry = Recurs::orderBy('codi')->get();
+        $rolsAry = Rol::orderBy('nom')->get();
+        return view('admin.usuari.edit', compact('theobj', 'recursosAry', 'rolsAry') );
+
     }
 
     /**
@@ -136,14 +162,20 @@ class UsuariController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        if ( !empty( $request->xusername )
+            && !empty( $request->xcontrasenya )
+            && !empty( $request->xemail)
+            && !empty( $request->xnom )
+            && !empty( $request->xcognoms )
+            && !empty( $request->xrolsid ) ) {
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
+            $theobj->username = $request->xusername;
+            if ( !empty( $request->xcontrasenya ) && $request->xcontrasenya != $theobj->contrasenya ) { $theobj->contrasenya = \bcrypt($request->xcontrasenya); }
+            $theobj->email = $request->xemail;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->cognoms = $request->xcognoms;
+            $theobj->rols_id = $request->xrolsid;
+            $theobj->recursos_id = $request->xrecursosid;
 
             try {
                 $theobj->save();
@@ -157,8 +189,7 @@ class UsuariController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Username, Contrasenya, Email, Nom i/o Cognoms inexistents' );
             $response = redirect()->action( [UsuariController::class, 'edit'] )->withInput();
 
         }
@@ -186,4 +217,63 @@ class UsuariController extends Controller
 
         return redirect()->action( [UsuariController::class, 'index'] );
     }
+
+
+
+
+
+    /**
+     * Show login View
+     *
+     * @return view()
+     */
+    public function showLogin()
+    {
+        return view('index');
+    }
+
+    /**
+     * Validate login
+     *
+     * @return Response $response
+     */
+    public function login(Request $request)
+    {
+
+        $correu = $request->input('correu');
+        $contrasenya = $request->input('contrasenya');
+
+        $user = Usuari::where('correu', $correu)->first();
+
+        if ($user !=null && Hash::check($contrasenya, $user->contrasenya)) {
+            Auth::login($user);
+            switch ($user->rols_id) {
+                case 1: $response = redirect('/admin/index'); break;
+                case 2: $response = redirect('/operator/index'); break;
+                case 3: $response = redirect('/mobile/index'); break;
+                default: $response = redirect('/index'); break;
+            }
+        }
+        else {
+            $request->session()->flash('error', 'Usuari o contrasenya incorrectes');
+            $response = redirect('/index')->withInput();
+        }
+
+        return $response;
+    }
+
+    /**
+    * Validate login
+    *
+    * @return redirect()
+    */
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/index');
+    }
+
+
+
+
 }

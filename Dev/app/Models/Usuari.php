@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Usuari extends Model
-{
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+//class Usuari extends Model
+//{
+class Usuari extends Authenticatable
+    {
+        use HasFactory, Notifiable;
+
+
     // - - - - - - - - - - especifica tabla
     protected $table = 'usuaris';
     // - - - - - - - - - - clave primaria, por defecto asume que es id

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Utility;
-use Illuminate\Database\QueryException;
+use App\Models\Sexe;
 use App\Models\Afectat;
+use App\Classes\Utility;
+use App\Models\TipusRecurs;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class AfectatController extends Controller
 {
@@ -16,26 +18,39 @@ class AfectatController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Afectat::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Afectat::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Afectat::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Afectat::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objectsAry = Afectat::orderBy('nom')->paginate(5);
+        echo '<script>console.log("index method ( srchnom: '.$request->input('srchnom').
+            ' / srchtelefon: '.$request->input('srchtelefon').
+            ' / srchcip: '.$request->input('srchcip').')")</script>';
+
+            // - - - - - search block =>
+        $searchTelefon = $request->input('srchtelefon');
+        $searchNom = ( $request->input('srchnom') );
+        $searchCIP = $request->input('srchcip');
+
+        if ( $searchTelefon || $searchNom || $searchCIP ) {
+
+            echo '<script>console.log("index method -> with srchData")</script>';
+
+            $objectsAry = Afectat::when( $searchTelefon, function ($query, $searchTelefon) { return $query->where( 'telefon','=', $searchTelefon ); })
+                ->when( $searchNom, function ($query, $searchNom) { return $query->where( 'nom','like', '%'.$searchNom.'%' )->orwhere( 'cognom','like', '%'.$searchNom.'%' ); })
+                ->when( $searchCIP, function ($query, $searchCIP) { return $query->where( 'municipis_id','=', $searchCIP ); })
+                ->orderBy('nom')->paginate(10)->withQueryString();
+
+        } else {
+
+            echo '<script>console.log("index method -> NO srchData")</script>';
+            $objectsAry = Afectat::orderBy('nom')->paginate(10);
+
+        }
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.afectat.index', compact('objectsAry') );
+        $sexesAry = Sexe::orderBy('sexe')->get();
+        $tipusrecursosAry = TipusRecurs::orderBy('tipus')->get();
+
+        return view('admin.afectat.index', compact('objectsAry','sexesAry','tipusrecursosAry') );
+
     }
 
 
@@ -47,11 +62,9 @@ class AfectatController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-
-        return view( 'admin.afectat.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        $sexesAry = Sexe::orderBy('sexe')->get();
+        $tipusrecursosAry = TipusRecurs::orderBy('tipus')->get();
+        return view( 'admin.afectat.create', compact('sexesAry','tipusrecursosAry') );
 
     }
 
@@ -63,38 +76,33 @@ class AfectatController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        $theobj = new Afectat;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        $theobj->telefon = $request->xtelefon;
+        $theobj->cip = $request->xcip;
+        $theobj->nom = $request->xnom;
+        $theobj->cognoms = $request->xcognoms;
+        $theobj->edat = $request->xedat;
+        $theobj->te_cip = $request->xtecip;
+        $theobj->sexes_id = $request->xsexesid;
+        $theobj->descripcio = $request->xdescripcio;
+        $theobj->tipus_recursos_id = $request->xtipusrecursosid;
 
-            $theobj = new Afectat;
-
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
-
-            try {
-                $theobj->save();
-                $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [AfectatController::class, 'index'] );
-            } catch( QueryException $ex ) {
-                $mensaje = Utility::errorMessage($ex);
-                $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [AfectatController::class, 'create'] )->withInput();
-            }
-
-        } else {
-
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+        try {
+            $theobj->save();
+            $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
+            $response = redirect()->action( [AfectatController::class, 'index'] );
+        } catch( QueryException $ex ) {
+            $mensaje = Utility::errorMessage($ex);
+            $request->session()->flash('error', $mensaje );
             $response = redirect()->action( [AfectatController::class, 'create'] )->withInput();
-
         }
 
         return $response;
+
     }
 
     /**
@@ -116,13 +124,12 @@ class AfectatController extends Controller
      */
     public function edit(Afectat $theobj)
     {
-        echo '<script>console.log("edit method")</script>';
 
-        return view('admin.afectat.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("edit method")</script>';
+        $sexesAry = Sexe::orderBy('sexe')->get();
+        $tipusrecursosAry = TipusRecurs::orderBy('tipus')->get();
+        return view('admin.afectat.edit', compact('theobj','sexesAry','tipusrecursosAry') );
+
     }
 
     /**
@@ -134,36 +141,33 @@ class AfectatController extends Controller
      */
     public function update(Request $request, Afectat $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        $theobj->telefon = $request->xtelefon;
+        $theobj->cip = $request->xcip;
+        $theobj->nom = $request->xnom;
+        $theobj->cognoms = $request->xcognoms;
+        $theobj->edat = $request->xedat;
+        $theobj->te_cip = $request->xtecip;
+        $theobj->sexes_id = $request->xsexesid;
+        $theobj->descripcio = $request->xdescripcio;
+        $theobj->tipus_recursos_id = $request->xtipusrecursosid;
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
-
-            try {
-                $theobj->save();
-                $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [AfectatController::class, 'index'] );
-            } catch( QueryException $ex ) {
-                $mensaje = Utility::errorMessage($ex);
-                $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [AfectatController::class, 'edit'] )->withInput();
-            }
-
-        } else {
-
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
-            $response = redirect()->action( [AfectatController::class, 'edit'] )->withInput();
-
+        try {
+            $theobj->save();
+            $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
+            $response = redirect()->action( [AfectatController::class, 'index'] );
+        } catch( QueryException $ex ) {
+            $mensaje = Utility::errorMessage($ex);
+            $request->session()->flash('error', $mensaje );
+            $sexesAry = Sexe::orderBy('sexe')->get();
+            $tipusrecursosAry = TipusRecurs::orderBy('tipus')->get();
+            $response = redirect()->action( [AfectatController::class, 'edit'], compact('theobj','sexesAry','tipusrecursosAry') )->withInput();
         }
 
         return $response;
+
     }
 
     /**

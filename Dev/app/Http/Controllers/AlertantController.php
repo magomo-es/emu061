@@ -19,29 +19,33 @@ class AlertantController extends Controller
     public function index(Request $request)
     {
 
-        echo '<script>console.log("index method ('.$request->input('srchfilter1').' / '.$request->input('srchfilter2').')")</script>';
-        // - - - - - search block =>
-        $searchActive = ($request->input('srchactiu')=='actiu');
-        $searchFilter1 = ($request->input('srchfilter1')>0);
-        $searchFilter2 = ($request->input('srchfilter2')>0);
-        if ( $searchFilter1 && $searchFilter2 ) {
-            $objectsAry = Alertant::where('tipus_alertants_id','=', $request->input('srchfilter1'))
-                ->where('municipis_id','=', $request->input('srchfilter2'))
-                ->orderBy('nom')
-                ->paginate(10)
-                ->withQueryString();
-        } else if ( $searchFilter1 && !$searchFilter2 ) {
-            $objectsAry = Alertant::where('tipus_alertants_id','=', $request->input('srchfilter1'))
-                ->orderBy('nom')
-                ->paginate(10)
-                ->withQueryString();
-        } else if ( !$searchFilter1 && $searchFilter2 ) {
-            $objectsAry = Alertant::where('municipis_id','=', $request->input('srchfilter2'))
-                ->orderBy('nom')
-                ->paginate(10)
-                ->withQueryString();
+        echo '<script>console.log("index method ( srchnom: '.$request->input('srchnom').
+            ' / srchtelefon: '.$request->input('srchtelefon').
+            ' / srchmunicipis: '.$request->input('srchmunicipis').
+            ' / srchtipus: '.$request->input('srchtipus').')")</script>';
+
+            // - - - - - search block =>
+        $searchTelefon = $request->input('srchtelefon');
+        $searchNom = ( $request->input('srchnom') );
+        $searchMunicipi = $request->input('srchmunicipis');
+        $searchTipus = $request->input('srchtipus');
+
+        if ( $searchTelefon || $searchNom || $searchMunicipi || $searchTipus ) {
+
+            echo '<script>console.log("index method -> with srchData")</script>';
+
+            $objectsAry = Alertant::when( $searchTelefon, function ($query, $searchTelefon) { return $query->where( 'telefon','=', $searchTelefon ); })
+                ->when( $searchNom, function ($query, $searchNom) { return $query->where( 'nom','like', '%'.$searchNom.'%' ); })
+                ->when( $searchMunicipi, function ($query, $searchMunicipi) { return $query->where( 'municipis_id','=', $searchMunicipi ); })
+                ->when( $searchTipus, function ($query, $searchTipus) { return $query->where( 'tipus_alertants_id','=', $searchTipus ); })
+                ->orderBy('nom')->paginate(10)->withQueryString();
+
         } else {
+
+            echo '<script>console.log("index method -> NO srchData")</script>';
+
             $objectsAry = Alertant::orderBy('nom')->paginate(10);
+
         }
 
         $municipisAry = Municipi::orderBy('nom')->get();
@@ -50,6 +54,7 @@ class AlertantController extends Controller
         $request->session()->flashInput($request->input());
 
         return view('admin.alertant.index', compact('objectsAry','municipisAry','tipusAry') );
+
     }
 
 
@@ -60,12 +65,11 @@ class AlertantController extends Controller
      */
     public function create()
     {
-        echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.alertant.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("create method")</script>';
+        $municipisAry = Municipi::orderBy('nom')->get();
+        $tipusAry = TipusAlertant::orderBy('tipus')->get();
+        return view( 'admin.alertant.create', compact('municipisAry','tipusAry') );
 
     }
 
@@ -77,34 +81,34 @@ class AlertantController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
-
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xtelefon ) && !empty( $request->xadreca ) ) {
 
             $theobj = new Alertant;
 
-            $theobj->sigles = $request->xsigles;
+            $theobj->telefon = $request->xtelefon;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->cognoms = $request->xcognoms;
+            $theobj->adreca = $request->xadreca;
+            $theobj->municipis_id = $request->xmunicipisid;
+            $theobj->tipus_alertants_id = $request->xtipusalertantsid;
 
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [CursController::class, 'index'] );
+                $response = redirect()->action( [AlertantController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [CursController::class, 'create'] )->withInput();
+                $response = redirect()->action( [AlertantController::class, 'create'] )->withInput();
             }
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
-            $response = redirect()->action( [CursController::class, 'create'] )->withInput();
+            $request->session()->flash('error', 'Telefon i/o Adreça inexistent' );
+            $response = redirect()->action( [AlertantController::class, 'create'] )->withInput();
 
         }
 
@@ -130,13 +134,12 @@ class AlertantController extends Controller
      */
     public function edit(Alertant $theobj)
     {
-        echo '<script>console.log("edit method")</script>';
 
-        return view('admin.alertant.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("edit method")</script>';
+        $municipisAry = Municipi::orderBy('nom')->get();
+        $tipusAry = TipusAlertant::orderBy('tipus')->get();
+        return view( 'admin.alertant.edit', compact('theobj','municipisAry','tipusAry') );
+
     }
 
     /**
@@ -148,36 +151,41 @@ class AlertantController extends Controller
      */
     public function update(Request $request, Alertant $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        if ( !empty( $request->xtelefon ) && !empty( $request->xadreca ) ) {
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
+            $theobj->telefon = $request->xtelefon;
             $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->cognoms = $request->xcognoms;
+            $theobj->adreca = $request->xadreca;
+            $theobj->municipis_id = $request->xmunicipisid;
+            $theobj->tipus_alertants_id = $request->xtipusalertantsid;
 
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [CursController::class, 'index'] );
+                $response = redirect()->action( [AlertantController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [CursController::class, 'edit'] )->withInput();
+                $municipisAry = Municipi::orderBy('nom')->get();
+                $tipusAry = TipusAlertant::orderBy('tipus')->get();
+                $response = redirect()->action( [AlertantController::class, 'edit'], compact('theobj','municipisAry','tipusAry') )->withInput();
             }
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
-            $response = redirect()->action( [CursController::class, 'edit'] )->withInput();
+            $request->session()->flash('error', 'Telefon i/o Adreça inexistent' );
+            $municipisAry = Municipi::orderBy('nom')->get();
+            $tipusAry = TipusAlertant::orderBy('tipus')->get();
+            $response = redirect()->action( [AlertantController::class, 'edit'], compact('theobj','municipisAry','tipusAry') )->withInput();
 
         }
 
         return $response;
+
     }
 
     /**
@@ -197,6 +205,6 @@ class AlertantController extends Controller
             $request->session()->flash('error', Utility::errorMessage($ex) );
         }
 
-        return redirect()->action( [CursController::class, 'index'] );
+        return redirect()->action( [AlertantController::class, 'index'] );
     }
 }

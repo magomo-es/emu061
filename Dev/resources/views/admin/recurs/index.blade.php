@@ -13,15 +13,35 @@
         <h5>Cercar</h5>
 
         <form action="{{ action([App\Http\Controllers\RecursController::class, 'index']) }}" method="GET">
+
             @csrf
+
             <div class="form-group row">
 
-                <div class="form-check col-sm-1 mt-2 text-right">
-                    <input class="form-check-input" type="checkbox" value="actiu" id="srchactiu" name="srchactiu" {{ ((old('srchactiu'))?'checked':'') }}>
-                    <label class="form-check-label" for="srchactiu">Actiu</label>
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="srchcode" class="col-2 col-form-label">Codi</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="srchcode" name="srchcode" value="{{ old('srchcode') }}">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-sm-1 text-right">
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="srchtype" class="col-2 col-form-label">Tipus</label>
+                        <div class="col-10">
+                            <select class="custom-select" id="srchtype" name="srchtype">
+                                <option value="0">seleccioneu tipus...</option>
+                                @foreach ($tipusAry as $type)
+                                <option value="{{ $type->id }}" {{ ((old('srchtype')==$type->id)?'selected':'') }}>{{ $type->tipus }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2 text-right">
                     <button type="submit" class="btn btn-secondary btn-sm mt-1"><i class="fas fa-search"></i> Cercar</button>
                 </div>
 
@@ -60,7 +80,7 @@
                 <tr>
                     <td>{{ $theobject->id }}</th>
                     <td>{{ $theobject->codi }}</td>
-                    <td>{{ $theobject->tipus_recursos_id }}</td>
+                    <td>{{ $tipusAry[$theobject->tipus_recursos_id]->tipus }}</td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" {{ (($theobject->actiu==1)?'checked':'') }} disabled>
@@ -99,13 +119,10 @@
 @endif
 
 
-<!--a href="{{ url('admin/sexes') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
+<a href="{{ action([App\Http\Controllers\RecursController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Recurs</button>
+</a>
 
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

@@ -16,13 +16,31 @@
             @csrf
             <div class="form-group row">
 
-                <div class="form-check col-sm-1 mt-2 text-right">
-                    <input class="form-check-input" type="checkbox" value="actiu" id="srchactiu" name="srchactiu" {{ ((old('srchactiu'))?'checked':'') }}>
-                    <label class="form-check-label" for="srchactiu">Actiu</label>
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="srchname" class="col-2 col-form-label">Nom</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="srchname" name="srchname" value="{{ old('srchname') }}">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-sm-1 text-right">
-                    <button type="submit" class="btn btn-secondary btn-sm mt-1"><i class="fas fa-search"></i> Cercar</button>
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="srchrol" class="col-2 col-form-label">Roles</label>
+                        <div class="col-10">
+                            <select class="custom-select" id="srchrol" name="srchrol">
+                                <option value="0">seleccioneu rol...</option>
+                                @foreach ($rolsAry as $rol)
+                                <option value="{{ $rol->id }}" {{ ((old('srchrol')==$rol->id)?'selected':'') }}>{{ $rol->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2 text-right">
+                    <button type="submit" class="btn btn-secondary btn mt-1"><i class="fas fa-search"></i> Cercar</button>
                 </div>
 
             </div>
@@ -73,13 +91,13 @@
                         <div class="btn-group" role="group">
                             <form class="m-0 p-0" action="{{ action([App\Http\Controllers\UsuariController::class, 'edit'], ['theobj' => $theobject->id]) }}">
                                 @csrf
-                                <button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Editar</button>
+                                <button type="submit" class="btn btn-secondary btn"><i class="fas fa-edit"></i> Editar</button>
                             </form>
                         </div>
 
                         <div class="btn-group ml-1" role="group">
 
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#boxModal"
+                            <button type="button" class="btn btn-danger btn" data-toggle="modal" data-target="#boxModal"
                              data-idelement="{{ $theobject->username }}"
                              data-action="{{ action([App\Http\Controllers\UsuariController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
                              ><i class="fas fa-trash"></i> Esborrar</button>
@@ -100,14 +118,9 @@
 
 @endif
 
-
-<!--a href="{{ url('admin/sexes') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
-
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
+<a href="{{ action([App\Http\Controllers\UsuariController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Usuari</button>
+</a>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

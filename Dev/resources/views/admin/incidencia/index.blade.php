@@ -14,16 +14,54 @@
 
         <form action="{{ action([App\Http\Controllers\IncidenciaController::class, 'index']) }}" method="GET">
             @csrf
-            <div class="form-group row">
 
-                <div class="form-check col-sm-1 mt-2 text-right">
-                    <input class="form-check-input" type="checkbox" value="actiu" id="srchactiu" name="srchactiu" {{ ((old('srchactiu'))?'checked':'') }}>
-                    <label class="form-check-label" for="srchactiu">Actiu</label>
+            <div class="row">
+                <div class="col-10">
+
+                    <div class="form-group row">
+
+                        <div class="col-3">
+                            <input type="text" class="form-control col-11" id="srchnom" name="srchnom" value="{{ old('srchnom') }}" placeholder="Nom">
+                        </div>
+
+                        <div class="col-3">
+                            <select class="custom-select" id="srchtipusincidencia" name="srchtipusincidencia">
+                                <option value="0">seleccioneu tipus...</option>
+                                @foreach ($tipusAry as $tipus)
+                                <option value="{{ $tipus->id }}" {{ ((old('srchtipusincidencia')==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-3">
+                            <select class="custom-select" id="srchusuari" name="srchusuari">
+                                <option value="0">seleccioneu usuari...</option>
+                                @foreach ($usuarisAry as $usuari)
+                                <option value="{{ $usuari->id }}" {{ ((old('srchusuari')==$usuari->id)?'selected':'') }}>{{ $usuari->username }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-3">
+                            <select class="custom-select" id="srchmunicipi" name="srchmunicipi">
+                                <option value="0">seleccioneu municipi...</option>
+                                @foreach ($municipisAry as $municipi)
+                                <option value="{{ $municipi->id }}" {{ ((old('srchmunicipi')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="col-sm-1 text-right">
-                    <button type="submit" class="btn btn-secondary btn-sm mt-1"><i class="fas fa-search"></i> Cercar</button>
+                <div class="col-2">
+
+                    <div class="col text-right">
+                        <button type="submit" class="btn btn-secondary btn-sm mt-1"><i class="fas fa-search"></i> Cercar</button>
+                    </div>
+
                 </div>
+
 
             </div>
 
@@ -48,15 +86,10 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Id</th>
                 <th scope="col"># Incidente</th>
-                <th scope="col">Data</th>
-                <th scope="col">Hora</th>
-                <th scope="col">Tel.Alertant</th>
+                <th scope="col">Data/Hora</th>
                 <th scope="col">Adreça</th>
-                <th scope="col">Descripció</th>
-                <th scope="col">Metge</th>
-                <th scope="col">Tipus_Incidencia</th>
+                <th scope="col">Tipus</th>
                 <th scope="col">Alertant</th>
                 <th scope="col">Municipi</th>
                 <th scope="col">Usuari</th>
@@ -66,25 +99,13 @@
             <tbody>
                 @foreach ($objectsAry as $theobject)
                 <tr>
-                    <td>{{ $theobject->id }}</th>
-                    <td>{{ $theobject->num_incident }}</td>
-                    <td>{{ $theobject->data }}</td>
-                    <td>{{ $theobject->hora }}</td>
-                    <td>{{ $theobject->telefon_alertant }}</td>
-                    <td>{{ $theobject->adreca }} - {{ $cicle->adreca_complement }}</td>
-                    <td>{{ $theobject->descripcio }}</td>
-                    <td>{{ $theobject->nom_metge }}</td>
-                    <td>{{ $theobject->tipus_incidencies_id }}</td>
-                    <td>{{ $theobject->alertants_id }}</td>
-                    <td>{{ $theobject->municipis_id }}</td>
-                    <td>{{ $theobject->usuaris_id }}</td>
-                    <td>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" {{ (($cicle->actiu==1)?'checked':'') }} disabled>
-                        </div>
-
-                    </td>
+                    <td><small>{{ $theobject->num_incident }}</small></td>
+                    <td><small>{{ $theobject->data. ' ' . $theobject->hora }}</small></td>
+                    <td><small>{{ $theobject->adreca }} - {{ $theobject->adreca_complement }}</small></td>
+                    <td><small>{{ $tipusAry->firstWhere('id', $theobject->tipus_incidencies_id)->tipus }}</small></td>
+                    <td><small>{{ $alertantsAry->firstWhere('id', $theobject->alertants_id)->nom }}</small></td>
+                    <td><small>{{ $municipisAry->firstWhere('id', $theobject->municipis_id)->nom }}</small></td>
+                    <td><small>{{ $usuarisAry->firstWhere('id', $theobject->usuaris_id)->username }}</small></td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">
@@ -118,13 +139,10 @@
 @endif
 
 
-<!--a href="{{ url('admin/sexes') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
+<a href="{{ action([App\Http\Controllers\IncidenciaController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Incidencia</button>
+</a>
 
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

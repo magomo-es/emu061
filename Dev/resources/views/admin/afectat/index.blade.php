@@ -14,14 +14,28 @@
 
         <form action="{{ action([App\Http\Controllers\AfectatController::class, 'index']) }}" method="GET">
             @csrf
+
             <div class="form-group row">
 
-                <div class="form-check col-sm-1 mt-2 text-right">
-                    <input class="form-check-input" type="checkbox" value="actiu" id="srchactiu" name="srchactiu" {{ ((old('srchactiu'))?'checked':'') }}>
-                    <label class="form-check-label" for="srchactiu">Actiu</label>
+                <div class="col-4">
+
+                    <input type="text" class="form-control col-11" id="srchnom" name="srchnom" value="{{ old('srchnom') }}" placeholder="Nom">
+
                 </div>
 
-                <div class="col-sm-1 text-right">
+                <div class="col-3">
+
+                    <input type="text" class="form-control col-11" id="srchcip" name="srchcip" value="{{ old('srchcip') }}" placeholder="CIP">
+
+                </div>
+
+                <div class="col-3">
+
+                    <input type="text" class="form-control col-11" id="srchtelefon" name="srchtelefon" value="{{ old('srchtelefon') }}" placeholder="Telefon">
+
+                </div>
+
+                <div class="col-2 text-right">
                     <button type="submit" class="btn btn-secondary btn-sm mt-1"><i class="fas fa-search"></i> Cercar</button>
                 </div>
 
@@ -54,7 +68,7 @@
                 <th scope="col">Teléfon</th>
                 <th scope="col">Edat</th>
                 <th scope="col">Sexe</th>
-                <th scope="col"></th>
+
             </tr>
             </thead>
             <tbody>
@@ -65,14 +79,7 @@
                     <td>{{ $theobject->cip }}</td>
                     <td>{{ $theobject->telefon }}</td>
                     <td>{{ $theobject->edat }}</td>
-                    <td>{{ $theobject->sexes_id }}</td>
-                    <td>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" {{ (($theobject->actiu==1)?'checked':'') }} disabled>
-                        </div>
-
-                    </td>
+                    <td>{{ $sexesAry->firstWhere('id', $theobject->sexes_id)->sexe }}</td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">
@@ -106,13 +113,10 @@
 @endif
 
 
-<!--a href="{{ url('admin/afectats') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
+<a href="{{ action([App\Http\Controllers\AfectatController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Alertant</button>
+</a>
 
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

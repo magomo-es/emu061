@@ -14,31 +14,44 @@
 
         <form action="{{ action([App\Http\Controllers\AlertantController::class, 'index']) }}" method="GET">
             @csrf
+
             <div class="form-group row">
 
-                <div class="col-sm-5">
+                <div class="col-2">
 
-                    <select class="custom-select" id="srchfilter1" name="srchfilter1">
-                        <option value="0" selected>Tots els Tipus</option>
+                    <input type="text" class="form-control col-11" id="srchtelefon" name="srchtelefon" value="{{ old('srchtelefon') }}" placeholder="Telefon">
+
+                </div>
+
+                <div class="col-2">
+
+                    <input type="text" class="form-control col-11" id="srchnom" name="srchnom" value="{{ old('srchnom') }}" placeholder="Nom">
+
+                </div>
+
+                <div class="col-3">
+
+                    <select class="custom-select" id="srchtipus" name="srchtipus">
+                        <option value="0" selected>...seleccioneu Tipus</option>
                         @foreach ($tipusAry as $tipus)
-                        <option value="{{ $tipus->id }}" {{ ((old('srchfilter1')==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>
+                        <option value="{{ $tipus->id }}" {{ ((old('srchtipus')==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>
                         @endforeach
                     </select>
 
                 </div>
 
-                <div class="col-sm-5">
+                <div class="col-3">
 
-                    <select class="custom-select" id="srchfilter2" name="srchfilter2">
-                        <option value="0" selected>Tots els Municipis</option>
+                    <select class="custom-select" id="srchmunicipis" name="srchmunicipis">
+                        <option value="0" selected>...seleccioneu Municipi</option>
                         @foreach ($municipisAry as $municipi)
-                        <option value="{{ $municipi->id }}" {{ ((old('srchfilter2')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
+                        <option value="{{ $municipi->id }}" {{ ((old('srchmunicipis')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
                         @endforeach
                     </select>
 
                 </div>
 
-                <div class="col-sm-2 text-right">
+                <div class="col-2 text-right">
                     <button type="submit" class="btn btn-secondary btn-sm mt-1"><i class="fas fa-search"></i> Cercar</button>
                 </div>
 
@@ -116,13 +129,10 @@
 @endif
 
 
-<!--a href="{{ url('admin/alertant') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
+<a href="{{ action([App\Http\Controllers\AlertantController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Alertant</button>
+</a>
 
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Recurs;
 use App\Classes\Utility;
+use App\Models\TipusRecurs;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -16,26 +17,43 @@ class RecursController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Recurso::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Recurso::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Recurso::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Recurso::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objectsAry = Recurs::orderBy('codi')->paginate(10);
+        // - - - - - search block =>
+        $searchType = ( $request->input('srchtype') > 0 );
+        $searchCode = ( strlen( $request->input('srchcode') ) > 0 );
+        if ( $searchType && $searchCode ) {
+            echo '<script>console.log(" search by searchType && searchCode")</script>';
+            $objectsAry = Recurs::where( 'tipus_recursos_id','=', $request->input('srchtype') )
+                ->where( 'codi', 'like', '%'.$request->input('srchcode').'%' )
+                ->orderBy('codi')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ( $searchType && !$searchCode ) {
+            echo '<script>console.log(" search by searchType")</script>';
+            $objectsAry = Recurs::where( 'tipus_recursos_id','=', $request->input('srchtype') )
+                ->orderBy('codi')
+                ->paginate(10)
+                ->withQueryString();
+        } else if ( !$searchType && $searchCode ) {
+            echo '<script>console.log(" search by searchCode")</script>';
+            $objectsAry = Recurs::where('codi', 'like', '%'.$request->input('srchcode').'%')
+                ->orderBy('codi')
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            echo '<script>console.log(" No search !")</script>';
+            $objectsAry = Recurs::orderBy('codi')
+                ->paginate(10);
+        }
+        // - - - - - search block //
+
+
+        $tipusAry = TipusRecurs::orderBy('tipus')->get();
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.recurs.index', compact('objectsAry') );
+        return view('admin.recurs.index', compact('objectsAry','tipusAry') );
+
     }
 
 
@@ -46,12 +64,10 @@ class RecursController extends Controller
      */
     public function create()
     {
-        echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.recurs.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("create method")</script>';
+        $tipusAry = TipusRecurs::orderBy('tipus')->get();
+        return view( 'admin.recurs.create', compact('tipusAry') );
 
     }
 
@@ -63,18 +79,16 @@ class RecursController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
-
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xcodi ) ) {
 
             $theobj = new Recurs;
 
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
+            $theobj->codi = $request->xcodi;
             $theobj->actiu = ($request->xactiu==1);
+            $theobj->tipus_recursos_id = $request->xtipusrecursosid;
 
             try {
                 $theobj->save();
@@ -88,8 +102,7 @@ class RecursController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Codi inexistent' );
             $response = redirect()->action( [RecursController::class, 'create'] )->withInput();
 
         }
@@ -116,13 +129,11 @@ class RecursController extends Controller
      */
     public function edit(Recurs $theobj)
     {
-        echo '<script>console.log("edit method")</script>';
 
-        return view('admin.recurs.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("edit method")</script>';
+        $tipusAry = TipusRecurs::orderBy('tipus')->get();
+        return view('admin.recurs.edit', compact( 'theobj','tipusAry' ) );
+
     }
 
     /**
@@ -134,16 +145,14 @@ class RecursController extends Controller
      */
     public function update(Request $request, Recurs $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        if ( !empty( $request->xcodi ) ) {
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
+            $theobj->codi = $request->xcodi;
             $theobj->actiu = ($request->xactiu==1);
+            $theobj->tipus_recursos_id = $request->xtipusrecursosid;
 
             try {
                 $theobj->save();
@@ -157,8 +166,7 @@ class RecursController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
+            $request->session()->flash('error', 'Codi inexistent' );
             $response = redirect()->action( [RecursController::class, 'edit'] )->withInput();
 
         }

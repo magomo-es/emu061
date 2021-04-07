@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuari;
 use App\Classes\Utility;
-use Illuminate\Database\QueryException;
+use App\Models\Alertant;
+use App\Models\Municipi;
 use App\Models\Incidencia;
 use Illuminate\Http\Request;
+use App\Models\TipusIncidencia;
+use Illuminate\Database\QueryException;
 
 class IncidenciaController extends Controller
 {
@@ -16,26 +20,44 @@ class IncidenciaController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Incidencia::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Incidencia::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Incidencia::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Incidencia::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
-        $objectsAry = Incidencia::orderBy('nom')->paginate(5);
+        echo '<script>console.log("index method ( srchnumincident: '.$request->input('srchnumincident').
+        ' / srchtipusincidencia: '.$request->input('srchtipusincidencia').
+        ' / srchusuari: '.$request->input('srchusuari').
+        ' / srchmunicipi: '.$request->input('srchmunicipi').')")</script>';
+
+        // - - - - - search block =>
+        $searchIncidente = $request->input('srchnumincident');
+        $searchTipus = ( $request->input('srchtipusincidencia') );
+        $searchUsuari = $request->input('srchusuari');
+        $searchMunicipi = $request->input('srchmunicipi');
+
+        if ( $searchIncidente || $searchTipus || $searchUsuari || $searchMunicipi ) {
+
+            echo '<script>console.log("index method -> with srchData")</script>';
+
+            $objectsAry = Incidencia::when( $searchIncidente, function ($query, $searchIncidente) { return $query->where( 'num_incident','=', $searchIncidente ); })
+                ->when( $searchTipus, function ($query, $searchTipus) { return $query->where( 'tipus_incidencies_id','=', $searchTipus ); })
+                ->when( $searchUsuari, function ($query, $searchUsuari) { return $query->where( 'usuaris_id','=', $searchUsuari ); })
+                ->when( $searchMunicipi, function ($query, $searchMunicipi) { return $query->where( 'municipis_id','=', $searchMunicipi ); })
+                ->orderBy('data')->orderBy('hora')->paginate(10)->withQueryString();
+
+        } else {
+
+            echo '<script>console.log("index method -> NO srchData")</script>';
+            $objectsAry = Incidencia::orderBy('data')->orderBy('hora')->paginate(10);
+
+        }
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.incidencia.index', compact('objectsAry') );
+        $tipusAry = TipusIncidencia::orderBy('tipus')->get();
+        $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+        $municipisAry = Municipi::orderBy('nom')->get();
+        $usuarisAry = Usuari::orderBy('username')->get();
+
+        return view('admin.incidencia.index', compact('objectsAry','tipusAry','alertantsAry','municipisAry','usuarisAry') );
+
     }
 
 
@@ -46,12 +68,13 @@ class IncidenciaController extends Controller
      */
     public function create()
     {
-        echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.incidencia.create', [
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("create method")</script>';
+        $tipusAry = TipusIncidencia::orderBy('tipus')->get();
+        $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+        $municipisAry = Municipi::orderBy('nom')->get();
+        $usuarisAry = Usuari::orderBy('username')->get();
+        return view( 'admin.incidencia.create', compact('tipusAry','alertantsAry','municipisAry','usuarisAry') );
 
     }
 
@@ -63,18 +86,29 @@ class IncidenciaController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
-
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
+        if ( !empty( $request->xnumincident )
+            && !empty( $request->xdata )
+            && !empty( $request->xhora )
+            && !empty( $request->xtelefonalertant )
+            && !empty( $request->xdescripcio ) ) {
 
             $theobj = new Incidencia;
 
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->num_incident = $request->xnumincident;
+            $theobj->data = $request->xdata;
+            $theobj->hora = $request->xhora;
+            $theobj->telefon_alertant = $request->xtelefonalertant;
+            $theobj->adreca = $request->xadreca;
+            $theobj->adreca_complement = $request->xadrecacomplement;
+            $theobj->descripcio = $request->xdescripcio;
+            $theobj->nom_metge = $request->xnommetge;
+            $theobj->tipus_incidencies_id = $request->xtipusincidenciesid;
+            $theobj->alertants_id = $request->xalertantsid;
+            $theobj->municipis_id = $request->xmunicipisid;
+            $theobj->usuaris_id = $request->xusuarisid;
 
             try {
                 $theobj->save();
@@ -88,13 +122,13 @@ class IncidenciaController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'incidente, Data, Hora, Telefon Alertant i/o Descripció inexistent' );
             $response = redirect()->action( [IncidenciaController::class, 'create'] )->withInput();
 
         }
 
         return $response;
+
     }
 
     /**
@@ -116,13 +150,14 @@ class IncidenciaController extends Controller
      */
     public function edit(Incidencia $theobj)
     {
-        echo '<script>console.log("edit method")</script>';
 
-        return view('admin.incidencia.edit', [
-            'theobj'=>$theobj,
-            //'cicles'=>Cicle::where('actiu','=', 1)->orderBy('nom')->get(),
-            'insert'=>true
-            ] );
+        echo '<script>console.log("edit method")</script>';
+        $tipusAry = TipusIncidencia::orderBy('tipus')->get();
+        $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+        $municipisAry = Municipi::orderBy('nom')->get();
+        $usuarisAry = Usuari::orderBy('username')->get();
+        return view('admin.incidencia.edit', compact('theobj','tipusAry','alertantsAry','municipisAry','usuarisAry') );
+
     }
 
     /**
@@ -134,16 +169,27 @@ class IncidenciaController extends Controller
      */
     public function update(Request $request, Incidencia $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        $isOk = true;
+        if ( !empty( $request->xnumincident )
+            && !empty( $request->xdata )
+            && !empty( $request->xhora )
+            && !empty( $request->xtelefonalertant )
+            && !empty( $request->xdescripcio ) ) {
 
-        if ( !empty( $request->xsigles ) && !empty( $request->xnom ) ) {
-
-            $theobj->sigles = $request->xsigles;
-            $theobj->nom = $request->xnom;
-            $theobj->cicles_id = $request->xciclesid;
-            $theobj->actiu = ($request->xactiu==1);
+            $theobj->num_incident = $request->xnumincident;
+            $theobj->data = $request->xdata;
+            $theobj->hora = $request->xhora;
+            $theobj->telefon_alertant = $request->xtelefonalertant;
+            $theobj->adreca = $request->xadreca;
+            $theobj->adreca_complement = $request->xadrecacomplement;
+            $theobj->descripcio = $request->xdescripcio;
+            $theobj->nom_metge = $request->xnommetge;
+            $theobj->tipus_incidencies_id = $request->xtipusincidenciesid;
+            $theobj->alertants_id = $request->xalertantsid;
+            $theobj->municipis_id = $request->xmunicipisid;
+            $theobj->usuaris_id = $request->xusuarisid;
 
             try {
                 $theobj->save();
@@ -152,18 +198,26 @@ class IncidenciaController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [IncidenciaController::class, 'edit'] )->withInput();
+                $tipusAry = TipusIncidencia::orderBy('tipus')->get();
+                $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+                $municipisAry = Municipi::orderBy('nom')->get();
+                $usuarisAry = Usuari::orderBy('username')->get();
+                $response = redirect()->action( [IncidenciaController::class, 'edit'], compact('theobj','objectsAry','tipusAry','alertantsAry','municipisAry','usuarisAry') )->withInput();
             }
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-
-            $response = redirect()->action( [IncidenciaController::class, 'edit'] )->withInput();
+            $request->session()->flash('error', 'incidente, Data, Hora, Telefon Alertant i/o Descripció inexistent' );
+            $tipusAry = TipusIncidencia::orderBy('tipus')->get();
+            $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+            $municipisAry = Municipi::orderBy('nom')->get();
+            $usuarisAry = Usuari::orderBy('username')->get();
+            $response = redirect()->action( [IncidenciaController::class, 'edit'], compact('theobj','objectsAry','tipusAry','alertantsAry','municipisAry','usuarisAry') )->withInput();
 
         }
 
         return $response;
+
     }
 
     /**
@@ -184,5 +238,6 @@ class IncidenciaController extends Controller
         }
 
         return redirect()->action( [IncidenciaController::class, 'index'] );
+
     }
 }
