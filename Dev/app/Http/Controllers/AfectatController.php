@@ -7,6 +7,7 @@ use App\Models\Afectat;
 use App\Classes\Utility;
 use App\Models\TipusRecurs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
 class AfectatController extends Controller
@@ -48,8 +49,9 @@ class AfectatController extends Controller
 
         $sexesAry = Sexe::orderBy('sexe')->get();
         $tipusrecursosAry = TipusRecurs::orderBy('tipus')->get();
+        $user = Auth::user();
 
-        return view('admin.afectat.index', compact('objectsAry','sexesAry','tipusrecursosAry') );
+        return view('admin.afectat.index', compact('objectsAry','sexesAry','tipusrecursosAry', 'user') );
 
     }
 

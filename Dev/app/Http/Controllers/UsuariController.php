@@ -227,9 +227,26 @@ class UsuariController extends Controller
      *
      * @return view()
      */
-    public function showLogin()
+    public function showLogin(Request $request)
     {
-        return view('index');
+
+        echo '<script>console.log("Usuari Controller -> showLogin")</script>';
+
+        $admin = Usuari::where( 'username','=', 'admin' )->get();
+        if ( !$admin ) {
+            $admin = new Usuari();
+            $admin->username = 'admin';
+            $admin->contrasenya = \bcrypt('admin');
+            $admin->email = 'admin@emu061.es';
+            $admin->nom = 'Admin';
+            $admin->cognoms = 'Emu061';
+            $admin->rols_id = 1;
+            $admin->save();
+            echo '<script>console.log("Usuari Controller -> showLogin -> Add Admin user")</script>';
+        }
+
+        return view('auth.login');
+
     }
 
     /**
@@ -240,37 +257,70 @@ class UsuariController extends Controller
     public function login(Request $request)
     {
 
-        $correu = $request->input('correu');
+        $username = $request->input('username');
         $contrasenya = $request->input('contrasenya');
 
-        $user = Usuari::where('correu', $correu)->first();
+        echo '<script>console.log("Usuari Controller -> login -> username: '.$username.' / contrasenya: '.$contrasenya.'")</script>';
 
-        if ($user !=null && Hash::check($contrasenya, $user->contrasenya)) {
-            Auth::login($user);
+        $user = Usuari::where('username', $username)->orwhere('email', $username)->first();
+
+        if ( $user != null && Hash::check($contrasenya, $user->contrasenya)) {
+
+            Auth::login($user, $remember = true);
+            //Auth::attempt($user);
+
+            echo '<script>console.log("Usuari Controller -> login -> user: '.$user->nom.' '.$user->cognoms.' ('.$user->email.')")</script>';
+
             switch ($user->rols_id) {
-                case 1: $response = redirect('/admin/index'); break;
-                case 2: $response = redirect('/operator/index'); break;
-                case 3: $response = redirect('/mobile/index'); break;
-                default: $response = redirect('/index'); break;
+
+                case 1: $response = view('admin.index'); break;
+                //case 1: $response = view('admin.index', [Auth::user()]); break;
+                //case 1: $response = redirect('admin'); break;
+                //case 2: $response = view('operator.index'); break;
+                //case 2: $response = view('operator.index', [Auth::user()]); break;
+                case 2: $response = redirect('operator'); break;
+                //case 3: $response = view('mobile.index'); break;
+                //case 3: $response = view('mobile.index', [Auth::user()]); break;
+                case 3:
+                    $request->session()->flash('error', 'Al intenar redireccionar redirect("mobile") se pierde el login del usuario'.
+                        ' Auth::user()->username: '.Auth::user()->username.
+                        ' Auth::id(): '.Auth::id().
+                        ' (user: '.$user->nom.' '.$user->cognoms.' ('.$user->email.')');
+                   $response = redirect('auth.login')->withInput(); break;
+                   //$response = redirect('mobile'); break;
+                //default: $response = view('index');
+                //default: $response = view('index', [Auth::user()]);
+                default: $response = redirect('/'); break;
+
             }
-        }
-        else {
+
+        } else {
+
             $request->session()->flash('error', 'Usuari o contrasenya incorrectes');
-            $response = redirect('/index')->withInput();
+            //$response = redirect('auth.login')->withInput();
+            $response = "";
+
         }
 
         return $response;
+
     }
+
 
     /**
     * Validate login
     *
     * @return redirect()
     */
-    public function logout()
+    public function logout(Request $request)
     {
+
         Auth::logout();
-        return redirect('/index');
+
+        $request->session()->flash('error', 'Agraïm la seva elecció ... Fins ara !');
+
+        return redirect('/');
+
     }
 
 

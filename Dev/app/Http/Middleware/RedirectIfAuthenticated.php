@@ -22,8 +22,12 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
+
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+
+                echo '<script>console.log("RedirectIfAuthenticated.php -> handle -> redirect")</script>';
+//                return redirect(RouteServiceProvider::HOME);
+
             }
         }
 

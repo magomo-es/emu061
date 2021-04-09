@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolController;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SexeController;
 use App\Http\Controllers\RecursController;
 use App\Http\Controllers\UsuariController;
@@ -20,16 +22,35 @@ use App\Http\Controllers\TipusIncidenciaController;
 use App\Http\Controllers\PlayVideoByCallerController;
 use App\Http\Controllers\IncidenciesHasRecursosController;
 
+
+
+//Route::get('/', [UsuariController::class, 'showLogin'] );
+//Route::get('/login', [UsuariController::class, 'showLogin'] )->name('login');
+//Route::post('/login', [UsuariController::class, 'login'] );
+//Route::get('/logout', [UsuariController::class, 'logout']);
+
 Route::get('/', function () { return view('index'); });
+Route::get('/login', [UsuariController::class, 'showLogin'])->name('login');
+Route::post('/login', [UsuariController::class, 'login'] );
+Route::get('/logout', [UsuariController::class, 'logout'])->name('logout');
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/home', function () {
+//         $user = Auth::user();
+//
+//         return view('home', compact('user'));
+//     });
+// });
 
 
-//Route::middleware(['auth'])->group( function() {
+    Route::get('/home', function () { return view('home', [Auth::user()]); })->middleware(['auth']);
 
-    Route::get('/admin', function () { return view('admin.index'); });
+    Route::view('/admin', 'admin.index', ['user' => [Auth::user()]])->name('admin');
+    //get('/admin', function () { return view('/admin','admin', [Auth::user()]); })->name('admin');
+
 
     Route::resource('admin/incidencies', IncidenciaController::class)->parameters(['incidencies' => 'theobj']);
 
-    Route::resource('admin/incidencies_has_recursos', IncidenciesHasRecursosController::class)->parameters(['incidencies_has_recursos' => 'theobj']);
+    Route::resource('admin/incidencies_has_recursos', IncidenciesHasRecursosController::class)->parameters(['incidencies_has_recursos' => 'theobj'])->middleware('auth');
 
     Route::resource('admin/afectats', AfectatController::class)->parameters(['afectats' => 'theobj']);
     Route::resource('admin/alertants', AlertantController::class)->parameters(['alertants' => 'theobj']);
@@ -51,8 +72,41 @@ Route::get('/', function () { return view('index'); });
     Route::resource('admin/playvideobycaller', PlayVideoByCallerController::class)->parameters(['playvideobycaller' => 'theobj']);
     Route::resource('admin/videoevents', VideoEventsController::class)->parameters(['videoevents' => 'theobj']);
 
-    Route::get('/operator', function () { return view('operator.index'); });
+    Route::middleware(['auth'])->group( function() {
 
-    Route::get('/mobile', function () { return view('mobile.index'); });
+        Route::group(['middleware' => ['login']], function() {
 
-//});
+            Route::get('operator', function () { return view('operator.index'); });
+
+            Route::get('mobile', function () { return view('mobile.index'); });
+
+        });
+    });
+
+Route::get('/clearcache', function() {
+
+    $notice = 'CONFIG';
+    // Laravel Clear CONFIG Cache On Shared Hosting
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('config:cache');
+
+    $notice.= ' / APPLICATION';
+    // Laravel Clear APPLICATION Cache On Shared Hosting
+    $exitCode = Artisan::call('cache:clear');
+
+    $notice.= ' / VIEW';
+    // Laravel Clear VIEW Cache On Shared Hosting
+    $exitCode = Artisan::call('view:clear');
+
+    // $notice.= ' / ROUTE';
+    // Laravel Clear ROUTE Cache On Shared Hosting
+    // $exitCode = Artisan::call('route:cache');
+
+    $notice.= ' cleared';
+
+    return $notice;
+
+});
+
+
+

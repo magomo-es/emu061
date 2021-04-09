@@ -24,18 +24,7 @@
 
     <body>
 
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ Auth::user()->username }} <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                @if(Auth::user()->rols_id==1)<li><a href="{{ url('admin.index') }}">Administració</a></li>@endif
-                @if(Auth::user()->rols_id==1 || Auth::user()->rols_id==2)<li><a href="{{ url('operator.index') }}">CECOS</a></li>
-                @if(Auth::user()->rols_id==1 || Auth::user()->rols_id==3)<li><a href="{{ url('mobile.index') }}">Recursos</a></li>
-                <li><hr></li>
-                <li><a href="{{ action([App\Http\Controllers\UsuariController::class, 'logout']) }}">Sortir</a></li>
-            </ul>
-        </div>
-
-        <nav class="navbar navbar-expand-lg bg-primary">
+         <nav class="navbar navbar-expand-lg bg-primary">
 
             <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" style="max-height: 50px;" /></a>
 
@@ -107,6 +96,7 @@
 
         </nav>
 
+        @include('_partials.userbox')
 
         <div class="container-fluid mt-3 mb-5">@yield('pageContent')</div>
 

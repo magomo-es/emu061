@@ -34,7 +34,7 @@ use App\Http\Controllers\Api\IncidenciesHasRecursosController;
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) { return $request->user(); });
 
-//Route::middleware(['auth:api'])->group( function() {
+Route::middleware(['auth:api'])->group( function() {
 
     Route::apiResource('admin/incidencies', IncidenciaController::class)->parameters(['incidencies' => 'theobj']);
 
@@ -64,4 +64,4 @@ use App\Http\Controllers\Api\IncidenciesHasRecursosController;
     Route::get( 'municipi/{theobj}', [MunicipiController::class, 'themunicipi'] );
     Route::get( 'centressanitaris', [AlertantController::class, 'centressanitaris'] );
 
-//});
+});

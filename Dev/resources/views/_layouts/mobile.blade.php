@@ -24,7 +24,7 @@
 
     <body>
 
-        <div class="dropdown">
+        {{-- <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ Auth::user()->username }} <span class="caret"></span></button>
             <ul class="dropdown-menu">
                 @if(Auth::user()->rols_id==1)<li><a href="{{ url('admin.index') }}">Administració</a></li>@endif
@@ -33,7 +33,7 @@
                 <li><hr></li>
                 <li><a href="{{ action([App\Http\Controllers\UsuariController::class, 'logout']) }}">Sortir</a></li>
             </ul>
-        </div>
+        </div> --}}
 
         <nav class="navbar navbar-expand-lg bg-primary">
 
@@ -43,6 +43,7 @@
 
         </nav>
 
+        @include('_partials.userbox')
 
         <div class="container-fluid mt-3 mb-5">@yield('pageContent')</div>
 

@@ -58,6 +58,7 @@
 
         </nav>
 
+        @include('_partials.userbox')
 
         <div class="container-fluid mt-3 mb-5">@yield('pageContent')</div>
 

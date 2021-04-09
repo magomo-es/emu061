@@ -154,8 +154,21 @@ class IncidenciaController extends Controller
         echo '<script>console.log("edit method")</script>';
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
-        $municipisAry = Municipi::orderBy('nom')->get();
+        $municipisAry = Municipi::with(['comarca'])->with(['provincia'])->orderBy('nom')->get();
         $usuarisAry = Usuari::orderBy('username')->get();
+
+
+
+
+
+
+        //echo '<script>console.log("edit method -> $theobj->tipus_incidencia()->tipus: '.json_encode($theobj,true).'")</script>';
+        //$alertantsAry = Alertant::with(['tipus_alertants'])->orderBy('cognoms')->orderBy('nom')->get();
+
+
+
+
+
         return view('admin.incidencia.edit', compact('theobj','tipusAry','alertantsAry','municipisAry','usuarisAry') );
 
     }

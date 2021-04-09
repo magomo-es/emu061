@@ -69,7 +69,6 @@
                 <th scope="col">Id</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Usuari</th>
-                <th scope="col">Contrasenya</th>
                 <th scope="col">Email</th>
                 <th scope="col">Rol</th>
                 <th scope="col">Recurs</th>
@@ -82,10 +81,9 @@
                     <td>{{ $theobject->id }}</th>
                     <td>{{ $theobject->nom }} {{ $theobject->cognoms }}</th>
                     <td>{{ $theobject->username }}</td>
-                    <td>{{ $theobject->contrasenya }}</th>
                     <td>{{ $theobject->email }}</td>
-                    <td>{{ $theobject->rols_id }}</td>
-                    <td>{{ $theobject->recursos_id }}</td>
+                    <td>{{ $rolsAry->firstWhere('id', $theobject->rols_id)->nom }}</td>
+                    <td>{{ ($theobject->recursos_id) ? $recursosAry->firstWhere('id', $theobject->recursos_id)->codi : '' }}</td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">
