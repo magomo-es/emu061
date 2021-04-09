@@ -53,9 +53,10 @@ class AlertantController extends Controller
      */
     public function show(Alertant $theobj)
     {
-        // para asociar ( dependencias a objeto )
-        // $theobj = Alertant::with('otratabla')->find($theobj->campoenlace);
+
+        $theobj = Alertant::with(['municipi','incidencies'])->find($theobj->id);
         return new AlertantResource($theobj);
+
     }
 
     /**

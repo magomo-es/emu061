@@ -53,9 +53,10 @@ class IncidenciaController extends Controller
      */
     public function show(Incidencia $theobj)
     {
-        // para asociar ( dependencias a objeto )
-        // $theobj = Incidencia::with('otratabla')->find($theobj->campoenlace);
+
+        $theobj = Incidencia::with('tipus_incidencia','alertant','municipi.comarca.provincia','usuari','afectats.recursos')->find($theobj->id);
         return new IncidenciaResource($theobj);
+
     }
 
     /**

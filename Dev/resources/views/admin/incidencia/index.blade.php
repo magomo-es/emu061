@@ -102,10 +102,10 @@
                     <td><small>{{ $theobject->num_incident }}</small></td>
                     <td><small>{{ $theobject->data. ' ' . $theobject->hora }}</small></td>
                     <td><small>{{ $theobject->adreca }} - {{ $theobject->adreca_complement }}</small></td>
-                    <td><small>{{ $tipusAry->firstWhere('id', $theobject->tipus_incidencies_id)->tipus }}</small></td>
-                    <td><small>{{ $alertantsAry->firstWhere('id', $theobject->alertants_id)->nom }}</small></td>
-                    <td><small>{{ $municipisAry->firstWhere('id', $theobject->municipis_id)->nom }}</small></td>
-                    <td><small>{{ $usuarisAry->firstWhere('id', $theobject->usuaris_id)->username }}</small></td>
+                    <td><small>{{ $theobject->tipus_incidencia->tipus }}</small></td>
+                    <td><small>{{ $theobject->alertant->nom }}</small></td>
+                    <td><small>{{ $theobject->municipi->nom }}</small></td>
+                    <td><small>{{ $theobject->usuari->username }}</small></td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">

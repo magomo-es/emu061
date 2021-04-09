@@ -1,0 +1,137 @@
+
+
+CODI CRITERIS DE GRAVETAT - Codificació pròpia del SEM
+----------------------------------------------------------
+
+G00 Crític, pacient molt greu, inclou ACR
+G01 Greu
+G02 Menys greu, no es pot incloure com greu ni lleu
+G03 Lleu, inclou els
+
+
+CODI 3 - Codificació pròpia del SEM
+----------------------------------------------------------
+
+3.0 Aturada Cardiorespiratòria
+3.01 Alerta telefònica a l’Hospital per ACR
+3.03 Activació SVAP (Suport Vital Avançat Perllongat)
+3.08 Aturada Cardiorespiratòria. Èxitus
+3.1 Trucada telefònica
+3.2 Recurs no operatiu per descans
+3.3 Recurs operatiu
+3.4 Arribada al lloc de l’incident
+3.5 Informació de la situació o dades de l’afectat
+3.6 Finalització del servei. La unitat es troba operativa
+3.7 G Es precisa ajut policial - Guàrdia Urbana Local
+3.7 N Es precisa ajut policial - Cos Nacional de Policia
+3.7 M Es precisa ajut policial - Mossos d’Esquadra
+3.70 Es precisa ajut policial URGENT. Situació de risc físic
+3.8 Èxitus
+3.9 Recurs no operatiu per accident
+3.10 Retorn a Base
+3.11 Anul·ació del servei
+3.12 Es precisa ajut per assistir al malalt. Patologia psiquiàtrica
+3.13 Fer ús correcte de l’equip de ràdio
+3.14 Es precisa ajut d’una altra unitat (s’especificarà el tipus)
+3.15 Relleu de l’equip assitencial
+3.16 Recurs no operatiu per reposar combustible
+3.17 Recurs no operatiu per reposar material sanitari
+3.18 Es precisa ajut de Bombers
+3.19 Es precisa una Unitat de Transport Sanitari (USVB)
+3.20 Resteu atents en espera de noves dades o informació
+3.21 Donar coordenades de situació o localització de la unitat
+3.22 Alta mèdica o voluntària
+3.23 Accident de trànsit
+3.24 Indigent / Sociopatia
+3.25 Intoxicació enòlica
+3.26 Sobredosi per drogues
+3.27 Politraumàtic, si TCE donar Glasgow
+3.28 Pacient amb patologia psiquiàtrica. Es troba agitat.
+3.29 Trauma via pública / domicili
+3.30 IAM / angor
+3.31 Intent d’autòlisi
+3.32 Pacient inconscient
+3.33 Pacient amb dispnea aguda
+3.40 Silenci a la xarxa, comunitat d’emergència
+3.50 Indiqueu el temps estimat per arribar al lloc de l’incident
+3.51 Trasllat assistit per metge/infermer. Sortim cap a l’hospital
+3.52 Trasllat no assistit. Sortim cap a l’hospital
+3.53 Unitat assistint i operativa per a noves necessitats servei
+307.9 Agitació psicomotriu
+788.99 Alteracions genitourinàries
+989.89 Altres intoxicacions
+300.9 Altres transtorns psiquiàtrics
+897,00 Amputació EEII
+887,00 Amputació EESS
+427.5 Aturada cardiorespiratòria
+799.1 Aturada respiratòria
+427.89 Bradicàrdia
+784.0 Cefalea
+723.1 Cervicàlgia
+782.5 Cianosi
+924.9 Contusió
+780.3 Convulsions
+992.0 Cop de Calor
+949.0 Cremades
+300.00 Crisi ansietat
+786.00 Dificultat respiratòria
+493.92 Dificultat respiratòria+ANTECEDENTS ASMA
+428,00 Dificultat respiratòria+ANTECEDENTS ICARDIACA
+491.21 Dificultat respiratòria+ANTECEDENTS MPOC
+729.5 Dolor a extremitats
+789.00 Dolor abdominal
+780.96 Dolor generalitzat/inespecífic
+724.2 Dolor Lumbar/Dolor Esquena
+786.50 Dolor toràcic
+661.93 Dolor/contraccions embaràs
+784.7 Epistaxi
+919.8 Ferides No penetrants/Erosions/Polierosions
+879.8 Ferides Penetrants
+827.0 Fractura extremitat inferior
+818.0 Fractura extremitat superior
+786.30 Hemoptisi
+641.93 Hemorràgia a l'embaràs
+578.9 Hemorràgia digestiva
+790.29 Hiperglucèmia
+401.9 Hipertensió arterial
+251.2 Hipoglucèmia
+458.9 Hipotensió arterial
+991.6 Hipotèrmia
+780.09 Inconsciència/coma
+661.33 Inici de part
+V62.84 Intent autolisi
+305.00 Intoxicació alcohòlica
+977.9 Intoxicació medicamentosa
+305.90 Intoxicació per drogues (heroïna, cocaïna...)
+987.9 Intoxicació per inhalació de fums
+989.6 Intoxicació per productes domèstics
+839.8 Luxació
+V02.9 Malaltia de risc: TBC, HIV, VHC...
+799.4 Malaltia terminal
+780.7 Malestar general
+780.4 Marejos/vertígens
+V65.5 No patologia aparent
+934 Obstrucció vies respiratòries
+V13.29 Patologia obstètrica/ginecològica mal definida
+379.9 Patologia oftàlmica i annexos
+388.7 Patologia òtica
+780.2 Pèrdua transitòria consciència/lipotímia
+924.8 Policontusionat
+829.0 Polifracturat
+V71.6 Possible agressió
+436. Possible AVC
+798.1 Possibles èxitus
+V60.9 Problema social
+995.3 Reacció al.lèrgica
+V23.9 Risc d'avortament
+V65.49 Servei preventiu
+780.6 Síndrome febril
+V58.9 Sondes/altres accions terapèutiques
+785.0 Taquicàrdia
+850.0 TCE conscient
+850.4 TCE insconscient
+850.5 TCE pèrdua de consciència recuperada
+786.2 Tos
+922.2 Traumatisme abdominal
+922.1 Traumatisme toràcic
+787.0 Vòmits

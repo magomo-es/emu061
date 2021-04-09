@@ -53,9 +53,10 @@ class AfectatController extends Controller
      */
     public function show(Afectat $theobj)
     {
-        // para asociar ( dependencias a objeto )
-        // $theobj = Afectat::with('otratabla')->find($theobj->campoenlace);
+
+        $theobj = Afectat::with(['tipus_alertant','municipi','incidencies'])->find($theobj->id);
         return new AfectatResource($theobj);
+
     }
 
     /**

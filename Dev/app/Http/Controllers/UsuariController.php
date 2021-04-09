@@ -273,21 +273,20 @@ class UsuariController extends Controller
 
             switch ($user->rols_id) {
 
-                case 1: $response = view('admin.index'); break;
+                //case 1: $response = view('admin.index'); break;
                 //case 1: $response = view('admin.index', [Auth::user()]); break;
-                //case 1: $response = redirect('admin'); break;
+                case 1: $response = redirect('admin'); break;
                 //case 2: $response = view('operator.index'); break;
                 //case 2: $response = view('operator.index', [Auth::user()]); break;
                 case 2: $response = redirect('operator'); break;
                 //case 3: $response = view('mobile.index'); break;
                 //case 3: $response = view('mobile.index', [Auth::user()]); break;
-                case 3:
-                    $request->session()->flash('error', 'Al intenar redireccionar redirect("mobile") se pierde el login del usuario'.
-                        ' Auth::user()->username: '.Auth::user()->username.
-                        ' Auth::id(): '.Auth::id().
-                        ' (user: '.$user->nom.' '.$user->cognoms.' ('.$user->email.')');
-                   $response = redirect('auth.login')->withInput(); break;
-                   //$response = redirect('mobile'); break;
+                case 3: $response = redirect('mobile'); break;
+                //    $request->session()->flash('error', 'Al intenar redireccionar redirect("mobile") se pierde el login del usuario'.
+                //        ' Auth::user()->username: '.Auth::user()->username.
+                //        ' Auth::id(): '.Auth::id().
+                //        ' (user: '.$user->nom.' '.$user->cognoms.' ('.$user->email.')');
+                //   $response = redirect('auth.login')->withInput(); break;
                 //default: $response = view('index');
                 //default: $response = view('index', [Auth::user()]);
                 default: $response = redirect('/'); break;

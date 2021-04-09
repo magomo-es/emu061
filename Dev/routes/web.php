@@ -22,29 +22,17 @@ use App\Http\Controllers\TipusIncidenciaController;
 use App\Http\Controllers\PlayVideoByCallerController;
 use App\Http\Controllers\IncidenciesHasRecursosController;
 
-
-
-//Route::get('/', [UsuariController::class, 'showLogin'] );
-//Route::get('/login', [UsuariController::class, 'showLogin'] )->name('login');
-//Route::post('/login', [UsuariController::class, 'login'] );
-//Route::get('/logout', [UsuariController::class, 'logout']);
-
-Route::get('/', function () { return view('index'); });
 Route::get('/login', [UsuariController::class, 'showLogin'])->name('login');
 Route::post('/login', [UsuariController::class, 'login'] );
 Route::get('/logout', [UsuariController::class, 'logout'])->name('logout');
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/home', function () {
-//         $user = Auth::user();
-//
-//         return view('home', compact('user'));
-//     });
-// });
 
+Route::get('/', function () { return redirect()->route('login'); });
 
-    Route::get('/home', function () { return view('home', [Auth::user()]); })->middleware(['auth']);
+Route::middleware(['auth'])->group( function() {
 
-    Route::view('/admin', 'admin.index', ['user' => [Auth::user()]])->name('admin');
+    Route::get('/home', function () { return view('home'); });
+
+    Route::view('/admin', 'admin.index')->name('admin');
     //get('/admin', function () { return view('/admin','admin', [Auth::user()]); })->name('admin');
 
 
@@ -72,15 +60,11 @@ Route::get('/logout', [UsuariController::class, 'logout'])->name('logout');
     Route::resource('admin/playvideobycaller', PlayVideoByCallerController::class)->parameters(['playvideobycaller' => 'theobj']);
     Route::resource('admin/videoevents', VideoEventsController::class)->parameters(['videoevents' => 'theobj']);
 
-    Route::middleware(['auth'])->group( function() {
+    Route::get('operator', function () { return view('operator.index'); });
 
-        Route::group(['middleware' => ['login']], function() {
+    Route::get('mobile', function () { return view('mobile.index'); });
 
-            Route::get('operator', function () { return view('operator.index'); });
 
-            Route::get('mobile', function () { return view('mobile.index'); });
-
-        });
     });
 
 Route::get('/clearcache', function() {

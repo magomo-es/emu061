@@ -55,9 +55,10 @@ class RecursController extends Controller
      */
     public function show(Recurs $theobj)
     {
-        // para asociar ( dependencias a objeto )
-        // $theobj = Recurs::with('otratabla')->find($theobj->campoenlace);
+
+        $theobj = Recurs::with(['tipus_recurso','usuaris','incidencies'])->find($theobj->id);
         return new RecursResource($theobj);
+
     }
 
     /**

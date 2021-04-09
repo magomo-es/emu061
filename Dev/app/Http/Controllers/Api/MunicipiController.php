@@ -55,9 +55,10 @@ class MunicipiController extends Controller
      */
     public function show(Municipi $theobj)
     {
-        // para asociar ( dependencias a objeto )
-        // $theobj = Municipi::with('otratabla')->find($theobj->campoenlace);
+
+        $theobj = Municipi::with(['comarca','provincia'])->find($theobj->id);
         return new MunicipiResource($theobj);
+
     }
 
     /**

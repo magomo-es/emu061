@@ -55,9 +55,10 @@ class ComarcaController extends Controller
      */
     public function show(Comarca $theobj)
     {
-        // para asociar ( dependencias a objeto )
-        // $theobj = Comarca::with('otratabla')->find($theobj->campoenlace);
+
+        $theobj = Comarca::with(['municipis','provincia'])->find($theobj->id);
         return new ComarcaResource($theobj);
+
     }
 
     /**
