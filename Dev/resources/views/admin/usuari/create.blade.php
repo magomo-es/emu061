@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Craete Cicle | CEP')
+@section('pageTitle', 'Nou Usuari | CEP')
 
 @section('pageContent')
 

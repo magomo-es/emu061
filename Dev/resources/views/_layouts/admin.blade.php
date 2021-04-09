@@ -86,6 +86,37 @@
                       <a class="dropdown-item" href="{{ url('admin/comarques') }}">Comarques</a>
                       <a class="dropdown-item" href="{{ url('admin/provincies') }}">Provincies</a>
                       <a class="dropdown-item" href="{{ url('admin/sexes') }}">Sexes</a>
+
+
+                      <a class="dropdown-item" href="{{ url('admin/hlp_angles') }}">Codis Interco</a>
+                      <a class="dropdown-item" href="{{ url('admin/hlp_formulari') }}">Codis 3 SEM</a>
+                      <a class="dropdown-item" href="{{ url('admin/hlp_angles') }}">Codis Gravetat</a>
+                      <a class="dropdown-item" href="{{ url('admin/hlp_formulari') }}">Codis Valoració</a>
+
+                    </div>
+
+                  </li>
+
+                  <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Videos</a>
+
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ url('admin/vds_videos') }}">Videos</a>
+                      <a class="dropdown-item" href="{{ url('admin/vds_assignacio') }}">Assignació</a>
+                      <a class="dropdown-item" href="{{ url('admin/vds_esdeveniments') }}">Esdeveniments </a>
+                    </div>
+
+                  </li>
+
+                  <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ajudes</a>
+
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ url('admin/hlp_angles_valoracio') }}">Anglés Valoraciós</a>
+                      <a class="dropdown-item" href="{{ url('admin/hlp_angles_simtomes') }}">Anglés Símtomes</a>
+                      <a class="dropdown-item" href="{{ url('admin/hlp_formulari') }}">Formulari</a>
                     </div>
 
                   </li>

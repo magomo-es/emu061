@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utility;
-use App\Models\FormElements;
 use Illuminate\Http\Request;
+use App\Models\HlpSimptomes;
 use Illuminate\Database\QueryException;
 
-class FormElementsController extends Controller
+class HlpSimptomesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class FormElementsController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = FormElements::orderBy('tagid')->paginate(10);
+        $objectsAry = HlpSimptomes::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.formelements.index', compact('objectsAry') );
+        return view('admin.help.simptomes', compact('objectsAry') );
     }
 
 
@@ -30,7 +30,7 @@ class FormElementsController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.formelements.create', ['insert'=>true] );
+        return view( 'admin.help.simptomes_creates', ['insert'=>true] );
     }
 
     /**
@@ -45,25 +45,25 @@ class FormElementsController extends Controller
 
         if ( !empty( $request->tagid ) ) {
 
-            $theobj = new FormElements();
+            $theobj = new HlpSimptomes();
 
             foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
 
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [FormElementsController::class, 'index'] );
+                $response = redirect()->action( [HlpSimptomesController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [FormElementsController::class, 'create'] )->withInput();
+                $response = redirect()->action( [HlpSimptomesController::class, 'create'] )->withInput();
             }
 
         } else {
 
-            $request->session()->flash('error', 'Nom inexistent' );
+            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
             // redirecciona si no estan completos los datos
-            $response = redirect()->action( [FormElementsController::class, 'create'] )->withInput();
+            $response = redirect()->action( [HlpSimptomesController::class, 'create'] )->withInput();
 
         }
 
@@ -73,10 +73,10 @@ class FormElementsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FormElements  $recursos
+     * @param  \App\Models\HlpSimptomes  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function show(FormElements $theobj)
+    public function show(HlpSimptomes $theobj)
     {
         //
     }
@@ -84,23 +84,23 @@ class FormElementsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FormElements  $recursos
+     * @param  \App\Models\HlpSimptomes  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormElements $theobj)
+    public function edit(HlpSimptomes $theobj)
     {
         echo '<script>console.log("edit method")</script>';
-        return view('admin.formelements.edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+        return view('admin.help.simptomes_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FormElements  $recursos
+     * @param  \App\Models\HlpSimptomes  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FormElements $theobj)
+    public function update(Request $request, HlpSimptomes $theobj)
     {
         echo '<script>console.log("store method")</script>';
 
@@ -111,17 +111,17 @@ class FormElementsController extends Controller
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [FormElementsController::class, 'index'] );
+                $response = redirect()->action( [HlpSimptomesController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [FormElementsController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [HlpSimptomesController::class, 'edit'] )->withInput();
             }
 
         } else {
 
-            $request->session()->flash('error', 'Nom inexistent' );
-            $response = redirect()->action( [FormElementsController::class, 'edit'] )->withInput();
+            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
+            $response = redirect()->action( [HlpSimptomesController::class, 'edit'] )->withInput();
 
         }
 
@@ -131,10 +131,10 @@ class FormElementsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FormElements  $recursos
+     * @param  \App\Models\HlpSimptomes  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, FormElements $theobj)
+    public function destroy(Request $request, HlpSimptomes $theobj)
     {
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
@@ -145,6 +145,6 @@ class FormElementsController extends Controller
             $request->session()->flash('error', Utility::errorMessage($ex) );
         }
 
-        return redirect()->action( [FormElementsController::class, 'index'] );
+        return redirect()->action( [HlpSimptomesController::class, 'index'] );
     }
 }

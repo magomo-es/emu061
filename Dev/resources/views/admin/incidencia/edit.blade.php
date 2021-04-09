@@ -8,7 +8,7 @@
 
 <div class="card">
 
-    <div class="card-header">Edit Incident</div>
+    <div class="card-header">Edit Incidencia</div>
 
     <div class="card-body">
 

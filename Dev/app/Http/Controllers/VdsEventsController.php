@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utility;
-use App\Models\VideoEvents;
+use App\Models\VdsEvents;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-class VideoEventsController extends Controller
+class VdsEventsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class VideoEventsController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = VideoEvents::orderBy('tagid')->paginate(10);
+        $objectsAry = VdsEvents::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.videoevents.index', compact('objectsAry') );
+        return view('admin.video.events', compact('objectsAry') );
     }
 
 
@@ -30,7 +30,7 @@ class VideoEventsController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.videoevents.create', ['insert'=>true] );
+        return view( 'admin.video.events_create', ['insert'=>true] );
     }
 
     /**
@@ -45,25 +45,25 @@ class VideoEventsController extends Controller
 
         if ( !empty( $request->tagid ) ) {
 
-            $theobj = new VideoEvents();
+            $theobj = new VdsEvents();
 
             foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
 
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [VideoEventsController::class, 'index'] );
+                $response = redirect()->action( [VdsEventsController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [VideoEventsController::class, 'create'] )->withInput();
+                $response = redirect()->action( [VdsEventsController::class, 'create'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
             // redirecciona si no estan completos los datos
-            $response = redirect()->action( [VideoEventsController::class, 'create'] )->withInput();
+            $response = redirect()->action( [VdsEventsController::class, 'create'] )->withInput();
 
         }
 
@@ -73,10 +73,10 @@ class VideoEventsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\VideoEvents  $recursos
+     * @param  \App\Models\VdsEvents  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function show(VideoEvents $theobj)
+    public function show(VdsEvents $theobj)
     {
         //
     }
@@ -84,23 +84,23 @@ class VideoEventsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\VideoEvents  $recursos
+     * @param  \App\Models\VdsEvents  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function edit(VideoEvents $theobj)
+    public function edit(VdsEvents $theobj)
     {
         echo '<script>console.log("edit method")</script>';
-        return view('admin.videoevents.edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+        return view('admin.video.events_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\VideoEvents  $recursos
+     * @param  \App\Models\VdsEvents  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VideoEvents $theobj)
+    public function update(Request $request, VdsEvents $theobj)
     {
         echo '<script>console.log("store method")</script>';
 
@@ -111,17 +111,17 @@ class VideoEventsController extends Controller
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [VideoEventsController::class, 'index'] );
+                $response = redirect()->action( [VdsEventsController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [VideoEventsController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [VdsEventsController::class, 'edit'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            $response = redirect()->action( [VideoEventsController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [VdsEventsController::class, 'edit'] )->withInput();
 
         }
 
@@ -131,10 +131,10 @@ class VideoEventsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\VideoEvents  $recursos
+     * @param  \App\Models\VdsEvents  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, VideoEvents $theobj)
+    public function destroy(Request $request, VdsEvents $theobj)
     {
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
@@ -145,6 +145,6 @@ class VideoEventsController extends Controller
             $request->session()->flash('error', Utility::errorMessage($ex) );
         }
 
-        return redirect()->action( [VideoEventsController::class, 'index'] );
+        return redirect()->action( [VdsEventsController::class, 'index'] );
     }
 }

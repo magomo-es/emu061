@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Craete Cicle | CEP')
+@section('pageTitle', 'Nou Recurs | CEP')
 
 @section('pageContent')
 
@@ -8,7 +8,7 @@
 
 <div class="card">
 
-    <div class="card-header">Cicle</div>
+    <div class="card-header">Nou Tipus Recurs</div>
 
     <div class="card-body">
 

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VideoEvents extends Model
+class FrmFormelements extends Model
 {
     // - - - - - - - - - - especifica tabla
-    protected $table = 'VideoEvents';
+    protected $table = 'frm_formelements';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     // protected $primaryKey = 'xxx';
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
@@ -21,12 +21,11 @@ class VideoEvents extends Model
     public $timestamps = false;
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function video() //: BelongsTo
+    public function playvideobycaller() //: HasMany
     {
-        return $this->belongsTo(Videos::class, 'id_video');
+        return $this->hasMany(VdsPlay::class, 'id_formelement');
     }
-
 
 }

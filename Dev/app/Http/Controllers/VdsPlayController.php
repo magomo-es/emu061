@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Classes\Utility;
 use Illuminate\Http\Request;
-use App\Models\PlayVideoByCaller;
+use App\Models\VdsPlay;
 use Illuminate\Database\QueryException;
 
-class PlayVideoByCallerController extends Controller
+class VdsPlayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class PlayVideoByCallerController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = PlayVideoByCaller::orderBy('tagid')->paginate(10);
+        $objectsAry = VdsPlay::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.playvideobycaller.index', compact('objectsAry') );
+        return view('admin.video.play', compact('objectsAry') );
     }
 
 
@@ -30,7 +30,7 @@ class PlayVideoByCallerController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.playvideobycaller.create', ['insert'=>true] );
+        return view( 'admin.video.play_create', ['insert'=>true] );
     }
 
     /**
@@ -45,25 +45,25 @@ class PlayVideoByCallerController extends Controller
 
         if ( !empty( $request->tagid ) ) {
 
-            $theobj = new PlayVideoByCaller();
+            $theobj = new VdsPlay();
 
             foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
 
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [PlayVideoByCallerController::class, 'index'] );
+                $response = redirect()->action( [VdsPlayController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [PlayVideoByCallerController::class, 'create'] )->withInput();
+                $response = redirect()->action( [VdsPlayController::class, 'create'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
             // redirecciona si no estan completos los datos
-            $response = redirect()->action( [PlayVideoByCallerController::class, 'create'] )->withInput();
+            $response = redirect()->action( [VdsPlayController::class, 'create'] )->withInput();
 
         }
 
@@ -73,10 +73,10 @@ class PlayVideoByCallerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PlayVideoByCaller  $recursos
+     * @param  \App\Models\VdsPlay  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function show(PlayVideoByCaller $theobj)
+    public function show(VdsPlay $theobj)
     {
         //
     }
@@ -84,23 +84,23 @@ class PlayVideoByCallerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PlayVideoByCaller  $recursos
+     * @param  \App\Models\VdsPlay  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function edit(PlayVideoByCaller $theobj)
+    public function edit(VdsPlay $theobj)
     {
         echo '<script>console.log("edit method")</script>';
-        return view('admin.playvideobycaller.edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+        return view('admin.video.play_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PlayVideoByCaller  $recursos
+     * @param  \App\Models\VdsPlay  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PlayVideoByCaller $theobj)
+    public function update(Request $request, VdsPlay $theobj)
     {
         echo '<script>console.log("store method")</script>';
 
@@ -111,17 +111,17 @@ class PlayVideoByCallerController extends Controller
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [PlayVideoByCallerController::class, 'index'] );
+                $response = redirect()->action( [VdsPlayController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [PlayVideoByCallerController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [VdsPlayController::class, 'edit'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            $response = redirect()->action( [PlayVideoByCallerController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [VdsPlayController::class, 'edit'] )->withInput();
 
         }
 
@@ -131,10 +131,10 @@ class PlayVideoByCallerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PlayVideoByCaller  $recursos
+     * @param  \App\Models\VdsPlay  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, PlayVideoByCaller $theobj)
+    public function destroy(Request $request, VdsPlay $theobj)
     {
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
@@ -145,6 +145,6 @@ class PlayVideoByCallerController extends Controller
             $request->session()->flash('error', Utility::errorMessage($ex) );
         }
 
-        return redirect()->action( [PlayVideoByCallerController::class, 'index'] );
+        return redirect()->action( [VdsPlayController::class, 'index'] );
     }
 }

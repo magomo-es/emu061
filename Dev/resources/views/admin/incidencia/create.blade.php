@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Create Incidencia | CEP')
+@section('pageTitle', 'Nou Incidencia | CEP')
 
 @section('pageContent')
 
@@ -8,7 +8,7 @@
 
 <div class="card">
 
-    <div class="card-header">Nou Incident</div>
+    <div class="card-header">Nou Incidencia</div>
 
     <div class="card-body">
 

@@ -1,17 +1,36 @@
-
-
-CODI CRITERIS DE GRAVETAT - Codificació pròpia del SEM
+CODI INTERCO
 ----------------------------------------------------------
-
-G00 Crític, pacient molt greu, inclou ACR
-G01 Greu
-G02 Menys greu, no es pot incloure com greu ni lleu
-G03 Lleu, inclou els
+A ALFA Alfa
+B BRAVO Bravo
+C CHARLIE Charli
+D DELTA Delta
+E ECHO Eko
+F FOXTROT Foxtrot
+G GOLF Golf
+H HOTEL Jotel
+I INDIA India
+J JULIETT Yuliet
+K KILO Kilo
+L LIMA Lima
+M MIKE Maik
+N NOVEMBER Nouvember
+Ñ ÑOÑO Ñoño
+O OSCAR Oscar
+P PAPA Papa
+Q QUEBECQ Kebek
+R ROMEO Romeo
+S SIERRA Sierra
+T TANGO Tango
+U UNIFORM Iuniform
+V VÍCTOR Víctor
+W WHISKY Uiski
+X X-RAY Eksrey
+Y YANKEE Yanki
+Z ZULÚ Zulú
 
 
 CODI 3 - Codificació pròpia del SEM
 ----------------------------------------------------------
-
 3.0 Aturada Cardiorespiratòria
 3.01 Alerta telefònica a l’Hospital per ACR
 3.03 Activació SVAP (Suport Vital Avançat Perllongat)
@@ -57,6 +76,18 @@ CODI 3 - Codificació pròpia del SEM
 3.51 Trasllat assistit per metge/infermer. Sortim cap a l’hospital
 3.52 Trasllat no assistit. Sortim cap a l’hospital
 3.53 Unitat assistint i operativa per a noves necessitats servei
+
+
+CODI CRITERIS DE GRAVETAT - Codificació pròpia del SEM
+----------------------------------------------------------
+G00 Crític, pacient molt greu, inclou ACR
+G01 Greu
+G02 Menys greu, no es pot incloure com greu ni lleu
+G03 Lleu, inclou els
+
+
+CODI VALORACIÓ SINDRÒMICA - Codificació internacional de malalties
+----------------------------------------------------------
 307.9 Agitació psicomotriu
 788.99 Alteracions genitourinàries
 989.89 Altres intoxicacions
@@ -135,3 +166,294 @@ V58.9 Sondes/altres accions terapèutiques
 922.2 Traumatisme abdominal
 922.1 Traumatisme toràcic
 787.0 Vòmits
+
+
+//// -------------------- //// -------------------- //// -------------------- //// -------------------- //// -------------------- ////
+---------- //// -------------------- //// -------------------- //// -------------------- //// -------------------- //// --------------
+//// -------------------- //// -------------------- //// -------------------- //// -------------------- //// -------------------- ////
+---------- //// -------------------- //// -------------------- //// -------------------- //// -------------------- //// --------------
+
+ALTER TABLE `codi_interco` ADD `soundlike` VARCHAR(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL AFTER `nom`; 
+
+
+
+
+CREATE TABLE `codi_interco` ( 
+  `codi` char(1) CHARACTER SET utf8mb4 NOT NULL,
+  `nom` varchar(250) CHARACTER SET utf8mb4 NOT NULL,
+  `soundlike` varchar(250) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('A','ALFA','Alfa');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('B','BRAVO','Bravo');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('C','CHARLIE','Charli');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('D','DELTA','Delta');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('E','ECHO','Eko');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('F','FOXTROT','Foxtrot');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('G','GOLF','Golf');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('H','HOTEL','Jotel');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('I','INDIA','India');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('J','JULIETT','Yuliet');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('K','KILO','Kilo');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('L','LIMA','Lima');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('M','MIKE','Maik');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('N','NOVEMBER','Nouvember');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('Ñ','ÑOÑO','Ñoño');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('O','OSCAR','Oscar');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('P','PAPA','Papa');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('Q','QUEBECQ','Kebek');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('R','ROMEO','Romeo');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('S','SIERRA','Sierra');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('T','TANGO','Tango');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('U','UNIFORM','Iunifor');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('V','VÍCTOR','Víctor');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('W','WHISKY','Uiski');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('X','X-RAY','Eksrey');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('Y','YANKEE','Yanki');
+INSERT INTO `codi_interco` (`codi`, `nom`, `soundlike`) VALUES ('Z','ZULÚ','Zulú');
+
+
+CREATE TABLE `codi_sem3` ( 
+  `codi` char(5) CHARACTER SET utf8mb4 NOT NULL,
+  `nom` varchar(250) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.0','Aturada Cardiorespiratòria');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.01','Alerta telefònica a l’Hospital per ACR');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.03','Activació SVAP (Suport Vital Avançat Perllongat)');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.08','Aturada Cardiorespiratòria. Èxitus');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.1','Trucada telefònica');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.2','Recurs no operatiu per descans');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.3','Recurs operatiu');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.4','Arribada al lloc de l’incident');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.5','Informació de la situació o dades de l’afectat');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.6','Finalització del servei. La unitat es troba operativa');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.7 G','Es precisa ajut policial - Guàrdia Urbana Local');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.7 N','Es precisa ajut policial - Cos Nacional de Policia');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.7 M',' Es precisa ajut policial - Mossos d’Esquadra');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.70','Es precisa ajut policial URGENT. Situació de risc físic');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.8','Èxitus');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.9','Recurs no operatiu per accident');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.10','Retorn a Base');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.11','Anul·ació del servei');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.12','Es precisa ajut per assistir al malalt. Patologia psiquiàtrica');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.13','Fer ús correcte de l’equip de ràdio');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.14','Es precisa ajut d’una altra unitat (s’especificarà el tipus)');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.15','Relleu de l’equip assitencial');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.16','Recurs no operatiu per reposar combustible');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.17','Recurs no operatiu per reposar material sanitari');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.18','Es precisa ajut de Bombers');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.19','Es precisa una Unitat de Transport Sanitari (USVB)');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.20','Resteu atents en espera de noves dades o informació');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.21','Donar coordenades de situació o localització de la unitat');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.22','Alta mèdica o voluntària');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.23','Accident de trànsit');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.24','Indigent / Sociopatia');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.25','Intoxicació enòlica');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.26','Sobredosi per drogues');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.27','Politraumàtic, si TCE donar Glasgow');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.28','Pacient amb patologia psiquiàtrica. Es troba agitat.');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.29','Trauma via pública / domicili');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.30','IAM / angor');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.31','Intent d’autòlisi');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.32','Pacient inconscient');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.33','Pacient amb dispnea aguda');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.40','Silenci a la xarxa, comunitat d’emergència');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.50','Indiqueu el temps estimat per arribar al lloc de l’incident');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.51','Trasllat assistit per metge/infermer. Sortim cap a l’hospital');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.52','Trasllat no assistit. Sortim cap a l’hospital');
+INSERT INTO `codi_sem3` (`codi`, `nom`) VALUES ('3.53','Unitat assistint i operativa per a noves necessitats servei');
+
+
+CREATE TABLE `codi_gravetat` ( 
+  `codi` char(3) CHARACTER SET utf8mb4 NOT NULL,
+  `nom` varchar(250) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `codi_gravetat` (`codi`, `nom`) VALUES ('G00','Crític, pacient molt greu, inclou ACR');
+INSERT INTO `codi_gravetat` (`codi`, `nom`) VALUES ('G01','Greu');
+INSERT INTO `codi_gravetat` (`codi`, `nom`) VALUES ('G02','Menys greu, no es pot incloure com greu ni lleu');
+INSERT INTO `codi_gravetat` (`codi`, `nom`) VALUES ('G03','Lleu, inclou els');
+
+
+CREATE TABLE `codi_valoracio` ( 
+  `codi` char(7) CHARACTER SET utf8mb4 NOT NULL,
+  `nom` varchar(250) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('307.9','Agitació psicomotriu');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('788.99','Alteracions genitourinàries');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('989.89','Altres intoxicacions');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('300.9','Altres transtorns psiquiàtrics');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('897,00','Amputació EEII');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('887,00','Amputació EESS');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('427.5','Aturada cardiorespiratòria');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('799.1','Aturada respiratòria');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('427.89','Bradicàrdia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('784.0','Cefalea');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('723.1','Cervicàlgia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('782.5','Cianosi');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('924.9','Contusió');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.3','Convulsions');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('992.0','Cop de Calor');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('949.0','Cremades');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('300.00','Crisi ansietat');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('786.00','Dificultat respiratòria');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('493.92','Dificultat respiratòria+ANTECEDENTS ASMA');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('428,00','Dificultat respiratòria+ANTECEDENTS ICARDIACA');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('491.21','Dificultat respiratòria+ANTECEDENTS MPOC');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('729.5','Dolor a extremitats');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('789.00','Dolor abdominal');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.96','Dolor generalitzat/inespecífic');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('724.2','Dolor Lumbar/Dolor Esquena');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('786.50','Dolor toràcic');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('661.93','Dolor/contraccions embaràs');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('784.7','Epistaxi');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('919.8','Ferides No penetrants/Erosions/Polierosions');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('879.8','Ferides Penetrants');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('827.0','Fractura extremitat inferior');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('818.0','Fractura extremitat superior');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('786.30','Hemoptisi');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('641.93','Hemorràgia a l\'embaràs');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('578.9','Hemorràgia digestiva');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('790.29','Hiperglucèmia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('401.9','Hipertensió arterial');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('251.2','Hipoglucèmia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('458.9','Hipotensió arterial');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('991.6','Hipotèrmia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.09','Inconsciència/coma');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('661.33','Inici de part');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V62.84','Intent autolisi');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('305.00','Intoxicació alcohòlica');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('977.9','Intoxicació medicamentosa');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('305.90','Intoxicació per drogues (heroïna, cocaïna...)');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('987.9','Intoxicació per inhalació de fums');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('989.6','Intoxicació per productes domèstics');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('839.8','Luxació');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V02.9','Malaltia de risc: TBC, HIV, VHC...');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('799.4','Malaltia terminal');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.7','Malestar general');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.4','Marejos/vertígens');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V65.5','No patologia aparent');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('934','Obstrucció vies respiratòries');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V13.29','Patologia obstètrica/ginecològica mal definida');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('379.9','Patologia oftàlmica i annexos');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('388.7','Patologia òtica');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.2','Pèrdua transitòria consciència/lipotímia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('924.8','Policontusionat');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('829.0','Polifracturat');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V71.6','Possible agressió');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('436.','Possible AVC');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('798.1','Possibles èxitus');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V60.9','Problema social');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('995.3','Reacció al.lèrgica');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V23.9','Risc d\'avortament');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V65.49','Servei preventiu');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('780.6','Síndrome febril');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('V58.9','Sondes/altres accions terapèutiques');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('785.0','Taquicàrdia');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('850.0','TCE conscient');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('850.4','TCE insconscient');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('850.5','TCE pèrdua de consciència recuperada');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('786.2','Tos');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('922.2','Traumatisme abdominal');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('922.1','Traumatisme toràcic');
+INSERT INTO `codi_valoracio` (`codi`, `nom`) VALUES ('787.0','Vòmits');
+
+
+CREATE TABLE `hlp_valoracio` ( 
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `codi_valoracio` char(7) CHARACTER SET utf8mb4 NOT NULL,
+  `translation` varchar(250) CHARACTER SET utf8mb4,
+  `soundlike` varchar(250) CHARACTER SET utf8mb4,
+  `jsontags` text CHARACTER SET utf8mb4
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('307.9','Psychomotor agitation','Psychomotor agitation','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('788.99','Genitourinary disorders','Genitourinary disorders','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('989.89','Other poisonings','Other poisonings','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('300.9','Other psychiatric disorders','Other psychiatric disorders','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('897.00','Lower-limb amputation','Lower-limb amputation','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('887.00','Upper-limb amputation','Upper-limb amputation','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('427.5','Cardiorespiratory arrest','Cardiorespiratory arrest','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('799.1','Respiratory arrest','Respiratory arrest','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('427.89','Bradycardia','Bradycardia','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('784.0','Headache','Headache','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('723.1','Cervical pain','Cervical pain','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('782.5','Cyanosis','Cyanosis','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('924.9','Contusion','Contusion','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.3','Convulsions','Convulsions','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('992.0','Heat Stroke','Heat Stroke','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('949.0','Burns','Burns','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('300.00','Anxiety crisis','Anxiety crisis','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('786.00','Respiratory difficulty','Respiratory difficulty','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('493.92','Respiratory distress + BACKGROUND ASTHMA','Respiratory distress + BACKGROUND ASTHMA','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('428.00','Breathing difficulty + BACKGROUND ICARDIACA','Breathing difficulty + BACKGROUND ICARDIACA','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('491.21','Respiratory distress + BACKGROUND COPD','Respiratory distress + BACKGROUND COPD','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('729.5','Pain in limbs','Pain in limbs','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('789.00','Abdominal pain','Abdominal pain','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.96','Generalized / nonspecific pain','Generalized / nonspecific pain','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('724.2','Low Back Pain / Back Pain','Low Back Pain / Back Pain','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('786.50','Chest pain','Chest pain','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('661.93','Pain / contractions pregnancy','Pain / contractions pregnancy','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('784.7','Epistaxis','Epistaxis','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('919.8','Non-penetrating wounds / Erosions / Polyerosions','Non-penetrating wounds / Erosions / Polyerosions','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('879.8','Penetrating Wounds','Penetrating Wounds','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('827.0','Lower extremity fracture','Lower extremity fracture','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('818.0','Upper limb fracture','Upper limb fracture','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('786.30','Hemoptysis','Hemoptysis','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('641.93','Hemorrhage in pregnancy','Hemorrhage in pregnancy','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('578.9','Digestive hemorrhage','Digestive hemorrhage','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('790.29','Hyperglycemia','Hyperglycemia','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('401.9','Hypertension','Hypertension','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('251.2','Hypoglycemia','Hypoglycemia','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('458.9','Hypotension','Hypotension','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('991.6','Hypothermia','Hypothermia','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.09','Unconsciousness / coma','Unconsciousness / coma','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('661.33','Beginning of childbirth','Beginning of childbirth','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V62.84','Intent autolysis','Intent autolysis','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('305.00','Alcohol intoxication','Alcohol intoxication','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('977.9','Drug poisoning','Drug poisoning','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('305.90','Drug poisoning (heroin, cocaine ...)','Drug poisoning (heroin, cocaine ...)','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('987.9','Inhalation of smoke inhalation','Inhalation of smoke inhalation','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('989.6','Poisoning by household products','Poisoning by household products','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('839.8','Dislocation','Dislocation','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V02.9','Risk disease: TB, HIV, HCV ...','Risk disease: TB, HIV, HCV ...','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('799.4','Terminal disease','Terminal disease','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.7','General discomfort','General discomfort','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.4','Dizziness / vertigo','Dizziness / vertigo','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V65.5','No apparent pathology','No apparent pathology','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('934','Respiratory obstruction','Respiratory obstruction','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V13.29','Poorly defined obstetric / gynecological pathology','Poorly defined obstetric / gynecological pathology','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('379.9','Ophthalmic pathology and appendages','Ophthalmic pathology and appendages','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('388.7','Optical pathology','Optical pathology','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.2','Transient loss of consciousness / lipothymia','Transient loss of consciousness / lipothymia','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('924.8','Polycontusion','Polycontusion','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('829.0','Polyfractured','Polyfractured','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V71.6','Possible aggression','Possible aggression','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('436.','Possible stroke','Possible stroke','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('798.1','Possible successes','Possible successes','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V60.9','Social problem','Social problem','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('995.3','Allergic reaction','Allergic reaction','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V23.9','Risk of abortion','Risk of abortion','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V65.49','Preventive service','Preventive service','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('780.6','Febrile syndrome','Febrile syndrome','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('V58.9','Probes / other therapeutic actions','Probes / other therapeutic actions','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('785.0','Tachycardia','Tachycardia','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('850.0','TCE conscious','TCE conscious','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('850.4','Unconscious TCE','Unconscious TCE','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('850.5','TCE loss of consciousness recovered','TCE loss of consciousness recovered','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('786.2','Cough','Cough','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('922.2','Abdominal trauma','Abdominal trauma','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('922.1','Chest trauma','Chest trauma','');
+INSERT INTO `hlp_valoracio` (`codi_valoracio`,`translation`,`soundlike`,`jsontags`) VALUES ('787.0','Vomiting','Vomiting','');
+
+
+CREATE TABLE `hlp_simptomes` ( 
+  `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `pregunta` char(7) CHARACTER SET utf8mb4 NOT NULL,
+  `translation` varchar(250) CHARACTER SET utf8mb4 NOT NULL,
+  `soundlike` varchar(250) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
