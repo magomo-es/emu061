@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group( function() {
     Route::get('mobile', function () { return view('mobile.index'); });
 
 
-    });
+});
 
 Route::get('/clearcache', function() {
 
