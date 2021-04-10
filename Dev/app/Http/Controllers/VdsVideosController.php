@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utility;
-use App\Models\Videos;
+use App\Models\VdsVideos;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 

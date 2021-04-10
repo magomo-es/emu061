@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Videos extends Model
+class VdsVideos extends Model
 {
     // - - - - - - - - - - especifica tabla
     protected $table = 'vds_videos';

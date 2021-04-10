@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Classes\Utility;
 use Illuminate\Http\Request;
-use App\Models\HlpSimptomes;
+use App\Models\HlpSimptoma;
 use Illuminate\Database\QueryException;
 
-class HlpSimptomesController extends Controller
+class HlpSimptomaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class HlpSimptomesController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = HlpSimptomes::orderBy('tagid')->paginate(10);
+        $objectsAry = HlpSimptoma::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
         return view('admin.help.simptomes', compact('objectsAry') );
     }
@@ -45,25 +45,25 @@ class HlpSimptomesController extends Controller
 
         if ( !empty( $request->tagid ) ) {
 
-            $theobj = new HlpSimptomes();
+            $theobj = new HlpSimptoma();
 
             foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
 
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [HlpSimptomesController::class, 'index'] );
+                $response = redirect()->action( [HlpSimptomaController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [HlpSimptomesController::class, 'create'] )->withInput();
+                $response = redirect()->action( [HlpSimptomaController::class, 'create'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
             // redirecciona si no estan completos los datos
-            $response = redirect()->action( [HlpSimptomesController::class, 'create'] )->withInput();
+            $response = redirect()->action( [HlpSimptomaController::class, 'create'] )->withInput();
 
         }
 
@@ -73,10 +73,10 @@ class HlpSimptomesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HlpSimptomes  $recursos
+     * @param  \App\Models\HlpSimptoma  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function show(HlpSimptomes $theobj)
+    public function show(HlpSimptoma $theobj)
     {
         //
     }
@@ -84,10 +84,10 @@ class HlpSimptomesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HlpSimptomes  $recursos
+     * @param  \App\Models\HlpSimptoma  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function edit(HlpSimptomes $theobj)
+    public function edit(HlpSimptoma $theobj)
     {
         echo '<script>console.log("edit method")</script>';
         return view('admin.help.simptomes_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
@@ -97,10 +97,10 @@ class HlpSimptomesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HlpSimptomes  $recursos
+     * @param  \App\Models\HlpSimptoma  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HlpSimptomes $theobj)
+    public function update(Request $request, HlpSimptoma $theobj)
     {
         echo '<script>console.log("store method")</script>';
 
@@ -111,17 +111,17 @@ class HlpSimptomesController extends Controller
             try {
                 $theobj->save();
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
-                $response = redirect()->action( [HlpSimptomesController::class, 'index'] );
+                $response = redirect()->action( [HlpSimptomaController::class, 'index'] );
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [HlpSimptomesController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [HlpSimptomaController::class, 'edit'] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            $response = redirect()->action( [HlpSimptomesController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [HlpSimptomaController::class, 'edit'] )->withInput();
 
         }
 
@@ -131,10 +131,10 @@ class HlpSimptomesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HlpSimptomes  $recursos
+     * @param  \App\Models\HlpSimptoma  $recursos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, HlpSimptomes $theobj)
+    public function destroy(Request $request, HlpSimptoma $theobj)
     {
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
@@ -145,6 +145,6 @@ class HlpSimptomesController extends Controller
             $request->session()->flash('error', Utility::errorMessage($ex) );
         }
 
-        return redirect()->action( [HlpSimptomesController::class, 'index'] );
+        return redirect()->action( [HlpSimptomaController::class, 'index'] );
     }
 }

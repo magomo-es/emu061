@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utility;
-use App\Models\FormElements;
 use Illuminate\Http\Request;
+use App\Models\FrmFormelements;
 use Illuminate\Database\QueryException;
 
 class FrmFormelementsController extends Controller
