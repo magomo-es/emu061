@@ -16,9 +16,11 @@ class VdsVideosController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = VdsVideos::orderBy('tagid')->paginate(10);
-        $request->session()->flashInput($request->input());
+
+        $objectsAry = VdsVideos::orderBy('title')->paginate(20);
+
         return view('admin.video.videos.index', compact('objectsAry') );
+
     }
 
 
@@ -52,6 +54,39 @@ class VdsVideosController extends Controller
             $theobj->title = $request->title;
             $theobj->description = $request->description;
             $theobj->filename = $request->filename;
+
+/*
+            $file = $request->file('filename');
+
+            //Display File Name
+            echo 'File Name: '.$file->getClientOriginalName();
+
+            //Display File Extension
+            echo 'File Extension: '.$file->getClientOriginalExtension();
+
+            //Display File Real Path
+            echo 'File Real Path: '.$file->getRealPath();
+
+            //Display File Size
+            echo 'File Size: '.$file->getSize();
+
+            //Display File Mime Type
+            echo 'File Mime Type: '.$file->getMimeType();
+
+            //Move Uploaded File
+            $destinationPath = url('/videos');
+            $file->move($destinationPath,$file->getClientOriginalName());
+*/
+
+
+
+
+
+
+
+
+
+
 
             try {
                 $theobj->save();
@@ -92,8 +127,10 @@ class VdsVideosController extends Controller
      */
     public function edit(VdsVideos $theobj)
     {
+
         echo '<script>console.log("edit method")</script>';
         return view('admin.video.videos.edit', compact('theobj') );
+
     }
 
     /**
@@ -105,6 +142,7 @@ class VdsVideosController extends Controller
      */
     public function update(Request $request, VdsVideos $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
         if ( !empty( $request->title ) && !empty( $request->filename ) ) {
@@ -131,6 +169,7 @@ class VdsVideosController extends Controller
         }
 
         return $response;
+
     }
 
     /**
@@ -141,6 +180,7 @@ class VdsVideosController extends Controller
      */
     public function destroy(Request $request, VdsVideos $theobj)
     {
+
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
         try {
@@ -151,5 +191,6 @@ class VdsVideosController extends Controller
         }
 
         return redirect()->action( [VdsVideosController::class, 'index'] );
+
     }
 }

@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Provincies list | Administració emu061 - Emulador de Sistema d\'Emergències 061')
+@section('pageTitle', 'Video Esdeveniment list | Administració emu061 - Emulador de Sistema d\'Emergències 061')
 
 @section('pageContent')
 
@@ -34,20 +34,20 @@
                     <td class="text-right">
 
                         <div class="btn-group" role="group">
-                            <form class="m-0 p-0" action="{{ action([App\Http\Controllers\ProvinciaController::class, 'edit'], ['theobj' => $theobject->id]) }}">
+                            <form class="m-0 p-0" action="{{ action([App\Http\Controllers\VdsEventsController::class, 'edit'], ['theobj' => $theobject->id]) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Editar</button>
                             </form>
                         </div>
 
-                        {{-- <div class="btn-group ml-1" role="group">
+                        <div class="btn-group ml-1" role="group">
 
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#boxModal"
                              data-idelement="{{ $theobject->nom }}"
-                             data-action="{{ action([App\Http\Controllers\ProvinciaController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
+                             data-action="{{ action([App\Http\Controllers\VdsEventsController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
                              ><i class="fas fa-trash"></i> Esborrar</button>
 
-                        </div> --}}
+                        </div>
 
                     </td>
                 </tr>
@@ -64,13 +64,10 @@
 @endif
 
 
-<!--a href="{{ url('admin/provincias') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
+<a href="{{ action([App\Http\Controllers\VdsEventsController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Video Esdeveniment</button>
+</a>
 
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

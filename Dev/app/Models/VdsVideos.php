@@ -15,7 +15,7 @@ class VdsVideos extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function valoracions() //: HasMany
+    public function vdsplay() //: HasMany
     {
         return $this->hasMany(VdsPlay::class, 'id_video');
     }
@@ -23,7 +23,7 @@ class VdsVideos extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function videoevents() //: HasMany
+    public function vdsevents() //: HasMany
     {
         return $this->hasMany(VdsEvents::class, 'id_video');
     }

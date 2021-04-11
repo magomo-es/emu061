@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\Utility;
 use App\Models\VdsEvents;
+use App\Models\VdsVideos;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
@@ -17,8 +18,8 @@ class VdsEventsController extends Controller
     public function index(Request $request)
     {
 
-        $objectsAry = VdsEvents::orderBy('tagid')->paginate(10);
-        $request->session()->flashInput($request->input());
+        $objectsAry = VdsEvents::with('videos')->orderBy('id_video')->paginate(20);
+
         return view('admin.video.events.index', compact('objectsAry') );
 
     }
@@ -33,7 +34,8 @@ class VdsEventsController extends Controller
     {
 
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.video.events.create' );
+        $videosAry = VdsVideos::orderby('title')->get();
+        return view( 'admin.video.events.create', compact('videosAry') );
 
     }
 
@@ -45,6 +47,7 @@ class VdsEventsController extends Controller
      */
     public function store(Request $request)
     {
+
         echo '<script>console.log("store method")</script>';
 
         if ( !empty( $request->ontime ) && !empty( $request->jsondata ) ) {
@@ -99,7 +102,12 @@ class VdsEventsController extends Controller
     {
 
         echo '<script>console.log("edit method")</script>';
-        return view('admin.video.events.edit', compact('theobj') );
+
+        $videosAry = VdsVideos::orderby('title')->get();
+
+        $theobj = VdsEvents::with('videos')->find($theobj->id_video);
+
+        return view('admin.video.events.edit', compact('theobj','videosAry') );
 
     }
 

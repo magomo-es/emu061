@@ -29,10 +29,9 @@
             </thead>
             <tbody>
                 @foreach ($objectsAry as $theobject)
-                {{-- print_r($theobject,true) --}}
                 <tr>
-                    <td>{{ $theobject->codi_valoracio }}</th>
-                    <td> {{ $theobject->valoracio->nom }}</td>
+                    <td>{{ $theobject->codi_valoracio }}</td>
+                    <td>{{ $theobject->valoracio->nom }}</td>
                     <td>{{ $theobject->translation }}</td>
                     <td class="text-right">
 
@@ -43,14 +42,14 @@
                             </form>
                         </div>
 
-                        <div class="btn-group ml-1" role="group">
+                        {{-- <div class="btn-group ml-1" role="group">
 
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#boxModal"
                              data-idelement="{{ $theobject->nom }}"
                              data-action="{{ action([App\Http\Controllers\HlpValoracioController::class, 'destroy'], ['theobj' => $theobject->codi_valoracio]) }}"
                              ><i class="fas fa-trash"></i> Esborrar</button>
 
-                        </div>
+                        </div> --}}
 
                     </td>
                 </tr>
@@ -58,7 +57,7 @@
             </tbody>
         </table>
 
-{{ $objectsAry->links() }}
+{{-- $objectsAry->links() --}}
 
     </div>
 

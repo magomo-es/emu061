@@ -23,6 +23,7 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Pregunta</th>
+                <th scope="col">Traduccio</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -31,6 +32,7 @@
                 <tr>
                     <td>{{ $theobject->id }}</th>
                     <td>{{ $theobject->pregunta }}</td>
+                    <td>{{ $theobject->translation }}</td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">

@@ -40,14 +40,14 @@
                             </form>
                         </div>
 
-                        {{-- <div class="btn-group ml-1" role="group">
+                        <div class="btn-group ml-1" role="group">
 
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#boxModal"
                              data-idelement="{{ $theobject->nom }}"
                              data-action="{{ action([App\Http\Controllers\ProvinciaController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
                              ><i class="fas fa-trash"></i> Esborrar</button>
 
-                        </div> --}}
+                        </div>
 
                     </td>
                 </tr>
@@ -64,13 +64,10 @@
 @endif
 
 
-<!--a href="{{ url('admin/provincias') }}"><button id="NewButton" type="button" class="btn btn-secondary"><i class="fas fa-plus"></i> Nou Cicle</button></a -->
+<a href="{{ action([App\Http\Controllers\VdsVideosController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Video</button>
+</a>
 
-
-<?php
-//$thevalue = 1;
-// Index Cicle Id #{{ $thevalue }}: {{ App\Clases\Cicle::getElementIndex( $cicles, $thevalue ) }}
-?>
 
 <!-- Modal -->
 <div id="boxModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="boxModalLabel" aria-hidden="true">

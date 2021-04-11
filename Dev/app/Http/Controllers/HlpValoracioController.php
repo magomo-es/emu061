@@ -6,6 +6,7 @@ use App\Classes\Utility;
 use App\Models\HlpSimptomes;
 use App\Models\HlpValoracio;
 use Illuminate\Http\Request;
+use App\Models\CodisValoracio;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
@@ -18,7 +19,7 @@ class HlpValoracioController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = HlpValoracio::with('valoracio')->orderBy('codi_valoracio')->paginate(20);
+        $objectsAry = HlpValoracio::with('valoracio','simptomes')->orderBy('codi_valoracio')->paginate(20);
 
         return view('admin.help.valoracio.index', compact('objectsAry') );
 
