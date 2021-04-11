@@ -18,7 +18,7 @@ class VdsPlayController extends Controller
     {
         $objectsAry = VdsPlay::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.video.play', compact('objectsAry') );
+        return view('admin.video.play.index', compact('objectsAry') );
     }
 
 
@@ -30,7 +30,7 @@ class VdsPlayController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.video.play_create', ['insert'=>true] );
+        return view( 'admin.video.play.create', ['insert'=>true] );
     }
 
     /**
@@ -43,11 +43,16 @@ class VdsPlayController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->title ) ) {
 
             $theobj = new VdsPlay();
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->title = $request->title;
+            $theobj->id_caller = $request->id_caller;
+            $theobj->id_video = $request->id_video;
+            $theobj->start = $request->start;
+            $theobj->ends = $request->ends;
+            $theobj->playevent = $request->playevent;
 
             try {
                 $theobj->save();
@@ -61,8 +66,7 @@ class VdsPlayController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Titul inexistent' );
             $response = redirect()->action( [VdsPlayController::class, 'create'] )->withInput();
 
         }
@@ -89,8 +93,10 @@ class VdsPlayController extends Controller
      */
     public function edit(VdsPlay $theobj)
     {
+
         echo '<script>console.log("edit method")</script>';
-        return view('admin.video.play_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+        return view('admin.video.play.edit', compact('theobj') );
+
     }
 
     /**
@@ -102,11 +108,17 @@ class VdsPlayController extends Controller
      */
     public function update(Request $request, VdsPlay $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->title ) ) {
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->title = $request->title;
+            $theobj->id_caller = $request->id_caller;
+            $theobj->id_video = $request->id_video;
+            $theobj->start = $request->start;
+            $theobj->ends = $request->ends;
+            $theobj->playevent = $request->playevent;
 
             try {
                 $theobj->save();
@@ -120,12 +132,13 @@ class VdsPlayController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
+            $request->session()->flash('error', 'Titul inexistent' );
             $response = redirect()->action( [VdsPlayController::class, 'edit'] )->withInput();
 
         }
 
         return $response;
+
     }
 
     /**
@@ -136,6 +149,7 @@ class VdsPlayController extends Controller
      */
     public function destroy(Request $request, VdsPlay $theobj)
     {
+
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
         try {
@@ -146,5 +160,6 @@ class VdsPlayController extends Controller
         }
 
         return redirect()->action( [VdsPlayController::class, 'index'] );
+
     }
 }

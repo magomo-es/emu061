@@ -40,7 +40,7 @@ class ComarcaController extends Controller
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.comarca.index', compact('objectsAry','provinciesAry') );
+        return view('admin.xtras.comarca.index', compact('objectsAry','provinciesAry') );
     }
 
 
@@ -53,7 +53,7 @@ class ComarcaController extends Controller
     {
         echo '<script>console.log("create method")</script>';
         $provinciesAry = Provincia::orderBy('nom')->get();
-        return view( 'admin.comarca.create', compact('provinciesAry') );
+        return view( 'admin.xtras.comarca.create', compact('provinciesAry') );
 
     }
 
@@ -117,7 +117,7 @@ class ComarcaController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
         $provinciesAry = Provincia::orderBy('nom')->get();
-        return view( 'admin.comarca.edit', compact('theobj','provinciesAry') );
+        return view( 'admin.xtras.comarca.edit', compact('theobj','provinciesAry') );
     }
 
     /**

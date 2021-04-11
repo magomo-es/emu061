@@ -19,7 +19,7 @@ class TipusRecursController extends Controller
 
         $objectsAry = TipusRecurs::orderBy('tipus')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.tipusrecurs.index', compact('objectsAry') );
+        return view('admin.tipus.tipusrecurs.index', compact('objectsAry') );
 
     }
 
@@ -33,7 +33,7 @@ class TipusRecursController extends Controller
     {
 
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.tipusrecurs.create' );
+        return view( 'admin.tipus.tipusrecurs.create' );
 
     }
 
@@ -94,7 +94,7 @@ class TipusRecursController extends Controller
     {
 
         echo '<script>console.log("edit method")</script>';
-        return view('admin.tipusrecurs.edit', ['theobj'=>$theobj] );
+        return view('admin.tipus.tipusrecurs.edit', ['theobj'=>$theobj] );
 
     }
 

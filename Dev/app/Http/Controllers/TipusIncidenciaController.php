@@ -19,7 +19,7 @@ class TipusIncidenciaController extends Controller
 
         $objectsAry = TipusIncidencia::orderBy('tipus')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.tipusincidencia.index', compact('objectsAry') );
+        return view('admin.tipus.tipusincidencia.index', compact('objectsAry') );
 
     }
 
@@ -33,7 +33,7 @@ class TipusIncidenciaController extends Controller
     {
 
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.tipusincidencia.create', ['insert'=>true] );
+        return view( 'admin.tipus.tipusincidencia.create', ['insert'=>true] );
 
     }
 
@@ -97,7 +97,7 @@ class TipusIncidenciaController extends Controller
     {
 
         echo '<script>console.log("edit method")</script>';
-        return view('admin.tipusincidencia.edit', ['theobj'=>$theobj] );
+        return view('admin.tipus.tipusincidencia.edit', ['theobj'=>$theobj] );
 
     }
 

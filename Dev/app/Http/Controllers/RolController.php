@@ -21,7 +21,7 @@ class RolController extends Controller
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.rol.index', compact('objectsAry') );
+        return view('admin.xtras.rol.index', compact('objectsAry') );
     }
 
 
@@ -34,7 +34,7 @@ class RolController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.rol.create', ['insert'=>true] );
+        return view( 'admin.xtras.rol.create', ['insert'=>true] );
 
     }
 
@@ -98,7 +98,7 @@ class RolController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('admin.rol.edit', ['theobj'=>$theobj,'insert'=>false] );
+        return view('admin.xtras.rol.edit', ['theobj'=>$theobj,'insert'=>false] );
     }
 
     /**

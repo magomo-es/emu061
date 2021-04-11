@@ -19,7 +19,7 @@ class TipusAlertantController extends Controller
 
         $objectsAry = TipusAlertant::orderBy('tipus')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.tipusalertant.index', compact('objectsAry') );
+        return view('admin.tipus.tipusalertant.index', compact('objectsAry') );
 
     }
 
@@ -33,7 +33,7 @@ class TipusAlertantController extends Controller
     {
 
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.tipusalertant.create' );
+        return view( 'admin.tipus.tipusalertant.create' );
 
     }
 
@@ -94,7 +94,7 @@ class TipusAlertantController extends Controller
     {
 
         echo '<script>console.log("edit method")</script>';
-        return view('admin.tipusalertant.edit', ['theobj'=>$theobj] );
+        return view('admin.tipus.tipusalertant.edit', ['theobj'=>$theobj] );
 
     }
 

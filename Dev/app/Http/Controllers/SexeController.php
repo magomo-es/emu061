@@ -16,26 +16,12 @@ class SexeController extends Controller
      */
     public function index(Request $request)
     {
-        // - - - - - search block =>
-        /*$searchActive = ($request->input('srchactiu')=='actiu');
-        $searchCicle = ($request->input('srchcicle')>0);
-        if ( $searchActive && $searchCicle ) {
-            $cursos = Sexe::where('actiu','=', 1)->where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( $searchActive && !$searchCicle ) {
-            $cursos = Sexe::where('actiu','=', 1)->orderBy('nom')->paginate(6)->withQueryString();
-        } else if ( !$searchActive && $searchCicle ) {
-            $cursos = Sexe::where('cicles_id','=', $request->input('srchcicle'))->orderBy('nom')->paginate(6)->withQueryString();
-        } else {
-            $cursos = Sexe::orderBy('nom')->paginate(5);
-        }
-        //$cicles = Cicle::where('actiu','=', 1)->orderBy('nom')->get();
-        */
 
         $objectsAry = Sexe::orderBy('sexe')->paginate(10);
 
         $request->session()->flashInput($request->input());
 
-        return view('admin.sexe.index', compact('objectsAry') );
+        return view('admin.xtras.sexe.index', compact('objectsAry') );
     }
 
 
@@ -48,7 +34,7 @@ class SexeController extends Controller
     {
         echo '<script>console.log("create method")</script>';
 
-        return view( 'admin.sexe.create', [
+        return view( 'admin.xtras.sexe.create', [
             'insert'=>true
             ] );
 
@@ -112,7 +98,7 @@ class SexeController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('admin.sexe.edit', [
+        return view('admin.xtras.sexe.edit', [
             'theobj'=>$theobj,
             'insert'=>true
             ] );

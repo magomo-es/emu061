@@ -35,7 +35,7 @@ class MunicipiController extends Controller
         $comarquesAry = Comarca::orderBy('nom')->get();
         $provinciesAry = Provincia::get();
         $request->session()->flashInput($request->input());
-        return view('admin.municipi.index', compact('objectsAry','comarquesAry','provinciesAry') );
+        return view('admin.xtras.municipi.index', compact('objectsAry','comarquesAry','provinciesAry') );
 
     }
 
@@ -51,7 +51,7 @@ class MunicipiController extends Controller
         echo '<script>console.log("create method")</script>';
         $comarquesAry = Comarca::orderBy('nom')->get();
         $provinciesAry = Provincia::get();
-        return view( 'admin.municipi.create', compact('comarquesAry','provinciesAry') );
+        return view( 'admin.xtras.municipi.create', compact('comarquesAry','provinciesAry') );
 
     }
 
@@ -116,7 +116,7 @@ class MunicipiController extends Controller
         echo '<script>console.log("edit method")</script>';
         $comarquesAry = Comarca::orderBy('nom')->get();
         $provinciesAry = Provincia::get();
-        return view('admin.municipi.edit', compact('theobj','comarquesAry','provinciesAry') );
+        return view('admin.xtras.municipi.edit', compact('theobj','comarquesAry','provinciesAry') );
 
     }
 

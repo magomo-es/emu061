@@ -16,8 +16,9 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-create database dbs1605720;
-use dbs1605720;
+create database dbs1605720
+use dbs1605720
+
 
 --
 -- Table structure for table `afectats`
@@ -37,6 +38,8 @@ CREATE TABLE `afectats` (
   `sexes_id` int(10) unsigned NOT NULL,
   `descripcio` text,
   `tipus_recursos_id` int(11) DEFAULT NULL,
+  `codi_gravetat` char(3) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `codi_valoracio` char(7) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_afectats_sexes1_idx` (`sexes_id`),
   CONSTRAINT `fk_afectats_sexes1` FOREIGN KEY (`sexes_id`) REFERENCES `sexes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -49,7 +52,7 @@ CREATE TABLE `afectats` (
 
 LOCK TABLES `afectats` WRITE;
 /*!40000 ALTER TABLE `afectats` DISABLE KEYS */;
-INSERT INTO `afectats` VALUES (2,666777888,'MARCI1234569977','Mario Jesus','del Rocio','66',NULL,1,'El mario se cayo y no hablo mas durante el resto del dia',1);
+INSERT INTO `afectats` VALUES (2,666777888,'MARCI1234569977','Mario Jesus','del Rocio','66',NULL,1,'El mario se cayo y no hablo mas durante el resto del dia',1,'','');
 /*!40000 ALTER TABLE `afectats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,6 +284,33 @@ LOCK TABLES `hlp_valoracio` WRITE;
 /*!40000 ALTER TABLE `hlp_valoracio` DISABLE KEYS */;
 INSERT INTO `hlp_valoracio` VALUES (1,'307.9','Psychomotor agitation','Psychomotor agitation',''),(2,'788.99','Genitourinary disorders','Genitourinary disorders',''),(3,'989.89','Other poisonings','Other poisonings',''),(4,'300.9','Other psychiatric disorders','Other psychiatric disorders',''),(5,'897.00','Lower-limb amputation','Lower-limb amputation',''),(6,'887.00','Upper-limb amputation','Upper-limb amputation',''),(7,'427.5','Cardiorespiratory arrest','Cardiorespiratory arrest',''),(8,'799.1','Respiratory arrest','Respiratory arrest',''),(9,'427.89','Bradycardia','Bradycardia',''),(10,'784.0','Headache','Headache',''),(11,'723.1','Cervical pain','Cervical pain',''),(12,'782.5','Cyanosis','Cyanosis',''),(13,'924.9','Contusion','Contusion',''),(14,'780.3','Convulsions','Convulsions',''),(15,'992.0','Heat Stroke','Heat Stroke',''),(16,'949.0','Burns','Burns',''),(17,'300.00','Anxiety crisis','Anxiety crisis',''),(18,'786.00','Respiratory difficulty','Respiratory difficulty',''),(19,'493.92','Respiratory distress + BACKGROUND ASTHMA','Respiratory distress + BACKGROUND ASTHMA',''),(20,'428.00','Breathing difficulty + BACKGROUND ICARDIACA','Breathing difficulty + BACKGROUND ICARDIACA',''),(21,'491.21','Respiratory distress + BACKGROUND COPD','Respiratory distress + BACKGROUND COPD',''),(22,'729.5','Pain in limbs','Pain in limbs',''),(23,'789.00','Abdominal pain','Abdominal pain',''),(24,'780.96','Generalized / nonspecific pain','Generalized / nonspecific pain',''),(25,'724.2','Low Back Pain / Back Pain','Low Back Pain / Back Pain',''),(26,'786.50','Chest pain','Chest pain',''),(27,'661.93','Pain / contractions pregnancy','Pain / contractions pregnancy',''),(28,'784.7','Epistaxis','Epistaxis',''),(29,'919.8','Non-penetrating wounds / Erosions / Polyerosions','Non-penetrating wounds / Erosions / Polyerosions',''),(30,'879.8','Penetrating Wounds','Penetrating Wounds',''),(31,'827.0','Lower extremity fracture','Lower extremity fracture',''),(32,'818.0','Upper limb fracture','Upper limb fracture',''),(33,'786.30','Hemoptysis','Hemoptysis',''),(34,'641.93','Hemorrhage in pregnancy','Hemorrhage in pregnancy',''),(35,'578.9','Digestive hemorrhage','Digestive hemorrhage',''),(36,'790.29','Hyperglycemia','Hyperglycemia',''),(37,'401.9','Hypertension','Hypertension',''),(38,'251.2','Hypoglycemia','Hypoglycemia',''),(39,'458.9','Hypotension','Hypotension',''),(40,'991.6','Hypothermia','Hypothermia',''),(41,'780.09','Unconsciousness / coma','Unconsciousness / coma',''),(42,'661.33','Beginning of childbirth','Beginning of childbirth',''),(43,'V62.84','Intent autolysis','Intent autolysis',''),(44,'305.00','Alcohol intoxication','Alcohol intoxication',''),(45,'977.9','Drug poisoning','Drug poisoning',''),(46,'305.90','Drug poisoning (heroin, cocaine ...)','Drug poisoning (heroin, cocaine ...)',''),(47,'987.9','Inhalation of smoke inhalation','Inhalation of smoke inhalation',''),(48,'989.6','Poisoning by household products','Poisoning by household products',''),(49,'839.8','Dislocation','Dislocation',''),(50,'V02.9','Risk disease: TB, HIV, HCV ...','Risk disease: TB, HIV, HCV ...',''),(51,'799.4','Terminal disease','Terminal disease',''),(52,'780.7','General discomfort','General discomfort',''),(53,'780.4','Dizziness / vertigo','Dizziness / vertigo',''),(54,'V65.5','No apparent pathology','No apparent pathology',''),(55,'934','Respiratory obstruction','Respiratory obstruction',''),(56,'V13.29','Poorly defined obstetric / gynecological pathology','Poorly defined obstetric / gynecological pathology',''),(57,'379.9','Ophthalmic pathology and appendages','Ophthalmic pathology and appendages',''),(58,'388.7','Optical pathology','Optical pathology',''),(59,'780.2','Transient loss of consciousness / lipothymia','Transient loss of consciousness / lipothymia',''),(60,'924.8','Polycontusion','Polycontusion',''),(61,'829.0','Polyfractured','Polyfractured',''),(62,'V71.6','Possible aggression','Possible aggression',''),(63,'436.','Possible stroke','Possible stroke',''),(64,'798.1','Possible successes','Possible successes',''),(65,'V60.9','Social problem','Social problem',''),(66,'995.3','Allergic reaction','Allergic reaction',''),(67,'V23.9','Risk of abortion','Risk of abortion',''),(68,'V65.49','Preventive service','Preventive service',''),(69,'780.6','Febrile syndrome','Febrile syndrome',''),(70,'V58.9','Probes / other therapeutic actions','Probes / other therapeutic actions',''),(71,'785.0','Tachycardia','Tachycardia',''),(72,'850.0','TCE conscious','TCE conscious',''),(73,'850.4','Unconscious TCE','Unconscious TCE',''),(74,'850.5','TCE loss of consciousness recovered','TCE loss of consciousness recovered',''),(75,'786.2','Cough','Cough',''),(76,'922.2','Abdominal trauma','Abdominal trauma',''),(77,'922.1','Chest trauma','Chest trauma',''),(78,'787.0','Vomiting','Vomiting','');
 /*!40000 ALTER TABLE `hlp_valoracio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hlp_valoracio_has_simptomes`
+--
+
+DROP TABLE IF EXISTS `hlp_valoracio_has_simptomes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hlp_valoracio_has_simptomes` (
+  `id_valoracio` int(10) unsigned NOT NULL,
+  `id_simptoma` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_valoracio`,`id_simptoma`),
+  KEY `fk_hlp_valoracio_has_simptomes_valoracio1_idx` (`id_valoracio`),
+  KEY `fk_hlp_valoracio_has_simptomes_simptomes1_idx` (`id_simptoma`),
+  CONSTRAINT `fk_hlp_valoracio_has_simptomes_simptomes1` FOREIGN KEY (`id_simptoma`) REFERENCES `hlp_simptomes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_hlp_valoracio_has_simptomes_valoracio1` FOREIGN KEY (`id_valoracio`) REFERENCES `hlp_valoracio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hlp_valoracio_has_simptomes`
+--
+
+LOCK TABLES `hlp_valoracio_has_simptomes` WRITE;
+/*!40000 ALTER TABLE `hlp_valoracio_has_simptomes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hlp_valoracio_has_simptomes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -633,6 +663,7 @@ INSERT INTO `usuaris` VALUES (3,'magomo','$2y$10$FbLgJljc8jTj1BNcGCzn8e4CA.rrpH7
 /*!40000 ALTER TABLE `usuaris` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
 --
 -- Table structure for table `vds_videos`
 --
@@ -718,6 +749,7 @@ LOCK TABLES `vds_videoevents` WRITE;
 /*!40000 ALTER TABLE `vds_videoevents` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -726,4 +758,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-09 15:51:25
+-- Dump completed on 2021-04-10 13:27:07

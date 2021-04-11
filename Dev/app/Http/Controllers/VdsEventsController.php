@@ -16,9 +16,11 @@ class VdsEventsController extends Controller
      */
     public function index(Request $request)
     {
+
         $objectsAry = VdsEvents::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.video.events', compact('objectsAry') );
+        return view('admin.video.events.index', compact('objectsAry') );
+
     }
 
 
@@ -29,8 +31,10 @@ class VdsEventsController extends Controller
      */
     public function create()
     {
+
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.video.events_create', ['insert'=>true] );
+        return view( 'admin.video.events.create' );
+
     }
 
     /**
@@ -43,11 +47,15 @@ class VdsEventsController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->ontime ) && !empty( $request->jsondata ) ) {
 
             $theobj = new VdsEvents();
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->id_video = $request->id_video;
+            $theobj->ontime = $request->ontime;
+            $theobj->timeout = $request->timeout;
+            $theobj->type = $request->type;
+            $theobj->jsondata = $request->jsondata;
 
             try {
                 $theobj->save();
@@ -61,13 +69,13 @@ class VdsEventsController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Segons d\'inici i/o Accions inexistent' );
             $response = redirect()->action( [VdsEventsController::class, 'create'] )->withInput();
 
         }
 
         return $response;
+
     }
 
     /**
@@ -89,8 +97,10 @@ class VdsEventsController extends Controller
      */
     public function edit(VdsEvents $theobj)
     {
+
         echo '<script>console.log("edit method")</script>';
-        return view('admin.video.events_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+        return view('admin.video.events.edit', compact('theobj') );
+
     }
 
     /**
@@ -102,11 +112,16 @@ class VdsEventsController extends Controller
      */
     public function update(Request $request, VdsEvents $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->ontime ) && !empty( $request->jsondata ) ) {
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->id_video = $request->id_video;
+            $theobj->ontime = $request->ontime;
+            $theobj->timeout = $request->timeout;
+            $theobj->type = $request->type;
+            $theobj->jsondata = $request->jsondata;
 
             try {
                 $theobj->save();
@@ -120,7 +135,7 @@ class VdsEventsController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
+            $request->session()->flash('error', 'Segons d\'inici i/o Accions inexistent' );
             $response = redirect()->action( [VdsEventsController::class, 'edit'] )->withInput();
 
         }
@@ -136,6 +151,7 @@ class VdsEventsController extends Controller
      */
     public function destroy(Request $request, VdsEvents $theobj)
     {
+
         echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
 
         try {
@@ -146,5 +162,6 @@ class VdsEventsController extends Controller
         }
 
         return redirect()->action( [VdsEventsController::class, 'index'] );
+
     }
 }

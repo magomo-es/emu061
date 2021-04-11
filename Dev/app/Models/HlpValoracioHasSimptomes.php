@@ -27,7 +27,7 @@ class HlpValoracioHasSimptomes extends Model
      */
     public function afectat() //: HasMany
     {
-        return $this->belongsTo(HlpSimptoma::class, 'id_simptoma');
+        return $this->belongsTo(HlpSimptomes::class, 'id_simptoma');
     }
 
 }

@@ -19,7 +19,7 @@ class ProvinciaController extends Controller
 
         $objectsAry = Provincia::orderBy('nom')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.provincia.index', compact('objectsAry') );
+        return view('admin.xtras.provincia.index', compact('objectsAry') );
     }
 
 
@@ -31,7 +31,7 @@ class ProvinciaController extends Controller
     public function create()
     {
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.provincia.create', ['insert'=>true] );
+        return view( 'admin.xtras.provincia.create', ['insert'=>true] );
 
     }
 
@@ -94,7 +94,7 @@ class ProvinciaController extends Controller
     {
         echo '<script>console.log("edit method")</script>';
 
-        return view('admin.provincia.edit', [
+        return view('admin.xtras.provincia.edit', [
             'theobj'=>$theobj,
             'insert'=>false
             ] );

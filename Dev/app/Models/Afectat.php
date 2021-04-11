@@ -51,4 +51,24 @@ class Afectat extends Model
         return $this->incidencies(Rol::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
     }
 
+    /**
+     * Get the user that owns the Afectat
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function gravetat() //: BelongsTo
+    {
+        return $this->belongsTo(CodisGravetat::class, 'codi_gravetat');
+    }
+
+    /**
+     * Get the user that owns the Afectat
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function valoracio() //: BelongsTo
+    {
+        return $this->belongsTo(TipusRecurs::class, 'codi_valoracio');
+    }
+
 }

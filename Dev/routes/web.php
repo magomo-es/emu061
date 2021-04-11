@@ -7,19 +7,25 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SexeController;
 use App\Http\Controllers\RecursController;
 use App\Http\Controllers\UsuariController;
-use App\Http\Controllers\VideosController;
 use App\Http\Controllers\AfectatController;
 use App\Http\Controllers\ComarcaController;
+use App\Http\Controllers\VdsPlayController;
 use App\Http\Controllers\AlertantController;
 use App\Http\Controllers\MunicipiController;
+use App\Http\Controllers\CodisSEM3Controller;
 use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\VdsEventsController;
+use App\Http\Controllers\VdsVideosController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\TipusRecursController;
-use App\Http\Controllers\VideoEventsController;
-use App\Http\Controllers\FormElementsController;
+use App\Http\Controllers\CodisIntercoController;
+use App\Http\Controllers\HlpSimptomesController;
+use App\Http\Controllers\HlpValoracioController;
+use App\Http\Controllers\CodisGravetatController;
 use App\Http\Controllers\TipusAlertantController;
+use App\Http\Controllers\CodisValoracioController;
+use App\Http\Controllers\HlpFormElementsController;
 use App\Http\Controllers\TipusIncidenciaController;
-use App\Http\Controllers\PlayVideoByCallerController;
 use App\Http\Controllers\IncidenciesHasRecursosController;
 
 Route::get('/login', [UsuariController::class, 'showLogin'])->name('login');
@@ -45,22 +51,32 @@ Route::middleware(['auth'])->group( function() {
     Route::resource('admin/recursos', RecursController::class)->parameters(['recursos' => 'theobj']);
     Route::resource('admin/usuaris', UsuariController::class)->parameters(['usuaris' => 'theobj']);
 
-    Route::resource('admin/tipus_alertants', TipusAlertantController::class)->parameters(['tipus_alertants' => 'theobj']);
-    Route::resource('admin/tipus_incidencies', TipusIncidenciaController::class)->parameters(['tipus_incidencies' => 'theobj']);
-    Route::resource('admin/tipus_recursos', TipusRecursController::class)->parameters(['tipus_recursos' => 'theobj']);
+    Route::resource('admin/tipus/tipus_alertants', TipusAlertantController::class)->parameters(['tipus_alertants' => 'theobj']);
+    Route::resource('admin/tipus/tipus_incidencies', TipusIncidenciaController::class)->parameters(['tipus_incidencies' => 'theobj']);
+    Route::resource('admin/tipus/tipus_recursos', TipusRecursController::class)->parameters(['tipus_recursos' => 'theobj']);
 
-    Route::resource('admin/rols', RolController::class)->parameters(['rols' => 'theobj']);
-    Route::resource('admin/municipis', MunicipiController::class)->parameters(['municipis' => 'theobj']);
-    Route::resource('admin/comarques', ComarcaController::class)->parameters(['comarques' => 'theobj']);
-    Route::resource('admin/provincies', ProvinciaController::class)->parameters(['provincies' => 'theobj']);
-    Route::resource('admin/sexes', SexeController::class)->parameters(['sexes' => 'theobj']);
+    Route::resource('admin/xtras/rols', RolController::class)->parameters(['rols' => 'theobj']);
+    Route::resource('admin/xtras/municipis', MunicipiController::class)->parameters(['municipis' => 'theobj']);
+    Route::resource('admin/xtras/comarques', ComarcaController::class)->parameters(['comarques' => 'theobj']);
+    Route::resource('admin/xtras/provincies', ProvinciaController::class)->parameters(['provincies' => 'theobj']);
+    Route::resource('admin/xtras/sexes', SexeController::class)->parameters(['sexes' => 'theobj']);
 
-    Route::resource('admin/formelements', FormElementsController::class)->parameters(['formelements' => 'theobj']);
-    Route::resource('admin/videos', VideosController::class)->parameters(['videos' => 'theobj']);
-    Route::resource('admin/playvideobycaller', PlayVideoByCallerController::class)->parameters(['playvideobycaller' => 'theobj']);
-    Route::resource('admin/videoevents', VideoEventsController::class)->parameters(['videoevents' => 'theobj']);
+    Route::resource('admin/xtras/codis/interco', CodisIntercoController::class)->parameters(['interco' => 'theobj']);
+    Route::resource('admin/xtras/codis/sem3', CodisSEM3Controller::class)->parameters(['sem3' => 'theobj']);
+    Route::resource('admin/xtras/codis/gravetat', CodisGravetatController::class)->parameters(['gravetat' => 'theobj']);
+    Route::resource('admin/xtras/codis/valoracio', CodisValoracioController::class)->parameters(['valoracio' => 'theobj']);
+
+    Route::resource('admin/video/videos', VdsVideosController::class)->parameters(['videos' => 'theobj']);
+    Route::resource('admin/video/play', VdsPlayController::class)->parameters(['play' => 'theobj']);
+    Route::resource('admin/video/events', VdsEventsController::class)->parameters(['events' => 'theobj']);
+
+    Route::resource('admin/help/valoracio', HlpValoracioController::class)->parameters(['valoracio' => 'theobj']);
+    Route::resource('admin/help/simptomes', HlpSimptomesController::class)->parameters(['simptomes' => 'theobj']);
+    Route::resource('admin/help/formelements', HlpFormElementsController::class)->parameters(['formelements' => 'theobj']);
+
 
     Route::get('operator', function () { return view('operator.index'); });
+
 
     Route::get('mobile', function () { return view('mobile.index'); });
 

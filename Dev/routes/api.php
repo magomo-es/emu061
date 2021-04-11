@@ -55,10 +55,10 @@ use App\Http\Controllers\Api\IncidenciesHasRecursosController;
     Route::apiResource('admin/provincies', ProvinciaController::class)->parameters(['provincies' => 'theobj']);
     Route::apiResource('admin/sexes', SexeController::class)->parameters(['sexes' => 'theobj']);
 
-    Route::apiResource('admin/formelements', FormElementsController::class)->parameters(['formelements' => 'theobj']);
-    Route::apiResource('admin/videos', VideosController::class)->parameters(['videos' => 'theobj']);
-    Route::apiResource('admin/playvideobycaller', PlayVideoByCallerController::class)->parameters(['playvideobycaller' => 'theobj']);
-    Route::apiResource('admin/videoevents', VideoEventsController::class)->parameters(['videoevents' => 'theobj']);
+//  Route::apiResource('admin/formelements', FormElementsController::class)->parameters(['formelements' => 'theobj']);
+//  Route::apiResource('admin/videos', VideosController::class)->parameters(['videos' => 'theobj']);
+//  Route::apiResource('admin/playvideobycaller', PlayVideoByCallerController::class)->parameters(['playvideobycaller' => 'theobj']);
+//  Route::apiResource('admin/videoevents', VideoEventsController::class)->parameters(['videoevents' => 'theobj']);
 
     Route::get( 'municipis', [MunicipiController::class, 'fullmunicipis'] );
     Route::get( 'municipi/{theobj}', [MunicipiController::class, 'themunicipi'] );

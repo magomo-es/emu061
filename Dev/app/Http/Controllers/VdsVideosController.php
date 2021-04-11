@@ -18,7 +18,7 @@ class VdsVideosController extends Controller
     {
         $objectsAry = VdsVideos::orderBy('tagid')->paginate(10);
         $request->session()->flashInput($request->input());
-        return view('admin.video.videos', compact('objectsAry') );
+        return view('admin.video.videos.index', compact('objectsAry') );
     }
 
 
@@ -29,8 +29,10 @@ class VdsVideosController extends Controller
      */
     public function create()
     {
+
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.video.videos_create', ['insert'=>true] );
+        return view( 'admin.video.videos.create' );
+
     }
 
     /**
@@ -43,11 +45,13 @@ class VdsVideosController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->title ) && !empty( $request->filename ) ) {
 
             $theobj = new VdsVideos();
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->title = $request->title;
+            $theobj->description = $request->description;
+            $theobj->filename = $request->filename;
 
             try {
                 $theobj->save();
@@ -61,8 +65,7 @@ class VdsVideosController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Titul i/o Video inexistent' );
             $response = redirect()->action( [VdsVideosController::class, 'create'] )->withInput();
 
         }
@@ -90,7 +93,7 @@ class VdsVideosController extends Controller
     public function edit(VdsVideos $theobj)
     {
         echo '<script>console.log("edit method")</script>';
-        return view('admin.video.videos_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+        return view('admin.video.videos.edit', compact('theobj') );
     }
 
     /**
@@ -104,9 +107,11 @@ class VdsVideosController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->title ) && !empty( $request->filename ) ) {
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->title = $request->title;
+            $theobj->description = $request->description;
+            $theobj->filename = $request->filename;
 
             try {
                 $theobj->save();
@@ -120,7 +125,7 @@ class VdsVideosController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
+            $request->session()->flash('error', 'Titul i/o Video inexistent' );
             $response = redirect()->action( [VdsVideosController::class, 'edit'] )->withInput();
 
         }

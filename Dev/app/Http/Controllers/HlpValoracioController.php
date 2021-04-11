@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utility;
+use App\Models\HlpSimptomes;
 use App\Models\HlpValoracio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
 class HlpValoracioController extends Controller
@@ -16,9 +18,10 @@ class HlpValoracioController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = HlpValoracio::orderBy('tagid')->paginate(10);
-        $request->session()->flashInput($request->input());
-        return view('admin.help.valoracio', compact('objectsAry') );
+        $objectsAry = HlpValoracio::with('valoracio')->orderBy('codi_valoracio')->paginate(20);
+
+        return view('admin.help.valoracio.index', compact('objectsAry') );
+
     }
 
 
@@ -29,8 +32,13 @@ class HlpValoracioController extends Controller
      */
     public function create()
     {
+
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.help.valoracio_create', ['insert'=>true] );
+
+        $simptomesAry = HlpSimptomes::orderBy('pregunta')->get();
+
+        return view( 'admin.help.valoracio.reate', compact('simptomesAry') );
+
     }
 
     /**
@@ -43,11 +51,13 @@ class HlpValoracioController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->xtranslation ) && !empty( $request->xjsontags ) ) {
 
             $theobj = new HlpValoracio();
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->translation = $request->translation;
+            $theobj->soundlike = $request->soundlike;
+            $theobj->jsontags = $request->jsontags;
 
             try {
                 $theobj->save();
@@ -61,8 +71,7 @@ class HlpValoracioController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
-            // redirecciona si no estan completos los datos
+            $request->session()->flash('error', 'Traduccio i/o Simptomes inexistent' );
             $response = redirect()->action( [HlpValoracioController::class, 'create'] )->withInput();
 
         }
@@ -89,8 +98,15 @@ class HlpValoracioController extends Controller
      */
     public function edit(HlpValoracio $theobj)
     {
+
         echo '<script>console.log("edit method")</script>';
-        return view('admin.help.valoracio_edit', [ 'theobj'=>$theobj, 'insert'=>true ] );
+
+        $simptomesAry = HlpSimptomes::orderBy('pregunta')->get();
+
+        $theobj = HlpValoracio::with('valoracio','simptomes')->find($theobj->codi_valoracio);
+
+        return view('admin.help.valoracio.edit', compact('theobj','simptomesAry') );
+
     }
 
     /**
@@ -102,11 +118,14 @@ class HlpValoracioController extends Controller
      */
     public function update(Request $request, HlpValoracio $theobj)
     {
+
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->tagid ) ) {
+        if ( !empty( $request->translation ) && !empty( $request->jsontags ) ) {
 
-            foreach( $request->all() as $tmpkey => $tmpdata) { $theobj->{$tmpkey} = $tmpdata; }
+            $theobj->translation = $request->translation;
+            $theobj->soundlike = $request->soundlike;
+            $theobj->jsontags = $request->jsontags;
 
             try {
                 $theobj->save();
@@ -120,12 +139,13 @@ class HlpValoracioController extends Controller
 
         } else {
 
-            $request->session()->flash('error', 'Sigles i/o Nom inexistent' );
+            $request->session()->flash('error', 'Traduccio i/o Simptomes inexistent' );
             $response = redirect()->action( [HlpValoracioController::class, 'edit'] )->withInput();
 
         }
 
         return $response;
+
     }
 
     /**
@@ -136,7 +156,8 @@ class HlpValoracioController extends Controller
      */
     public function destroy(Request $request, HlpValoracio $theobj)
     {
-        echo '<script>console.log("destroy method => theid: '.$theobj->id.'")</script>';
+
+        echo '<script>console.log("destroy method => theid: '.$theobj->codi_valoracio.'")</script>';
 
         try {
             $theobj->delete();
@@ -146,5 +167,6 @@ class HlpValoracioController extends Controller
         }
 
         return redirect()->action( [HlpValoracioController::class, 'index'] );
+
     }
 }

@@ -69,9 +69,9 @@
                     <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Taules Tipus</a>
 
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{{ url('admin/tipus_alertants') }}">Tipus Alertants</a>
-                      <a class="dropdown-item" href="{{ url('admin/tipus_incidencies') }}">Tipus Incidencies</a>
-                      <a class="dropdown-item" href="{{ url('admin/tipus_recursos') }}">Tipus Recursos</a>
+                      <a class="dropdown-item" href="{{ url('admin/tipus/tipus_alertants') }}">Tipus Alertants</a>
+                      <a class="dropdown-item" href="{{ url('admin/tipus/tipus_incidencies') }}">Tipus Incidencies</a>
+                      <a class="dropdown-item" href="{{ url('admin/tipus/tipus_recursos') }}">Tipus Recursos</a>
                     </div>
 
                   </li>
@@ -81,15 +81,15 @@
                     <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Altres taules</a>
 
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{{ url('admin/rols') }}">Rols</a>
-                      <a class="dropdown-item" href="{{ url('admin/municipis') }}">Municipis</a>
-                      <a class="dropdown-item" href="{{ url('admin/comarques') }}">Comarques</a>
-                      <a class="dropdown-item" href="{{ url('admin/provincies') }}">Provincies</a>
-                      <a class="dropdown-item" href="{{ url('admin/sexes') }}">Sexes</a>
-                      <a class="dropdown-item" href="{{ url('admin/codis/interco') }}">Codis Interco</a>
-                      <a class="dropdown-item" href="{{ url('admin/codis/sem3') }}">Codis 3 SEM</a>
-                      <a class="dropdown-item" href="{{ url('admin/codis/gravetat') }}">Codis Gravetat</a>
-                      <a class="dropdown-item" href="{{ url('admin/codis/valoracio') }}">Codis Valoració</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/rols') }}">Rols</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/municipis') }}">Municipis</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/comarques') }}">Comarques</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/provincies') }}">Provincies</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/sexes') }}">Sexes</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/codis/interco') }}">Codis Interco</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/codis/sem3') }}">Codis 3 SEM</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/codis/gravetat') }}">Codis Gravetat</a>
+                      <a class="dropdown-item" href="{{ url('admin/xtras/codis/valoracio') }}">Codis Valoració</a>
 
                     </div>
 
@@ -114,7 +114,7 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="{{ url('admin/help/valoracio') }}">Anglés Valoracións</a>
                       <a class="dropdown-item" href="{{ url('admin/help/simptomes') }}">Anglés Símptomes</a>
-                      <a class="dropdown-item" href="{{ url('admin/formelements') }}">Elements Formulari</a>
+                      <a class="dropdown-item" href="{{ url('admin/help/formelements') }}">Elements Formulari</a>
                     </div>
 
                   </li>
