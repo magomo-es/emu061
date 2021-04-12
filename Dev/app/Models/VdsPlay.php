@@ -15,15 +15,15 @@ class VdsPlay extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function formelement() //: BelongsTo
+    public function valoracio() //: BelongsTo
     {
-        return $this->belongsTo(CodiValoracio::class, 'id_formelement');
+        return $this->belongsTo(CodisValoracio::class, 'id_caller');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function videos() //: BelongsTo
+    public function video() //: BelongsTo
     {
         return $this->belongsTo(VdsVideos::class, 'id_video');
     }

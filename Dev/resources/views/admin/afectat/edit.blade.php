@@ -70,8 +70,8 @@
 
                 <div class="col-3">
                     <div class="row">
-                        <label for="xsexesid" class="col-2 col-form-label"><small>Sexe</small></label>
-                        <div class="col-10">
+                        <label for="xsexesid" class="col-3 col-form-label"><small>Sexe</small></label>
+                        <div class="col-9">
                             <select class="custom-select" id="xsexesid" name="xsexesid">
                                 @foreach ($sexesAry as $sexe)
                                 <option value="{{ $sexe->id }}" {{ (($theobj->sexes_id==$sexe->id)?'selected':'') }}>{{ $sexe->sexe }}</option>

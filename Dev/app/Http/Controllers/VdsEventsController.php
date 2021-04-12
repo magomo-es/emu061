@@ -18,9 +18,11 @@ class VdsEventsController extends Controller
     public function index(Request $request)
     {
 
-        $objectsAry = VdsEvents::with('videos')->orderBy('id_video')->paginate(20);
+        $objectsAry = VdsEvents::with('video')->orderBy('id_video')->paginate(20);
 
-        return view('admin.video.events.index', compact('objectsAry') );
+        $typeAry = ['No def','Explicació','Joc'];
+
+        return view('admin.video.events.index', compact('objectsAry','typeAry') );
 
     }
 
@@ -34,8 +36,12 @@ class VdsEventsController extends Controller
     {
 
         echo '<script>console.log("create method")</script>';
+
         $videosAry = VdsVideos::orderby('title')->get();
-        return view( 'admin.video.events.create', compact('videosAry') );
+
+        $typeAry = ['No def','Explicació','Joc'];
+
+        return view( 'admin.video.events.create', compact('videosAry','typeAry') );
 
     }
 
@@ -50,10 +56,11 @@ class VdsEventsController extends Controller
 
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->ontime ) && !empty( $request->jsondata ) ) {
+        if ( !empty( $request->ontime ) && !empty( $request->title ) && !empty( $request->jsondata ) ) {
 
             $theobj = new VdsEvents();
 
+            $theobj->title = $request->title;
             $theobj->id_video = $request->id_video;
             $theobj->ontime = $request->ontime;
             $theobj->timeout = $request->timeout;
@@ -105,9 +112,11 @@ class VdsEventsController extends Controller
 
         $videosAry = VdsVideos::orderby('title')->get();
 
-        $theobj = VdsEvents::with('videos')->find($theobj->id_video);
+        $typeAry = ['No def','Explicació','Joc'];
 
-        return view('admin.video.events.edit', compact('theobj','videosAry') );
+        $theobj = VdsEvents::with('video')->find($theobj->id_video);
+
+        return view('admin.video.events.edit', compact('theobj','videosAry','typeAry') );
 
     }
 
@@ -123,8 +132,9 @@ class VdsEventsController extends Controller
 
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->ontime ) && !empty( $request->jsondata ) ) {
+        if ( !empty( $request->ontime ) && !empty( $request->title ) && !empty( $request->jsondata ) ) {
 
+            $theobj->title = $request->title;
             $theobj->id_video = $request->id_video;
             $theobj->ontime = $request->ontime;
             $theobj->timeout = $request->timeout;

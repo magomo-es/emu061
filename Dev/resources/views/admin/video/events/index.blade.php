@@ -14,7 +14,7 @@
 
 <div class="card">
 
-    <div class="card-header bg-white">Provincies</div>
+    <div class="card-header bg-white">Video Esdeveniment</div>
 
     <div class="card-body">
 
@@ -22,7 +22,11 @@
             <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nom</th>
+                <th scope="col">Titul</th>
+                <th scope="col">Video</th>
+                <th scope="col">S'inicia</th>
+                <th scope="col">Interval</th>
+                <th scope="col">Tipus</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -30,7 +34,11 @@
                 @foreach ($objectsAry as $theobject)
                 <tr>
                     <td>{{ $theobject->id }}</th>
-                    <td>{{ $theobject->nom }}</td>
+                    <td>{{ $theobject->title }}</td>
+                    <td>{{ $theobject->video->title }}</td>
+                    <td>{{ $theobject->ontime }}</td>
+                    <td>{{ $theobject->timeout }}</td>
+                    <td>{{ $typeAry[$theobject->type] }}</td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">

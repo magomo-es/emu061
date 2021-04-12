@@ -731,11 +731,12 @@ DROP TABLE IF EXISTS `vds_videoevents`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vds_videoevents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(250) DEFAULT NULL,
   `id_video` int(10) unsigned NOT NULL,
   `ontime` int(10) unsigned DEFAULT NULL,
   `timeout` int(10) unsigned DEFAULT NULL,
   `type` tinyint(3) unsigned DEFAULT NULL,
-  `jsondata` varchar(250) DEFAULT NULL,
+  `jsondata` TEXT DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_video2_idx` (`id_video`),
   CONSTRAINT `fk_video2` FOREIGN KEY (`id_video`) REFERENCES `vds_videos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION

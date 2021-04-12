@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Provincies list | Administració emu061 - Emulador de Sistema d\'Emergències 061')
+@section('pageTitle', 'Play Video by Valoracio list | Administració emu061 - Emulador de Sistema d\'Emergències 061')
 
 @section('pageContent')
 
@@ -14,7 +14,7 @@
 
 <div class="card">
 
-    <div class="card-header bg-white">Provincies</div>
+    <div class="card-header bg-white">Play Video by Valoracio</div>
 
     <div class="card-body">
 
@@ -22,19 +22,28 @@
             <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nom</th>
-                <th scope="col"></th>
+                <th scope="col">Titul</th>
+                <th scope="col">Video</th>
+                <th scope="col">Valoracio</th>
+                <th scope="col">Inicia</th>
+                <th scope="col">Finalitza</th>
+                <th scope="col">Esdev.</th>
             </tr>
             </thead>
             <tbody>
                 @foreach ($objectsAry as $theobject)
                 <tr>
                     <td>{{ $theobject->id }}</th>
-                    <td>{{ $theobject->nom }}</td>
+                    <td>{{ $theobject->title }}</td>
+                    <td>{{ $theobject->video->title }}</th>
+                    <td>{{ $theobject->valoracio->nom }}</td>
+                    <td>{{ $theobject->start }}</th>
+                    <td>{{ $theobject->ends }}</td>
+                    <td><input class="form-check-input" type="checkbox" {{ (($theobject->playevent==1)?'checked':'') }} disabled></td>
                     <td class="text-right">
 
                         <div class="btn-group" role="group">
-                            <form class="m-0 p-0" action="{{ action([App\Http\Controllers\ProvinciaController::class, 'edit'], ['theobj' => $theobject->id]) }}">
+                            <form class="m-0 p-0" action="{{ action([App\Http\Controllers\VdsPlayController::class, 'edit'], ['theobj' => $theobject->id]) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-edit"></i> Editar</button>
                             </form>
@@ -44,7 +53,7 @@
 
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#boxModal"
                              data-idelement="{{ $theobject->nom }}"
-                             data-action="{{ action([App\Http\Controllers\ProvinciaController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
+                             data-action="{{ action([App\Http\Controllers\VdsPlayController::class, 'destroy'], ['theobj' => $theobject->id]) }}"
                              ><i class="fas fa-trash"></i> Esborrar</button>
 
                         </div>
@@ -64,8 +73,8 @@
 @endif
 
 
-<a href="{{ action([App\Http\Controllers\VdsVideosController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
-    <i class="fas fa-plus"></i> Nou Video</button>
+<a href="{{ action([App\Http\Controllers\VdsPlayController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
+    <i class="fas fa-plus"></i> Nou Play Video by Valoracio</button>
 </a>
 
 

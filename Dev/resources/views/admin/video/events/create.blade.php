@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Nou Provincia | CEP')
+@section('pageTitle', 'Nou Video Esdeveniment | CEP')
 
 @section('pageContent')
 
@@ -16,7 +16,77 @@
 
             @csrf
 
+            <div class="form-group row">
 
+                <div class="col-6">
+                    <div class="row">
+                        <label for="title" class="col-2 col-form-label"><small>Titul</small></label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                        <label for="id_video" class="col-2 col-form-label"><small>Video</small></label>
+                        <div class="col-10">
+                            <select class="custom-select" id="id_video" name="id_video">
+                                @foreach ($videosAry as $video)
+                                <option value="{{ $video->id }}" {{ (( old('id_video')==$video->id)?'selected':'') }}>{{ $video->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <div class="row">
+                        <label for="ontime" class="col-3 col-form-label"><small>S'inicia</small></label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="ontime" name="ontime" value="{{ old('ontime') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <label for="timeout" class="col-3 col-form-label"><small>Interval</small></label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="timeout" name="timeout" value="{{ old('timeout') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <label for="type" class="col-sm-3 col-form-label"><small>Tipus</small></label>
+                        <div class="col-sm-9">
+                            <select class="custom-select" id="type" name="type">
+                                @foreach ($typeAry as $key => $type)
+                                <option value="{{ $key }}" {{ (( old('type')==$key)?'selected':'') }}>{{ $type }}</option>
+                                @endforeach
+                            </select>
+                         </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+
+                <div class="col">
+                    <div class="row">
+                        <label for="jsondata" class="col-1 col-form-label pr-1"><small>Event Data (json)</small></label>
+                        <div class="col-11">
+                            <textarea rows="6" class="form-control" id="jsondata" name="jsondata">{{ old('jsondata') }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             <div class="text-right">
 

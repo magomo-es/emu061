@@ -17,7 +17,7 @@ class HlpValoracioHasSimptomes extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function incidencia() //: BelongsTo
+    public function valoracio() //: BelongsTo
     {
         return $this->belongsTo(HlpValoracio::class, 'id_valoracio');
     }
@@ -25,7 +25,7 @@ class HlpValoracioHasSimptomes extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function afectat() //: HasMany
+    public function simptomes() //: HasMany
     {
         return $this->belongsTo(HlpSimptomes::class, 'id_simptoma');
     }

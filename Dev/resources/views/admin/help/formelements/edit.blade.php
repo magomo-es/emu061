@@ -17,7 +17,6 @@
             @csrf
             @method('PUT')
 
-
             <div class="form-group row">
 
                 <div class="col-6">

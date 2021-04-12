@@ -19,7 +19,7 @@ class HlpValoracioController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = HlpValoracio::with('valoracio','simptomes')->orderBy('codi_valoracio')->paginate(20);
+        $objectsAry = HlpValoracio::with('valoracio','simptomes')->orderBy('codi_valoracio')->get();
 
         return view('admin.help.valoracio.index', compact('objectsAry') );
 
@@ -59,6 +59,8 @@ class HlpValoracioController extends Controller
             $theobj->translation = $request->translation;
             $theobj->soundlike = $request->soundlike;
             $theobj->jsontags = $request->jsontags;
+
+            $theobj->simptomes()->sync($request->simptomes);
 
             try {
                 $theobj->save();
@@ -100,13 +102,16 @@ class HlpValoracioController extends Controller
     public function edit(HlpValoracio $theobj)
     {
 
-        echo '<script>console.log("edit method")</script>';
+//        echo '<script>console.log("edit method")</script>';
 
         $simptomesAry = HlpSimptomes::orderBy('pregunta')->get();
 
         $theobj = HlpValoracio::with('valoracio','simptomes')->find($theobj->codi_valoracio);
 
-        return view('admin.help.valoracio.edit', compact('theobj','simptomesAry') );
+        $simtomesIdAry = array();
+        foreach($theobj->simptomes as $tmpkey => $tmpdata) { $simtomesIdAry[$tmpdata->id] = $tmpdata->id; }
+
+        return view('admin.help.valoracio.edit', compact('theobj','simptomesAry', 'simtomesIdAry') );
 
     }
 
@@ -122,11 +127,15 @@ class HlpValoracioController extends Controller
 
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->translation ) && !empty( $request->jsontags ) ) {
+        if ( !empty( $request->translation ) && !empty( $request->simptomes ) ) {
 
             $theobj->translation = $request->translation;
             $theobj->soundlike = $request->soundlike;
             $theobj->jsontags = $request->jsontags;
+
+//          $theobj->simptomes()->attach($request->simptomes);
+//          $theobj->simptomes()->updateExistingPivot( $request->simptomes, ['active' => false,] );
+            $theobj->simptomes()->sync($request->simptomes);
 
             try {
                 $theobj->save();
@@ -135,13 +144,13 @@ class HlpValoracioController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [HlpValoracioController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [HlpValoracioController::class, 'edit'], ['theobj'=> $theobj->codi_valoracio] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Traduccio i/o Simptomes inexistent' );
-            $response = redirect()->action( [HlpValoracioController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [HlpValoracioController::class, 'edit'], ['theobj'=> $theobj->codi_valoracio] )->withInput();
 
         }
 

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Utility;
+use App\Models\CodisValoracio;
 use Illuminate\Http\Request;
 use App\Models\VdsPlay;
+use App\Models\VdsVideos;
 use Illuminate\Database\QueryException;
 
 class VdsPlayController extends Controller
@@ -16,9 +18,15 @@ class VdsPlayController extends Controller
      */
     public function index(Request $request)
     {
-        $objectsAry = VdsPlay::orderBy('tagid')->paginate(10);
-        $request->session()->flashInput($request->input());
-        return view('admin.video.play.index', compact('objectsAry') );
+
+        $objectsAry = VdsPlay::with('video','valoracio')->orderBy('title')->paginate(20);
+
+        $videosAry = VdsVideos::orderby('title')->get();
+
+        $valoracionsAry = CodisValoracio::orderby('nom')->get();
+
+        return view('admin.video.play.index', compact('objectsAry','videosAry','valoracionsAry') );
+
     }
 
 
@@ -29,8 +37,15 @@ class VdsPlayController extends Controller
      */
     public function create()
     {
+
         echo '<script>console.log("create method")</script>';
-        return view( 'admin.video.play.create', ['insert'=>true] );
+
+        $videosAry = VdsVideos::orderby('title')->get();
+
+        $valoracionsAry = CodisValoracio::orderby('nom')->get();
+
+        return view( 'admin.video.play.create', compact('videosAry','valoracionsAry') );
+
     }
 
     /**
@@ -95,7 +110,14 @@ class VdsPlayController extends Controller
     {
 
         echo '<script>console.log("edit method")</script>';
-        return view('admin.video.play.edit', compact('theobj') );
+
+        $videosAry = VdsVideos::orderby('title')->get();
+
+        $valoracionsAry = CodisValoracio::orderby('nom')->get();
+
+        $theobj = VdsPlay::with('video','valoracio')->find($theobj->id_video);
+
+        return view('admin.video.play.edit', compact('theobj','videosAry','valoracionsAry') );
 
     }
 

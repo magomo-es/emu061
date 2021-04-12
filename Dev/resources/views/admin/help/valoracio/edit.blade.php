@@ -47,12 +47,39 @@
             </div>
             <div class="form-group row">
 
+                <label for="item" class="col-2 col-form-label align-right"><small>Simptomes</small></label>
+                <div class="col-10">
+                    <div class="row">
+
+                        @foreach ($simptomesAry as $simptoma)
+
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-1 pl-2">
+                                    <input class="form-check-input ml-1"
+                                        type="checkbox"
+                                        value="{{ $simptoma->id }}"
+                                        id="item_{{ $simptoma->id }}"
+                                        name="simptomes[]" {{ ( isset( $simtomesIdAry[ $simptoma->id ] ) )?'checked':'' }}>
+                                </div>
+                                <label for="item_{{ $simptoma->id }}"
+                                    class="col-11 col-form-label align-right">
+                                    <small>{{ $simptoma->pregunta }}</small>
+                                </label>
+                            </div>
+                        </div>
+                        @endforeach
+
+                    </div>
+                </div>
+
+            </div>
+            {{-- <div class="form-group row">
                 <label for="jsontags" class="col-2 col-form-label pr-1"><small>Simptomes in JSON Data</small></label>
                 <div class="col-10">
                     <textarea rows="6" class="form-control" id="jsontags" name="jsontags">{{ $theobj->jsontags }}</textarea>
                 </div>
-
-            </div>
+            </div> --}}
 
             <div class="text-right">
 
