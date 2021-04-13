@@ -76,7 +76,8 @@
 
             <hr>
 
-            <div class="form-group">
+                <tablaAfectados></tablaAfectados>
+            <!-- <div class="form-group">
                 <label for="desc">Llista d'afectats:</label>
                 <table class="table">
                     <thead class="table-light">
@@ -104,7 +105,7 @@
                         </tr>
                     </tbody>
                   </table>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <input class="btn btn-primary" type="submit" value="Enviar">

@@ -50,8 +50,7 @@
         @include('_partials.userbox')
 
         <div class="container-fluid mt-3 mb-5">
-            <incidencies></incidencies>
-            <tablaAfectados></tablaAfectados>
+            <incidencies-component></incidencies-component>
         </div>
 
     </body>
