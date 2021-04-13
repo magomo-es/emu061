@@ -184,13 +184,13 @@ class UsuariController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [UsuariController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [UsuariController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Username, Contrasenya, Email, Nom i/o Cognoms inexistents' );
-            $response = redirect()->action( [UsuariController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [UsuariController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

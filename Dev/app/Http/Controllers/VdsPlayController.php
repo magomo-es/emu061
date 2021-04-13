@@ -149,13 +149,13 @@ class VdsPlayController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [VdsPlayController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [VdsPlayController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Titul inexistent' );
-            $response = redirect()->action( [VdsPlayController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [VdsPlayController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

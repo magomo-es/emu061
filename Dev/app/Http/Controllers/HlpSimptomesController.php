@@ -124,13 +124,13 @@ class HlpSimptomesController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [HlpSimptomesController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [HlpSimptomesController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Pregunta i/o Traduccio inexistent' );
-            $response = redirect()->action( [HlpSimptomesController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [HlpSimptomesController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

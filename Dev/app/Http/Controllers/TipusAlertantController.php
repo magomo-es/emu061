@@ -121,13 +121,13 @@ class TipusAlertantController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [TipusAlertantController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [TipusAlertantController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Tipus inexistent' );
-            $response = redirect()->action( [TipusAlertantController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [TipusAlertantController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

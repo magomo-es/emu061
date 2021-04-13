@@ -36,7 +36,7 @@ class IncidenciaController extends Controller
 
             echo '<script>console.log("index method -> with srchData")</script>';
 
-            $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi.','usuari','afectats','recursos')->when( $searchIncidente, function ($query, $searchIncidente) { return $query->where( 'num_incident','=', $searchIncidente ); })
+            $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi.','usuari','afectats.recursos')->when( $searchIncidente, function ($query, $searchIncidente) { return $query->where( 'num_incident','=', $searchIncidente ); })
                 ->when( $searchTipus, function ($query, $searchTipus) { return $query->where( 'tipus_incidencies_id','=', $searchTipus ); })
                 ->when( $searchUsuari, function ($query, $searchUsuari) { return $query->where( 'usuaris_id','=', $searchUsuari ); })
                 ->when( $searchMunicipi, function ($query, $searchMunicipi) { return $query->where( 'municipis_id','=', $searchMunicipi ); })
@@ -45,7 +45,7 @@ class IncidenciaController extends Controller
         } else {
 
             echo '<script>console.log("index method -> NO srchData")</script>';
-            $objectsAry = Incidencia::with(['tipus_incidencia','alertant','municipi','usuari','afectats','recursos'])->orderBy('data')->orderBy('hora')->paginate(10);
+            $objectsAry = Incidencia::with(['tipus_incidencia','alertant','municipi','usuari','afectats.recursos'])->orderBy('data')->orderBy('hora')->paginate(10);
 
         }
 
@@ -215,7 +215,7 @@ class IncidenciaController extends Controller
                 $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
                 $municipisAry = Municipi::orderBy('nom')->get();
                 $usuarisAry = Usuari::orderBy('username')->get();
-                $response = redirect()->action( [IncidenciaController::class, 'edit'], compact('theobj','objectsAry','tipusAry','alertantsAry','municipisAry','usuarisAry') )->withInput();
+                $response = redirect()->action( [IncidenciaController::class, 'edit'], compact('theobj','tipusAry','alertantsAry','municipisAry','usuarisAry') )->withInput();
             }
 
         } else {
@@ -225,7 +225,7 @@ class IncidenciaController extends Controller
             $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
             $municipisAry = Municipi::orderBy('nom')->get();
             $usuarisAry = Usuari::orderBy('username')->get();
-            $response = redirect()->action( [IncidenciaController::class, 'edit'], compact('theobj','objectsAry','tipusAry','alertantsAry','municipisAry','usuarisAry') )->withInput();
+            $response = redirect()->action( [IncidenciaController::class, 'edit'], compact('theobj','tipusAry','alertantsAry','municipisAry','usuarisAry') )->withInput();
 
         }
 

@@ -34,7 +34,7 @@ class Usuari extends Authenticatable
      */
     public function rol() //: BelongsTo
     {
-        return $this->belongsTo(Rol::class, 'rols_id');
+        return $this->hasOne(Rol::class, 'rols_id');
     }
 
     /**
@@ -44,7 +44,7 @@ class Usuari extends Authenticatable
      */
     public function recurso() //: BelongsTo
     {
-        return $this->belongsTo(Recurs::class, 'recursos_id');
+        return $this->hasOne(Recurs::class, 'recursos_id');
     }
 
     /**

@@ -161,13 +161,13 @@ class RecursController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [RecursController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [RecursController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Codi inexistent' );
-            $response = redirect()->action( [RecursController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [RecursController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

@@ -24,6 +24,8 @@
 
     <body>
 
+        <?php date_default_timezone_set('Europe/Madrid'); ?>
+
          <nav class="navbar navbar-expand-lg bg-primary">
 
             <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" style="max-height: 50px;" /></a>

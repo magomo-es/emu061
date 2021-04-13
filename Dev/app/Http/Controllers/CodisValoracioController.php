@@ -124,13 +124,13 @@ class CodisValoracioController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [CodisValoracioController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [CodisValoracioController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Codi i/o Nom inexistent' );
-            $response = redirect()->action( [CodisValoracioController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [CodisValoracioController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

@@ -24,6 +24,8 @@
 
     <body>
 
+        <?php date_default_timezone_set('Europe/Madrid'); ?>
+
         {{-- <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ Auth::user()->username }} <span class="caret"></span></button>
             <ul class="dropdown-menu">

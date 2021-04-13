@@ -124,13 +124,13 @@ class ProvinciaController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [ProvinciaController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [ProvinciaController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Nom inexistent' );
-            $response = redirect()->action( [ProvinciaController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [ProvinciaController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

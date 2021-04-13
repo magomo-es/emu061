@@ -11,6 +11,8 @@ class HlpValoracioHasSimptomes extends Model
     protected $table = 'hlp_valoracio_has_simptomes';
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     protected $primaryKey = ['id_valoracio', 'id_simptoma'];
+    // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
+    public $incrementing = false;
 
     public $timestamps = false;
 

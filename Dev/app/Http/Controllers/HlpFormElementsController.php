@@ -126,13 +126,13 @@ class HlpFormElementsController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [HlpFormElementsController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [HlpFormElementsController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Titul, Descripcio i/o Etiquetes inexistent' );
-            $response = redirect()->action( [HlpFormElementsController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [HlpFormElementsController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

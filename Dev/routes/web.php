@@ -34,7 +34,8 @@ Route::get('/logout', [UsuariController::class, 'logout'])->name('logout');
 
 Route::get('/', function () { return redirect()->route('login'); });
 
-Route::middleware(['auth'])->group( function() {
+//Route::middleware(['auth'])->group( function() {
+Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', function () { return view('home'); });
 
@@ -85,10 +86,7 @@ Route::middleware(['auth'])->group( function() {
 
 Route::get('/clearcache', function() {
 
-    $notice = 'CONFIG';
-    // Laravel Clear CONFIG Cache On Shared Hosting
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('config:cache');
+    $notice = '';
 
     $notice.= ' / APPLICATION';
     // Laravel Clear APPLICATION Cache On Shared Hosting
@@ -101,6 +99,12 @@ Route::get('/clearcache', function() {
     // $notice.= ' / ROUTE';
     // Laravel Clear ROUTE Cache On Shared Hosting
     // $exitCode = Artisan::call('route:cache');
+
+    $notice.= ' / CONFIG';
+    // Laravel Clear CONFIG Cache On Shared Hosting
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('config:cache');
+
 
     $notice.= ' cleared';
 

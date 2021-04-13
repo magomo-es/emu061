@@ -148,13 +148,13 @@ class VdsEventsController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [VdsEventsController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [VdsEventsController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Segons d\'inici i/o Accions inexistent' );
-            $response = redirect()->action( [VdsEventsController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [VdsEventsController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

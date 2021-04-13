@@ -122,13 +122,13 @@ class CodisSEM3Controller extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [CodisSEM3Controller::class, 'edit'] )->withInput();
+                $response = redirect()->action( [CodisSEM3Controller::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Codi i/o Nom inexistent' );
-            $response = redirect()->action( [CodisSEM3Controller::class, 'edit'] )->withInput();
+            $response = redirect()->action( [CodisSEM3Controller::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

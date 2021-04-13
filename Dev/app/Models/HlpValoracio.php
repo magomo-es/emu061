@@ -38,6 +38,7 @@ class HlpValoracio extends Model
     public function simptomes() //: BelongsToMany
     {
         return $this->belongsToMany(HlpSimptomes::class, 'hlp_valoracio_has_simptomes', 'codi_valoracio', 'id_simptoma');
+        //return $this->hasMany(HlpSimptomes::class, 'id_simptoma');
     }
 
 }

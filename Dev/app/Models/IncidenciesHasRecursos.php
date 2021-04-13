@@ -12,7 +12,7 @@ class IncidenciesHasRecursos extends Model
     // - - - - - - - - - - clave primaria, por defecto asume que es id
     protected $primaryKey = ['incidencies_id', 'recursos_id', 'afectats_id'];
     // - - - - - - - - - - incremento de clave, por defecto asume autoincrement
-    // public $incrementing = false;
+    public $incrementing = false;
     // - - - - - - - - - - tipo de clave, por defecto asume entero
     // protected $keyType = 'string';
     // - - - - - - - - - - por defecto asume que existen created_at y updated_at para registrar timestamp

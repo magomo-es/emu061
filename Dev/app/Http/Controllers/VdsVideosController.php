@@ -6,6 +6,7 @@ use App\Classes\Utility;
 use App\Models\VdsVideos;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 
 class VdsVideosController extends Controller
 {
@@ -47,46 +48,32 @@ class VdsVideosController extends Controller
     {
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->title ) && !empty( $request->filename ) ) {
+        if ( !empty( $request->title ) && $request->hasFile('filename') && $request->file('filename')->isValid() ) {
 
             $theobj = new VdsVideos();
 
             $theobj->title = $request->title;
             $theobj->description = $request->description;
-            $theobj->filename = $request->filename;
+            $theobj->filename = $request->file('filename')->getClientOriginalName();
 
-/*
+            /* >>> There is couple of method you can apply while you uploading some file(s) using laravel's.
+            Here is the couple of them and most important to, in my thought.*/
+            //  $request->hasFile('filename')
+            /* >>> hasFile method to check user upload file or not. */
+            //  $request->file('filename')->isValid()
+            /* >>> isValid method take care to check file have no error.
+            After these checks, you have to get file properties and move to desired location. For these purposes. */
             $file = $request->file('filename');
-
-            //Display File Name
-            echo 'File Name: '.$file->getClientOriginalName();
-
-            //Display File Extension
-            echo 'File Extension: '.$file->getClientOriginalExtension();
-
-            //Display File Real Path
-            echo 'File Real Path: '.$file->getRealPath();
-
-            //Display File Size
-            echo 'File Size: '.$file->getSize();
-
-            //Display File Mime Type
-            echo 'File Mime Type: '.$file->getMimeType();
-
-            //Move Uploaded File
-            $destinationPath = url('/videos');
-            $file->move($destinationPath,$file->getClientOriginalName());
-*/
-
-
-
-
-
-
-
-
-
-
+            /* >>> Get the document information object. So after that you can use further helper function provided my laravel FileUploader. */
+            //    $file->getRealPath();
+            //    $file->getClientOriginalName();
+            //    $file->getClientOriginalExtension();
+            //    $file->getSize();
+            //    $file->getMimeType();
+            /* >>> and finally to move the uploaded file */
+            //    $file->move($destinationPath);
+            //    $file->move($destinationPath, $fileName);
+            $file->move( public_path().'/videos/', urlencode( $file->getClientOriginalName() ) );
 
             try {
                 $theobj->save();
@@ -145,11 +132,37 @@ class VdsVideosController extends Controller
 
         echo '<script>console.log("store method")</script>';
 
-        if ( !empty( $request->title ) && !empty( $request->filename ) ) {
+        if ( !empty( $request->title ) && $request->hasFile('filename') ) {
+
+            // eliminacion de archivo anterior
+            //Storage::delete( public_path() . '/videos/' . urlencode( $theobj->filename ) );
+            echo '<script>console.log("file: '.public_path() . '/videos/' . urlencode( $theobj->filename ).'")</script>';
+            if ( file_exists( public_path() . '/videos/' . urlencode( $theobj->filename ) ) ) {
+                @unlink( public_path() . '/videos/' . urlencode( $theobj->filename ) );
+            }
 
             $theobj->title = $request->title;
             $theobj->description = $request->description;
-            $theobj->filename = $request->filename;
+            $theobj->filename = $request->file('filename')->getClientOriginalName();
+
+            /* >>> There is couple of method you can apply while you uploading some file(s) using laravel's.
+            Here is the couple of them and most important to, in my thought.*/
+            //  $request->hasFile('filename')
+            /* >>> hasFile method to check user upload file or not. */
+            //  $request->file('filename')->isValid()
+            /* >>> isValid method take care to check file have no error.
+            After these checks, you have to get file properties and move to desired location. For these purposes. */
+            $file = $request->file('filename');
+            /* >>> Get the document information object. So after that you can use further helper function provided my laravel FileUploader. */
+            //    $file->getRealPath();
+            //    $file->getClientOriginalName();
+            //    $file->getClientOriginalExtension();
+            //    $file->getSize();
+            //    $file->getMimeType();
+            /* >>> and finally to move the uploaded file */
+            //    $file->move($destinationPath);
+            //    $file->move($destinationPath, $fileName);
+            $file->move( public_path().'/videos/', urlencode( $file->getClientOriginalName() ) );
 
             try {
                 $theobj->save();
@@ -158,13 +171,13 @@ class VdsVideosController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [VdsVideosController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [VdsVideosController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
-            $request->session()->flash('error', 'Titul i/o Video inexistent' );
-            $response = redirect()->action( [VdsVideosController::class, 'edit'] )->withInput();
+            $request->session()->flash('error', 'Titul i/o Video inexistent (1)' );
+            $response = redirect()->action( [VdsVideosController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

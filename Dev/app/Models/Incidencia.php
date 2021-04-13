@@ -67,16 +67,7 @@ class Incidencia extends Model
      */
     public function afectats() //: BelongsToMany
     {
-        return $this->belongsToMany(Afectat::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
+        return $this->belongsToMany(Afectat::class, 'incidencies_has_recursos', 'afectats_id', 'incidencies_id');
     }
 
-    /**
-     * The roles that belong to the incidencies
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function recursos() //: BelongsToMany
-    {
-        return $this->belongsToMany(Recurs::class, 'incidencies_has_recursos', 'recursos_id', 'incidencies_id');
-    }
 }

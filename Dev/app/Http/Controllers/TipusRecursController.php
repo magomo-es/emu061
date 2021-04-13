@@ -121,13 +121,13 @@ class TipusRecursController extends Controller
             } catch( QueryException $ex ) {
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
-                $response = redirect()->action( [TipusRecursController::class, 'edit'] )->withInput();
+                $response = redirect()->action( [TipusRecursController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
             }
 
         } else {
 
             $request->session()->flash('error', 'Tipus inexistent' );
-            $response = redirect()->action( [TipusRecursController::class, 'edit'] )->withInput();
+            $response = redirect()->action( [TipusRecursController::class, 'edit'], [ 'theobj' => $theobj ] )->withInput();
 
         }
 

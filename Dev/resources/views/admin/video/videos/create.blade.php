@@ -34,12 +34,16 @@
 
             </div>
 
-            <div class="form-group row p-3">
+            <div class="form-group row px-3">
 
+                <div for="description" class="col-1 col-form-label">Video</div>
+                <div class="custom-file col-5 p-0">
+                    <input type="text" class="form-control" value="{{ old('filename') }}" readonly>
+                </div>
                 <div for="description" class="col-1 col-form-label"></div>
-                <div class="custom-file col-11 p-0">
+                <div class="custom-file col-5 p-0">
                     <input type="file" class="custom-file-input" id="filename" name="filename">
-                    <label class="custom-file-label" for="filename">Arxiu Video</label>
+                    <label class="custom-file-label" for="filename">Seleccio Arxiu de Video</label>
                 </div>
 
             </div>
