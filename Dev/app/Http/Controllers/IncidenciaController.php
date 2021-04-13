@@ -7,7 +7,6 @@ use App\Classes\Utility;
 use App\Models\Alertant;
 use App\Models\Municipi;
 use App\Models\Incidencia;
-use App\Models\TipusAlertant;
 use Illuminate\Http\Request;
 use App\Models\TipusIncidencia;
 use Illuminate\Database\QueryException;
@@ -54,11 +53,10 @@ class IncidenciaController extends Controller
 
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
-        $tipusAlertantAry = TipusAlertant::orderBy('tipus')->get();
         $municipisAry = Municipi::orderBy('nom')->get();
         $usuarisAry = Usuari::orderBy('username')->get();
 
-        return view('admin.incidencia.index', compact('objectsAry','tipusAry','alertantsAry','tipusAlertantAry','municipisAry','usuarisAry') );
+        return view('admin.incidencia.index', compact('objectsAry','tipusAry','alertantsAry','municipisAry','usuarisAry') );
 
     }
 
@@ -74,10 +72,9 @@ class IncidenciaController extends Controller
         echo '<script>console.log("create method")</script>';
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
-        $tipusAlertantAry = TipusAlertant::orderBy('tipus')->get();
         $municipisAry = Municipi::orderBy('nom')->get();
         $usuarisAry = Usuari::orderBy('username')->get();
-        return view( 'admin.incidencia.create', compact('tipusAry','alertantsAry','tipusAlertantAry','municipisAry','usuarisAry') );
+        return view( 'admin.incidencia.create', compact('tipusAry','alertantsAry','municipisAry','usuarisAry') );
 
     }
 
@@ -157,11 +154,22 @@ class IncidenciaController extends Controller
         echo '<script>console.log("edit method")</script>';
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
-        $tipusAlertantAry = TipusAlertant::orderBy('tipus')->get();
-        $municipisAry = Municipi::orderBy('nom')->get();
+        $municipisAry = Municipi::with(['comarca'])->with(['provincia'])->orderBy('nom')->get();
         $usuarisAry = Usuari::orderBy('username')->get();
 
-        return view('admin.incidencia.edit', compact('theobj','tipusAry','alertantsAry','tipusAlertantAry','municipisAry','usuarisAry') );
+
+
+
+
+
+        //echo '<script>console.log("edit method -> $theobj->tipus_incidencia()->tipus: '.json_encode($theobj,true).'")</script>';
+        //$alertantsAry = Alertant::with(['tipus_alertants'])->orderBy('cognoms')->orderBy('nom')->get();
+
+
+
+
+
+        return view('admin.incidencia.edit', compact('theobj','tipusAry','alertantsAry','municipisAry','usuarisAry') );
 
     }
 

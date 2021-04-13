@@ -17,39 +17,39 @@
 
                 <div class="col-3">
                     <div class="row">
-                        <label for="numincident" class="col-4 col-form-label"><small>Id Incidencia</small></label>
+                        <label for="xnumincident" class="col-4 col-form-label"><small>Id Incidencia</small></label>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ old('numincident') }}" required>
+                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ old('numincident') }}" v-model="incident.numincident">
                         </div>
                     </div>
                 </div>
 
                 <div class="col-3">
                     <div class="row">
-                        <label for="data" class="col-4 col-form-label"><small>Data</small></label>
+                        <label for="xdata" class="col-4 col-form-label"><small>Data</small></label>
                         <div class="col-8">
-                            <input type="date" class="form-control" id="data" name="data"
+                            <input type="date" class="form-control" id="xdata" name="xdata"
                             min="{{ date('Y-m-d',time()-86400) }}" max="{{ date('Y-m-d',time()+86400) }}"
-                            value="{{ (!empty(old('data'))?old('data'):date('Y-m-d',time())) }}" required>
+                            value="{{ (!empty(old('xdata'))?old('xdata'):date('Y-m-d',time())) }}" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-2">
                     <div class="row">
-                        <label for="hora" class="col-4 col-form-label"><small>Hora</small></label>
+                        <label for="xhora" class="col-4 col-form-label"><small>Hora</small></label>
                         <div class="col-8">
-                            <input type="time" class="form-control" id="hora" name="hora"
-                            value="{{ (!empty(old('hora'))?old('hora'):date('G:i',time())) }}" v-model="incident.hora" required>
+                            <input type="time" class="form-control" id="xhora" name="xhora"
+                            value="{{ (!empty(old('xhora'))?old('xhora'):date('G:i',time())) }}" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="row">
-                        <label for="telefonalertant" class="col-2 col-form-label"><small>Telefon</small></label>
+                        <label for="xtelefonalertant" class="col-2 col-form-label"><small>Telefon</small></label>
                         <div class="col-6">
-                            <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ (!empty(old('telefonalertant'))?old('telefonalertant'):'') }}" v-model="incident.telefonalertant" required>
+                            <input type="text" class="form-control" id="xtelefonalertant" name="xtelefonalertant" value="{{ old('xtelefonalertant') }}">
                         </div>
                         <div class="col-4">
                             <button id="addAlertant" type="button" class="btn btn-primary w-100 px-3" @click="openAlertantEdit()">Alertant</button>
@@ -61,9 +61,9 @@
 
             <div class="form-group row">
 
-                <label for="adreca" class="col-1 col-form-label"><small>Adreça</small></label>
+                <label for="xadreca" class="col-1 col-form-label"><small>Adreça</small></label>
                 <div class="col-11">
-                    <input type="text" class="form-control" id="adreca" name="adreca" value="{{ (!empty(old('adreca'))?old('adreca'):'') }}" v-model="incident.adreca" required>
+                    <input type="text" class="form-control" id="xadreca" name="xadreca" value="{{ old('xadreca') }}">
                 </div>
 
             </div>
@@ -72,9 +72,9 @@
 
                 <div class="col-6">
                     <div class="row">
-                        <label for="adrecacomplement" class="col-2 col-form-label"><small>Adreça comp</small></label>
+                        <label for="xadrecacomplement" class="col-2 col-form-label"><small>Adreça comp</small></label>
                         <div class="col-10">
-                            <input type="text" class="form-control" id="adrecacomplement" name="adrecacomplement" value="{{ (!empty(old('adrecacomplement'))?old('adrecacomplement'):'') }}" v-model="incident.adrecacomplement" required>
+                            <input type="text" class="form-control" id="xadrecacomplement" name="xadrecacomplement" value="{{ old('xadrecacomplement') }}">
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                     <div class="row">
                         <label for="xmunicipisid" class="col-2 col-form-label"><small>Municipi</small></label>
                         <div class="col-10">
-                            <select class="custom-select" id="xmunicipisid" name="xmunicipisid" v-model="incident.adrecacomplement">
+                            <select class="custom-select" id="xmunicipisid" name="xmunicipisid">
                                 @foreach ($municipisAry as $municipi)
                                 <option value="{{ $municipi->id }}" {{ ((old('xmunicipisid')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
                                 @endforeach
@@ -93,17 +93,6 @@
                 </div>
 
             </div>
-
-                descripcio: '',
-                nom_metge: '',
-                tipus_incidencies_id: 0,
-                alertants_id: 0,
-                municipis_id: 0,
-                usuaris_id: 0,
-                afectats: []
-
-
-
 
             <div class="form-group row">
 
