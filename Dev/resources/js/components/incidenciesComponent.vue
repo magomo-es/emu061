@@ -122,17 +122,19 @@
 
 export default {
 
-    data: {
-      errors: [],
-      num: null,
-      data: null,
-      hora: null,
-      munics: ['Barcelona', 'Hospitalet de Llobregat', 'Badalona', 'Mataró'],
-      comarcas: ['Baix Llogregat', 'Barcelonés', 'Baix Penedés'],
-      provincia: ['Barcelona', 'Lleida', 'Tarragona', 'Girona'],
-      direcc: null,
-      direcc_compl: null,
-      desc: null,
+    data() {
+        return {
+            errors: [],
+            num: null,
+            data: null,
+            hora: null,
+            munics: ['Barcelona', 'Hospitalet de Llobregat', 'Badalona', 'Mataró'],
+            comarcas: ['Baix Llogregat', 'Barcelonés', 'Baix Penedés'],
+            provincia: ['Barcelona', 'Lleida', 'Tarragona', 'Girona'],
+            direcc: null,
+            direcc_compl: null,
+            desc: null,
+        }
     },
     methods: {
         onSubmit() {

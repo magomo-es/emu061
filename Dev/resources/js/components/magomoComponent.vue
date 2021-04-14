@@ -203,8 +203,7 @@
 
                 key_tmp: 0,
 
-                valoracionCodi = '',
-                valoracionKey = '',
+                valoracionCodi: '',
 
                 afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' },
 
@@ -288,17 +287,22 @@
 
             onChangeValoracio( ev ) {
 
-                //let optionValoracio = ev.currentTarget
-                //let sel = ev.currentTarget.selectedIndex
                 this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value
-                this.valoracionKey = ev.currentTarget.options[ev.currentTarget.selectedIndex].key
 
             },
 
-            openVideoValoracio( code ) {
+            openVideoValoracio() {
 
-                console.log( 'openVideoValoracio ' + this.valoracionCodi+' / '+this.valoracionKey )
-                alert(' open video modal code ' + this.valoracionCodi+' / '+this.valoracionKey )
+                console.log( 'openVideoValoracio ' + this.valoracionCodi )
+                alert(' open video modal code ' + this.valoracionCodi )
+
+
+
+
+
+
+
+
                 //$('#modalVideoValoracio').modal('hide')
 
             },

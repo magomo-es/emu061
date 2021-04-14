@@ -1966,17 +1966,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: {
-    errors: [],
-    num: null,
-    data: null,
-    hora: null,
-    munics: ['Barcelona', 'Hospitalet de Llobregat', 'Badalona', 'Mataró'],
-    comarcas: ['Baix Llogregat', 'Barcelonés', 'Baix Penedés'],
-    provincia: ['Barcelona', 'Lleida', 'Tarragona', 'Girona'],
-    direcc: null,
-    direcc_compl: null,
-    desc: null
+  data: function data() {
+    return {
+      errors: [],
+      num: null,
+      data: null,
+      hora: null,
+      munics: ['Barcelona', 'Hospitalet de Llobregat', 'Badalona', 'Mataró'],
+      comarcas: ['Baix Llogregat', 'Barcelonés', 'Baix Penedés'],
+      provincia: ['Barcelona', 'Lleida', 'Tarragona', 'Girona'],
+      direcc: null,
+      direcc_compl: null,
+      desc: null
+    };
   },
   methods: {
     onSubmit: function onSubmit() {
@@ -2014,9 +2016,302 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/magomoComponent.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************************************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\resources\\js\\components\\magomoComponent.vue: Unexpected token (206:27)\n\n\u001b[0m \u001b[90m 204 |\u001b[39m             key_tmp\u001b[33m:\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 205 |\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 206 |\u001b[39m             valoracionCodi \u001b[33m=\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 207 |\u001b[39m             valoracionKey \u001b[33m=\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 208 |\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 209 |\u001b[39m             afectat\u001b[33m:\u001b[39m { id\u001b[33m:\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m telefon\u001b[33m:\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m cip\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m nom\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m cognoms\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m edat\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m te_cip\u001b[33m:\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m sexes_id\u001b[33m:\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m descripcio\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m tipus_recursos_id\u001b[33m:\u001b[39m \u001b[35m0\u001b[39m\u001b[33m,\u001b[39m codi_gravetat\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m\u001b[33m,\u001b[39m codi_valoracio\u001b[33m:\u001b[39m \u001b[32m''\u001b[39m }\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:775:17)\n    at Parser.raiseWithData (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:768:17)\n    at Parser.raise (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:736:17)\n    at Parser.unexpected (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:9716:16)\n    at Parser.checkExpressionErrors (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:9804:12)\n    at Parser.parseMaybeAssign (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:10468:12)\n    at Parser.parseExpressionBase (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:10386:23)\n    at X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:10380:39\n    at Parser.allowInAnd (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12079:16)\n    at Parser.parseExpression (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:10380:17)\n    at Parser.parseReturnStatement (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12605:28)\n    at Parser.parseStatementContent (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12284:21)\n    at Parser.parseStatement (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12236:17)\n    at Parser.parseBlockOrModuleBlockBody (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12816:25)\n    at Parser.parseBlockBody (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12807:10)\n    at Parser.parseBlock (X:\\xampp\\htdocs\\00_Proyecto_emu061\\emu061\\Dev\\node_modules\\@babel\\parser\\lib\\index.js:12791:10)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
+  data: function data() {
+    return {
+      key_tmp: 0,
+      valoracionCodi: '',
+      valoracionKey: '',
+      afectat: {
+        id: 0,
+        telefon: 0,
+        cip: '',
+        nom: '',
+        cognoms: '',
+        edat: '',
+        te_cip: 0,
+        sexes_id: 0,
+        descripcio: '',
+        tipus_recursos_id: 0,
+        codi_gravetat: '',
+        codi_valoracio: ''
+      },
+      afectats: [],
+      sexes: [],
+      tipusrecursos: [],
+      codisgravetat: [],
+      codisvaloracions: [],
+      vdsvides: [],
+      vdsevents: [],
+      vdsplay: [],
+      hlpvaloracions: [],
+      hlpsimtomes: []
+    };
+  },
+  methods: {
+    emptyAfectat: function emptyAfectat() {
+      return {
+        id: '',
+        telefon: 0,
+        cip: '',
+        nom: '',
+        cognoms: '',
+        edat: '',
+        te_cip: 0,
+        sexes_id: 0,
+        descripcio: '',
+        tipus_recursos_id: 0,
+        codi_gravetat: '',
+        codi_valoracio: ''
+      };
+    },
+    confirmDeleteAfectat: function confirmDeleteAfectat(afectat, keyindex) {
+      console.log('open modal delete x afectat id ' + (keyindex + 1));
+      this.key_tmp = keyindex;
+      this.afectat = afectat;
+      $('#modalAfectatDelete').modal('show');
+    },
+    openEditAfectat: function openEditAfectat(afectat, keyindex) {
+      console.log('open modal x edit afectat id ' + (keyindex + 1));
+      this.key_tmp = keyindex;
+      this.afectat = afectat;
+      $('#modalEditAfectat').modal('show');
+    },
+    deleteAfectat: function deleteAfectat() {
+      console.log('delete afectat id ' + (this.key_tmp + 1));
+      this.afectats.splice(this.work_key, 1);
+      $('#modalAfectatDelete').modal('hide');
+    },
+    registerAfectat: function registerAfectat() {
+      if (this.key_tmp >= 0 && this.afectats[this.key_tmp]) {
+        console.log('updated afectat id ' + (this.key_tmp + 1));
+        this.afectats[this.key_tmp] = this.afectat;
+      } else {
+        console.log('added afectat id ' + (this.key_tmp + 1));
+        this.afectats.push(this.afectat);
+      }
+
+      $('#modalEditAfectat').modal('hide');
+    },
+    onChangeValoracio: function onChangeValoracio(ev) {
+      //let optionValoracio = ev.currentTarget
+      //let sel = ev.currentTarget.selectedIndex
+      this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value;
+      this.valoracionKey = ev.currentTarget.options[ev.currentTarget.selectedIndex].key;
+    },
+    openVideoValoracio: function openVideoValoracio(code) {
+      console.log('openVideoValoracio ' + this.valoracionCodi + ' / ' + this.valoracionKey);
+      alert(' open video modal code ' + this.valoracionCodi + ' / ' + this.valoracionKey); //$('#modalVideoValoracio').modal('hide')
+    }
+  },
+  created: function created() {
+    var apptag = document.getElementById('app');
+    this.afectats = JSON.parse(apptag.dataset.pafectats);
+    this.sexes = JSON.parse(apptag.dataset.psexes);
+    this.tipusrecursos = JSON.parse(apptag.dataset.ptipusrecursos);
+    this.codisgravetat = JSON.parse(apptag.dataset.pcodisgravetat);
+    this.codisvaloracions = JSON.parse(apptag.dataset.pcodisvaloracions);
+    this.vdsvides = JSON.parse(apptag.dataset.pvdsvideos);
+    this.vdsevents = JSON.parse(apptag.dataset.pvdsevents);
+    this.vdsplay = JSON.parse(apptag.dataset.pvdsplay);
+    this.hlpvaloracions = JSON.parse(apptag.dataset.phlpvaloracions);
+    this.hlpsimtomes = JSON.parse(apptag.dataset.phlpsimptomes);
+  },
+  mounted: function mounted() {
+    console.log('Component mounted...');
+  }
+});
 
 /***/ }),
 
@@ -37620,9 +37915,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _magomoComponent_vue_vue_type_template_id_7b164784___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./magomoComponent.vue?vue&type=template&id=7b164784& */ "./resources/js/components/magomoComponent.vue?vue&type=template&id=7b164784&");
 /* harmony import */ var _magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./magomoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/magomoComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -37716,11 +38008,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./magomoComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/magomoComponent.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default())); 
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_magomoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -51424,18 +51712,6 @@ Vue.compile = compileToFunctions;
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
