@@ -2206,13 +2206,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
     return {
       key_tmp: 0,
       valoracionCodi: '',
-      valoracionKey: '',
+      videoId: 0,
+      play_video: '',
       afectat: {
         id: 0,
         telefon: 0,
@@ -2232,7 +2256,7 @@ __webpack_require__.r(__webpack_exports__);
       tipusrecursos: [],
       codisgravetat: [],
       codisvaloracions: [],
-      vdsvides: [],
+      vdsvideos: [],
       vdsevents: [],
       vdsplay: [],
       hlpvaloracions: [],
@@ -2240,6 +2264,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
     emptyAfectat: function emptyAfectat() {
       return {
         id: '',
@@ -2256,23 +2281,27 @@ __webpack_require__.r(__webpack_exports__);
         codi_valoracio: ''
       };
     },
+    // - - - - - - - - - - - - - - - - - - - - - AFECTAT: confirmDeleteAfectat =>
     confirmDeleteAfectat: function confirmDeleteAfectat(afectat, keyindex) {
       console.log('open modal delete x afectat id ' + (keyindex + 1));
       this.key_tmp = keyindex;
       this.afectat = afectat;
       $('#modalAfectatDelete').modal('show');
     },
+    // - - - - - - - - - - - - - - - - - - - - - AFECTAT: openEditAfectat =>
     openEditAfectat: function openEditAfectat(afectat, keyindex) {
       console.log('open modal x edit afectat id ' + (keyindex + 1));
       this.key_tmp = keyindex;
       this.afectat = afectat;
       $('#modalEditAfectat').modal('show');
     },
+    // - - - - - - - - - - - - - - - - - - - - - AFECTAT: deleteAfectat =>
     deleteAfectat: function deleteAfectat() {
       console.log('delete afectat id ' + (this.key_tmp + 1));
       this.afectats.splice(this.work_key, 1);
       $('#modalAfectatDelete').modal('hide');
     },
+    // - - - - - - - - - - - - - - - - - - - - - AFECTAT: registerAfectat =>
     registerAfectat: function registerAfectat() {
       if (this.key_tmp >= 0 && this.afectats[this.key_tmp]) {
         console.log('updated afectat id ' + (this.key_tmp + 1));
@@ -2284,16 +2313,60 @@ __webpack_require__.r(__webpack_exports__);
 
       $('#modalEditAfectat').modal('hide');
     },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
     onChangeValoracio: function onChangeValoracio(ev) {
-      //let optionValoracio = ev.currentTarget
-      //let sel = ev.currentTarget.selectedIndex
       this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value;
-      this.valoracionKey = ev.currentTarget.options[ev.currentTarget.selectedIndex].key;
     },
-    openVideoValoracio: function openVideoValoracio(code) {
-      console.log('openVideoValoracio ' + this.valoracionCodi + ' / ' + this.valoracionKey);
-      alert(' open video modal code ' + this.valoracionCodi + ' / ' + this.valoracionKey); //$('#modalVideoValoracio').modal('hide')
-    }
+    // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: openVideoValoracio =>
+    openVideoValoracio: function openVideoValoracio() {
+      console.log('openVideoValoracio ' + this.valoracionCodi);
+      this.videoid = this.findVideoFileById(this.findVideoIdByCodiValoracio(this.valoracionCodi));
+
+      if (this.videoid >= 0) {
+        console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename);
+        this.play_video = '/videos/' + encodeURI(this.vdsvideos[this.videoid].filename);
+        $('#modalVideoValoracio').modal('show');
+      } else {
+        alert('Actualment no es disposa d\'cap vídeo per a aquesta valoració.');
+      }
+    },
+    // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: closeVideoValoracio =>
+    closeVideoValoracio: function closeVideoValoracio() {
+      $('#modalVideoValoracio').modal('hide');
+      this.play_video = '';
+    },
+    // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoIdByCodiValoracio =>
+    findVideoIdByCodiValoracio: function findVideoIdByCodiValoracio(code) {
+      var i = -1,
+          foud = -1;
+
+      if (code.length > 0) {
+        while (foud < 0 && ++i < this.vdsplay.length) {
+          if (this.vdsplay[i].id_caller == code) {
+            foud = this.vdsplay[i].id_video;
+          }
+        }
+      }
+
+      return foud;
+    },
+    // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoFileById =>
+    findVideoFileById: function findVideoFileById(id) {
+      var i = -1,
+          foud = -1;
+
+      if (id >= 0) {
+        while (foud < 0 && ++i < this.vdsplay.length) {
+          if (this.vdsvideos[i].id == id) {
+            foud = i;
+          }
+        }
+      }
+
+      return foud;
+    } // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
   },
   created: function created() {
     var apptag = document.getElementById('app');
@@ -2302,7 +2375,7 @@ __webpack_require__.r(__webpack_exports__);
     this.tipusrecursos = JSON.parse(apptag.dataset.ptipusrecursos);
     this.codisgravetat = JSON.parse(apptag.dataset.pcodisgravetat);
     this.codisvaloracions = JSON.parse(apptag.dataset.pcodisvaloracions);
-    this.vdsvides = JSON.parse(apptag.dataset.pvdsvideos);
+    this.vdsvideos = JSON.parse(apptag.dataset.pvdsvideos);
     this.vdsevents = JSON.parse(apptag.dataset.pvdsevents);
     this.vdsplay = JSON.parse(apptag.dataset.pvdsplay);
     this.hlpvaloracions = JSON.parse(apptag.dataset.phlpvaloracions);
@@ -39186,6 +39259,47 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: { id: "modalVideoValoracio", tabindex: "-1" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(19),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("video", {
+                  attrs: { id: "videoValoracio", src: _vm.play_video }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.closeVideoValoracio()
+                      }
+                    }
+                  },
+                  [_vm._v("Tanca")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -39429,6 +39543,31 @@ var staticRenderFns = [
       },
       [_c("small", [_vm._v("Descripcio")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Videos per Valoració")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true

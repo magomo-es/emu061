@@ -178,6 +178,29 @@
     </div>
     <!-- Modal modalEditAfectat Inser/Update -->
 
+    <!-- Modal modalVideoValoracio VIDEO-->
+    <div id="modalVideoValoracio" class="modal" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Videos per Valoració</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <video id="videoValoracio" v-bind:src="play_video" ></video>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="closeVideoValoracio()">Tanca</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal modalVideoValoracio VIDEO -->
+
 </div>
 </template>
 
@@ -205,6 +228,12 @@
 
                 valoracionCodi: '',
 
+                videoId: 0,
+
+                play_video: '',
+
+
+
                 afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' },
 
                 afectats: [],
@@ -212,7 +241,7 @@
                 tipusrecursos: [],
                 codisgravetat: [],
                 codisvaloracions: [],
-                vdsvides: [],
+                vdsvideos: [],
                 vdsevents: [],
                 vdsplay: [],
                 hlpvaloracions: [],
@@ -223,7 +252,7 @@
         },
 
         methods: {
-
+            // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
             emptyAfectat() {
                 return {
                     id: '',
@@ -240,7 +269,7 @@
                     codi_valoracio: ''
                 }
             },
-
+            // - - - - - - - - - - - - - - - - - - - - - AFECTAT: confirmDeleteAfectat =>
             confirmDeleteAfectat( afectat, keyindex ) {
 
                 console.log( 'open modal delete x afectat id ' + (keyindex+1) )
@@ -249,7 +278,7 @@
                 $('#modalAfectatDelete').modal('show')
 
             },
-
+            // - - - - - - - - - - - - - - - - - - - - - AFECTAT: openEditAfectat =>
             openEditAfectat( afectat, keyindex ) {
 
                 console.log( 'open modal x edit afectat id ' + (keyindex+1) )
@@ -258,7 +287,7 @@
                 $('#modalEditAfectat').modal('show')
 
             },
-
+            // - - - - - - - - - - - - - - - - - - - - - AFECTAT: deleteAfectat =>
             deleteAfectat() {
 
                 console.log( 'delete afectat id ' + (this.key_tmp+1) )
@@ -266,7 +295,7 @@
                 $('#modalAfectatDelete').modal('hide')
 
             },
-
+            // - - - - - - - - - - - - - - - - - - - - - AFECTAT: registerAfectat =>
             registerAfectat() {
 
                 if ( this.key_tmp >= 0 && this.afectats[this.key_tmp] ) {
@@ -284,29 +313,65 @@
                 $('#modalEditAfectat').modal('hide')
 
             },
-
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
             onChangeValoracio( ev ) {
 
                 this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value
 
             },
-
+            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: openVideoValoracio =>
             openVideoValoracio() {
 
                 console.log( 'openVideoValoracio ' + this.valoracionCodi )
-                alert(' open video modal code ' + this.valoracionCodi )
 
+                this.videoid = this.findVideoFileById( this.findVideoIdByCodiValoracio( this.valoracionCodi ) )
 
+                if( this.videoid>=0 ) {
 
+                    console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename )
+                    this.play_video = '/videos/'+encodeURI(this.vdsvideos[this.videoid].filename)
+                    $('#modalVideoValoracio').modal('show')
 
+                } else {
 
+                    alert('Actualment no es disposa d\'cap vídeo per a aquesta valoració.' )
 
-
-
-                //$('#modalVideoValoracio').modal('hide')
+                }
 
             },
+            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: closeVideoValoracio =>
+            closeVideoValoracio() {
 
+                $('#modalVideoValoracio').modal('hide')
+                this.play_video = ''
+
+            },
+            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoIdByCodiValoracio =>
+            findVideoIdByCodiValoracio( code ) {
+
+                var i = -1, foud = -1;
+                if (code.length>0) {
+                    while (foud<0 && ++i<this.vdsplay.length) {
+                        if (this.vdsplay[i].id_caller==code) { foud = this.vdsplay[i].id_video; }
+                    }
+                }
+                return foud
+
+            },
+            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoFileById =>
+            findVideoFileById( id ) {
+
+                var i = -1, foud = -1;
+                if (id>=0) {
+                    while (foud<0 && ++i<this.vdsplay.length) {
+                        if (this.vdsvideos[i].id==id) { foud = i; }
+                    }
+                 }
+                return foud
+
+            },
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
         },
 
         created() {
@@ -316,7 +381,7 @@
             this.tipusrecursos = JSON.parse( apptag.dataset.ptipusrecursos )
             this.codisgravetat = JSON.parse( apptag.dataset.pcodisgravetat )
             this.codisvaloracions = JSON.parse( apptag.dataset.pcodisvaloracions )
-            this.vdsvides = JSON.parse( apptag.dataset.pvdsvideos )
+            this.vdsvideos = JSON.parse( apptag.dataset.pvdsvideos )
             this.vdsevents = JSON.parse( apptag.dataset.pvdsevents )
             this.vdsplay = JSON.parse( apptag.dataset.pvdsplay )
             this.hlpvaloracions = JSON.parse( apptag.dataset.phlpvaloracions )
