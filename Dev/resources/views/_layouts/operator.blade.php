@@ -46,6 +46,29 @@
         </nav> --}}
 
 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container" style="max-width: 1350px;">
+
+                <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    Generar Trucada
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarText" style="margin-left: 10px;">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#navbarText"
+                                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                                Video
+                            </button>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </nav>
+
 
         @include('_partials.userbox')
 
