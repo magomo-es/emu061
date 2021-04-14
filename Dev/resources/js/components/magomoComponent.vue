@@ -1,536 +1,303 @@
 <template>
-<main>
+<div class="w-100 mt-4">
 
-<div class="alert alert-info text-white" v-bind:class="{ 'bg-danger': retError }" role="alert" v-on:click="resetReturn()" v-show="showMsgs">{{ retMessage + ' ('+retStatus+')' }}</div>
-
-<div class="card">
-
-    <div class="card-header">Nou Incidencia</div>
-
-    <div class="card-body">
-
-        <form action="{{ action( [App\Http\Controllers\IncidenciaController::class, 'store'] ) }}" method="POST">
-
-            @csrf
-
-            <div class="form-group row">
-
-                <div class="col-3">
-                    <div class="row">
-                        <label for="xnumincident" class="col-4 col-form-label"><small>Id Incidencia</small></label>
-                        <div class="col-8">
-                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ old('numincident') }}" v-model="incident.numincident">
-                        </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col"><small>Id</small></th>
+            <th scope="col"><small>Nom i Congoms</small></th>
+            <th scope="col"><small>CIP</small></th>
+            <th scope="col"><small>Teléfon</small></th>
+            <th scope="col"><small>Edat</small></th>
+            <th scope="col"><small>Sexe</small></th>
+            <th scope="col" class="text-right">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary btn-sm" @click="openEditAfectat(emptyAfectat(),-1)">Nou Afectat</button>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(afectat, index) in afectats" v-bind:key="afectat.id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ afectat.nom }} {{ afectat.cognoms }}</td>
+                <td>{{ afectat.cip }}</td>
+                <td>{{ afectat.telefon }}</td>
+                <td>{{ afectat.edat }}</td>
+                <td>{{ sexes[afectat.sexe] }}</td>
+                <td class="text-right">
+                    <input type="hidden" v-bind:id="'afectat['+index+'][id]'" v-bind:name="'afectat['+index+'][id]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][nom]'" v-bind:name="'afectat['+index+'][nom]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][cognoms]'" v-bind:name="'afectat['+index+'][cognoms]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][cip]'" v-bind:name="'afectat['+index+'][cip]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][telefon]'" v-bind:name="'afectat['+index+'][telefon]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][edat]'" v-bind:name="'afectat['+index+'][edat]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][sexe]'" v-bind:name="'afectat['+index+'][sexe]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][descripcio]'" v-bind:name="'afectat['+index+'][descripcio]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][tipus_recursos_id]'" v-bind:name="'afectat['+index+'][tipus_recursos_id]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][codi_gravetat]'" v-bind:name="'afectat['+index+'][codi_gravetat]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][codi_valoracio]'" v-bind:name="'afectat['+index+'][codi_valoracio]'" />
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-warning btn-sm" @click="openEditAfectat(afectat, index)">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
                     </div>
+                    <div class="btn-group ml-1" role="group">
+                        <button type="button" class="btn btn-danger btn-sm" @click="confirmDeleteAfectat(afectat, index)">
+                            <i class="fas fa-trash"></i> Esborrar
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <!-- Modal modalAfectatDelete Delete -->
+    <div id="modalAfectatDelete" class="modal" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Esborrar Afectat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">Estas segur de que vols esborrar l'afectat {{ '# '+(key_tmp+1)+' - '+afectat.nom+' '+afectat.cognom  }} ?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Tarcar</button>
+                    <button type="button" class="btn btn-danger" @click="deleteAfectat()"><i class="fas fa-trash"></i> Esborrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal modalAfectatDelete Delete -->
+
+    <!-- Modal modalEditAfectat Inser/Update -->
+    <div id="modalEditAfectat" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Afectat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
-                <div class="col-3">
-                    <div class="row">
-                        <label for="xdata" class="col-4 col-form-label"><small>Data</small></label>
-                        <div class="col-8">
-                            <input type="date" class="form-control" id="xdata" name="xdata"
-                            min="{{ date('Y-m-d',time()-86400) }}" max="{{ date('Y-m-d',time()+86400) }}"
-                            value="{{ (!empty(old('xdata'))?old('xdata'):date('Y-m-d',time())) }}" required>
-                        </div>
-                    </div>
-                </div>
+                <div class="modal-body px-5">
 
-                <div class="col-2">
-                    <div class="row">
-                        <label for="xhora" class="col-4 col-form-label"><small>Hora</small></label>
-                        <div class="col-8">
-                            <input type="time" class="form-control" id="xhora" name="xhora"
-                            value="{{ (!empty(old('xhora'))?old('xhora'):date('G:i',time())) }}" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="row">
-                        <label for="xtelefonalertant" class="col-2 col-form-label"><small>Telefon</small></label>
+                    <div class="form-group row">
                         <div class="col-6">
-                            <input type="text" class="form-control" id="xtelefonalertant" name="xtelefonalertant" value="{{ old('xtelefonalertant') }}">
+                            <div class="row px-1">
+                                <label for="afectat_nom" class="col-12 col-form-label pl-1"><small>Nom</small></label>
+                                <input type="text" class="col-12 form-control" id="afectat_nom" v-model="afectat.nom">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row px-1">
+                                <label for="afectat_cognoms" class="col-12 col-form-label pr-1"><small>Congnoms</small></label>
+                                <input type="text" class="col-12 form-control" id="afectat_cognoms" v-model="afectat.cognoms">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <div class="row px-1">
+                                <label for="afectat_cip" class="col-12 col-form-label pr-1"><small>CIP</small></label>
+                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip">
+                            </div>
                         </div>
                         <div class="col-4">
-                            <button id="addAlertant" type="button" class="btn btn-primary w-100 px-3" @click="openAlertantEdit()">Alertant</button>
+                            <div class="row px-1">
+                                <label for="afectat_edat" class="col-12 col-form-label pr-1"><small>Edat</small></label>
+                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row px-1">
+                                <label for="afectat_sexesid" class="col-12 col-form-label"><small>Sexe</small></label>
+                                <select class="col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexes_id">
+                                    <option v-for="(item) in sexes"  v-bind:key="item.id" v-bind:value="item.id">{{ item.sexe }}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <div class="row px-1">
+                                <label for="afectat_tipusrecursosid" class="col-12 col-form-label"><small>Tipus Recurs</small></label>
+                                <select class="col-12 custom-select" id="afectat_tipusrecursosid" v-model="afectat.tipus_recursos_id">
+                                    <option v-for="(item) in tipusrecursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.tipus }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row px-1">
+                                <label for="afectat_codigravetat" class="col-12 col-form-label"><small>Codi Gravetat</small></label>
+                                <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat">
+                                    <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <div class="row px-1">
+                                <label for="afectat_codivaloracio" class="col-12 col-form-label"><small>Codi Valoracio</small></label>
+                                <select class="col-12 custom-select" id="afectat_codivaloracio" v-model="afectat.codi_valoracio">
+                                    <option v-for="(item) in codisvaloracions" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <div class="row px-1">
+                                <label for="afectat_descripcio" class="col-12 col-form-label pr-1"><small>Descripcio</small></label>
+                                <textarea rows="6" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tarcar</button>
+                    <button type="button" class="btn btn-primary" @click="registerAfectat()">{{ (!afectat.id)?'Afegir':'Modificar' }}</button>
+                </div>
             </div>
-
-            <div class="form-group row">
-
-                <label for="xadreca" class="col-1 col-form-label"><small>Adreça</small></label>
-                <div class="col-11">
-                    <input type="text" class="form-control" id="xadreca" name="xadreca" value="{{ old('xadreca') }}">
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-6">
-                    <div class="row">
-                        <label for="xadrecacomplement" class="col-2 col-form-label"><small>Adreça comp</small></label>
-                        <div class="col-10">
-                            <input type="text" class="form-control" id="xadrecacomplement" name="xadrecacomplement" value="{{ old('xadrecacomplement') }}">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="row">
-                        <label for="xmunicipisid" class="col-2 col-form-label"><small>Municipi</small></label>
-                        <div class="col-10">
-                            <select class="custom-select" id="xmunicipisid" name="xmunicipisid">
-                                @foreach ($municipisAry as $municipi)
-                                <option value="{{ $municipi->id }}" {{ ((old('xmunicipisid')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col">
-                    <div class="row">
-                        <label for="xdescripcio" class="col-1 col-form-label pr-1"><small>Descripcio</small></label>
-                        <div class="col-11">
-                            <textarea rows="6" class="form-control" id="xdescripcio" name="xdescripcio">{{ old('xdescripcio') }}</textarea>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-3">
-                    <div class="row">
-                        <label for="xnommetge" class="col-4 col-form-label pr-1"><small>Metge</small></label>
-                        <div class="col-8">
-                            <input type="text" class="form-control" id="xnommetge" name="xnommetge" value="{{ old('xnommetge') }}">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-3">
-                    <div class="row">
-                        <label for="xtipusincidenciesid" class="col-3 col-form-label"><small>Tipus</small></label>
-                        <div class="col-9">
-                            <select class="custom-select" id="xtipusincidenciesid" name="xtipusincidenciesid">
-                                @foreach ($tipusAry as $tipus)
-                                <option value="{{ $tipus->id }}" {{ ((old('xtipusincidenciesid')==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-3">
-                    <div class="row">
-                        <label for="xalertantsid" class="col-3 col-form-label"><small>Alertant</small></label>
-                        <div class="col-9">
-                            <select class="custom-select" id="xalertantsid" name="xalertantsid">
-                                @foreach ($alertantsAry as $alertant)
-                                <option value="{{ $alertant->id }}" {{ ((old('xalertantsid')==$alertant->id)?'selected':'') }}>{{ $alertant->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-3">
-                    <div class="row">
-                        <label for="xusuarisid" class="col-3 col-form-label"><small>Usuari</small></label>
-                        <div class="col-9">
-                            <select class="custom-select" id="xusuarisid" name="xusuarisid">
-                                @foreach ($usuarisAry as $usuari)
-                                <option value="{{ $usuari->id }}" {{ ((old('xusuarisid')==$usuari->id)?'selected':'') }}>{{ $usuari->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="text-right">
-
-                <a class="btn btn-secondary" href="{{ action([App\Http\Controllers\IncidenciaController::class, 'index']) }}">Cancel.lar</a>
-                <button type="submit" class="btn btn-dark">Aceptar</button>
-
-            </div>
-
-        </form>
-
+        </div>
     </div>
+    <!-- Modal modalEditAfectat Inser/Update -->
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <tr v-for="cicle in cicles" v-bind:key="cicle.id">
-                    <td>{{ cicle.id }}</td>
-                    <td>{{ cicle.sigles }}</td>
-                    <td>{{ cicle.nom }}</td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-bind:checked="cicle.actiu" disabled>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-secondary btn-sm" @click="openEditCicle(cicle)">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                        </div>
-                        <div class="btn-group ml-1" role="group">
-                            <button type="submit" class="btn btn-danger btn-sm" @click="confirmDeleteCicle(cicle)">
-                                <i class="fas fa-trash"></i> Esborrar
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal Delete -->
-<div id="deleteModal" class="modal" tabindex="-1">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Esborrar Cicle</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">Estas segur de que vols esborrar el cicle {{ cicle.sigles }} ?</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Tarcar</button>
-          <button type="submit" class="btn btn-danger" @click="deleteCicle()"><i class="fas fa-trash"></i> Esborrar</button>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- Modal Delete -->
-
-<!-- Modal Inser/Update -->
-<div id="editModal" class="modal" tabindex="-1">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edita Cicle</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div class="modal-body">
-
-            <div class="alert alert-info text-white" v-bind:class="{ 'bg-danger': retError }" role="alert" v-on:click="resetReturn()" v-show="showModalMsgs">{{ retMessage + ' ('+retStatus+')' }}</div>
-
-          <form>
-            <div class="form-group row">
-                <label for="xsigles" class="col-sm-2 col-form-label">Sigles</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="xsigles" name="xsigles" v-model="cicle.sigles">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="xnom" class="col-sm-2 col-form-label">Nom</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="xnom" name="xnom" v-model="cicle.nom">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="xdescripcio" class="col-sm-2 col-form-label">Descripcio</label>
-                <div class="col-sm-10">
-                    <textarea type="text" class="form-control" id="xdescripcio" name="xdescripcio" rows="5" v-model="cicle.descripcio"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="xactiu" class="col-sm-2 col-form-label">Actiu</label>
-                <div class="col-sm-10 pl-2">
-                    <input class="form-check-input ml-1" type="checkbox" value="1" id="xactiu" name="xactiu" v-model="cicle.actiu">
-                </div>
-            </div>
-
-          </form>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Tarcar</button>
-          <button type="submit" class="btn btn-primary" @click="saveCicle()"><i class="fas fa-trash"></i> {{ (!cicle.id)?'Afegir':'Modificar' }}</button>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- Modal -->
-
-
-
-</main>
-
 </template>
 
 <script>
     export default {
 
+        props: [
+            'pafectats',
+            'psexes',
+            'ptipusrecursos',
+            'pcodisgravetat',
+            'pcodisvaloracions',
+            'pvdsvideos',
+            'pvdsevents',
+            'pvdsplay',
+            'phlpvaloracions',
+            'phlpsimptomes'
+            ],
+
         data() {
+
             return {
 
-                frm_formelement: { id: 0, title: '', description: '', tagid: '' }, frmelements: [],
+                key_tmp: 0,
 
-                codi_gravetat: { codi: '', nom: '' }, gravetat: [],
+                isUpdate: false,
 
-                codi_valoracio: { codi: '', nom: '' }, valoracions: [],
+                afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' },
 
-                hlp_valoracio: { codi_valoracio: '', translation: '', soundlike: '', jsontags: '' , simptomes: [] }, hlpvaloracions: [],
-
-                hlp_simptoma: { id: 0, pregunta: '', translation: '', soundlike: '' }, hlpsimtomes: [],
-
-                vds_video: { id: 0, title: '', description: '', filename: '' }, vdsvideos: [],
-
-                vds_play: { id: 0, title: '', id_caller: '', id_video: 0, start: 0, ends: 0, playevent: false }, vdsplayers: [],
-
-                vds_event: { id: 0, title: '', id_video: 0, ontime: 0, timeout: 0, type: 0, jsondata: '' }, vdsevents: [],
-
-                afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' }, afectats: [],
-
-                sexe: { id: 0, sexe: '' }, sexes: [],
-
-                municipi: { id: 0, nom: '', comarques_id: 0 }, municipis: [],
-
-                alertant: { id: 0, telefon: 0, nom: '', cognoms: '', adreca: '', municipis_id: 0, tipus_alertants_id: 0 }, alertants: [],
-
-                tipus_incidencia: { id: 0, tipus: '', video: '' }, tipusincidencias: [],
-
-                recurso: { id: 0, codi: '', actiu: false, tipus_recursos_id: 0 },
-                recursos: [],
-
-                hasrecurso: { incidencies_id: 0, recursos_id: 0, afectats_id: 0, hora_activacio: '', hora_mobilitzacio: '', hora_assistencia: '', hora_transport: '', hora_arribada_hospital: '', hora_transferencia: '', hora_finalitzacio: '', prioritat: 0, desti: '', desti_alertant_id: 0 }, hasrecursos: [],
-
-                incidencies: {
-                id: 0,
-                num_incident: 0,
-                data: '',
-                hora: '',
-                telefon_alertant: 0,
-                adreca: '',
-                adreca_complement: '',
-                descripcio: '',
-                nom_metge: '',
-                tipus_incidencies_id: 0,
-                alertants_id: 0,
-                municipis_id: 0,
-                usuaris_id: 0,
-                afectats: []
-                },
-
-                retError: false,
-                retMessage: "",
-                retStatus: 0,
-                showMsgs: false,
-                showModalMsgs: false
+                afectats: [],
+                sexes: [],
+                tipusrecursos: [],
+                codisgravetat: [],
+                codisvaloracions: [],
+                vdsvides: [],
+                vdsevents: [],
+                vdsplay: [],
+                hlpvaloracions: [],
+                hlpsimtomes: [],
 
             }
+
         },
 
         methods: {
 
-            resetCicle() {
-                return { id: '', sigles: '', nom: '', descripcio: '', actiu: false }
+            emptyAfectat() {
+                return {
+                    id: '',
+                    telefon: 0,
+                    cip: '',
+                    nom: '',
+                    cognoms: '',
+                    edat: '',
+                    te_cip: 0,
+                    sexes_id: 0,
+                    descripcio: '',
+                    tipus_recursos_id: 0,
+                    codi_gravetat: '',
+                    codi_valoracio: ''
+                }
             },
 
-            resetReturn() {
-                this.retError = false
-                this.retMessage = ""
-                this.retStatus = 0
-                this.showMsgs = false
-                this.showModalMsgs = false
-            },
+            confirmDeleteAfectat( afectat, keyindex ) {
 
-            selectCicles() {
-
-                this.resetReturn()
-
-                let me = this;
-                axios.get('/api/cicles')
-                    .then(response => { me.cicles = response.data; })
-                    .catch(error => {
-                        console.log(error);
-                        me.retError = true
-                        me.retMessage = response.error
-                        me.retStatus = response.status
-                        me.showMsgs = true
-                    } )
-                    .finally( () => this.loading = false )
+                console.log( 'open modal delete x afectat id ' + (keyindex+1) )
+                this.key_tmp = keyindex
+                this.afectat = afectat
+                $('#modalAfectatDelete').modal('show')
 
             },
 
-            confirmDeleteCicle(cicle) {
+            openEditAfectat( afectat, keyindex ) {
 
-                this.resetReturn()
-                this.cicle = cicle
-                $('#deleteModal').modal('show')
-
-            },
-
-            openEditCicle(cicle) {
-
-                this.resetReturn()
-                this.cicle = JSON.parse(JSON.stringify(cicle))
-                $('#editModal').modal('show')
+                console.log( 'open modal x edit afectat id ' + (keyindex+1) )
+                this.key_tmp = keyindex
+                this.afectat = afectat
+                $('#modalEditAfectat').modal('show')
 
             },
 
-            saveCicle() {
+            deleteAfectat() {
 
-                let me = this;
+                console.log( 'delete afectat id ' + (this.key_tmp+1) )
+                this.afectats.splice(this.work_key, 1);
+                $('#modalAfectatDelete').modal('hide')
 
-                if (!this.cicle.id) {
+            },
 
-                    console.log( 'insert cicle -> url -> ' + '/api/cicles');
-                    axios
-                        .post( '/api/cicles', me.cicle )
-                        .then( response => {
-                            console.log(response)
-                            me.selectCicles()
-                            $('#editModal').modal('hide')
-                            me.retMessage = 'Cicle '+me.cicle.sigles+' Afegit'
-                            me.retStatus = response.status
-                            me.showMsgs = true
-                        } )
-                        .catch( error => {
-                            console.log(error.response.status)
-                            console.log(error.response.data)
-                            me.retError = true
-                            me.retMessage = error.response.data.error
-                            me.retStatus = error.response.status
-                            me.showModalMsgs = true
-                        })
+            registerAfectat() {
+
+                if ( this.key_tmp >= 0 && this.afectats[this.key_tmp] ) {
+
+                    console.log( 'updated afectat id ' + (this.key_tmp+1) )
+                    this.afectats[this.key_tmp] = this.afectat
 
                 } else {
 
-                    console.log( 'update cicle -> url -> ' + '/api/cicles/' + this.cicle.id);
-                    axios
-                        .put( '/api/cicles/'+this.cicle.id, me.cicle )
-                        .then( response => {
-                            console.log(response)
-                            me.selectCicles()
-                            $('#editModal').modal('hide')
-                            me.retMessage = 'Cicle '+me.cicle.sigles+' Modificat'
-                            me.retStatus = response.status
-                            me.showMsgs = true
-                        } )
-                        .catch( error => {
-                            console.log(error)
-                            me.retError = true
-                            me.retMessage = error.response.data.error
-                            me.retStatus = error.response.status
-                            me.showModalMsgs = true
-                        })
+                    console.log( 'added afectat id ' + (this.key_tmp+1) )
+                    this.afectats.push( this.afectat )
 
                 }
 
+                $('#modalEditAfectat').modal('hide')
+
             },
 
-            deleteCicle() {
-
-                let me = this;
-                console.log('/api/cicles/' + me.cicle.id);
-                axios
-                    .delete( '/api/cicles/' + me.cicle.id )
-                    .then( response => {
-                        console.log(response)
-                        me.selectCicles()
-                        $('#deleteModal').modal('hide')
-                        me.retMessage = response.data.message
-                        me.retStatus = response.status
-                        me.showMsgs = true
-                    } )
-                    .catch( error => {
-                        $('#deleteModal').modal('hide')
-                        console.log(error);
-                        me.retError = true
-                        me.retMessage = error.response.data.error
-                        me.retStatus = error.response.status
-                        me.showMsgs = true
-                    })
-
-            }
 
         },
 
         created() {
-
-            this.selectCicles()
-
+            let apptag = document.getElementById('app');
+            this.afectats = JSON.parse( apptag.dataset.pafectats )
+            this.sexes = JSON.parse( apptag.dataset.psexes )
+            this.tipusrecursos = JSON.parse( apptag.dataset.ptipusrecursos )
+            this.codisgravetat = JSON.parse( apptag.dataset.pcodisgravetat )
+            this.codisvaloracions = JSON.parse( apptag.dataset.pcodisvaloracions )
+            this.vdsvides = JSON.parse( apptag.dataset.pvdsvideos )
+            this.vdsevents = JSON.parse( apptag.dataset.pvdsevents )
+            this.vdsplay = JSON.parse( apptag.dataset.pvdsplay )
+            this.hlpvaloracions = JSON.parse( apptag.dataset.phlpvaloracions )
+            this.hlpsimtomes = JSON.parse( apptag.dataset.phlpsimptomes )
         },
 
-        mounted() {
-
-            console.log('Component mounted.')
-
-        }
+        mounted() { console.log('Component mounted...') }
 
     }
 </script>

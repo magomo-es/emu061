@@ -6,8 +6,189 @@
 
 @include('_partials.mensajes')
 
-<div class="container-fluid mt-3 mb-5" id="app">
-    <magomo-component></magomo-component>
+<div class="card">
+
+    <div class="card-header">Edit Incidencia</div>
+
+    <div class="card-body">
+
+        <form action="{{ action( [App\Http\Controllers\IncidenciaController::class, 'update'], ['theobj' => $theobj->id] ) }}" method="POST">
+
+            @csrf
+            @method('PUT')
+
+            <div class="form-group row">
+
+                <div class="col-4">
+                    <div class="row">
+                        <label for="numincident" class="col-3 col-form-label"><small>Id Incident</small></label>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ $theobj->num_incident }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row">
+                        <label for="data" class="col-4 col-form-label"><small>Data</small></label>
+                        <div class="col-8">
+                            <input type="date" class="form-control" id="data" name="data"
+                            min="{{ date('Y-m-d',time()-86400) }}" max="{{ date('Y-m-d',time()+86400) }}"
+                            value="{{ $theobj->data }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <div class="row">
+                        <label for="hora" class="col-4 col-form-label"><small>Hora</small></label>
+                        <div class="col-8">
+                            <input type="time" class="form-control" id="hora" name="hora" value="{{ $theobj->hora }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row">
+                        <label for="telefonalertant" class="col-4 col-form-label"><small>Telefon</small></label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ $theobj->telefon_alertant }}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label for="adreca" class="col-1 col-form-label"><small>Adreça</small></label>
+                <div class="col-11">
+                    <input type="text" class="form-control" id="adreca" name="adreca" value="{{ $theobj->adreca }}">
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-6">
+                    <div class="row">
+                        <label for="adrecacomplement" class="col-2 col-form-label"><small>Adreça comp</small></label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="adrecacomplement" name="adrecacomplement" value="{{ $theobj->adreca_complement }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                        <label for="municipisid" class="col-2 col-form-label"><small>Municipi</small></label>
+                        <div class="col-10">
+                            <select class="custom-select" id="municipisid" name="municipisid">
+                                @foreach ($municipisAry as $municipi)
+                                <option value="{{ $municipi->id }}" {{ (($theobj->municipis_id==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col">
+                    <div class="row">
+                        <label for="descripcio" class="col-1 col-form-label pr-1"><small>Descripcio</small></label>
+                        <div class="col-11">
+                            <textarea rows="6" class="form-control" id="descripcio" name="descripcio">{{ $theobj->descripcio }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <div class="col-3">
+                    <div class="row">
+                        <label for="nommetge" class="col-4 col-form-label pr-1"><small>Metge</small></label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="nommetge" name="nommetge" value="{{ $theobj->nom_metge }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row">
+                        <label for="tipusincidenciesid" class="col-3 col-form-label"><small>Tipus</small></label>
+                        <div class="col-9">
+                            <select class="custom-select" id="tipusincidenciesid" name="tipusincidenciesid">
+                                @foreach ($tipusAry as $tipus)
+                                <option value="{{ $tipus->id }}" {{ (($theobj->tipus_incidencies_id==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row">
+                        <label for="alertantsid" class="col-3 col-form-label"><small>Alertant</small></label>
+                        <div class="col-9">
+                            <select class="custom-select" id="alertantsid" name="alertantsid">
+                                @foreach ($alertantsAry as $alertant)
+                                <option value="{{ $alertant->id }}" {{ (($theobj->alertants_id==$alertant->id)?'selected':'') }}>{{ $alertant->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="row">
+                        <label for="usuarisid" class="col-3 col-form-label"><small>Usuari</small></label>
+                        <div class="col-9">
+                            <select class="custom-select" id="usuarisid" name="usuarisid">
+                                @foreach ($usuarisAry as $usuari)
+                                <option value="{{ $usuari->id }}" {{ (($theobj->usuaris_id==$usuari->id)?'selected':'') }}>{{ $usuari->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group row"
+                v-bind:prop-alertants="{{ ($theobj->alertants)?$theobj->alertants->toJson():'{}' }}"
+                v-bind:prop-sexes="{{ ($sexesAry)?$sexesAry->toJson():'{}' }}"
+                v-bind:prop-tipusrecursos="{{ ($tipusrecursosAry)?$tipusrecursosAry->toJson():'{}' }}"
+                v-bind:prop-codisgravetat="{{ ($codisgravetatAry)?$codisgravetatAry->toJson():'{}' }}"
+                v-bind:prop-codisvaloracions="{{ ($codisvaloracionsAry)?$codisvaloracionsAry->toJson():'{}' }}"
+                v-bind:prop-vdsvideos="{{ ($vdsvideosAry)?$vdsvideosAry->toJson():'{}' }}"
+                v-bind:prop-vdsevents="{{ ($vdseventsAry)?$vdseventsAry->toJson():'{}' }}"
+                v-bind:prop-vdsplay="{{ ($vdsplayAry)?$vdsplayAry->toJson():'{}' }}"
+                v-bind:prop-hlpvaloracions="{{ ($hlpvaloracionsAry)?$hlpvaloracionsAry->toJson():'{}' }}"
+                v-bind:prop-hlpsimptomes="{{ ($hlpsimptomesAry)?$hlpsimptomesAry->toJson():'{}' }}"
+                id="app">
+                <!-- Afectats Table -->
+                <magomo-component></magomo-component>
+            </div>
+
+            <div class="text-right">
+
+                <a class="btn btn-secondary" href="{{ action([App\Http\Controllers\IncidenciaController::class, 'index']) }}">Cancel.lar</a>
+                <button type="submit" class="btn btn-dark">Aceptar</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
+
+
 
 @endsection
