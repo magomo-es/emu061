@@ -76,7 +76,7 @@
 
             <hr>
 
-                <tablaAfectados></tablaAfectados>
+                <tabla-afectados></tabla-afectados>
             <!-- <div class="form-group">
                 <label for="desc">Llista d'afectats:</label>
                 <table class="table">
