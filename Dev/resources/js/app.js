@@ -22,6 +22,7 @@ window.Vue = require('vue').default;
 Vue.component('magomo-component', require('./components/magomoComponent.vue').default);
 Vue.component('incidencies-component', require('./components/incidenciesComponent.vue').default);
 Vue.component('tabla-afectados-component', require('./components/tablaAfectadosComponent.vue').default);
+Vue.component('alertant-component', require('./components/alertantComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
