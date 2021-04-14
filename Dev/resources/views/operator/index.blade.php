@@ -4,6 +4,7 @@
 
 @section('pageContent')
 
+    <alertant-component></alertant-component>
     <incidencies-component></incidencies-component>
 
 @endsection

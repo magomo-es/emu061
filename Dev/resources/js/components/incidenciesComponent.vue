@@ -77,6 +77,8 @@
         </div>
 
         <hr>
+
+        <tabla-afectados-component></tabla-afectados-component>
 </template>
 
 <style>
@@ -94,11 +96,13 @@
 </style>
 
 <script>
+import TablaAfectadosComponent from './tablaAfectadosComponent.vue';
 export default {
   data() {
     return {
       errors: [],
-      num: null,
+      num: null
+TablaAfectadosComponent,
       data: null,
       hora: null,
       munics: ["Barcelona", "Hospitalet de Llobregat", "Badalona", "Mataró"],
