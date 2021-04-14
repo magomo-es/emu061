@@ -54,7 +54,7 @@ class VdsVideosController extends Controller
 
             $theobj->title = $request->title;
             $theobj->description = $request->description;
-            $theobj->filename = $request->file('filename')->getClientOriginalName();
+            $theobj->filename = urlencode($request->file('filename')->getClientOriginalName());
 
             /* >>> There is couple of method you can apply while you uploading some file(s) using laravel's.
             Here is the couple of them and most important to, in my thought.*/
@@ -143,7 +143,7 @@ class VdsVideosController extends Controller
 
             $theobj->title = $request->title;
             $theobj->description = $request->description;
-            $theobj->filename = $request->file('filename')->getClientOriginalName();
+            $theobj->filename = urlencode($request->file('filename')->getClientOriginalName());
 
             /* >>> There is couple of method you can apply while you uploading some file(s) using laravel's.
             Here is the couple of them and most important to, in my thought.*/
