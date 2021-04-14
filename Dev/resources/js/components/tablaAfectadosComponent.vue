@@ -1,6 +1,5 @@
 <template>
 
-    <template>
     <div class="form-group">
                 <label for="desc">Llista d'afectats:</label>
 
