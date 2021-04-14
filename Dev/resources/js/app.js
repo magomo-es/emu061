@@ -20,6 +20,8 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('magomo-component', require('./components/magomoComponent.vue').default);
+Vue.component('incidencies-component', require('./components/incidenciesComponent.vue').default);
+Vue.component('tabla-afectados-component', require('./components/tablaAfectadosComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
