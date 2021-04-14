@@ -1,9 +1,13 @@
 <template>
+
     <div class="container mt-4" style="max-width: 40%;">
+
         <div class="row g-3 align-items-center">
+
             <div class="col-auto">
                 <label for="tel_alertante" class="col-form-label">Telèfon:</label>
             </div>
+
             <div class="col-auto">
                 <input type="tel_alertante" id="tel_alertante" class="form-control form-control-sm" disabled>
             </div>
@@ -18,7 +22,9 @@
             <div class="col-auto">
                 <button class="btn btn-light" style="box-shadow: 0px 1px 0.1px grey;">Veure Alertant</button>
             </div>
+
         </div>
+
     </div>
 
 </template>
@@ -59,7 +65,7 @@
         }
     },
     methods: {
-        
+
     }
   }
 </script>

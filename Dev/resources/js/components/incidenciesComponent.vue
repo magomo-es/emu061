@@ -1,5 +1,7 @@
 <template>
+
   <div class="container-lg mt-4" style="max-width: 1300px;">
+
     <form id="app" @submit.prevent="onSubmit" action="" method="post" novalidate="true">
 
         <!-- <p v-if="errors.length">
@@ -79,6 +81,11 @@
         <hr>
 
         <tabla-afectados-component></tabla-afectados-component>
+
+    </form>
+
+    </div>
+
 </template>
 
 <style>
@@ -101,8 +108,8 @@ export default {
   data() {
     return {
       errors: [],
-      num: null
-TablaAfectadosComponent,
+      num: null,
+      TablaAfectadosComponent,
       data: null,
       hora: null,
       munics: ["Barcelona", "Hospitalet de Llobregat", "Badalona", "Mataró"],

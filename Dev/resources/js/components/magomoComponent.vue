@@ -187,7 +187,10 @@
                 </div>
                 <div class="modal-body" style="position: relative">
 
-                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto;" ></video>
+                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto;" onclick="this.play()"></video>
+                    <button id="rewButton" class="ctrlsBtn">rew</button>
+                    <div id="timeBox">00:00</div>
+                    <button id="fwrButton" class="ctrlsBtn">fow</button>
 
                 </div>
                 <div class="modal-footer">
@@ -200,6 +203,13 @@
 
 </div>
 </template>
+
+<style>
+    .ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px; }
+    #rewButton { left: 10px; }
+    #fwrButton { right: 10px; }
+    #timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center; }
+</style>
 
 <script>
     export default {
@@ -327,6 +337,31 @@
 
                     console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename )
                     this.play_video = '/videos/'+encodeURI(this.vdsvideos[this.videoid].filename)
+
+
+
+                        console.log( 'start script ->' );
+                        var mainVideo = document.getElementById('mainVideo');
+                        var timeBox = document.getElementById('timeBox');
+                        var rewButton = document.getElementById('rewButton').onclick = function () { mainVideo.currentTime -= 10; };
+                        var fwrButton = document.getElementById('fwrButton').onclick = function () { mainVideo.currentTime += 10; };
+                        // mainVideo.canplaythrough = function() { mainVideoInit(); };
+                        // mainVideo.play = function() { console.log( 'start script -> play' ); };
+                        // mainVideo.playing = function() { console.log( 'start script -> playing' ); };
+                        mainVideo.ontimeupdate = function() { console.log( 'start script -> ontimeupdate' ); mainVideoPlayingmy(); };
+                        function mainVideoInit() { console.log( 'mainVideoPlayingmy ->' ); }
+                        function mainVideoPlayingmy() {
+                            timeBox.innerHTML = parseInt( mainVideo.duration - mainVideo.currentTime );
+                            let percentualElapsedTime = ( ( ( mainVideo.currentTime ) * 100 ) / mainVideo.duration );
+                            if ( percentualElapsedTime > 90 ) { timeBox.style.backgroundColor = "#FF3300"; }
+                            else if ( percentualElapsedTime > 80 ) { timeBox.style.backgroundColor = "#c5d304"; }
+                            else { timeBox.style.backgroundColor = "#07ad07"; }
+                            console.log( 'mainVideoPlayingmy -> percentualElapsedTime: ' +percentualElapsedTime );
+                        }
+
+
+
+
                     $('#modalVideoValoracio').modal('show')
 
                 } else {
