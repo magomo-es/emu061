@@ -179,18 +179,15 @@
     <!-- Modal modalEditAfectat Inser/Update -->
 
     <!-- Modal modalVideoValoracio VIDEO-->
-    <div id="modalVideoValoracio" class="modal" tabindex="-1">
-        <div class="modal-dialog" role="document">
+    <div id="modalVideoValoracio" class="modal fade bd-example-modal-lg" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Videos per Valoració</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="position: relative">
 
-                    <video id="videoValoracio" v-bind:src="play_video" ></video>
+                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto;" ></video>
 
                 </div>
                 <div class="modal-footer">
@@ -342,6 +339,7 @@
             // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: closeVideoValoracio =>
             closeVideoValoracio() {
 
+                document.getElementById('videoValoracio').pause();
                 $('#modalVideoValoracio').modal('hide')
                 this.play_video = ''
 

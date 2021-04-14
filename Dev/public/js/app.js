@@ -2226,9 +2226,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
@@ -2332,6 +2329,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: closeVideoValoracio =>
     closeVideoValoracio: function closeVideoValoracio() {
+      document.getElementById('videoValoracio').pause();
       $('#modalVideoValoracio').modal('hide');
       this.play_video = '';
     },
@@ -39264,22 +39262,30 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "modal",
+        staticClass: "modal fade bd-example-modal-lg",
         attrs: { id: "modalVideoValoracio", tabindex: "-1" }
       },
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(19),
               _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("video", {
-                  attrs: { id: "videoValoracio", src: _vm.play_video }
-                })
-              ]),
+              _c(
+                "div",
+                {
+                  staticClass: "modal-body",
+                  staticStyle: { position: "relative" }
+                },
+                [
+                  _c("video", {
+                    staticStyle: { width: "100%" },
+                    attrs: { id: "videoValoracio", src: _vm.play_video }
+                  })
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -39553,19 +39559,6 @@ var staticRenderFns = [
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
         [_vm._v("Videos per Valoració")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
   }
