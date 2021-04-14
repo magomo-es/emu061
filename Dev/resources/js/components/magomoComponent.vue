@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_cognoms" class="col-12 col-form-label pr-1"><small>Congnoms</small></label>
+                                <label for="afectat_cognoms" class="col-12 col-form-label pl-1"><small>Congnoms</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_cognoms" v-model="afectat.cognoms">
                             </div>
                         </div>
@@ -103,19 +103,19 @@
                     <div class="form-group row">
                         <div class="col-4">
                             <div class="row px-1">
-                                <label for="afectat_cip" class="col-12 col-form-label pr-1"><small>CIP</small></label>
+                                <label for="afectat_cip" class="col-12 col-form-label pl-1"><small>CIP</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="row px-1">
-                                <label for="afectat_edat" class="col-12 col-form-label pr-1"><small>Edat</small></label>
+                                <label for="afectat_edat" class="col-12 col-form-label pl-1"><small>Edat</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="row px-1">
-                                <label for="afectat_sexesid" class="col-12 col-form-label"><small>Sexe</small></label>
+                                <label for="afectat_sexesid" class="col-12 col-form-label pl-1"><small>Sexe</small></label>
                                 <select class="col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexes_id">
                                     <option v-for="(item) in sexes"  v-bind:key="item.id" v-bind:value="item.id">{{ item.sexe }}</option>
                                 </select>
@@ -126,7 +126,7 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_tipusrecursosid" class="col-12 col-form-label"><small>Tipus Recurs</small></label>
+                                <label for="afectat_tipusrecursosid" class="col-12 col-form-label pl-1"><small>Tipus Recurs</small></label>
                                 <select class="col-12 custom-select" id="afectat_tipusrecursosid" v-model="afectat.tipus_recursos_id">
                                     <option v-for="(item) in tipusrecursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.tipus }}</option>
                                 </select>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_codigravetat" class="col-12 col-form-label"><small>Codi Gravetat</small></label>
+                                <label for="afectat_codigravetat" class="col-12 col-form-label pl-1"><small>Codi Gravetat</small></label>
                                 <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat">
                                     <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
@@ -145,10 +145,15 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <div class="row px-1">
-                                <label for="afectat_codivaloracio" class="col-12 col-form-label"><small>Codi Valoracio</small></label>
-                                <select class="col-12 custom-select" id="afectat_codivaloracio" v-model="afectat.codi_valoracio">
+                                <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1"><small>Codi Valoracio</small></label>
+                                <select class="col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
                                     <option v-for="(item) in codisvaloracions" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
+                                <button type="button" class="col-2 btn btn-primary" @click="openVideoValoracio()">Video</button>
+                                <button type="button" class="col-2 btn btn-primary" data-toggle="collapse" data-target="#collapseAyuda" aria-expanded="false" aria-controls="collapseExample">Ayuda</button>
+                            </div>
+                            <div class="collapse" id="collapseAyuda">
+                                <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
                             </div>
                         </div>
                     </div>
@@ -156,7 +161,7 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <div class="row px-1">
-                                <label for="afectat_descripcio" class="col-12 col-form-label pr-1"><small>Descripcio</small></label>
+                                <label for="afectat_descripcio" class="col-12 col-form-label pl-1"><small>Descripcio</small></label>
                                 <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
                             </div>
                         </div>
@@ -198,7 +203,8 @@
 
                 key_tmp: 0,
 
-                isUpdate: false,
+                valoracionCodi = '',
+                valoracionKey = '',
 
                 afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' },
 
@@ -280,6 +286,22 @@
 
             },
 
+            onChangeValoracio( ev ) {
+
+                //let optionValoracio = ev.currentTarget
+                //let sel = ev.currentTarget.selectedIndex
+                this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value
+                this.valoracionKey = ev.currentTarget.options[ev.currentTarget.selectedIndex].key
+
+            },
+
+            openVideoValoracio( code ) {
+
+                console.log( 'openVideoValoracio ' + this.valoracionCodi+' / '+this.valoracionKey )
+                alert(' open video modal code ' + this.valoracionCodi+' / '+this.valoracionKey )
+                //$('#modalVideoValoracio').modal('hide')
+
+            },
 
         },
 

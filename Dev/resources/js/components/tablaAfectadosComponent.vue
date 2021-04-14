@@ -1,60 +1,64 @@
 <template>
 
     <div class="form-group">
-                <label for="desc">Llista d'afectats:</label>
 
-                    <div  class="tableFixHead">
-                        <table class="table">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Noms</th>
-                                    <th>Cognoms</th>
-                                    <th>CIP</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody >
+        <label for="desc">Llista d'afectats:</label>
 
-                                <tr>
-                                    <td>Rodolfo</td>
-                                    <td>Gallardo</td>
-                                    <td>0000000000</td>
-                                    <td>
-                                        <input type="button" value="Editar">
-                                        <input type="button" value="Eliminar">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Marcelo</td>
-                                    <td>Goncevatt</td>
-                                    <td>0000000000</td>
-                                </tr>
-                                <tr>
-                                    <td>Mario</td>
-                                    <td>de la Torre</td>
-                                    <td>0000000000</td>
-                                </tr>
-                                <tr>
-                                    <td>Mario</td>
-                                    <td>de la Torre</td>
-                                    <td>0000000000</td>
-                                </tr>
-                                <tr>
-                                    <td>Mario</td>
-                                    <td>de la Torre</td>
-                                    <td>0000000000</td>
-                                </tr>
-                                <tr>
-                                    <td>Mario</td>
-                                    <td>de la Torre</td>
-                                    <td>0000000000</td>
-                                </tr>
-                            </tbody>
+        <div  class="tableFixHead">
 
-                         </table>
-                    </div>
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Noms</th>
+                        <th>Cognoms</th>
+                        <th>CIP</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody >
 
-            </div>
+                    <tr>
+                        <td>Rodolfo</td>
+                        <td>Gallardo</td>
+                        <td>0000000000</td>
+                        <td>
+                            <input type="button" value="Editar">
+                            <input type="button" value="Eliminar">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Marcelo</td>
+                        <td>Goncevatt</td>
+                        <td>0000000000</td>
+                    </tr>
+                    <tr>
+                        <td>Mario</td>
+                        <td>de la Torre</td>
+                        <td>0000000000</td>
+                    </tr>
+                    <tr>
+                        <td>Mario</td>
+                        <td>de la Torre</td>
+                        <td>0000000000</td>
+                    </tr>
+                    <tr>
+                        <td>Mario</td>
+                        <td>de la Torre</td>
+                        <td>0000000000</td>
+                    </tr>
+                    <tr>
+                        <td>Mario</td>
+                        <td>de la Torre</td>
+                        <td>0000000000</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </template>
 
 <script>
