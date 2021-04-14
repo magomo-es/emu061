@@ -18,126 +18,138 @@
 
             <div class="form-group row">
 
-                <div class="col-3">
+                <div class="col-12">
                     <div class="row">
-                        <label for="numincident" class="col-4 col-form-label"><small>Id Incidencia</small></label>
-                        <div class="col-8">
-                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ old('numincident') }}">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-3">
-                    <div class="row">
-                        <label for="data" class="col-4 col-form-label"><small>Data</small></label>
-                        <div class="col-8">
-                            <input type="date" class="form-control" id="data" name="data"
-                            min="{{ date('Y-m-d',time()-86400) }}" max="{{ date('Y-m-d',time()+86400) }}"
-                            value="{{ (!empty(old('data'))?old('data'):date('Y-m-d',time())) }}" required>
+                        <div class="col-3">
+                            <div class="row">
+                                <label for="numincident" class="col-12 col-form-label"><small>Id Incidencia</small></label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="numincident" name="numincident" value="{{ old('numincident') }}">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-2">
-                    <div class="row">
-                        <label for="hora" class="col-4 col-form-label"><small>Hora</small></label>
-                        <div class="col-8">
-                            <input type="time" class="form-control" id="hora" name="hora"
-                                value="{{ (!empty(old('hora'))?old('hora'):date('H:i',time())) }}" required>
+                        <div class="col-3">
+                            <div class="row">
+                                <label for="data" class="col-12 col-form-label"><small>Data</small></label>
+                                <div class="col-12">
+                                    <input type="date" class="form-control" id="data" name="data"
+                                    min="{{ date('Y-m-d',time()-86400) }}" max="{{ date('Y-m-d',time()+86400) }}"
+                                    value="{{ (!empty(old('data'))?old('data'):date('Y-m-d',time())) }}" required>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-4">
-                    <div class="row">
-                        <label for="telefonalertant" class="col-2 col-form-label"><small>Telefon</small></label>
-                        <div class="col-6">
-                            <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ old('telefonalertant') }}">
+                        <div class="col-2">
+                            <div class="row">
+                                <label for="hora" class="col-12 col-form-label"><small>Hora</small></label>
+                                <div class="col-12">
+                                    <input type="time" class="form-control" id="hora" name="hora"
+                                        value="{{ (!empty(old('hora'))?old('hora'):date('H:i',time())) }}" required>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="col-4">
-                            <button id="addAlertant" type="button" class="btn btn-primary w-100 px-3" data-toggle="modal" data-target="#modalAlertant">Alertant</button>
+                            <div class="row">
+                                <label for="telefonalertant" class="col-12 col-form-label"><small>Telefon</small></label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ old('telefonalertant') }}">
+                                </div>
+                                <div class="col-4">
+                                    <button id="addAlertant" type="button" class="btn btn-primary w-100 px-3" data-toggle="modal" data-target="#modalAlertant">Alertant</button>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
-
-            </div>
-            <div class="form-group row">
-
-                <label for="adreca" class="col-1 col-form-label"><small>Adreça</small></label>
-                <div class="col-11">
-                    <input type="text" class="form-control" id="adreca" name="adreca" value="{{ old('adreca') }}">
-                </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-6">
+                <div class="col-12">
                     <div class="row">
-                        <label for="adrecacomplement" class="col-2 col-form-label"><small>Adreça comp</small></label>
-                        <div class="col-10">
-                            <input type="text" class="form-control" id="adrecacomplement" name="adrecacomplement" value="{{ old('adrecacomplement') }}">
+
+                        <label for="adreca" class="col-12 col-form-label"><small>Adreça</small></label>
+                        <div class="col-12">
+                            <input type="text" class="form-control" id="adreca" name="adreca" value="{{ old('adreca') }}">
                         </div>
+
                     </div>
                 </div>
-
-                <div class="col-6">
+                <div class="col-12">
                     <div class="row">
-                        <label for="municipisid" class="col-2 col-form-label"><small>Municipi</small></label>
-                        <div class="col-10">
-                            <select class="custom-select" id="municipisid" name="municipisid">
-                                @foreach ($municipisAry as $municipi)<option value="{{ $municipi->id }}" {{ ((old('municipisid')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>@endforeach
-                            </select>
+
+                        <div class="col-6">
+                            <div class="row">
+                                <label for="adrecacomplement" class="col-12 col-form-label"><small>Adreça comp</small></label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="adrecacomplement" name="adrecacomplement" value="{{ old('adrecacomplement') }}">
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="col-6">
+                            <div class="row">
+                                <label for="municipisid" class="col-12 col-form-label"><small>Municipi</small></label>
+                                <div class="col-12">
+                                    <select class="custom-select" id="municipisid" name="municipisid">
+                                        @foreach ($municipisAry as $municipi)<option value="{{ $municipi->id }}" {{ ((old('municipisid')==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>@endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col">
+                <div class="col-12">
                     <div class="row">
-                        <label for="descripcio" class="col-1 col-form-label pr-1"><small>Descripcio</small></label>
-                        <div class="col-11">
-                            <textarea rows="6" class="form-control" id="descripcio" name="descripcio">{{ old('descripcio') }}</textarea>
+
+                        <div class="col">
+                            <div class="row">
+                                <label for="descripcio" class="col-12 col-form-label pr-1"><small>Descripcio</small></label>
+                                <div class="col-12">
+                                    <textarea rows="4" class="form-control" id="descripcio" name="descripcio">{{ old('descripcio') }}</textarea>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
-
-            </div>
-
-            <div class="form-group row">
-
-                <div class="col-4">
+                <div class="col-12">
                     <div class="row">
-                        <label for="nommetge" class="col-3 col-form-label pr-1"><small>Metge</small></label>
-                        <div class="col-9">
-                            <input type="text" class="form-control" id="nommetge" name="nommetge" value="{{ old('nommetge') }}">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-4">
-                    <div class="row">
-                        <label for="tipusincidenciesid" class="col-2 col-form-label"><small>Tipus</small></label>
-                        <div class="col-10">
-                            <select class="custom-select" id="tipusincidenciesid" name="tipusincidenciesid">
-                                @foreach ($tipusAry as $tipus)<option value="{{ $tipus->id }}" {{ ((old('tipusincidenciesid')==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>@endforeach
-                            </select>
+                        <div class="col-4">
+                            <div class="row">
+                                <label for="nommetge" class="col-12 col-form-label pr-1"><small>Metge</small></label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="nommetge" name="nommetge" value="{{ old('nommetge') }}">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-4">
-                    <div class="row">
-                        <label for="usuarisid" class="col-2 col-form-label"><small>Usuari</small></label>
-                        <div class="col-10">
-                            <select class="custom-select" id="usuarisid" name="usuarisid">
-                                @foreach ($usuarisAry as $usuari)<option value="{{ $usuari->id }}" {{ ((old('usuarisid')==$usuari->id)?'selected':'') }}>{{ $usuari->nom }}</option>@endforeach
-                            </select>
+                        <div class="col-4">
+                            <div class="row">
+                                <label for="tipusincidenciesid" class="col-12 col-form-label"><small>Tipus</small></label>
+                                <div class="col-12">
+                                    <select class="custom-select" id="tipusincidenciesid" name="tipusincidenciesid">
+                                        @foreach ($tipusAry as $tipus)<option value="{{ $tipus->id }}" {{ ((old('tipusincidenciesid')==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>@endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="col-4">
+                            <div class="row">
+                                <label for="usuarisid" class="col-12 col-form-label"><small>Usuari</small></label>
+                                <div class="col-12">
+                                    <select class="custom-select" id="usuarisid" name="usuarisid">
+                                        @foreach ($usuarisAry as $usuari)<option value="{{ $usuari->id }}" {{ ((old('usuarisid')==$usuari->id)?'selected':'') }}>{{ $usuari->nom }}</option>@endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
 
             </div>

@@ -1,5 +1,5 @@
 <template>
-<div class="w-100 mt-4">
+<div class="w-100 mt-4 px-3">
 
     <table class="table table-hover">
         <thead>
@@ -157,7 +157,7 @@
                         <div class="col-12">
                             <div class="row px-1">
                                 <label for="afectat_descripcio" class="col-12 col-form-label pr-1"><small>Descripcio</small></label>
-                                <textarea rows="6" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
+                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
                             </div>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tarcar</button>
-                    <button type="button" class="btn btn-primary" @click="registerAfectat()">{{ (!afectat.id)?'Afegir':'Modificar' }}</button>
+                    <button type="button" class="btn btn-primary" @click="registerAfectat()">{{ (key_tmp<0)?'Afegir':'Modificar' }}</button>
                 </div>
             </div>
         </div>

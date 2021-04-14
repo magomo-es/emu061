@@ -37673,7 +37673,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-100 mt-4" }, [
+  return _c("div", { staticClass: "w-100 mt-4 px-3" }, [
     _c("table", { staticClass: "table table-hover" }, [
       _c("thead", [
         _c("tr", [
@@ -37891,7 +37891,7 @@ var render = function() {
                         " - " +
                         _vm.afectat.nom +
                         " " +
-                        _vm.afectat.nom
+                        _vm.afectat.cognom
                     ) +
                     " ?"
                 )
@@ -38273,7 +38273,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { rows: "6", id: "afectat_descripcio" },
+                        attrs: { rows: "2", id: "afectat_descripcio" },
                         domProps: { value: _vm.afectat.tipusrecursosid },
                         on: {
                           input: function($event) {
@@ -38314,7 +38314,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v(_vm._s(!_vm.afectat.id ? "Afegir" : "Modificar"))]
+                  [_vm._v(_vm._s(_vm.key_tmp < 0 ? "Afegir" : "Modificar"))]
                 )
               ])
             ])
