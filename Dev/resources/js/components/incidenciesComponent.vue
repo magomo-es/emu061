@@ -82,9 +82,15 @@
 
         <tabla-afectados-component></tabla-afectados-component>
 
+        <div class="form-group mt-4">
+            <input class="btn btn-primary" type="submit" value="Confirmar Incidencia">
+
+            <input class="btn btn-secondary" type="submit" value="Cancel·lar">
+        </div>
+
     </form>
 
-    </div>
+  </div>
 
 </template>
 
@@ -105,22 +111,73 @@
 <script>
 import TablaAfectadosComponent from './tablaAfectadosComponent.vue';
 export default {
+  components: { modalAlertantModalAlertantComponent },
   data() {
     return {
-      errors: [],
-      num: null,
-      TablaAfectadosComponent,
-      data: null,
-      hora: null,
-      munics: ["Barcelona", "Hospitalet de Llobregat", "Badalona", "Mataró"],
-      comarcas: ["Baix Llogregat", "Barcelonés", "Baix Penedés"],
-      provincia: ["Barcelona", "Lleida", "Tarragona", "Girona"],
-      direcc: null,
-      direcc_compl: null,
-      desc: null,
+      cleanForm();
     };
   },
   methods: {
+    // getNum()
+
+    getMunicipi()
+    {
+        let me = this;
+          axios
+            .get('/municipi')
+            .then(response => {
+                me.munics = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+    },
+
+    getComarca()
+    {
+        let me = this;
+          axios
+            .get('/comarca')
+            .then(response => {
+                me.comarcas = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+    },
+
+    getProvincia()
+    {
+        let me = this;
+          axios
+            .get('/provincia')
+            .then(response => {
+                me.provincia = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+    },
+
+    cleanForm() {
+        return {
+            errors: [],
+            num: null,
+            TablaAfectadosComponent,
+            data: null,
+            hora: null,
+            munics: [],
+            comarcas: [],
+            provincia: [],
+            direcc: null,
+            direcc_compl: null,
+            desc: null
+        }
+    },
+
     onSubmit() {
       if (
         this.num &&

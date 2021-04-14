@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-auto">
-                <input type="tel_alertante" id="tel_alertante" class="form-control form-control-sm" disabled>
+                <input type="text" id="tel_alertante" class="form-control form-control-sm" v-model="alertant.telefon" disabled>
             </div>
 
             <div class="col-auto cont-vip">
@@ -20,12 +20,72 @@
             </div>
 
             <div class="col-auto">
-                <button class="btn btn-light" style="box-shadow: 0px 1px 0.1px grey;">Veure Alertant</button>
+                <button class="btn btn-light" data-toggle="modal" data-target="#modalAlertant" style="box-shadow: 0px 1px 0.1px grey;">Veure Alertant</button>
             </div>
 
         </div>
 
+        <!-- MODAL -->
+
+        <div class="modal fade" id="modalAlertant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Alertant</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group px-3">
+
+                            <div class="row">
+                                <label for="alertant_nom" class="col-12 col-form-label pl-1"><small>Nom</small></label>
+                                <input type="text" class="col-12 form-control" id="alertant_nom" name="alertant_nom" v-model="alertant.nom">
+                            </div>
+
+                            <div class="row">
+                                <label for="alertant_cognoms" class="col-12 col-form-label pl-1"><small>Congnoms</small></label>
+                                <input type="text" class="col-12 form-control" id="alertant_cognoms" name="alertant_cognoms" v-model="alertant.cognoms">
+                            </div>
+
+                            <div class="row">
+                                <label for="alertant_adreca" class="col-12 col-form-label pl-1"><small>Adreça</small></label>
+                                <input type="text" class="col-12 form-control" id="alertant_adreca" name="alertant_adreca" v-model="alertant.adreca">
+                            </div>
+
+                            <div class="row">
+                                <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
+                                <select class="col-12 custom-select" id="alertant_municipisid" name="alertant_municipisid">
+                                    <option v-for="municipi in municipis" :key="municipi.id">{{ municipi.nom }}</option>
+                                    <!--v-model="alertant.municipis_id"-->
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <label for="alertant_tipusalertantsid" class="col-12 col-form-label pl-1"><small>Tipus</small></label>
+                                <select class="col-12 custom-select" id="alertant_tipusalertantsid" name="alertant_tipusalertantsid">
+                                    <option v-for="tipus in tipus_alertants" :key="tipus.id">{{ tipus.tipus }}</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 
 </template>
 
@@ -61,11 +121,53 @@
 
     data() {
         return {
-            tel_alertante: null
+            alertant: [],
+            municipis: [],
+            tipus_alertants: []
         }
     },
     methods: {
+        getAlertant()
+        {
+            let me = this;
+            axios
+                .get('/alertant')
+                .then(response => {
+                    me.alertant = response.data;
+                })
+                .catch( error => {
+                    console.log(error)
+                })
+                .finally(() => this.loading = false)
+        },
 
+        getMunicipis()
+        {
+            let me = this;
+            axios
+                .get('/municipi')
+                .then(response => {
+                    me.munics = response.data;
+                })
+                .catch( error => {
+                    console.log(error)
+                })
+                .finally(() => this.loading = false)
+        },
+
+        getTipus_alertants()
+        {
+            let me = this;
+            axios
+                .get('/tipus_alertants')
+                .then(response => {
+                    me.tipus_alertants = response.data;
+                })
+                .catch( error => {
+                    console.log(error)
+                })
+                .finally(() => this.loading = false)
+        }
     }
   }
 </script>
