@@ -318,7 +318,7 @@ export default {
 
       confirmDelete()
       {
-        $(#confirmDelete).modal('show")
+        $('#confirmDelete').modal('show")
       }
 
   },
