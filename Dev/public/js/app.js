@@ -2388,13 +2388,13 @@ __webpack_require__.r(__webpack_exports__);
       this.videoid = this.findVideoFileById(this.findVideoIdByCodiValoracio(this.valoracionCodi));
 
       if (this.videoid >= 0) {
-        var mainVideoInit = function mainVideoInit() {
-          console.log('mainVideoPlayingmy ->');
+        var videoValoracioInit = function videoValoracioInit() {
+          console.log('videoValoracioPlayingmy ->');
         };
 
-        var mainVideoPlayingmy = function mainVideoPlayingmy() {
-          timeBox.innerHTML = parseInt(mainVideo.duration - mainVideo.currentTime);
-          var percentualElapsedTime = mainVideo.currentTime * 100 / mainVideo.duration;
+        var videoValoracioPlayingmy = function videoValoracioPlayingmy() {
+          timeBox.innerHTML = parseInt(videoValoracio.duration - videoValoracio.currentTime);
+          var percentualElapsedTime = videoValoracio.currentTime * 100 / videoValoracio.duration;
 
           if (percentualElapsedTime > 90) {
             timeBox.style.backgroundColor = "#FF3300";
@@ -2404,29 +2404,29 @@ __webpack_require__.r(__webpack_exports__);
             timeBox.style.backgroundColor = "#07ad07";
           }
 
-          console.log('mainVideoPlayingmy -> percentualElapsedTime: ' + percentualElapsedTime);
+          console.log('videoValoracioPlayingmy -> percentualElapsedTime: ' + percentualElapsedTime);
         };
 
         console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename);
         this.play_video = '/videos/' + encodeURI(this.vdsvideos[this.videoid].filename);
         console.log('start script ->');
-        var mainVideo = document.getElementById('mainVideo');
+        var videoValoracio = document.getElementById('videoValoracio');
         var timeBox = document.getElementById('timeBox');
 
         var rewButton = document.getElementById('rewButton').onclick = function () {
-          mainVideo.currentTime -= 10;
+          videoValoracio.currentTime -= 10;
         };
 
         var fwrButton = document.getElementById('fwrButton').onclick = function () {
-          mainVideo.currentTime += 10;
-        }; // mainVideo.canplaythrough = function() { mainVideoInit(); };
-        // mainVideo.play = function() { console.log( 'start script -> play' ); };
-        // mainVideo.playing = function() { console.log( 'start script -> playing' ); };
+          videoValoracio.currentTime += 10;
+        }; // videoValoracio.canplaythrough = function() { videoValoracioInit(); };
+        // videoValoracio.play = function() { console.log( 'start script -> play' ); };
+        // videoValoracio.playing = function() { console.log( 'start script -> playing' ); };
 
 
-        mainVideo.ontimeupdate = function () {
+        videoValoracio.ontimeupdate = function () {
           console.log('start script -> ontimeupdate');
-          mainVideoPlayingmy();
+          videoValoracioPlayingmy();
         };
 
         $('#modalVideoValoracio').modal('show');
@@ -40251,7 +40251,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "button",
-                    { staticClass: "ctrlsBtn", attrs: { id: "rewButton" } },
+                    {
+                      staticClass: "ctrlsBtn",
+                      attrs: { id: "rewButton", type: "button" }
+                    },
                     [_vm._v("rew")]
                   ),
                   _vm._v(" "),
@@ -40259,7 +40262,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "button",
-                    { staticClass: "ctrlsBtn", attrs: { id: "fwrButton" } },
+                    {
+                      staticClass: "ctrlsBtn",
+                      attrs: { id: "fwrButton", type: "button" }
+                    },
                     [_vm._v("fow")]
                   )
                 ]
