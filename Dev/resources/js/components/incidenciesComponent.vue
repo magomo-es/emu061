@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container-lg mt-4" style="max-width: 1300px;">
+  <div class="container-lg mt-2" style="max-width: 1300px;">
 
     <form id="app" @submit.prevent="onSubmit" action="" method="post" novalidate="true">
 
@@ -14,40 +14,40 @@
         <div class="form-group">
             <div class="row">
                 <div class="col" style="max-width: max-content;">
-                    <label for="num">Número:</label>
+                    <label for="num"><small>Número:</small></label>
                     <input class="form-control form-control-sm" id="num" v-model="num" type="number" name="num"
                         value="0" disabled>
                 </div>
 
                 <div class="col" style="max-width: max-content;">
-                    <label for="data">Data:</label>
+                    <label for="data"><small>Data:</small></label>
                     <input class="form-control form-control-sm" id="data" v-model="data" type="date" name="data">
                 </div>
 
 
                 <div class="col" style="max-width: max-content;">
-                    <label for="hora">Hora:</label>
+                    <label for="hora"><small>Hora:</small></label>
                     <input class="form-control form-control-sm" id="hora" v-model="hora" type="time" name="hora">
                 </div>
 
 
                 <div class="col">
-                    <label for="munics">Municipi:</label>
+                    <label for="munics"><small>Municipi:</small></label>
                     <select class="form-control form-control-sm" id="munics" v-model="munics">
-                        <option v-for="munic in munics" :key='munic'>{{ munic }}</option>
+                        <option v-for="munic in munics" :key='munic' v-bind:value="munic.id">{{ munic.nom }}</option>
                     </select>
                 </div>
 
 
                 <div class="col">
-                    <label for="comarcas">Comarca:</label>
+                    <label for="comarcas"><small>Comarca:</small></label>
                     <select class="form-control form-control-sm" name="comarcas" id="comarcas" v-model="comarcas">
                         <option v-for="comarca in comarcas" :key='comarca'>{{ comarca }}</option>
                     </select>
                 </div>
 
                 <div class="col">
-                    <label for="provincia">Provincia:</label>
+                    <label for="provincia"><small>Provincia:</small></label>
                     <select class="form-control form-control-sm" name="provincia" id="provincia"
                         v-model="provincia">
                         <option v-for="prov in provincia" :key='prov'>{{ prov }}</option>
@@ -60,13 +60,13 @@
         <div class="form-group">
             <div class="row">
                 <div class="col">
-                    <label for="direcc">Adreça:</label>
+                    <label for="direcc"><small>Adreça:</small></label>
                     <input class="form-control form-control-sm" id="direcc" v-model="direcc" type="text"
                         name="direcc">
                 </div>
 
                 <div class="col">
-                    <label for="direcc_compl">Adreça Compl.</label>
+                    <label for="direcc_compl"><small>Adreça Compl.:</small></label>
                     <input class="form-control form-control-sm" id="direcc_compl" v-model="direcc_compl" type="text"
                         name="direcc_compl">
                 </div>
@@ -74,7 +74,7 @@
         </div>
 
         <div class="form-group">
-            <label for="desc">Descripció</label>
+            <label for="desc"><small>Descripció:</small></label>
             <textarea class="form-control form-control-sm" id="desc" v-model="desc" rows="2"></textarea>
         </div>
 
@@ -95,6 +95,16 @@
 </template>
 
 <style>
+
+.form-group
+{
+    margin-bottom: 0.5rem !important;
+}
+
+.form-group label
+{
+    margin-bottom: 0rem !important;
+}
 
 .form-control-sm
 {
@@ -133,7 +143,7 @@ export default {
     {
         let me = this;
           axios
-            .get('/municipi')
+            .get('http://app.emu061.es/api/municipis')
             .then(response => {
                 me.munics = response.data;
             })
