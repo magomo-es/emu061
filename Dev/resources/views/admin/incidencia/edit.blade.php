@@ -159,22 +159,22 @@
 
             </div>
 
-
-            <div class="form-group row"
-                v-bind:prop-alertants="{{ ($theobj->alertants)?$theobj->alertants->toJson():'{}' }}"
-                v-bind:prop-sexes="{{ ($sexesAry)?$sexesAry->toJson():'{}' }}"
-                v-bind:prop-tipusrecursos="{{ ($tipusrecursosAry)?$tipusrecursosAry->toJson():'{}' }}"
-                v-bind:prop-codisgravetat="{{ ($codisgravetatAry)?$codisgravetatAry->toJson():'{}' }}"
-                v-bind:prop-codisvaloracions="{{ ($codisvaloracionsAry)?$codisvaloracionsAry->toJson():'{}' }}"
-                v-bind:prop-vdsvideos="{{ ($vdsvideosAry)?$vdsvideosAry->toJson():'{}' }}"
-                v-bind:prop-vdsevents="{{ ($vdseventsAry)?$vdseventsAry->toJson():'{}' }}"
-                v-bind:prop-vdsplay="{{ ($vdsplayAry)?$vdsplayAry->toJson():'{}' }}"
-                v-bind:prop-hlpvaloracions="{{ ($hlpvaloracionsAry)?$hlpvaloracionsAry->toJson():'{}' }}"
-                v-bind:prop-hlpsimptomes="{{ ($hlpsimptomesAry)?$hlpsimptomesAry->toJson():'{}' }}"
-                id="app">
-                <!-- Afectats Table -->
-                <magomo-component></magomo-component>
-            </div>
+            <!-- Afectats Table VUE -->
+            <div class="form-group row" id="app"
+                data-pafectats='{!! ($objectsAry)?str_replace("'", '´', $objectsAry->toJson()):"[]" !!}'
+                data-palertants='{!! ($alertantsAry)?str_replace("'", '´', $alertantsAry->toJson()):"[]" !!}'
+                data-psexes='{!! ($sexesAry)?str_replace("'", '´', $sexesAry->toJson()):"[]" !!}'
+                data-ptipusrecursos='{!! ($tipusrecursosAry)?str_replace("'", '´', $tipusrecursosAry->toJson()):"[]" !!}'
+                data-pcodisgravetat='{!! ($codisgravetatAry)?str_replace("'", '´', $codisgravetatAry->toJson()):'[]' !!}'
+                data-pcodisvaloracions='{!! ($codisvaloracionsAry)?str_replace("'", '´', $codisvaloracionsAry->toJson()):'[]' !!}'
+                data-pvdsvideos='{!! ($vdsvideosAry)?str_replace("'", '´', $vdsvideosAry->toJson()):'[]' !!}'
+                data-pvdsevents='{!! ($vdseventsAry)?str_replace("'", '´', $vdseventsAry->toJson()):'[]' !!}'
+                data-pvdsplay='{!! ($vdsplayAry)?str_replace("'", '´', $vdsplayAry->toJson()):'[]' !!}'
+                data-phlpvaloracions='{!! ($hlpvaloracionsAry)?str_replace("'", '´', $hlpvaloracionsAry->toJson()):'[]' !!}'
+                data-phlpsimptomes='{!! ($hlpsimptomesAry)?str_replace("'", '´', $hlpsimptomesAry->toJson()):'[]' !!}'
+                data-plpvaloraciohassimptomesAry='{!! ($hlpvaloraciohassimptomesAry)?str_replace("'", '´', $hlpvaloraciohassimptomesAry->toJson()):'[]' !!}'
+            ><magomo-component></magomo-component></div>
+            <!-- Afectats Table VUE -->
 
             <div class="text-right">
 

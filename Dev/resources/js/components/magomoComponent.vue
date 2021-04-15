@@ -146,26 +146,28 @@
                         <div class="col-12">
                             <div class="row px-1 mb-3">
                                 <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1"><small>Codi Valoracio</small></label>
-                                <select class="col-7 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
-                                    <option v-for="(item) in codisvaloracions" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
+                                <select class="col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
+                                    <option v-for="(item, index) in codisvaloracions" v-bind:key="item.id" v-bind:id="('v_'+index+'_'+item.codi)" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
-                                <button type="button" class="col-2 btn btn-outline-secondary ml-3" @click="openVideoValoracio()"><i class="bi bi-camera-reels"></i> Video</button>
-                                <button type="button" class="col-2 btn btn-outline-secondary ml-3" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)"><i class="bi bi-globe2"></i> Ayuda</button>
+                                <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" @click="openVideoValoracio()"><i class="far fa-play-circle"></i> Video</button></div>
+                                <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)"><i class="far fa-question-circle"></i> Ayuda</button></div>
                             </div>
                             <div v-show="(displayHelp)" class="row px-1 mb-3">
 
                                 <h5>Simptomes</h5>
                                 <div class="container-fluid mt-3 mb-5">
+
                                     <div class="row">
-                                    <div class="col-4 mb-2 ml-4" v-for="(item, index) in hlpsimtomes" v-bind:key="item.id" style="border-left: 1px dotted #0b0a0b;">
-                                        <div class="row">
-                                            <input class="form-check-input" type="checkbox" v-bind:id="item.id" v-bind:codi="item.codi" v-bind:ind="index" >
-                                            <p class="p-1 m-0" style="display: block; background-color: #fff;"><small>{{ item.pregunta }}</small></p>
-                                            <p class="p-1 m-0" style="display: block; background-color: rgb(244, 241, 51);"><small>{{ item.translation }}</small></p>
-                                            <p class="p-1 m-0" style="display: block; background-color: rgb(148, 244, 51);"><small>{{ item.soundlike }}</small></p>
+                                        <div class="col-4 mb-2 px-2" v-for="(item, index) in hlpsimtomes" v-bind:key="item.id" style="border-left: 1px dotted #0b0a0b;">
+
+                                            <p class="w-100 p-1 m-0" style="background-color: #fff;">
+                                                <input class="" type="checkbox" v-bind:id="('simptoma'+item.id)" v-bind:data-simptoma="item.id" v-bind:data-codi="item.codi" v-bind:data-ind="index" @click="checkboxSimptomes($event)">
+                                                <small>{{ item.pregunta }}</small>
+                                            </p>
+                                            <p class="w-100 p-1 m-0" style="background-color: rgb(244, 241, 51);"><small>{{ item.translation }}</small></p>
+                                            <p class="w-100 p-1 m-0" style="background-color: rgb(148, 244, 51);"><small>{{ item.soundlike }}</small></p>
 
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
 
@@ -187,7 +189,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tarcar</button>
-                    <button type="button" class="btn btn-primary" @click="registerAfectat()" v-bind:text="(key_tmp<0)?'Afegir':'Modificar'"></button>
+                    <button type="button" class="btn btn-primary" @click="registerAfectat()" v-text="((key_tmp<0)?'Afegir':'Modificar')"></button>
                 </div>
             </div>
         </div>
@@ -255,6 +257,8 @@
 
                 valoracionCodi: '',
 
+                simptomesSelected:  new Map(),
+
                 videoId: 0,
 
                 play_video: '',
@@ -273,23 +277,14 @@
                 vdsplay: [],
                 hlpvaloracions: [],
                 hlpsimtomes: [],
+                byid_hlpsimtomes: [],
+                hlpvaloraciohassimptomes: [],
 
             }
 
         },
 
         methods: {
-
-
-            openBoxValoracio() {
-                this.displayHelp = true
-            },
-
-            closeBoxValoracio() {
-                this.displayHelp = false
-            },
-
-
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
             emptyAfectat() {
                 return {
@@ -321,7 +316,8 @@
 
                 console.log( 'open modal x edit afectat id ' + (keyindex+1) )
                 this.key_tmp = keyindex
-                this.afectat = afectat
+                //this.afectat = afectat
+                Object.assign(this.afectat, afectat);
                 $('#modalEditAfectat').modal('show')
 
             },
@@ -351,11 +347,103 @@
                 $('#modalEditAfectat').modal('hide')
 
             },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: checkboxSimptomes =>
+            checkboxSimptomes( ev ) {
+                /*
+                let sayings = new Map();
+                sayings.set('dog', 'woof');
+                sayings.set('cat', 'meow');
+                sayings.set('elephant', 'toot');
+                sayings.size; // 3
+                sayings.get('dog'); // woof
+                sayings.get('fox'); // undefined
+                sayings.has('bird'); // false
+                sayings.delete('dog');
+                sayings.has('dog'); // false
+
+                for (let [key, value] of sayings) {
+                console.log(key + ' goes ' + value);
+                }
+                // "cat goes meow"
+                // "elephant goes toot"
+
+                sayings.clear();
+                sayings.size; // 0
+                */
+                console.log( 'checkboxSimtomes -> ev.target.id: '+ ev.currentTarget.id );
+
+                if (ev.currentTarget.checked) {
+                    this.simptomesSelected.set( ev.currentTarget.dataset.simptoma, ev.currentTarget.dataset.codi );
+                } else {
+                    this.simptomesSelected.delete( ev.currentTarget.dataset.simptoma );
+                }
+                this.showablesValoracio()
+            },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: showablesValoracio =>
+            showablesValoracio() {
+
+                for (let [key, value] of this.simptomesSelected) {
+                    console.log( key + ' -> ' + value );
+                    //document.getElementById('v_'+index+'_'+item.codi)
+
+                }
+
+            },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: openBoxValoracio =>
+            openBoxValoracio() {
+                this.displayHelp = true
+            },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: closeBoxValoracio =>
+            closeBoxValoracio() {
+                this.displayHelp = false
+            },
             // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
             onChangeValoracio( ev ) {
 
                 this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value
 
+            },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+            addValoracioDataset() {
+
+                var optionobj;
+
+                for( var i=0; i< this.hlpvaloracions.length; i++) {
+
+                    optionobj = document.getElementById('v_'+i+'_'+this.hlpvaloracions[i].codi_valoracio);
+
+                    for( var k=0; k< this.hlpvaloraciohassimptomes.length; k++) {
+
+                        if (this.hlpvaloracions[i].codi_valoracio==this.hlpvaloraciohassimptomes[k].codi_valoracio) {
+
+                            optionobj.dataset[this.hlpvaloraciohassimptomes[k].id_simptoma] = 1
+
+                            console.log(' ___ found !! -> ' + this.hlpvaloraciohassimptomes[k].id_simptoma);
+
+                        }
+                    }
+                }
+            },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+            addValoracioSimptomes() {
+
+                var optionobj;
+
+                for( var i=0; i< this.hlpvaloracions.length; i++) {
+
+                    optionobj = document.getElementById('v_'+i+'_'+this.hlpvaloracions[i].codi_valoracio);
+
+                    for( var k=0; k< this.hlpvaloraciohassimptomes.length; k++) {
+
+                        if (this.hlpvaloracions[i].codi_valoracio==this.hlpvaloraciohassimptomes[k].codi_valoracio) {
+
+                            optionobj.dataset[this.hlpvaloraciohassimptomes[k].id_simptoma] = 1
+
+                            console.log(' ___ found !! -> ' + this.hlpvaloraciohassimptomes[k].id_simptoma);
+
+                        }
+                    }
+                }
             },
             // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: openVideoValoracio =>
             openVideoValoracio() {
@@ -434,6 +522,14 @@
                 return foud
 
             },
+            // - - - - - - - - - - - - - - - - - - - - - TOOLS: generateArrayById =>
+            generateArrayById( original ) {
+                let tmpary = [];
+                    for( var i=0; i<original.length; i++ ) {
+                        tmpary[original[i].id] = original[i];
+                    }
+                return tmpary
+            }
             // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
             // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
         },
@@ -450,9 +546,17 @@
             this.vdsplay = JSON.parse( apptag.dataset.pvdsplay )
             this.hlpvaloracions = JSON.parse( apptag.dataset.phlpvaloracions )
             this.hlpsimtomes = JSON.parse( apptag.dataset.phlpsimptomes )
+            this.byid_hlpsimtomes = this.generateArrayById( this.hlpsimtomes )
+            this.hlpvaloraciohassimptomes = JSON.parse( apptag.dataset.phlpvaloraciohassimptomes )
         },
 
-        mounted() { console.log('Component mounted...') }
+        mounted() {
+
+            console.log('Component mounted...')
+
+            this.addValoracioDataset()
+
+        }
 
     }
 </script>

@@ -2270,6 +2270,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
 //
 //
 //
@@ -2508,6 +2524,7 @@ __webpack_require__.r(__webpack_exports__);
       displayHelp: false,
       key_tmp: 0,
       valoracionCodi: '',
+      simptomesSelected: new Map(),
       videoId: 0,
       play_video: '',
       afectat: {
@@ -2533,16 +2550,12 @@ __webpack_require__.r(__webpack_exports__);
       vdsevents: [],
       vdsplay: [],
       hlpvaloracions: [],
-      hlpsimtomes: []
+      hlpsimtomes: [],
+      byid_hlpsimtomes: [],
+      hlpvaloraciohassimptomes: []
     };
   },
   methods: {
-    openBoxValoracio: function openBoxValoracio() {
-      this.displayHelp = true;
-    },
-    closeBoxValoracio: function closeBoxValoracio() {
-      this.displayHelp = false;
-    },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
     emptyAfectat: function emptyAfectat() {
       return {
@@ -2570,8 +2583,9 @@ __webpack_require__.r(__webpack_exports__);
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: openEditAfectat =>
     openEditAfectat: function openEditAfectat(afectat, keyindex) {
       console.log('open modal x edit afectat id ' + (keyindex + 1));
-      this.key_tmp = keyindex;
-      this.afectat = afectat;
+      this.key_tmp = keyindex; //this.afectat = afectat
+
+      Object.assign(this.afectat, afectat);
       $('#modalEditAfectat').modal('show');
     },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: deleteAfectat =>
@@ -2592,9 +2606,97 @@ __webpack_require__.r(__webpack_exports__);
 
       $('#modalEditAfectat').modal('hide');
     },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: checkboxSimptomes =>
+    checkboxSimptomes: function checkboxSimptomes(ev) {
+      /*
+      let sayings = new Map();
+      sayings.set('dog', 'woof');
+      sayings.set('cat', 'meow');
+      sayings.set('elephant', 'toot');
+      sayings.size; // 3
+      sayings.get('dog'); // woof
+      sayings.get('fox'); // undefined
+      sayings.has('bird'); // false
+      sayings.delete('dog');
+      sayings.has('dog'); // false
+       for (let [key, value] of sayings) {
+      console.log(key + ' goes ' + value);
+      }
+      // "cat goes meow"
+      // "elephant goes toot"
+       sayings.clear();
+      sayings.size; // 0
+      */
+      console.log('checkboxSimtomes -> ev.target.id: ' + ev.currentTarget.id);
+
+      if (ev.currentTarget.checked) {
+        this.simptomesSelected.set(ev.currentTarget.dataset.simptoma, ev.currentTarget.dataset.codi);
+      } else {
+        this.simptomesSelected["delete"](ev.currentTarget.dataset.simptoma);
+      }
+
+      this.showablesValoracio();
+    },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: showablesValoracio =>
+    showablesValoracio: function showablesValoracio() {
+      var _iterator = _createForOfIteratorHelper(this.simptomesSelected),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = _slicedToArray(_step.value, 2),
+              key = _step$value[0],
+              value = _step$value[1];
+
+          console.log(key + ' -> ' + value); //document.getElementById('v_'+index+'_'+item.codi)
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: openBoxValoracio =>
+    openBoxValoracio: function openBoxValoracio() {
+      this.displayHelp = true;
+    },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: closeBoxValoracio =>
+    closeBoxValoracio: function closeBoxValoracio() {
+      this.displayHelp = false;
+    },
     // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
     onChangeValoracio: function onChangeValoracio(ev) {
       this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value;
+    },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+    addValoracioDataset: function addValoracioDataset() {
+      var optionobj;
+
+      for (var i = 0; i < this.hlpvaloracions.length; i++) {
+        optionobj = document.getElementById('v_' + i + '_' + this.hlpvaloracions[i].codi_valoracio);
+
+        for (var k = 0; k < this.hlpvaloraciohassimptomes.length; k++) {
+          if (this.hlpvaloracions[i].codi_valoracio == this.hlpvaloraciohassimptomes[k].codi_valoracio) {
+            optionobj.dataset[this.hlpvaloraciohassimptomes[k].id_simptoma] = 1;
+            console.log(' ___ found !! -> ' + this.hlpvaloraciohassimptomes[k].id_simptoma);
+          }
+        }
+      }
+    },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+    addValoracioSimptomes: function addValoracioSimptomes() {
+      var optionobj;
+
+      for (var i = 0; i < this.hlpvaloracions.length; i++) {
+        optionobj = document.getElementById('v_' + i + '_' + this.hlpvaloracions[i].codi_valoracio);
+
+        for (var k = 0; k < this.hlpvaloraciohassimptomes.length; k++) {
+          if (this.hlpvaloracions[i].codi_valoracio == this.hlpvaloraciohassimptomes[k].codi_valoracio) {
+            optionobj.dataset[this.hlpvaloraciohassimptomes[k].id_simptoma] = 1;
+            console.log(' ___ found !! -> ' + this.hlpvaloraciohassimptomes[k].id_simptoma);
+          }
+        }
+      }
     },
     // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: openVideoValoracio =>
     openVideoValoracio: function openVideoValoracio() {
@@ -2683,6 +2785,16 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return foud;
+    },
+    // - - - - - - - - - - - - - - - - - - - - - TOOLS: generateArrayById =>
+    generateArrayById: function generateArrayById(original) {
+      var tmpary = [];
+
+      for (var i = 0; i < original.length; i++) {
+        tmpary[original[i].id] = original[i];
+      }
+
+      return tmpary;
     } // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
@@ -2699,9 +2811,12 @@ __webpack_require__.r(__webpack_exports__);
     this.vdsplay = JSON.parse(apptag.dataset.pvdsplay);
     this.hlpvaloracions = JSON.parse(apptag.dataset.phlpvaloracions);
     this.hlpsimtomes = JSON.parse(apptag.dataset.phlpsimptomes);
+    this.byid_hlpsimtomes = this.generateArrayById(this.hlpsimtomes);
+    this.hlpvaloraciohassimptomes = JSON.parse(apptag.dataset.phlpvaloraciohassimptomes);
   },
   mounted: function mounted() {
     console.log('Component mounted...');
+    this.addValoracioDataset();
   }
 });
 
@@ -7658,7 +7773,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\n{\n    background-color: rgb(27, 220, 27);\n    border-radius: 50%;\n    width: 10px;\n    height: 10px;\n    margin-top: 14px;\n    margin-left: -25px;\n}\n.cont-vip\n{\n    width: 40px;\n    height: 37px;\n    margin-left: 20px;\n}\n.cont-vip span\n{\n    color: black;\n    float: right;\n    margin-top: -17px;\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: rgb(27, 220, 27);\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\r\n    margin-left: -25px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\r\n    margin-left: 20px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7730,7 +7845,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\n\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\n{\n    border-bottom: 0px !important;\n    padding-left: 15px !important;\n}\n.table th, td\n{\n    font-size: 85%;\n    vertical-align: middle !important;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\r\n{\r\n    border-bottom: 0px !important;\r\n    padding-left: 15px !important;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39808,7 +39923,7 @@ var staticRenderFns = [
               { staticClass: "btn btn-dark", attrs: { type: "button" } },
               [
                 _vm._v(
-                  "\n                            Generar Trucada\n                        "
+                  "\r\n                            Generar Trucada\r\n                        "
                 )
               ]
             )
@@ -40970,7 +41085,7 @@ var render = function() {
                                 expression: "afectat.codi_valoracio"
                               }
                             ],
-                            staticClass: "col-7 custom-select",
+                            staticClass: "col-8 custom-select",
                             attrs: { id: "afectat_codivaloracio" },
                             on: {
                               change: [
@@ -40998,60 +41113,70 @@ var render = function() {
                               ]
                             }
                           },
-                          _vm._l(_vm.codisvaloracions, function(item) {
+                          _vm._l(_vm.codisvaloracions, function(item, index) {
                             return _c(
                               "option",
-                              { key: item.id, domProps: { value: item.codi } },
+                              {
+                                key: item.id,
+                                attrs: { id: "v_" + index + "_" + item.codi },
+                                domProps: { value: item.codi }
+                              },
                               [_vm._v(_vm._s(item.nom))]
                             )
                           }),
                           0
                         ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "col-2 btn btn-outline-secondary ml-3",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.openVideoValoracio()
+                        _c("div", { staticClass: "col-2 p-0 m-0 pl-4" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-secondary w-100",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.openVideoValoracio()
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "bi bi-camera-reels" }),
-                            _vm._v(" Video")
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: !_vm.displayHelp,
-                                expression: "(!displayHelp)"
-                              }
-                            ],
-                            staticClass: "col-2 btn btn-outline-secondary ml-3",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "collapse"
                             },
-                            on: {
-                              click: function($event) {
-                                return _vm.openBoxValoracio()
+                            [
+                              _c("i", { staticClass: "far fa-play-circle" }),
+                              _vm._v(" Video")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-2 p-0 m-0 pl-4" }, [
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.displayHelp,
+                                  expression: "(!displayHelp)"
+                                }
+                              ],
+                              staticClass: "btn btn-outline-secondary w-100",
+                              attrs: {
+                                type: "button",
+                                "data-toggle": "collapse"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.openBoxValoracio()
+                                }
                               }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "bi bi-globe2" }),
-                            _vm._v(" Ayuda")
-                          ]
-                        )
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "far fa-question-circle"
+                              }),
+                              _vm._v(" Ayuda")
+                            ]
+                          )
+                        ])
                       ]),
                       _vm._v(" "),
                       _c(
@@ -41082,73 +41207,75 @@ var render = function() {
                                     "div",
                                     {
                                       key: item.id,
-                                      staticClass: "col-4 mb-2 ml-4",
+                                      staticClass: "col-4 mb-2 px-2",
                                       staticStyle: {
                                         "border-left": "1px dotted #0b0a0b"
                                       }
                                     },
                                     [
-                                      _c("div", { staticClass: "row" }, [
-                                        _c("input", {
-                                          staticClass: "form-check-input",
-                                          attrs: {
-                                            type: "checkbox",
-                                            id: item.id,
-                                            codi: item.codi,
-                                            ind: index
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass: "w-100 p-1 m-0",
+                                          staticStyle: {
+                                            "background-color": "#fff"
                                           }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "p",
-                                          {
-                                            staticClass: "p-1 m-0",
-                                            staticStyle: {
-                                              display: "block",
-                                              "background-color": "#fff"
+                                        },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: "checkbox",
+                                              id: "simptoma" + item.id,
+                                              "data-simptoma": item.id,
+                                              "data-codi": item.codi,
+                                              "data-ind": index
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.checkboxSimptomes(
+                                                  $event
+                                                )
+                                              }
                                             }
-                                          },
-                                          [
-                                            _c("small", [
-                                              _vm._v(_vm._s(item.pregunta))
-                                            ])
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "p",
-                                          {
-                                            staticClass: "p-1 m-0",
-                                            staticStyle: {
-                                              display: "block",
-                                              "background-color":
-                                                "rgb(244, 241, 51)"
-                                            }
-                                          },
-                                          [
-                                            _c("small", [
-                                              _vm._v(_vm._s(item.translation))
-                                            ])
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "p",
-                                          {
-                                            staticClass: "p-1 m-0",
-                                            staticStyle: {
-                                              display: "block",
-                                              "background-color":
-                                                "rgb(148, 244, 51)"
-                                            }
-                                          },
-                                          [
-                                            _c("small", [
-                                              _vm._v(_vm._s(item.soundlike))
-                                            ])
-                                          ]
-                                        )
-                                      ])
+                                          }),
+                                          _vm._v(" "),
+                                          _c("small", [
+                                            _vm._v(_vm._s(item.pregunta))
+                                          ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass: "w-100 p-1 m-0",
+                                          staticStyle: {
+                                            "background-color":
+                                              "rgb(244, 241, 51)"
+                                          }
+                                        },
+                                        [
+                                          _c("small", [
+                                            _vm._v(_vm._s(item.translation))
+                                          ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass: "w-100 p-1 m-0",
+                                          staticStyle: {
+                                            "background-color":
+                                              "rgb(148, 244, 51)"
+                                          }
+                                        },
+                                        [
+                                          _c("small", [
+                                            _vm._v(_vm._s(item.soundlike))
+                                          ])
+                                        ]
+                                      )
                                     ]
                                   )
                                 }),
@@ -41236,9 +41363,11 @@ var render = function() {
                 _vm._v(" "),
                 _c("button", {
                   staticClass: "btn btn-primary",
-                  attrs: {
-                    type: "button",
-                    text: _vm.key_tmp < 0 ? "Afegir" : "Modificar"
+                  attrs: { type: "button" },
+                  domProps: {
+                    textContent: _vm._s(
+                      _vm.key_tmp < 0 ? "Afegir" : "Modificar"
+                    )
                   },
                   on: {
                     click: function($event) {

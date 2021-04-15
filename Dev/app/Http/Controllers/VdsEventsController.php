@@ -114,7 +114,7 @@ class VdsEventsController extends Controller
 
         $typeAry = ['No def','Explicació','Joc'];
 
-        $theobj = VdsEvents::with('video')->find($theobj->id_video);
+        $theobj = VdsEvents::with('video')->find($theobj->id);
 
         return view('admin.video.events.edit', compact('theobj','videosAry','typeAry') );
 

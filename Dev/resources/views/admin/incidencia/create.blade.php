@@ -157,6 +157,7 @@
             <!-- Afectats Table VUE -->
             <div class="form-group row" id="app"
                 data-pafectats='{!! "[]" !!}'
+                data-palertants='{!! ($alertantsAry)?str_replace("'", '´', $alertantsAry->toJson()):"[]" !!}'
                 data-psexes='{!! ($sexesAry)?str_replace("'", '´', $sexesAry->toJson()):"[]" !!}'
                 data-ptipusrecursos='{!! ($tipusrecursosAry)?str_replace("'", '´', $tipusrecursosAry->toJson()):"[]" !!}'
                 data-pcodisgravetat='{!! ($codisgravetatAry)?str_replace("'", '´', $codisgravetatAry->toJson()):'[]' !!}'
@@ -166,6 +167,7 @@
                 data-pvdsplay='{!! ($vdsplayAry)?str_replace("'", '´', $vdsplayAry->toJson()):'[]' !!}'
                 data-phlpvaloracions='{!! ($hlpvaloracionsAry)?str_replace("'", '´', $hlpvaloracionsAry->toJson()):'[]' !!}'
                 data-phlpsimptomes='{!! ($hlpsimptomesAry)?str_replace("'", '´', $hlpsimptomesAry->toJson()):'[]' !!}'
+                data-phlpvaloraciohassimptomes='{!! ($hlpvaloraciohassimptomesAry)?str_replace("'", '´', $hlpvaloraciohassimptomesAry->toJson()):'[]' !!}'
             ><magomo-component></magomo-component></div>
             <!-- Afectats Table VUE -->
 
