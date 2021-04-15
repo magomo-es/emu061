@@ -111,7 +111,6 @@
 <script>
 import TablaAfectadosComponent from './tablaAfectadosComponent.vue';
 export default {
-  components: { modalAlertantModalAlertantComponent },
   data() {
     return {
         errors: [],

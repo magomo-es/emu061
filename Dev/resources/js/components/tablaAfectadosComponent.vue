@@ -190,7 +190,7 @@
         </div>
 
         <!-- MODAL DELETE -->
-        <!--<div class="modal" tabindex="-1" id="confirmDelete">
+        <div class="modal" tabindex="-1" id="confirmDelete">
             <div class="modal-dialog>
                 <div class="modal-content">
                     <div class="modal-header">
@@ -201,9 +201,16 @@
                     </div>
 
                     <div class="modal-body">
+                        <p>Modal text goes here</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Close</button>
+                    </div>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
 </template>
 
@@ -311,7 +318,7 @@ export default {
 
       confirmDelete()
       {
-        //$(#confirmDelete).modal('show")
+        $(#confirmDelete).modal('show")
       }
 
   },
