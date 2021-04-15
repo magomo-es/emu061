@@ -40955,7 +40955,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "col-2 btn btn-primary ml-3",
+                            staticClass: "col-2 btn btn-outline-secondary ml-3",
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
@@ -40963,7 +40963,10 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Video")]
+                          [
+                            _c("i", { staticClass: "bi bi-camera-reels" }),
+                            _vm._v(" Video")
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -40977,7 +40980,7 @@ var render = function() {
                                 expression: "(!displayHelp)"
                               }
                             ],
-                            staticClass: "col-2 btn btn-primary ml-3",
+                            staticClass: "col-2 btn btn-outline-secondary ml-3",
                             attrs: {
                               type: "button",
                               "data-toggle": "collapse"
@@ -40988,7 +40991,10 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Ayuda")]
+                          [
+                            _c("i", { staticClass: "bi bi-globe2" }),
+                            _vm._v(" Ayuda")
+                          ]
                         )
                       ]),
                       _vm._v(" "),

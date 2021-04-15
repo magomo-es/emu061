@@ -149,8 +149,8 @@
                                 <select class="col-7 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
                                     <option v-for="(item) in codisvaloracions" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
-                                <button type="button" class="col-2 btn btn-primary ml-3" @click="openVideoValoracio()">Video</button>
-                                <button type="button" class="col-2 btn btn-primary ml-3" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)">Ayuda</button>
+                                <button type="button" class="col-2 btn btn-outline-secondary ml-3" @click="openVideoValoracio()"><i class="bi bi-camera-reels"></i> Video</button>
+                                <button type="button" class="col-2 btn btn-outline-secondary ml-3" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)"><i class="bi bi-globe2"></i> Ayuda</button>
                             </div>
                             <div v-show="(displayHelp)" class="row px-1 mb-3">
 
