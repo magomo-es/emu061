@@ -2451,10 +2451,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
     return {
+      displayHelp: false,
       key_tmp: 0,
       valoracionCodi: '',
       videoId: 0,
@@ -2486,6 +2505,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    openBoxValoracio: function openBoxValoracio() {
+      this.displayHelp = true;
+    },
+    closeBoxValoracio: function closeBoxValoracio() {
+      this.displayHelp = false;
+    },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
     emptyAfectat: function emptyAfectat() {
       return {
@@ -7546,7 +7571,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.form-control-sm\n{\n    box-shadow: 0px 1px 0.1px grey !important;\n}\n.label\n{\n    font-size: 85%;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-control-sm\r\n{\r\n    box-shadow: 0px 1px 0.1px grey !important;\n}\n.label\r\n{\r\n    font-size: 85%;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7570,7 +7595,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7594,7 +7619,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\n\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee;\n}\n.table th, td\n{\n    font-size: 85%;\n    vertical-align: middle !important;\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -40324,7 +40349,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-edit" }),
-                      _vm._v(" Editar\r\n                        ")
+                      _vm._v(" Editar\n                        ")
                     ]
                   )
                 ]
@@ -40347,7 +40372,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-trash" }),
-                      _vm._v(" Esborrar\r\n                        ")
+                      _vm._v(" Esborrar\n                        ")
                     ]
                   )
                 ]
@@ -40698,97 +40723,246 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(16),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-group row",
+                    class: { "valoracio-box": _vm.displayHelp },
+                    attrs: { id: "boxValoracio" }
+                  },
+                  [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "row px-1 mb-3" }, [
+                        _vm._m(16),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.afectat.codi_valoracio,
+                                expression: "afectat.codi_valoracio"
+                              }
+                            ],
+                            staticClass: "col-7 custom-select",
+                            attrs: { id: "afectat_codivaloracio" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.afectat,
+                                    "codi_valoracio",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return _vm.onChangeValoracio($event)
+                                }
+                              ]
+                            }
+                          },
+                          _vm._l(_vm.codisvaloracions, function(item) {
+                            return _c(
+                              "option",
+                              { key: item.id, domProps: { value: item.codi } },
+                              [_vm._v(_vm._s(item.nom))]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "col-2 btn btn-primary ml-3",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.openVideoValoracio()
+                              }
+                            }
+                          },
+                          [_vm._v("Video")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.displayHelp,
+                                expression: "(!displayHelp)"
+                              }
+                            ],
+                            staticClass: "col-2 btn btn-primary ml-3",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "collapse"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.openBoxValoracio()
+                              }
+                            }
+                          },
+                          [_vm._v("Ayuda")]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
-                        "select",
+                        "div",
                         {
                           directives: [
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.afectat.codi_valoracio,
-                              expression: "afectat.codi_valoracio"
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.displayHelp,
+                              expression: "(displayHelp)"
                             }
                           ],
-                          staticClass: "col-8 custom-select",
-                          attrs: { id: "afectat_codivaloracio" },
-                          on: {
-                            change: [
-                              function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.afectat,
-                                  "codi_valoracio",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                              function($event) {
-                                return _vm.onChangeValoracio($event)
-                              }
+                          staticClass: "row px-1 mb-3"
+                        },
+                        [
+                          _c("h5", [_vm._v("Simptomes")]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "container-fluid mt-3 mb-5" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "row" },
+                                _vm._l(_vm.hlpsimtomes, function(item, index) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      key: item.id,
+                                      staticClass: "col-4 mb-2 ml-4",
+                                      staticStyle: {
+                                        "border-left": "1px dotted #0b0a0b"
+                                      }
+                                    },
+                                    [
+                                      _c("div", { staticClass: "row" }, [
+                                        _c("input", {
+                                          staticClass: "form-check-input",
+                                          attrs: {
+                                            type: "checkbox",
+                                            id: item.id,
+                                            codi: item.codi,
+                                            ind: index
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass: "p-1 m-0",
+                                            staticStyle: {
+                                              display: "block",
+                                              "background-color": "#fff"
+                                            }
+                                          },
+                                          [
+                                            _c("small", [
+                                              _vm._v(_vm._s(item.pregunta))
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass: "p-1 m-0",
+                                            staticStyle: {
+                                              display: "block",
+                                              "background-color":
+                                                "rgb(244, 241, 51)"
+                                            }
+                                          },
+                                          [
+                                            _c("small", [
+                                              _vm._v(_vm._s(item.translation))
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass: "p-1 m-0",
+                                            staticStyle: {
+                                              display: "block",
+                                              "background-color":
+                                                "rgb(148, 244, 51)"
+                                            }
+                                          },
+                                          [
+                                            _c("small", [
+                                              _vm._v(_vm._s(item.soundlike))
+                                            ])
+                                          ]
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                }),
+                                0
+                              )
                             ]
-                          }
-                        },
-                        _vm._l(_vm.codisvaloracions, function(item) {
-                          return _c(
-                            "option",
-                            { key: item.id, domProps: { value: item.codi } },
-                            [_vm._v(_vm._s(item.nom))]
                           )
-                        }),
-                        0
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "col-2 btn btn-primary",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.openVideoValoracio()
-                            }
-                          }
-                        },
-                        [_vm._v("Video")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "col-2 btn btn-primary",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "collapse",
-                            "data-target": "#collapseAyuda",
-                            "aria-expanded": "false",
-                            "aria-controls": "collapseExample"
-                          }
-                        },
-                        [_vm._v("Ayuda")]
+                        ]
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(17)
-                  ])
-                ]),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.displayHelp,
+                            expression: "(displayHelp)"
+                          }
+                        ],
+                        staticClass: "btn btn-secondary",
+                        staticStyle: {
+                          position: "absolute",
+                          bottom: "30px",
+                          right: "30px"
+                        },
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.closeBoxValoracio()
+                          }
+                        }
+                      },
+                      [_vm._v("Tarcar")]
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(18),
+                      _vm._m(17),
                       _vm._v(" "),
                       _c("textarea", {
                         directives: [
@@ -40830,19 +41004,18 @@ var render = function() {
                   [_vm._v("Tarcar")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.registerAfectat()
-                      }
-                    }
+                _c("button", {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    type: "button",
+                    text: _vm.key_tmp < 0 ? "Afegir" : "Modificar"
                   },
-                  [_vm._v(_vm._s(_vm.key_tmp < 0 ? "Afegir" : "Modificar"))]
-                )
+                  on: {
+                    click: function($event) {
+                      return _vm.registerAfectat()
+                    }
+                  }
+                })
               ])
             ])
           ]
@@ -40862,7 +41035,7 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(19),
+              _vm._m(18),
               _vm._v(" "),
               _c(
                 "div",
@@ -41134,22 +41307,6 @@ var staticRenderFns = [
         attrs: { for: "afectat_codivaloracio" }
       },
       [_c("small", [_vm._v("Codi Valoracio")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "collapse", attrs: { id: "collapseAyuda" } },
-      [
-        _c("div", { staticClass: "card card-body" }, [
-          _vm._v(
-            "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident."
-          )
-        ])
-      ]
     )
   },
   function() {

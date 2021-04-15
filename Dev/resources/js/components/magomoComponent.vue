@@ -142,20 +142,36 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" id="boxValoracio" v-bind:class="{ 'valoracio-box': displayHelp }">
                         <div class="col-12">
-                            <div class="row px-1">
+                            <div class="row px-1 mb-3">
                                 <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1"><small>Codi Valoracio</small></label>
-                                <select class="col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
+                                <select class="col-7 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
                                     <option v-for="(item) in codisvaloracions" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
-                                <button type="button" class="col-2 btn btn-primary" @click="openVideoValoracio()">Video</button>
-                                <button type="button" class="col-2 btn btn-primary" data-toggle="collapse" data-target="#collapseAyuda" aria-expanded="false" aria-controls="collapseExample">Ayuda</button>
+                                <button type="button" class="col-2 btn btn-primary ml-3" @click="openVideoValoracio()">Video</button>
+                                <button type="button" class="col-2 btn btn-primary ml-3" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)">Ayuda</button>
                             </div>
-                            <div class="collapse" id="collapseAyuda">
-                                <div class="card card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.</div>
+                            <div v-show="(displayHelp)" class="row px-1 mb-3">
+
+                                <h5>Simptomes</h5>
+                                <div class="container-fluid mt-3 mb-5">
+                                    <div class="row">
+                                    <div class="col-4 mb-2 ml-4" v-for="(item, index) in hlpsimtomes" v-bind:key="item.id" style="border-left: 1px dotted #0b0a0b;">
+                                        <div class="row">
+                                            <input class="form-check-input" type="checkbox" v-bind:id="item.id" v-bind:codi="item.codi" v-bind:ind="index" >
+                                            <p class="p-1 m-0" style="display: block; background-color: #fff;"><small>{{ item.pregunta }}</small></p>
+                                            <p class="p-1 m-0" style="display: block; background-color: rgb(244, 241, 51);"><small>{{ item.translation }}</small></p>
+                                            <p class="p-1 m-0" style="display: block; background-color: rgb(148, 244, 51);"><small>{{ item.soundlike }}</small></p>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
+                        <button type="button" class="btn btn-secondary" @click="closeBoxValoracio()" v-show="(displayHelp)" style="position: absolute; bottom: 30px; right: 30px;">Tarcar</button>
                     </div>
 
                     <div class="form-group row">
@@ -171,7 +187,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tarcar</button>
-                    <button type="button" class="btn btn-primary" @click="registerAfectat()">{{ (key_tmp<0)?'Afegir':'Modificar' }}</button>
+                    <button type="button" class="btn btn-primary" @click="registerAfectat()" v-bind:text="(key_tmp<0)?'Afegir':'Modificar'"></button>
                 </div>
             </div>
         </div>
@@ -209,6 +225,8 @@
     #rewButton { left: 10px; }
     #fwrButton { right: 10px; }
     #timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center; }
+    .valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99; }
+
 </style>
 
 <script>
@@ -230,6 +248,8 @@
         data() {
 
             return {
+
+                displayHelp: false,
 
                 key_tmp: 0,
 
@@ -259,6 +279,17 @@
         },
 
         methods: {
+
+
+            openBoxValoracio() {
+                this.displayHelp = true
+            },
+
+            closeBoxValoracio() {
+                this.displayHelp = false
+            },
+
+
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
             emptyAfectat() {
                 return {
