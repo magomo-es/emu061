@@ -2,16 +2,6 @@
 <main>
     <div class="container-lg" style="max-width: 1300px;">
         <div class="row">
-            <div class="col-4" style="flex: 0 0 31.7%;">
-                <button class="btn btn-dark" type="button">
-                    Generar Trucada
-                </button>
-
-                <button class="btn btn-info" type="button">
-                    Video
-                </button>
-            </div>
-
             <div class="col-auto">
                 <div class="row g-3 align-items-center">
 
@@ -35,6 +25,21 @@
                     </div>
 
                 </div>
+            </div>
+
+            <div class="col-2" style="flex: 1 !important; max-width: 19.75%; margin-left:42%;">
+                 <div class="row g-3 align-items-center">
+                     <div class="col-auto">
+                        <button class="btn btn-dark" type="button">
+                            Generar Trucada
+                        </button>
+                     </div>
+
+                    <div class="col-auto">
+                        <!-- <button type="button" class="col-2 btn btn-outline-secondary ml-3"><i class="bi bi-camera-reels"></i> Video</button> -->
+                        <button class="btn btn-outline-secondary">Video</button>
+                    </div>
+                 </div>
             </div>
         </div>
 
@@ -128,6 +133,8 @@
     margin-top: -17px;
     margin-left: 15px;
 }
+
+.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px; }
 
 </style>
 

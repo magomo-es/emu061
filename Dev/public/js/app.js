@@ -1978,6 +1978,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2952,18 +2959,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      key_tmp: 0,
       afectat: {
-        id: '',
+        id: 0,
         telefon: '',
         cip: '',
         nom: '',
         cognoms: '',
         edat: '',
-        sexe_id: '',
-        tipus_recurs_id: '',
+        sexe_id: 0,
+        tipus_recursos_id: '',
         codi_gravetat: '',
         codi_valoracio: '',
         descripcio: ''
@@ -3036,20 +3057,29 @@ __webpack_require__.r(__webpack_exports__);
         return _this5.loading = false;
       });
     },
-    confirmDelete: function confirmDelete(afectat) {
+    confirmDelete: function confirmDelete(afectat, keyindex) {
+      this.key_tmp = keyindex;
       this.afectat = afectat;
       $('#confirmDelete').modal("show");
     },
     deleteAfectat: function deleteAfectat() {
-      this.afectats.splice(afectat, 1);
+      this.afectats.splice(this.work_key, 1);
+      $('#confirmDelete').modal("hide");
     },
-    openModalAfectat: function openModalAfectat() {
+    openModalAfectat: function openModalAfectat(afectat, keyindex) {
+      this.key_tmp = keyindex;
+      this.afectat = afectat;
       $('#modalCrearAfectat').modal("show");
     },
     createAfectat: function createAfectat() {
-      // let me = this;
-      $('#modalCrearAfectat').modal("hide");
-      this.afectats.push(this.afectat); //   axios
+      if (this.key_tmp >= 0 && this.afectats[this.key_tmp]) {
+        this.afectats[this.key_tmp] = this.afectat;
+      } else {
+        this.afectats.push(this.afectat);
+      } // let me = this;
+
+
+      $('#modalCrearAfectat').modal("hide"); //   axios
       //     .post('/', me.afectat)
       //     .then(function(response)
       //     {
@@ -3060,6 +3090,21 @@ __webpack_require__.r(__webpack_exports__);
       //     {
       //         me.errorMessage = error.response.data.error;
       //     })
+    },
+    cleanAfectat: function cleanAfectat() {
+      return {
+        id: 0,
+        telefon: '',
+        cip: '',
+        nom: '',
+        cognoms: '',
+        edat: '',
+        sexe_id: 0,
+        tipus_recursos_id: '',
+        codi_gravetat: '',
+        codi_valoracio: '',
+        descripcio: ''
+      };
     }
   },
   mounted: function mounted() {
@@ -7613,7 +7658,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: rgb(27, 220, 27);\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\r\n    margin-left: -25px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\r\n    margin-left: 20px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\n{\n    background-color: rgb(27, 220, 27);\n    border-radius: 50%;\n    width: 10px;\n    height: 10px;\n    margin-top: 14px;\n    margin-left: -25px;\n}\n.cont-vip\n{\n    width: 40px;\n    height: 37px;\n    margin-left: 20px;\n}\n.cont-vip span\n{\n    color: black;\n    float: right;\n    margin-top: -17px;\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7685,7 +7730,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\r\n{\r\n    border-bottom: 0px !important;\r\n    padding-left: 15px !important;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\n\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\n{\n    border-bottom: 0px !important;\n    padding-left: 15px !important;\n}\n.table th, td\n{\n    font-size: 85%;\n    vertical-align: middle !important;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39479,11 +39524,9 @@ var render = function() {
       { staticClass: "container-lg", staticStyle: { "max-width": "1300px" } },
       [
         _c("div", { staticClass: "row" }, [
-          _vm._m(0),
-          _vm._v(" "),
           _c("div", { staticClass: "col-auto" }, [
             _c("div", { staticClass: "row g-3 align-items-center" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "col-auto" }, [
                 _c("input", {
@@ -39509,11 +39552,13 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(2)
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _vm._m(3)
         ]),
         _vm._v(" "),
         _c(
@@ -39695,32 +39740,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-4", staticStyle: { flex: "0 0 31.7%" } },
-      [
-        _c(
-          "button",
-          { staticClass: "btn btn-dark", attrs: { type: "button" } },
-          [
-            _vm._v(
-              "\r\n                    Generar Trucada\r\n                "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-info", attrs: { type: "button" } },
-          [_vm._v("\r\n                    Video\r\n                ")]
-        )
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-auto" }, [
       _c(
         "label",
@@ -39766,6 +39785,43 @@ var staticRenderFns = [
         [_vm._v("Veure Alertant")]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "col-2",
+        staticStyle: {
+          flex: "1 !important",
+          "max-width": "19.75%",
+          "margin-left": "42%"
+        }
+      },
+      [
+        _c("div", { staticClass: "row g-3 align-items-center" }, [
+          _c("div", { staticClass: "col-auto" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-dark", attrs: { type: "button" } },
+              [
+                _vm._v(
+                  "\n                            Generar Trucada\n                        "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-auto" }, [
+            _c("button", { staticClass: "btn btn-outline-secondary" }, [
+              _vm._v("Video")
+            ])
+          ])
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -41538,6 +41594,8 @@ var render = function() {
       _c("table", { staticClass: "table" }, [
         _c("thead", { staticClass: "table-light" }, [
           _c("tr", [
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+            _vm._v(" "),
             _c("th", { attrs: { scope: "col" } }, [_vm._v("Noms")]),
             _vm._v(" "),
             _c("th", { attrs: { scope: "col" } }, [_vm._v("Cognoms")]),
@@ -41545,6 +41603,10 @@ var render = function() {
             _c("th", { attrs: { scope: "col" } }, [_vm._v("Edat")]),
             _vm._v(" "),
             _c("th", { attrs: { scope: "col" } }, [_vm._v("CIP")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Sexe")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Telèfon")]),
             _vm._v(" "),
             _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
               _c(
@@ -41562,7 +41624,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.openModalAfectat()
+                          _vm.openModalAfectat(_vm.cleanAfectat(), -1)
                         }
                       }
                     },
@@ -41579,8 +41641,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.afectats, function(afectat) {
+          _vm._l(_vm.afectats, function(afectat, index) {
             return _c("tr", { key: afectat.id }, [
+              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(afectat.nom))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(afectat.cognoms))]),
@@ -41589,8 +41653,33 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(afectat.cip))]),
               _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm.sexes[afectat.sexe]))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(afectat.telefon))]),
+              _vm._v(" "),
               _c("td", { staticClass: "text-right" }, [
-                _vm._m(1, true),
+                _c(
+                  "div",
+                  { staticClass: "btn-group", attrs: { role: "group" } },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.openModalAfectat(afectat, index)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-edit" }),
+                        _vm._v(" Editar\n                            ")
+                      ]
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -41603,7 +41692,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.confirmDelete(afectat)
+                            return _vm.confirmDelete(afectat, index)
                           }
                         }
                       },
@@ -41640,13 +41729,13 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body px-5" }, [
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(3),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41674,7 +41763,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(4),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41708,7 +41797,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(5),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41736,7 +41825,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41764,7 +41853,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(7),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41815,7 +41904,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(8),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41835,7 +41924,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(9),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41859,12 +41948,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(10),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c(
                         "select",
                         {
-                          staticClass: "col-8 custom-select",
+                          staticClass: "col-7 custom-select",
                           attrs: { id: "afectat_codivaloracio" }
                         },
                         _vm._l(_vm.codis_valoracio, function(codi) {
@@ -41877,58 +41966,42 @@ var render = function() {
                         0
                       ),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "col-2 btn btn-primary",
-                          attrs: { type: "button" }
-                        },
-                        [_vm._v("Video")]
-                      ),
+                      _vm._m(10),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "col-2 btn btn-primary",
-                          attrs: {
-                            type: "button",
-                            "data-toggle": "collapse",
-                            "data-target": "#collapseAyuda",
-                            "aria-expanded": "false",
-                            "aria-controls": "collapseExample"
-                          }
-                        },
-                        [_vm._v("Ayuda")]
-                      )
+                      _vm._m(11)
                     ]),
                     _vm._v(" "),
-                    _vm._m(11)
+                    _vm._m(12)
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(12),
+                      _vm._m(13),
                       _vm._v(" "),
                       _c("textarea", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.afectat,
-                            expression: "afectat"
+                            value: _vm.afectat.descripcio,
+                            expression: "afectat.descripcio"
                           }
                         ],
                         staticClass: "col-12 form-control",
                         attrs: { rows: "2", id: "afectat_descripcio" },
-                        domProps: { value: _vm.afectat },
+                        domProps: { value: _vm.afectat.descripcio },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.afectat = $event.target.value
+                            _vm.$set(
+                              _vm.afectat,
+                              "descripcio",
+                              $event.target.value
+                            )
                           }
                         }
                       })
@@ -41958,7 +42031,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Afegir")]
+                  [_vm._v("Desar")]
                 )
               ])
             ])
@@ -41973,13 +42046,13 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(13),
+            _vm._m(14),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("p", [
                 _vm._v(
-                  "Estas segur de que vols esborrar l'afectat " +
-                    _vm._s(_vm.afectat.id) +
+                  "Estas segur de que vols esborrar l'afectat - " +
+                    _vm._s(_vm.afectat.id + 1) +
                     " - " +
                     _vm._s(_vm.afectat.nom) +
                     " " +
@@ -42031,26 +42104,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-secondary btn-sm", attrs: { type: "button" } },
-        [
-          _c("i", { staticClass: "fas fa-edit" }),
-          _vm._v(" Editar\n                            ")
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Crear Afectat")]
+        [_vm._v("Afectats")]
       ),
       _vm._v(" "),
       _c(
@@ -42169,6 +42227,32 @@ var staticRenderFns = [
         attrs: { for: "afectat_codivaloracio" }
       },
       [_c("small", [_vm._v("Codi Valoracio")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "col-2 btn btn-outline-secondary ml-3",
+        attrs: { type: "button" }
+      },
+      [_c("i", { staticClass: "bi bi-camera-reels" }), _vm._v(" Video")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "col-2 btn btn-outline-secondary ml-3",
+        attrs: { type: "button", "data-toggle": "collapse" }
+      },
+      [_c("i", { staticClass: "bi bi-globe2" }), _vm._v(" Ayuda")]
     )
   },
   function() {

@@ -6,13 +6,16 @@
             <table class="table">
                 <thead class="table-light">
                     <tr>
+                        <th scope="col">ID</th>
                         <th scope="col">Noms</th>
                         <th scope="col">Cognoms</th>
                         <th scope="col">Edat</th>
                         <th scope="col">CIP</th>
+                        <th scope="col">Sexe</th>
+                        <th scope="col">Telèfon</th>
                         <th scope="col" class="text-right">
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#modalCrearAfectat" @click="openModalAfectat()">
+                                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#modalCrearAfectat" @click="openModalAfectat(cleanAfectat(),-1)">
                                     <i class="fas fa-plus"></i> Nou Afectat
                                 </button>
                             </div>
@@ -21,23 +24,28 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="afectat in afectats" v-bind:key="afectat.id">
+                    <tr v-for="(afectat, index) in afectats" v-bind:key="afectat.id">
+                        <td>{{ index + 1 }}</td>
                         <td>{{ afectat.nom }}</td>
                         <td>{{ afectat.cognoms }}</td>
                         <td>{{ afectat.edat }}</td>
                         <td>{{ afectat.cip }}</td>
+                        <td>{{ sexes[afectat.sexe] }}</td>
+                        <td>{{ afectat.telefon }}</td>
 
                         <td class="text-right">
+
+
                             <!-- FALTA MODAL EDICIÓN -->
                             <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm">
+                                <button type="button" class="btn btn-secondary btn-sm" @click="openModalAfectat(afectat, index)">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             </div>
 
                             <!-- FALTA ELIMINCACIÓN -->
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete( afectat )">
+                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete( afectat, index )">
                                     <i class="fas fa-trash"></i> Esborrar
                                 </button>
                             </div>
@@ -54,7 +62,7 @@
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="exampleModalLabel" class="modal-title">Crear Afectat</h5>
+                        <h5 id="exampleModalLabel" class="modal-title">Afectats</h5>
                         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -151,12 +159,12 @@
                                         <small>Codi Valoracio</small>
                                     </label>
 
-                                    <select id="afectat_codivaloracio" class="col-8 custom-select">
+                                    <select id="afectat_codivaloracio" class="col-7 custom-select">
                                         <option v-for="codi in codis_valoracio" :key="codi.id" value="codi.id">{{ codi.nom }}</option>
                                     </select>
 
-                                    <button type="button" class="col-2 btn btn-primary">Video</button>
-                                    <button type="button" data-toggle="collapse" data-target="#collapseAyuda" aria-expanded="false" aria-controls="collapseExample" class="col-2 btn btn-primary">Ayuda</button>
+                                    <button type="button" class="col-2 btn btn-outline-secondary ml-3"><i class="bi bi-camera-reels"></i> Video</button>
+                                    <button type="button" class="col-2 btn btn-outline-secondary ml-3" data-toggle="collapse"><i class="bi bi-globe2"></i> Ayuda</button>
                                 </div>
 
                                 <div id="collapseAyuda" class="collapse">
@@ -175,7 +183,7 @@
                                         <small>Descripcio</small>
                                     </label>
 
-                                    <textarea rows="2" id="afectat_descripcio" class="col-12 form-control" v-model="afectat"></textarea>
+                                    <textarea rows="2" id="afectat_descripcio" class="col-12 form-control" v-model="afectat.descripcio"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +191,7 @@
 
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Tarcar</button>
-                        <button type="button" class="btn btn-primary" @click="createAfectat()">Afegir</button>
+                        <button type="button" class="btn btn-primary" @click="createAfectat()">Desar</button>
                     </div>
                 </div>
             </div>
@@ -201,7 +209,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <p>Estas segur de que vols esborrar l'afectat {{ afectat.id }} - {{ afectat.nom }} {{ afectat.cognoms }}</p> <!--Falta mostrar afectat-->
+                        <p>Estas segur de que vols esborrar l'afectat - {{ (afectat.id + 1) }} - {{ afectat.nom }} {{ afectat.cognoms }}</p> <!--Falta mostrar afectat-->
                     </div>
 
                     <div class="modal-footer">
@@ -236,6 +244,11 @@ th     { background:#eee; padding:0px !important }
     vertical-align: middle !important;
 }
 
+.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px; }
+#rewButton { left: 10px; }
+#fwrButton { right: 10px; }
+#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center; }
+.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99; }
 
 </style>
 
@@ -243,19 +256,20 @@ th     { background:#eee; padding:0px !important }
 export default {
   data() {
         return {
+            key_tmp: 0,
+
             afectat: {
-                id: '',
+                id: 0,
                 telefon: '',
                 cip: '',
                 nom: '',
                 cognoms: '',
                 edat: '',
-                sexe_id: '',
-                tipus_recurs_id: '',
+                sexe_id: 0,
+                tipus_recursos_id: '',
                 codi_gravetat: '',
                 codi_valoracio: '',
                 descripcio: ''
-
             },
             afectats: [],
             sexes: [],
@@ -336,28 +350,40 @@ export default {
             .finally(() => this.loading = false)
       },
 
-      confirmDelete( afectat )
+      confirmDelete( afectat, keyindex )
       {
-        this.afectat = afectat;
-        $('#confirmDelete').modal("show")
+          this.key_tmp = keyindex
+          this.afectat = afectat;
+          $('#confirmDelete').modal("show")
       },
 
       deleteAfectat()
       {
-          this.afectats.splice(afectat, 1)
+        this.afectats.splice(this.work_key, 1);
+        $('#confirmDelete').modal("hide")
       },
 
-      openModalAfectat()
+      openModalAfectat( afectat, keyindex )
       {
+          this.key_tmp = keyindex
+          this.afectat = afectat
           $('#modalCrearAfectat').modal("show")
       },
 
       createAfectat()
       {
+          if ( this.key_tmp >= 0 && this.afectats[this.key_tmp])
+          {
+              this.afectats[this.key_tmp] = this.afectat
+          }
+          else
+          {
+              this.afectats.push(this.afectat)
+          }
+
             // let me = this;
 
             $('#modalCrearAfectat').modal("hide")
-            this.afectats.push(this.afectat);
 
         //   axios
         //     .post('/', me.afectat)
@@ -371,6 +397,23 @@ export default {
         //     {
         //         me.errorMessage = error.response.data.error;
         //     })
+      },
+
+      cleanAfectat()
+      {
+        return {
+            id: 0,
+            telefon: '',
+            cip: '',
+            nom: '',
+            cognoms: '',
+            edat: '',
+            sexe_id: 0,
+            tipus_recursos_id: '',
+            codi_gravetat: '',
+            codi_valoracio: '',
+            descripcio: ''
+        }
       }
 
   },
