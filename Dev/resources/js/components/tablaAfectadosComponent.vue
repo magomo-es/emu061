@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <label for="desc">Llista d'afectats:</label>
+        <label for="desc"><small>Llista d'afectats:</small></label>
 
         <div class="tableFixHead">
             <table class="table">
@@ -12,7 +12,7 @@
                         <th scope="col">CIP</th>
                         <th scope="col" class="text-right">
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#modalCrearAfectant" @click="openModalAfectat()">
+                                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#modalCrearAfectat" @click="openModalAfectat()">
                                     <i class="fas fa-plus"></i> Nou Afectat
                                 </button>
                             </div>
@@ -50,7 +50,7 @@
         </div>
 
         <!-- MODAL CREAR AFECTADO -->
-        <div class="modal fade" id="modalCrearAfectant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalCrearAfectat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -183,7 +183,7 @@
 
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Tarcar</button>
-                        <button type="button" class="btn btn-primary" @onclick="createAfectat()">Afegir</button>
+                        <button type="button" class="btn btn-primary" @click="createAfectat()">Afegir</button>
                     </div>
                 </div>
             </div>
@@ -201,12 +201,12 @@
                     </div>
 
                     <div class="modal-body">
-                        <p>Estas segur de que vols esborrar l'afectat </p> <!--Falta mostrar afectat-->
+                        <p>Estas segur de que vols esborrar l'afectat {{ afectat.id }} - {{ afectat.nom }} {{ afectat.cognoms }}</p> <!--Falta mostrar afectat-->
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
-                        <button type="button" class="btn btn-primary">Esborrar</button>
+                        <button type="button" class="btn btn-primary" @click="deleteAfectat()">Esborrar</button>
                     </div>
                 </div>
             </div>
@@ -336,33 +336,41 @@ export default {
             .finally(() => this.loading = false)
       },
 
-      confirmDelete( selected_afectat )
+      confirmDelete( afectat )
       {
-        this.afectat = selected_afectat;
+        this.afectat = afectat;
         $('#confirmDelete').modal("show")
+      },
+
+      deleteAfectat()
+      {
+          this.afectats.splice(afectat, 1)
       },
 
       openModalAfectat()
       {
-          $('#modalCrearAfectant').modal("show")
+          $('#modalCrearAfectat').modal("show")
       },
 
       createAfectat()
       {
-          let me = this;
+            // let me = this;
 
-          axios
-            .post('/', me.afectat)
-            .then(function(response)
-            {
-                console.log(respose);
+            $('#modalCrearAfectat').modal("hide")
+            this.afectats.push(this.afectat);
 
-                me.selectAfectats();
-                $('#modalCrearAfectant').modal("hide");
-            }).catch(function(error)
-            {
-                me.errorMessage = error.response.data.error;
-            })
+        //   axios
+        //     .post('/', me.afectat)
+        //     .then(function(response)
+        //     {
+        //         console.log(respose);
+
+        //         me.selectAfectats();
+        //
+        //     }).catch(function(error)
+        //     {
+        //         me.errorMessage = error.response.data.error;
+        //     })
       }
 
   },

@@ -3011,22 +3011,30 @@ __webpack_require__.r(__webpack_exports__);
         return _this5.loading = false;
       });
     },
-    confirmDelete: function confirmDelete(selected_afectat) {
-      this.afectat = selected_afectat;
+    confirmDelete: function confirmDelete(afectat) {
+      this.afectat = afectat;
       $('#confirmDelete').modal("show");
     },
+    deleteAfectat: function deleteAfectat() {
+      this.afectats.splice(afectat, 1);
+    },
     openModalAfectat: function openModalAfectat() {
-      $('#modalCrearAfectant').modal("show");
+      $('#modalCrearAfectat').modal("show");
     },
     createAfectat: function createAfectat() {
-      var me = this;
-      axios.post('/', me.afectat).then(function (response) {
-        console.log(respose);
-        me.selectAfectats();
-        $('#modalCrearAfectant').modal("hide");
-      })["catch"](function (error) {
-        me.errorMessage = error.response.data.error;
-      });
+      // let me = this;
+      $('#modalCrearAfectat').modal("hide");
+      this.afectats.push(this.afectat); //   axios
+      //     .post('/', me.afectat)
+      //     .then(function(response)
+      //     {
+      //         console.log(respose);
+      //         me.selectAfectats();
+      //
+      //     }).catch(function(error)
+      //     {
+      //         me.errorMessage = error.response.data.error;
+      //     })
     }
   },
   mounted: function mounted() {
@@ -3105,7 +3113,7 @@ try {
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // FALTA TEST
 
-window.axios["default"].baseURL = '/Dev/public/api';
+window.axios["default"].baseURL = 'http://app.emu061.es/api';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -41357,7 +41365,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "form-group" }, [
-    _c("label", { attrs: { for: "desc" } }, [_vm._v("Llista d'afectats:")]),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "tableFixHead" }, [
       _c("table", { staticClass: "table" }, [
@@ -41383,7 +41391,7 @@ var render = function() {
                       attrs: {
                         type: "button",
                         "data-toggle": "modal",
-                        "data-target": "#modalCrearAfectant"
+                        "data-target": "#modalCrearAfectat"
                       },
                       on: {
                         click: function($event) {
@@ -41415,7 +41423,7 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(afectat.cip))]),
               _vm._v(" "),
               _c("td", { staticClass: "text-right" }, [
-                _vm._m(0, true),
+                _vm._m(1, true),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -41452,7 +41460,7 @@ var render = function() {
       {
         staticClass: "modal fade",
         attrs: {
-          id: "modalCrearAfectant",
+          id: "modalCrearAfectat",
           tabindex: "-1",
           role: "dialog",
           "aria-labelledby": "exampleModalLabel",
@@ -41465,13 +41473,13 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body px-5" }, [
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41499,7 +41507,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41533,7 +41541,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(4),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41561,7 +41569,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(5),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41589,7 +41597,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(6),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41640,7 +41648,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(7),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41660,7 +41668,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(8),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41684,7 +41692,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(9),
+                      _vm._m(10),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41727,14 +41735,14 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(10)
+                    _vm._m(11)
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(11),
+                      _vm._m(12),
                       _vm._v(" "),
                       _c("textarea", {
                         directives: [
@@ -41778,7 +41786,7 @@ var render = function() {
                     staticClass: "btn btn-primary",
                     attrs: { type: "button" },
                     on: {
-                      onclick: function($event) {
+                      click: function($event) {
                         return _vm.createAfectat()
                       }
                     }
@@ -41792,10 +41800,66 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(12)
+    _c(
+      "div",
+      { staticClass: "modal", attrs: { tabindex: "-1", id: "confirmDelete" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(13),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("p", [
+                _vm._v(
+                  "Estas segur de que vols esborrar l'afectat " +
+                    _vm._s(_vm.afectat.id) +
+                    " - " +
+                    _vm._s(_vm.afectat.nom) +
+                    " " +
+                    _vm._s(_vm.afectat.cognoms)
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Tancar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteAfectat()
+                    }
+                  }
+                },
+                [_vm._v("Esborrar")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "desc" } }, [
+      _c("small", [_vm._v("Llista d'afectats:")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -41973,59 +42037,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal", attrs: { tabindex: "-1", id: "confirmDelete" } },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "modal-header" }, [
-              _c("h5", { staticClass: "modal-title" }, [
-                _vm._v("Esborrar Afectat")
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "close",
-                  attrs: {
-                    type: "button",
-                    "data-dismiss": "modal",
-                    "aria-label": "Close"
-                  }
-                },
-                [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("×")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("p", [_vm._v("Estas segur de que vols esborrar l'afectat ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v("Tancar")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                [_vm._v("Esborrar")]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Esborrar Afectat")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true
