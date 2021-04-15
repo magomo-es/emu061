@@ -23,7 +23,6 @@
                     <div class="col-auto">
                         <button class="btn btn-light" data-toggle="modal" data-target="#modalAlertant" style="box-shadow: 0px 1px 0.1px grey;">Veure Alertant</button>
                     </div>
-
                 </div>
             </div>
 
