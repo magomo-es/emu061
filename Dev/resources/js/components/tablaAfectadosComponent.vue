@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <label for="desc">Llista d'afectats:</label>
+        <label for="desc"><small>Llista d'afectats:</small></label>
 
         <div class="tableFixHead">
             <table class="table">
@@ -12,7 +12,7 @@
                         <th scope="col">CIP</th>
                         <th scope="col" class="text-right">
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalCrearAfectant" >
+                                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#modalCrearAfectat" @click="openModalAfectat()">
                                     <i class="fas fa-plus"></i> Nou Afectat
                                 </button>
                             </div>
@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="afectat in afectats" :key="afectat.id">
+                    <tr v-for="afectat in afectats" v-bind:key="afectat.id">
                         <td>{{ afectat.nom }}</td>
                         <td>{{ afectat.cognoms }}</td>
                         <td>{{ afectat.edat }}</td>
@@ -37,7 +37,7 @@
 
                             <!-- FALTA ELIMINCACIÓN -->
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete()">
+                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete( afectat )">
                                     <i class="fas fa-trash"></i> Esborrar
                                 </button>
                             </div>
@@ -50,7 +50,7 @@
         </div>
 
         <!-- MODAL CREAR AFECTADO -->
-        <div class="modal fade" id="modalCrearAfectant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalCrearAfectat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -175,7 +175,7 @@
                                         <small>Descripcio</small>
                                     </label>
 
-                                    <textarea rows="2" id="afectat_descripcio" class="col-12 form-control" v-model="afectat.descripcio"></textarea>
+                                    <textarea rows="2" id="afectat_descripcio" class="col-12 form-control" v-model="afectat"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +183,7 @@
 
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-secondary">Tarcar</button>
-                        <button type="button" class="btn btn-primary">Afegir</button>
+                        <button type="button" class="btn btn-primary" @click="createAfectat()">Afegir</button>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
 
         <!-- MODAL DELETE -->
         <div class="modal" tabindex="-1" id="confirmDelete">
-            <div class="modal-dialog>
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Esborrar Afectat</h5>
@@ -201,12 +201,12 @@
                     </div>
 
                     <div class="modal-body">
-                        <p>Modal text goes here</p>
+                        <p>Estas segur de que vols esborrar l'afectat {{ afectat.id }} - {{ afectat.nom }} {{ afectat.cognoms }}</p> <!--Falta mostrar afectat-->
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+                        <button type="button" class="btn btn-primary" @click="deleteAfectat()">Esborrar</button>
                     </div>
                 </div>
             </div>
@@ -222,7 +222,13 @@
 /* Just common table stuff. Really. */
 table  { border-collapse: collapse; width: 100%; }
 th, td { padding: 8px 16px; }
-th     { background:#eee; }
+th     { background:#eee; padding:0px !important }
+
+.table thead th
+{
+    border-bottom: 0px !important;
+    padding-left: 15px !important;
+}
 
 .table th, td
 {
@@ -237,6 +243,20 @@ th     { background:#eee; }
 export default {
   data() {
         return {
+            afectat: {
+                id: '',
+                telefon: '',
+                cip: '',
+                nom: '',
+                cognoms: '',
+                edat: '',
+                sexe_id: '',
+                tipus_recurs_id: '',
+                codi_gravetat: '',
+                codi_valoracio: '',
+                descripcio: ''
+
+            },
             afectats: [],
             sexes: [],
             tipus_recurs: [],
@@ -316,9 +336,41 @@ export default {
             .finally(() => this.loading = false)
       },
 
-      confirmDelete()
+      confirmDelete( afectat )
       {
+        this.afectat = afectat;
         $('#confirmDelete').modal("show")
+      },
+
+      deleteAfectat()
+      {
+          this.afectats.splice(afectat, 1)
+      },
+
+      openModalAfectat()
+      {
+          $('#modalCrearAfectat').modal("show")
+      },
+
+      createAfectat()
+      {
+            // let me = this;
+
+            $('#modalCrearAfectat').modal("hide")
+            this.afectats.push(this.afectat);
+
+        //   axios
+        //     .post('/', me.afectat)
+        //     .then(function(response)
+        //     {
+        //         console.log(respose);
+
+        //         me.selectAfectats();
+        //
+        //     }).catch(function(error)
+        //     {
+        //         me.errorMessage = error.response.data.error;
+        //     })
       }
 
   },

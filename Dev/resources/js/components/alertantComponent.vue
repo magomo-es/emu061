@@ -1,28 +1,41 @@
 <template>
+<main>
+    <div class="container-lg" style="max-width: 1300px;">
+        <div class="row">
+            <div class="col-4" style="flex: 0 0 31.7%;">
+                <button class="btn btn-dark" type="button">
+                    Generar Trucada
+                </button>
 
-    <div class="container mt-4" style="max-width: 40%;">
-
-        <div class="row g-3 align-items-center">
-
-            <div class="col-auto">
-                <label for="tel_alertante" class="col-form-label">Telèfon:</label>
+                <button class="btn btn-info" type="button">
+                    Video
+                </button>
             </div>
 
             <div class="col-auto">
-                <input type="text" id="tel_alertante" class="form-control form-control-sm" v-model="alertant.telefon" disabled>
-            </div>
+                <div class="row g-3 align-items-center">
 
-            <div class="col-auto cont-vip">
-                <a href="" data-toggle="modal" data-target="#exampleModal2">
-                    <div class="circle"></div>
-                    <span>VIP</span>
-                </a>
-            </div>
+                    <div class="col-auto">
+                        <label for="tel_alertante" class="col-form-label">Telèfon:</label>
+                    </div>
 
-            <div class="col-auto">
-                <button class="btn btn-light" data-toggle="modal" data-target="#modalAlertant" style="box-shadow: 0px 1px 0.1px grey;">Veure Alertant</button>
-            </div>
+                    <div class="col-auto">
+                        <input type="text" id="tel_alertante" class="form-control form-control-sm" v-model="alertant.telefon" disabled>
+                    </div>
 
+                    <div class="col-auto cont-vip">
+                        <a href="" data-toggle="modal" data-target="#exampleModal2">
+                            <div class="circle"></div>
+                            <span>VIP</span>
+                        </a>
+                    </div>
+
+                    <div class="col-auto">
+                        <button class="btn btn-light" data-toggle="modal" data-target="#modalAlertant" style="box-shadow: 0px 1px 0.1px grey;">Veure Alertant</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <!-- MODAL -->
@@ -77,15 +90,15 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-
+</main>
 
 </template>
 
@@ -98,12 +111,14 @@
     width: 10px;
     height: 10px;
     margin-top: 14px;
+    margin-left: -25px;
 }
 
 .cont-vip
 {
     width: 40px;
     height: 37px;
+    margin-left: 20px;
 }
 
 .cont-vip span

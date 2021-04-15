@@ -1963,6 +1963,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2135,6 +2150,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2158,7 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var me = this;
-      axios.get('/municipi').then(function (response) {
+      axios.get('http://app.emu061.es/api/municipis').then(function (response) {
         me.munics = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -2921,9 +2946,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      afectat: {
+        id: '',
+        telefon: '',
+        cip: '',
+        nom: '',
+        cognoms: '',
+        edat: '',
+        sexe_id: '',
+        tipus_recurs_id: '',
+        codi_gravetat: '',
+        codi_valoracio: '',
+        descripcio: ''
+      },
       afectats: [],
       sexes: [],
       tipus_recurs: [],
@@ -2992,8 +3036,30 @@ __webpack_require__.r(__webpack_exports__);
         return _this5.loading = false;
       });
     },
-    confirmDelete: function confirmDelete() {
+    confirmDelete: function confirmDelete(afectat) {
+      this.afectat = afectat;
       $('#confirmDelete').modal("show");
+    },
+    deleteAfectat: function deleteAfectat() {
+      this.afectats.splice(afectat, 1);
+    },
+    openModalAfectat: function openModalAfectat() {
+      $('#modalCrearAfectat').modal("show");
+    },
+    createAfectat: function createAfectat() {
+      // let me = this;
+      $('#modalCrearAfectat').modal("hide");
+      this.afectats.push(this.afectat); //   axios
+      //     .post('/', me.afectat)
+      //     .then(function(response)
+      //     {
+      //         console.log(respose);
+      //         me.selectAfectats();
+      //
+      //     }).catch(function(error)
+      //     {
+      //         me.errorMessage = error.response.data.error;
+      //     })
     }
   },
   mounted: function mounted() {
@@ -3072,7 +3138,7 @@ try {
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // FALTA TEST
 
-window.axios["default"].baseURL = '/Dev/public/api';
+window.axios["default"].baseURL = 'http://app.emu061.es/api';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -7547,7 +7613,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: rgb(27, 220, 27);\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: rgb(27, 220, 27);\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\r\n    margin-left: -25px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\r\n    margin-left: 20px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7571,7 +7637,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.form-control-sm\r\n{\r\n    box-shadow: 0px 1px 0.1px grey !important;\n}\n.label\r\n{\r\n    font-size: 85%;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group\r\n{\r\n    margin-bottom: 0.5rem !important;\n}\n.form-group label\r\n{\r\n    margin-bottom: 0rem !important;\n}\n.form-control-sm\r\n{\r\n    box-shadow: 0px 1px 0.1px grey !important;\n}\n.label\r\n{\r\n    font-size: 85%;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7619,7 +7685,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\r\n{\r\n    border-bottom: 0px !important;\r\n    padding-left: 15px !important;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39407,216 +39473,250 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container mt-4", staticStyle: { "max-width": "40%" } },
-    [
-      _c("div", { staticClass: "row g-3 align-items-center" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.alertant.telefon,
-                expression: "alertant.telefon"
-              }
-            ],
-            staticClass: "form-control form-control-sm",
-            attrs: { type: "text", id: "tel_alertante", disabled: "" },
-            domProps: { value: _vm.alertant.telefon },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.alertant, "telefon", $event.target.value)
-              }
-            }
-          })
+  return _c("main", [
+    _c(
+      "div",
+      { staticClass: "container-lg", staticStyle: { "max-width": "1300px" } },
+      [
+        _c("div", { staticClass: "row" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-auto" }, [
+            _c("div", { staticClass: "row g-3 align-items-center" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-auto" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.alertant.telefon,
+                      expression: "alertant.telefon"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  attrs: { type: "text", id: "tel_alertante", disabled: "" },
+                  domProps: { value: _vm.alertant.telefon },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.alertant, "telefon", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ])
         ]),
         _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._m(2)
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "modalAlertant",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "exampleModalLabel",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("div", { staticClass: "form-group px-3" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _vm._m(4),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.alertant.nom,
-                            expression: "alertant.nom"
-                          }
-                        ],
-                        staticClass: "col-12 form-control",
-                        attrs: {
-                          type: "text",
-                          id: "alertant_nom",
-                          name: "alertant_nom"
-                        },
-                        domProps: { value: _vm.alertant.nom },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "modalAlertant",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "exampleModalLabel",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "form-group px-3" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.alertant.nom,
+                              expression: "alertant.nom"
                             }
-                            _vm.$set(_vm.alertant, "nom", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _vm._m(5),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.alertant.cognoms,
-                            expression: "alertant.cognoms"
-                          }
-                        ],
-                        staticClass: "col-12 form-control",
-                        attrs: {
-                          type: "text",
-                          id: "alertant_cognoms",
-                          name: "alertant_cognoms"
-                        },
-                        domProps: { value: _vm.alertant.cognoms },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.alertant,
-                              "cognoms",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _vm._m(6),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.alertant.adreca,
-                            expression: "alertant.adreca"
-                          }
-                        ],
-                        staticClass: "col-12 form-control",
-                        attrs: {
-                          type: "text",
-                          id: "alertant_adreca",
-                          name: "alertant_adreca"
-                        },
-                        domProps: { value: _vm.alertant.adreca },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.alertant,
-                              "adreca",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _vm._m(7),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          staticClass: "col-12 custom-select",
+                          ],
+                          staticClass: "col-12 form-control",
                           attrs: {
-                            id: "alertant_municipisid",
-                            name: "alertant_municipisid"
+                            type: "text",
+                            id: "alertant_nom",
+                            name: "alertant_nom"
+                          },
+                          domProps: { value: _vm.alertant.nom },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.alertant, "nom", $event.target.value)
+                            }
                           }
-                        },
-                        _vm._l(_vm.municipis, function(municipi) {
-                          return _c("option", { key: municipi.id }, [
-                            _vm._v(_vm._s(municipi.nom))
-                          ])
-                        }),
-                        0
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _vm._m(8),
+                        })
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          staticClass: "col-12 custom-select",
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.alertant.cognoms,
+                              expression: "alertant.cognoms"
+                            }
+                          ],
+                          staticClass: "col-12 form-control",
                           attrs: {
-                            id: "alertant_tipusalertantsid",
-                            name: "alertant_tipusalertantsid"
+                            type: "text",
+                            id: "alertant_cognoms",
+                            name: "alertant_cognoms"
+                          },
+                          domProps: { value: _vm.alertant.cognoms },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.alertant,
+                                "cognoms",
+                                $event.target.value
+                              )
+                            }
                           }
-                        },
-                        _vm._l(_vm.tipus_alertants, function(tipus) {
-                          return _c("option", { key: tipus.id }, [
-                            _vm._v(_vm._s(tipus.tipus))
-                          ])
-                        }),
-                        0
-                      )
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.alertant.adreca,
+                              expression: "alertant.adreca"
+                            }
+                          ],
+                          staticClass: "col-12 form-control",
+                          attrs: {
+                            type: "text",
+                            id: "alertant_adreca",
+                            name: "alertant_adreca"
+                          },
+                          domProps: { value: _vm.alertant.adreca },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.alertant,
+                                "adreca",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(8),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            staticClass: "col-12 custom-select",
+                            attrs: {
+                              id: "alertant_municipisid",
+                              name: "alertant_municipisid"
+                            }
+                          },
+                          _vm._l(_vm.municipis, function(municipi) {
+                            return _c("option", { key: municipi.id }, [
+                              _vm._v(_vm._s(municipi.nom))
+                            ])
+                          }),
+                          0
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _vm._m(9),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            staticClass: "col-12 custom-select",
+                            attrs: {
+                              id: "alertant_tipusalertantsid",
+                              name: "alertant_tipusalertantsid"
+                            }
+                          },
+                          _vm._l(_vm.tipus_alertants, function(tipus) {
+                            return _c("option", { key: tipus.id }, [
+                              _vm._v(_vm._s(tipus.tipus))
+                            ])
+                          }),
+                          0
+                        )
+                      ])
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(9)
-              ])
-            ]
-          )
-        ]
-      )
-    ]
-  )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(10)
+                ])
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-4", staticStyle: { flex: "0 0 31.7%" } },
+      [
+        _c(
+          "button",
+          { staticClass: "btn btn-dark", attrs: { type: "button" } },
+          [
+            _vm._v(
+              "\r\n                    Generar Trucada\r\n                "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-info", attrs: { type: "button" } },
+          [_vm._v("\r\n                    Video\r\n                ")]
+        )
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39760,17 +39860,17 @@ var staticRenderFns = [
     return _c("div", { staticClass: "modal-footer" }, [
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Guardar")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
         {
           staticClass: "btn btn-secondary",
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Tancar")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Guardar")]
       )
     ])
   }
@@ -39800,7 +39900,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "container-lg mt-4",
+      staticClass: "container-lg mt-2",
       staticStyle: { "max-width": "1300px" }
     },
     [
@@ -39825,7 +39925,7 @@ var render = function() {
                   staticStyle: { "max-width": "max-content" }
                 },
                 [
-                  _c("label", { attrs: { for: "num" } }, [_vm._v("Número:")]),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -39864,7 +39964,7 @@ var render = function() {
                   staticStyle: { "max-width": "max-content" }
                 },
                 [
-                  _c("label", { attrs: { for: "data" } }, [_vm._v("Data:")]),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -39897,7 +39997,7 @@ var render = function() {
                   staticStyle: { "max-width": "max-content" }
                 },
                 [
-                  _c("label", { attrs: { for: "hora" } }, [_vm._v("Hora:")]),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -39924,9 +40024,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "col" }, [
-                _c("label", { attrs: { for: "munics" } }, [
-                  _vm._v("Municipi:")
-                ]),
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -39958,16 +40056,18 @@ var render = function() {
                     }
                   },
                   _vm._l(_vm.munics, function(munic) {
-                    return _c("option", { key: munic }, [_vm._v(_vm._s(munic))])
+                    return _c(
+                      "option",
+                      { key: munic, domProps: { value: munic.id } },
+                      [_vm._v(_vm._s(munic.nom))]
+                    )
                   }),
                   0
                 )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col" }, [
-                _c("label", { attrs: { for: "comarcas" } }, [
-                  _vm._v("Comarca:")
-                ]),
+                _vm._m(4),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -40008,9 +40108,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col" }, [
-                _c("label", { attrs: { for: "provincia" } }, [
-                  _vm._v("Provincia:")
-                ]),
+                _vm._m(5),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -40053,7 +40151,7 @@ var render = function() {
           _c("div", { staticClass: "form-group" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col" }, [
-                _c("label", { attrs: { for: "direcc" } }, [_vm._v("Adreça:")]),
+                _vm._m(6),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -40079,9 +40177,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col" }, [
-                _c("label", { attrs: { for: "direcc_compl" } }, [
-                  _vm._v("Adreça Compl.")
-                ]),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -40113,7 +40209,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "desc" } }, [_vm._v("Descripció")]),
+            _vm._m(8),
             _vm._v(" "),
             _c("textarea", {
               directives: [
@@ -40142,7 +40238,7 @@ var render = function() {
           _vm._v(" "),
           _c("tabla-afectados-component"),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(9)
         ],
         1
       )
@@ -40150,6 +40246,78 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "num" } }, [
+      _c("small", [_vm._v("Número:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "data" } }, [
+      _c("small", [_vm._v("Data:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "hora" } }, [
+      _c("small", [_vm._v("Hora:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "munics" } }, [
+      _c("small", [_vm._v("Municipi:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "comarcas" } }, [
+      _c("small", [_vm._v("Comarca:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "provincia" } }, [
+      _c("small", [_vm._v("Provincia:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "direcc" } }, [
+      _c("small", [_vm._v("Adreça:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "direcc_compl" } }, [
+      _c("small", [_vm._v("Adreça Compl.:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "desc" } }, [
+      _c("small", [_vm._v("Descripció:")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -41358,11 +41526,50 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "form-group" }, [
-    _c("label", { attrs: { for: "desc" } }, [_vm._v("Llista d'afectats:")]),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "tableFixHead" }, [
       _c("table", { staticClass: "table" }, [
-        _vm._m(0),
+        _c("thead", { staticClass: "table-light" }, [
+          _c("tr", [
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Noms")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Cognoms")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Edat")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("CIP")]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+              _c(
+                "div",
+                { staticClass: "btn-group ml-1", attrs: { role: "group" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm m-1",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#modalCrearAfectat"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.openModalAfectat()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-plus" }),
+                      _vm._v(" Nou Afectat\n                            ")
+                    ]
+                  )
+                ]
+              )
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "tbody",
@@ -41390,7 +41597,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.confirmDelete()
+                            return _vm.confirmDelete(afectat)
                           }
                         }
                       },
@@ -41414,7 +41621,7 @@ var render = function() {
       {
         staticClass: "modal fade",
         attrs: {
-          id: "modalCrearAfectant",
+          id: "modalCrearAfectat",
           tabindex: "-1",
           role: "dialog",
           "aria-labelledby": "exampleModalLabel",
@@ -41703,23 +41910,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.afectat.descripcio,
-                            expression: "afectat.descripcio"
+                            value: _vm.afectat,
+                            expression: "afectat"
                           }
                         ],
                         staticClass: "col-12 form-control",
                         attrs: { rows: "2", id: "afectat_descripcio" },
-                        domProps: { value: _vm.afectat.descripcio },
+                        domProps: { value: _vm.afectat },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(
-                              _vm.afectat,
-                              "descripcio",
-                              $event.target.value
-                            )
+                            _vm.afectat = $event.target.value
                           }
                         }
                       })
@@ -41728,14 +41931,85 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(13)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Tarcar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.createAfectat()
+                      }
+                    }
+                  },
+                  [_vm._v("Afegir")]
+                )
+              ])
             ])
           ]
         )
       ]
     ),
     _vm._v(" "),
-    _vm._m(14)
+    _c(
+      "div",
+      { staticClass: "modal", attrs: { tabindex: "-1", id: "confirmDelete" } },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(13),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("p", [
+                _vm._v(
+                  "Estas segur de que vols esborrar l'afectat " +
+                    _vm._s(_vm.afectat.id) +
+                    " - " +
+                    _vm._s(_vm.afectat.nom) +
+                    " " +
+                    _vm._s(_vm.afectat.cognoms)
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Tancar")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteAfectat()
+                    }
+                  }
+                },
+                [_vm._v("Esborrar")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -41743,40 +42017,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "table-light" }, [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Noms")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cognoms")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edat")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("CIP")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-          _c(
-            "div",
-            { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary btn-sm",
-                  attrs: {
-                    type: "button",
-                    "data-toggle": "modal",
-                    "data-target": "#modalCrearAfectant"
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-plus" }),
-                  _vm._v(" Nou Afectat\n                            ")
-                ]
-              )
-            ]
-          )
-        ])
-      ])
+    return _c("label", { attrs: { for: "desc" } }, [
+      _c("small", [_vm._v("Llista d'afectats:")])
     ])
   },
   function() {
@@ -41956,73 +42198,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Tarcar")]
-      ),
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Esborrar Afectat")]),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Afegir")]
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal", attrs: { tabindex: "-1", id: "confirmDelete" } },
-      [
-        _vm._v('">\n                '),
-        _c("div", { staticClass: "modal-header" }, [
-          _c("h5", { staticClass: "modal-title" }, [
-            _vm._v("Esborrar Afectat")
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "close",
-              attrs: {
-                type: "button",
-                "data-dismiss": "modal",
-                "aria-label": "Close"
-              }
-            },
-            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _c("p", [_vm._v("Modal text goes here")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-footer" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary",
-              attrs: { type: "button", "data-dismiss": "modal" }
-            },
-            [_vm._v("Close")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "button" } },
-            [_vm._v("Close")]
-          )
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
