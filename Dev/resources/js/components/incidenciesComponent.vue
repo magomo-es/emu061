@@ -114,8 +114,18 @@ export default {
   components: { modalAlertantModalAlertantComponent },
   data() {
     return {
-      cleanForm();
-    };
+        errors: [],
+        num: null,
+        TablaAfectadosComponent,
+        data: null,
+        hora: null,
+        munics: [],
+        comarcas: [],
+        provincia: [],
+        direcc: null,
+        direcc_compl: null,
+        desc: null
+    }
   },
   methods: {
     // getNum()
