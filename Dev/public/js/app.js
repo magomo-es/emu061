@@ -2821,9 +2821,153 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      afectats: [],
+      sexes: [],
+      tipus_recurs: [],
+      codis_gravetat: [],
+      codis_valoracio: []
+    };
+  },
+  methods: {
+    selectAfectats: function selectAfectats() {
+      var _this = this;
+
+      var me = this;
+      axios.get('/afectats').then(function (response) {
+        me.afectats = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+    getSexes: function getSexes() {
+      var _this2 = this;
+
+      var me = this;
+      axios.get('/sexes').then(function (response) {
+        me.sexes = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this2.loading = false;
+      });
+    },
+    getTipus_recurs: function getTipus_recurs() {
+      var _this3 = this;
+
+      var me = this;
+      axios.get('/recurs').then(function (response) {
+        me.tipus_recurs = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this3.loading = false;
+      });
+    },
+    getCodis_gravetat: function getCodis_gravetat() {
+      var _this4 = this;
+
+      var me = this;
+      axios.get('/codis_gravetat').then(function (response) {
+        me.codis_gravetat = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this4.loading = false;
+      });
+    },
+    getCodis_valoracio: function getCodis_valoracio() {
+      var _this5 = this;
+
+      var me = this;
+      axios.get('/codis_valoracio').then(function (response) {
+        me.codis_valoracio = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this5.loading = false;
+      });
+    },
+    confirmDelete: function confirmDelete() {//$(#confirmDelete).modal('show")
+    }
+  },
+  mounted: function mounted() {
+    console.log('Component mounted');
   }
 });
 
@@ -7445,7 +7589,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\n\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee;\n}\n.table th, td\n{\n    font-size: 85%;\n    vertical-align: middle !important;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41051,327 +41195,618 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "form-group" }, [
+    _c("label", { attrs: { for: "desc" } }, [_vm._v("Llista d'afectats:")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "tableFixHead" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.afectats, function(afectat) {
+            return _c("tr", { key: afectat.id }, [
+              _c("td", [_vm._v(_vm._s(afectat.nom))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(afectat.cognoms))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(afectat.edat))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(afectat.cip))]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-right" }, [
+                _vm._m(1, true),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-sm",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.confirmDelete()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-trash" }),
+                        _vm._v(" Esborrar\n                            ")
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalCrearAfectant",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body px-5" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.nom,
+                            expression: "afectat.nom"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { type: "text", id: "afectat_nom" },
+                        domProps: { value: _vm.afectat.nom },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.afectat, "nom", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.cognoms,
+                            expression: "afectat.cognoms"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { type: "text", id: "afectat_cognoms" },
+                        domProps: { value: _vm.afectat.cognoms },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.afectat,
+                              "cognoms",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.cip,
+                            expression: "afectat.cip"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { type: "text", id: "afectat_cip" },
+                        domProps: { value: _vm.afectat.cip },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.afectat, "cip", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.edat,
+                            expression: "afectat.edat"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { type: "text", id: "afectat_edat" },
+                        domProps: { value: _vm.afectat.edat },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.afectat, "edat", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.afectat.sexe_id,
+                              expression: "afectat.sexe_id"
+                            }
+                          ],
+                          staticClass: "col-12 custom-select",
+                          attrs: { id: "afectat_sexesid" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.afectat,
+                                "sexe_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.sexes, function(sexe) {
+                          return _c(
+                            "option",
+                            { key: sexe.id, attrs: { value: "sexe.id" } },
+                            [_vm._v(_vm._s(sexe.nom))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          staticClass: "col-12 custom-select",
+                          attrs: { id: "afectat_tipusrecursosid" }
+                        },
+                        _vm._l(_vm.tipus_recurs, function(recurs) {
+                          return _c("option", { key: recurs.id }, [
+                            _vm._v(_vm._s(recurs.nom))
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(9),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          staticClass: "col-12 custom-select",
+                          attrs: { id: "afectat_codigravetat" }
+                        },
+                        _vm._l(_vm.codis_gravetat, function(grav) {
+                          return _c(
+                            "option",
+                            { key: grav.id, attrs: { value: "grav.id" } },
+                            [_vm._v(_vm._s(grav.nom))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(10),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          staticClass: "col-8 custom-select",
+                          attrs: { id: "afectat_codivaloracio" }
+                        },
+                        _vm._l(_vm.codis_valoracio, function(codi) {
+                          return _c(
+                            "option",
+                            { key: codi.id, attrs: { value: "codi.id" } },
+                            [_vm._v(_vm._s(codi.nom))]
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "col-2 btn btn-primary",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("Video")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "col-2 btn btn-primary",
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "collapse",
+                            "data-target": "#collapseAyuda",
+                            "aria-expanded": "false",
+                            "aria-controls": "collapseExample"
+                          }
+                        },
+                        [_vm._v("Ayuda")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(11)
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(12),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.descripcio,
+                            expression: "afectat.descripcio"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { rows: "2", id: "afectat_descripcio" },
+                        domProps: { value: _vm.afectat.descripcio },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.afectat,
+                              "descripcio",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(13)
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "desc" } }, [_vm._v("Llista d'afectats:")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "tableFixHead" }, [
-        _c("table", { staticClass: "table" }, [
-          _c("thead", { staticClass: "table-light" }, [
-            _c("tr", [
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Noms")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Cognoms")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("CIP")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-plus" }),
-                        _vm._v(" Nou Afectat\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td", [_vm._v("Rodolfo")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Gallardo")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("0000000000")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Editar\n                            ")
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash" }),
-                        _vm._v(" Esborrar\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Marcelo")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Goncevatt")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("0000000000")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Editar\n                            ")
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash" }),
-                        _vm._v(" Esborrar\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Mario")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("de la Torre")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("0000000000")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Editar\n                            ")
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash" }),
-                        _vm._v(" Esborrar\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Mario")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("de la Torre")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("0000000000")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Editar\n                            ")
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash" }),
-                        _vm._v(" Esborrar\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Mario")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("de la Torre")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("0000000000")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Editar\n                            ")
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash" }),
-                        _vm._v(" Esborrar\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", [_vm._v("Mario")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("de la Torre")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("0000000000")]),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-right" }, [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Editar\n                            ")
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "btn-group ml-1", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm",
-                        attrs: { type: "button" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash" }),
-                        _vm._v(" Esborrar\n                            ")
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
+    return _c("thead", { staticClass: "table-light" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Noms")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cognoms")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edat")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("CIP")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+          _c(
+            "div",
+            { staticClass: "btn-group ml-1", attrs: { role: "group" } },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "modal",
+                    "data-target": "#modalCrearAfectant"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-plus" }),
+                  _vm._v(" Nou Afectat\n                            ")
+                ]
+              )
+            ]
+          )
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-secondary btn-sm", attrs: { type: "button" } },
+        [
+          _c("i", { staticClass: "fas fa-edit" }),
+          _vm._v(" Editar\n                            ")
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Crear Afectat")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_nom" }
+      },
+      [_c("small", [_vm._v("Nom")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_cognoms" }
+      },
+      [_c("small", [_vm._v("Congnoms")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_cip" }
+      },
+      [_c("small", [_vm._v("CIP")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_edat" }
+      },
+      [_c("small", [_vm._v("Edat")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_sexesid" }
+      },
+      [_c("small", [_vm._v("Sexe")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_tipusrecursosid" }
+      },
+      [_c("small", [_vm._v("Tipus Recurs")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_codigravetat" }
+      },
+      [_c("small", [_vm._v("Codi Gravetat")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_codivaloracio" }
+      },
+      [_c("small", [_vm._v("Codi Valoracio")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "collapse", attrs: { id: "collapseAyuda" } },
+      [
+        _c("div", { staticClass: "card card-body" }, [
+          _vm._v(
+            "\n                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.\n                                "
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_descripcio" }
+      },
+      [_c("small", [_vm._v("Descripcio")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Tarcar")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Afegir")]
+      )
     ])
   }
 ]

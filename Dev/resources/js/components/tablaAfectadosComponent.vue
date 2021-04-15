@@ -8,10 +8,11 @@
                     <tr>
                         <th scope="col">Noms</th>
                         <th scope="col">Cognoms</th>
+                        <th scope="col">Edat</th>
                         <th scope="col">CIP</th>
                         <th scope="col" class="text-right">
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-primary btn-sm">
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalCrearAfectant" >
                                     <i class="fas fa-plus"></i> Nou Afectat
                                 </button>
                             </div>
@@ -20,119 +21,189 @@
                 </thead>
                 <tbody>
 
-                    <tr>
-                        <td>Rodolfo</td>
-                        <td>Gallardo</td>
-                        <td>0000000000</td>
+                    <tr v-for="afectat in afectats" :key="afectat.id">
+                        <td>{{ afectat.nom }}</td>
+                        <td>{{ afectat.cognoms }}</td>
+                        <td>{{ afectat.edat }}</td>
+                        <td>{{ afectat.cip }}</td>
+
                         <td class="text-right">
+                            <!-- FALTA MODAL EDICIÓN -->
                             <div role="group" class="btn-group">
                                 <button type="button" class="btn btn-secondary btn-sm">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             </div>
 
+                            <!-- FALTA ELIMINCACIÓN -->
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm">
+                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete()">
                                     <i class="fas fa-trash"></i> Esborrar
                                 </button>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Marcelo</td>
-                        <td>Goncevatt</td>
-                        <td>0000000000</td>
-                        <td class="text-right">
-                            <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </div>
 
-                            <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Esborrar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mario</td>
-                        <td>de la Torre</td>
-                        <td>0000000000</td>
-                        <td class="text-right">
-                            <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </div>
-
-                            <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Esborrar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mario</td>
-                        <td>de la Torre</td>
-                        <td>0000000000</td>
-                        <td class="text-right">
-                            <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </div>
-
-                            <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Esborrar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mario</td>
-                        <td>de la Torre</td>
-                        <td>0000000000</td>
-                        <td class="text-right">
-                            <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </div>
-
-                            <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Esborrar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mario</td>
-                        <td>de la Torre</td>
-                        <td>0000000000</td>
-                        <td class="text-right">
-                            <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </div>
-
-                            <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Esborrar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
 
             </table>
         </div>
 
+        <!-- MODAL CREAR AFECTADO -->
+        <div class="modal fade" id="modalCrearAfectant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div role="document" class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="exampleModalLabel" class="modal-title">Crear Afectat</h5>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body px-5">
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <div class="row px-1">
+                                    <label for="afectat_nom" class="col-12 col-form-label pl-1">
+                                        <small>Nom</small>
+                                    </label>
+
+                                    <input type="text" id="afectat_nom" class="col-12 form-control" v-model="afectat.nom">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row px-1">
+                                    <label for="afectat_cognoms" class="col-12 col-form-label pl-1">
+                                        <small>Congnoms</small>
+                                    </label>
+
+                                    <input type="text" id="afectat_cognoms" class="col-12 form-control"  v-model="afectat.cognoms">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <div class="row px-1">
+                                    <label for="afectat_cip" class="col-12 col-form-label pl-1">
+                                        <small>CIP</small>
+                                    </label>
+
+                                    <input type="text" id="afectat_cip" class="col-12 form-control" v-model="afectat.cip">
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="row px-1">
+                                    <label for="afectat_edat" class="col-12 col-form-label pl-1">
+                                        <small>Edat</small>
+                                    </label>
+
+                                    <input type="text" id="afectat_edat" class="col-12 form-control" v-model="afectat.edat">
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="row px-1">
+                                    <label for="afectat_sexesid" class="col-12 col-form-label pl-1">
+                                        <small>Sexe</small>
+                                    </label>
+
+                                    <select id="afectat_sexesid" class="col-12 custom-select" v-model="afectat.sexe_id">
+                                        <option v-for="sexe in sexes" :key="sexe.id" value="sexe.id">{{ sexe.nom }}</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <div class="row px-1">
+                                    <label for="afectat_tipusrecursosid" class="col-12 col-form-label pl-1">
+                                        <small>Tipus Recurs</small>
+                                    </label>
+
+                                    <select id="afectat_tipusrecursosid" class="col-12 custom-select">
+                                        <option v-for="recurs in tipus_recurs" :key="recurs.id">{{ recurs.nom }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row px-1">
+                                    <label for="afectat_codigravetat" class="col-12 col-form-label pl-1">
+                                        <small>Codi Gravetat</small>
+                                    </label>
+
+                                    <select id="afectat_codigravetat" class="col-12 custom-select">
+                                        <option v-for="grav in codis_gravetat" :key="grav.id" value="grav.id">{{ grav.nom }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div class="row px-1">
+                                    <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1">
+                                        <small>Codi Valoracio</small>
+                                    </label>
+
+                                    <select id="afectat_codivaloracio" class="col-8 custom-select">
+                                        <option v-for="codi in codis_valoracio" :key="codi.id" value="codi.id">{{ codi.nom }}</option>
+                                    </select>
+
+                                    <button type="button" class="col-2 btn btn-primary">Video</button>
+                                    <button type="button" data-toggle="collapse" data-target="#collapseAyuda" aria-expanded="false" aria-controls="collapseExample" class="col-2 btn btn-primary">Ayuda</button>
+                                </div>
+
+                                <div id="collapseAyuda" class="collapse">
+                                    <div class="card card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div class="row px-1">
+                                    <label for="afectat_descripcio" class="col-12 col-form-label pl-1">
+                                        <small>Descripcio</small>
+                                    </label>
+
+                                    <textarea rows="2" id="afectat_descripcio" class="col-12 form-control" v-model="afectat.descripcio"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Tarcar</button>
+                        <button type="button" class="btn btn-primary">Afegir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL DELETE -->
+        <!--<div class="modal" tabindex="-1" id="confirmDelete">
+            <div class="modal-dialog>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Esborrar Afectat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                </div>
+            </div>
+        </div>-->
     </div>
 </template>
 
@@ -157,8 +228,95 @@ th     { background:#eee; }
 
 <script>
 export default {
-  data: function() {
-        return {}
+  data() {
+        return {
+            afectats: [],
+            sexes: [],
+            tipus_recurs: [],
+            codis_gravetat: [],
+            codis_valoracio: []
+        }
   },
+  methods: {
+
+      selectAfectats()
+      {
+          let me = this;
+          axios
+            .get('/afectats')
+            .then(response => {
+                me.afectats = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+      getSexes()
+      {
+          let me = this;
+          axios
+            .get('/sexes')
+            .then(response => {
+                me.sexes = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+      getTipus_recurs()
+      {
+          let me = this;
+          axios
+            .get('/recurs')
+            .then(response => {
+                me.tipus_recurs = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+      getCodis_gravetat()
+      {
+          let me = this;
+          axios
+            .get('/codis_gravetat')
+            .then(response => {
+                me.codis_gravetat = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+      getCodis_valoracio()
+      {
+          let me = this;
+          axios
+            .get('/codis_valoracio')
+            .then(response => {
+                me.codis_valoracio = response.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+      confirmDelete()
+      {
+        //$(#confirmDelete).modal('show")
+      }
+
+  },
+  mounted() {
+      console.log('Component mounted')
+  }
 };
 </script>
