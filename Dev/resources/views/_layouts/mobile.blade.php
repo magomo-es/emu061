@@ -37,13 +37,13 @@
             </ul>
         </div> --}}
 
-        <nav class="navbar navbar-expand-lg bg-primary">
+        {{-- <nav class="navbar navbar-expand-lg bg-primary">
 
             <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/img/logo.png') }}" style="max-height: 50px;" /></a>
 
             <h5 class="text-white px-4 m-0">Mobil</h5>
 
-        </nav>
+        </nav> --}}
 
         @include('_partials.userbox')
 
