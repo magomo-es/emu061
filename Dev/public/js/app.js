@@ -1984,7 +1984,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2517,6 +2516,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
@@ -2526,7 +2540,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       valoracionCodi: '',
       simptomesSelected: new Map(),
       videoId: 0,
-      play_video: '',
+      videoPlayingTime: 0,
+      videoPositionStar: 0,
+      videoPositionEnd: 0,
+      videoPlayEvents: false,
       afectat: {
         id: 0,
         telefon: 0,
@@ -2543,6 +2560,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
       afectats: [],
       sexes: [],
+      recursos: [],
+      destins: [],
       tipusrecursos: [],
       codisgravetat: [],
       codisvaloracions: [],
@@ -2630,7 +2649,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       console.log('checkboxSimtomes -> ev.target.id: ' + ev.currentTarget.id);
 
       if (ev.currentTarget.checked) {
-        this.simptomesSelected.set(ev.currentTarget.dataset.simptoma, ev.currentTarget.dataset.codi);
+        this.simptomesSelected.set(ev.currentTarget.dataset.simptoma, ev.currentTarget.dataset.ind);
+        console.log('map added element key ' + ev.currentTarget.dataset.simptoma + ' = ' + ev.currentTarget.dataset.ind);
       } else {
         this.simptomesSelected["delete"](ev.currentTarget.dataset.simptoma);
       }
@@ -2639,21 +2659,36 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: showablesValoracio =>
     showablesValoracio: function showablesValoracio() {
-      var _iterator = _createForOfIteratorHelper(this.simptomesSelected),
-          _step;
+      var selectobj = document.getElementById('afectat_codivaloracio');
+      var showThis = true;
 
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _step$value = _slicedToArray(_step.value, 2),
-              key = _step$value[0],
-              value = _step$value[1];
+      for (var i = 0; i < selectobj.options.length; i++) {
+        var _iterator = _createForOfIteratorHelper(this.simptomesSelected),
+            _step;
 
-          console.log(key + ' -> ' + value); //document.getElementById('v_'+index+'_'+item.codi)
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var _step$value = _slicedToArray(_step.value, 2),
+                key = _step$value[0],
+                value = _step$value[1];
+
+            if (!(key in selectobj.options[i].dataset)) {
+              showThis = false;
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
         }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
+
+        if (showThis) {
+          selectobj.options[i].style.display = 'block';
+        } else {
+          selectobj.options[i].style.display = 'none';
+        }
+
+        showThis = true;
       }
     },
     // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: openBoxValoracio =>
@@ -2704,37 +2739,55 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.videoid = this.findVideoFileById(this.findVideoIdByCodiValoracio(this.valoracionCodi));
 
       if (this.videoid >= 0) {
-        var videoValoracioInit = function videoValoracioInit() {
-          console.log('videoValoracioPlayingmy ->');
-        };
-
+        //function videoValoracioInit() { console.log( 'videoValoracioPlayingmy ->' ); }
         var videoValoracioPlayingmy = function videoValoracioPlayingmy() {
-          timeBox.innerHTML = parseInt(videoValoracio.duration - videoValoracio.currentTime);
-          var percentualElapsedTime = videoValoracio.currentTime * 100 / videoValoracio.duration;
+          // imprime tiempo de ejecucion de video
+          var calctmp = videoValoracio.currentTime - this.videoPositionStar;
+          timeBox.innerHTML = parseInt(calctmp / 60) + ':' + calctmp % 60; // pausa si fin
 
-          if (percentualElapsedTime > 90) {
-            timeBox.style.backgroundColor = "#FF3300";
-          } else if (percentualElapsedTime > 80) {
-            timeBox.style.backgroundColor = "#c5d304";
-          } else {
-            timeBox.style.backgroundColor = "#07ad07";
+          if (videoValoracio.currentTime >= this.videoPositionEnd) {
+            videoValoracio.currentTime = this.videoPositionEnd;
+            videoValoracio.pause();
           }
-
-          console.log('videoValoracioPlayingmy -> percentualElapsedTime: ' + percentualElapsedTime);
         };
 
         console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename);
         this.play_video = '/videos/' + encodeURI(this.vdsvideos[this.videoid].filename);
         console.log('start script ->');
         var videoValoracio = document.getElementById('videoValoracio');
-        var timeBox = document.getElementById('timeBox');
+        var timeBox = document.getElementById('timeBox'); // variables de video
 
-        var rewButton = document.getElementById('rewButton').onclick = function () {
-          videoValoracio.currentTime -= 10;
+        this.videoPlayingTime = 0;
+        this.videoPositionStar = this.vdsvideos[this.videoid].start;
+        this.videoPositionEnd = this.vdsvideos[this.videoid].ends;
+        this.videoPlayEvents = this.vdsvideos[this.videoid].playevent; // eventos de botones de video
+
+        document.getElementById('homButton').onclick = function () {
+          videoValoracio.currentTime = this.videoPositionStar;
         };
 
-        var fwrButton = document.getElementById('fwrButton').onclick = function () {
-          videoValoracio.currentTime += 10;
+        document.getElementById('rewButton').onclick = function () {
+          if (videoValoracio.currentTime - 10 < this.videoPositionStar) {
+            videoValoracio.currentTime = this.videoPositionStar;
+          } else {
+            videoValoracio.currentTime -= 10;
+          }
+        };
+
+        document.getElementById('plyButton').onclick = function () {
+          videoValoracio.play();
+        };
+
+        document.getElementById('fwrButton').onclick = function () {
+          if (videoValoracio.currentTime + 10 < this.videoPositionEnd) {
+            videoValoracio.currentTime = this.videoPositionEnd;
+          } else {
+            videoValoracio.currentTime += 10;
+          }
+        };
+
+        document.getElementById('endButton').onclick = function () {
+          videoValoracio.currentTime = this.videoPositionEnd;
         }; // videoValoracio.canplaythrough = function() { videoValoracioInit(); };
         // videoValoracio.play = function() { console.log( 'start script -> play' ); };
         // videoValoracio.playing = function() { console.log( 'start script -> playing' ); };
@@ -2802,8 +2855,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   created: function created() {
     var apptag = document.getElementById('app');
     this.afectats = JSON.parse(apptag.dataset.pafectats);
+    this.destins = JSON.parse(apptag.dataset.pdestins);
     this.sexes = JSON.parse(apptag.dataset.psexes);
     this.tipusrecursos = JSON.parse(apptag.dataset.ptipusrecursos);
+    this.recursos = JSON.parse(apptag.dataset.precursos);
     this.codisgravetat = JSON.parse(apptag.dataset.pcodisgravetat);
     this.codisvaloracions = JSON.parse(apptag.dataset.pcodisvaloracions);
     this.vdsvideos = JSON.parse(apptag.dataset.pvdsvideos);
@@ -7821,7 +7876,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#videoButtonsBox { position: absolute; bottom: 10px; left: 10px; right: 10px; padding: 10px; padding: 3px; background-color: rgba(0,0,0,.5); display: grid;\ngrid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 50px;\n}\n.ctrlsBtn { background-color: rgba(0,0,0,5); color: #fff; cursor: pointer; border-radius: 3px; border-color: transparent;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -40856,7 +40911,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-4" }, [
+                  _c("div", { staticClass: "col-3" }, [
                     _c("div", { staticClass: "row px-1" }, [
                       _vm._m(11),
                       _vm._v(" "),
@@ -40884,7 +40939,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-4" }, [
+                  _c("div", { staticClass: "col-2" }, [
                     _c("div", { staticClass: "row px-1" }, [
                       _vm._m(12),
                       _vm._v(" "),
@@ -40912,7 +40967,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-4" }, [
+                  _c("div", { staticClass: "col-2" }, [
                     _c("div", { staticClass: "row px-1" }, [
                       _vm._m(13),
                       _vm._v(" "),
@@ -40959,62 +41014,11 @@ var render = function() {
                         0
                       )
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-6" }, [
-                    _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(14),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.afectat.tipus_recursos_id,
-                              expression: "afectat.tipus_recursos_id"
-                            }
-                          ],
-                          staticClass: "col-12 custom-select",
-                          attrs: { id: "afectat_tipusrecursosid" },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.afectat,
-                                "tipus_recursos_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        _vm._l(_vm.tipusrecursos, function(item) {
-                          return _c(
-                            "option",
-                            { key: item.id, domProps: { value: item.id } },
-                            [_vm._v(_vm._s(item.tipus))]
-                          )
-                        }),
-                        0
-                      )
-                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "col-5" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(15),
+                      _vm._m(14),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41062,6 +41066,112 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(15),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.afectat.recursos_id,
+                              expression: "afectat.recursos_id"
+                            }
+                          ],
+                          staticClass: "col-12 custom-select",
+                          attrs: { id: "afectat_recursosid" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.afectat,
+                                "recursos_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.recursos, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  item.codi + " - " + item.tipus_recurso.tipus
+                                )
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(16),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.afectat.desti_alertant_id,
+                              expression: "afectat.desti_alertant_id"
+                            }
+                          ],
+                          staticClass: "col-12 custom-select",
+                          attrs: { id: "afectat_destialertantid" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.afectat,
+                                "desti_alertant_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.destins, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.codi } },
+                            [_vm._v(_vm._s(item.nom))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
                   {
@@ -41072,7 +41182,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "col-12" }, [
                       _c("div", { staticClass: "row px-1 mb-3" }, [
-                        _vm._m(16),
+                        _vm._m(17),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -41227,7 +41337,6 @@ var render = function() {
                                               type: "checkbox",
                                               id: "simptoma" + item.id,
                                               "data-simptoma": item.id,
-                                              "data-codi": item.codi,
                                               "data-ind": index
                                             },
                                             on: {
@@ -41319,7 +41428,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(17),
+                      _vm._m(18),
                       _vm._v(" "),
                       _c("textarea", {
                         directives: [
@@ -41394,7 +41503,7 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(18),
+              _vm._m(19),
               _vm._v(" "),
               _c(
                 "div",
@@ -41405,32 +41514,12 @@ var render = function() {
                 [
                   _c("video", {
                     staticStyle: { width: "100%" },
-                    attrs: {
-                      id: "videoValoracio",
-                      src: _vm.play_video,
-                      onclick: "this.play()"
-                    }
+                    attrs: { id: "videoValoracio", src: _vm.play_video }
                   }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "ctrlsBtn",
-                      attrs: { id: "rewButton", type: "button" }
-                    },
-                    [_vm._v("rew")]
-                  ),
                   _vm._v(" "),
                   _c("div", { attrs: { id: "timeBox" } }, [_vm._v("00:00")]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "ctrlsBtn",
-                      attrs: { id: "fwrButton", type: "button" }
-                    },
-                    [_vm._v("fow")]
-                  )
+                  _vm._m(20)
                 ]
               ),
               _vm._v(" "),
@@ -41637,9 +41726,9 @@ var staticRenderFns = [
       "label",
       {
         staticClass: "col-12 col-form-label pl-1",
-        attrs: { for: "afectat_tipusrecursosid" }
+        attrs: { for: "afectat_codigravetat" }
       },
-      [_c("small", [_vm._v("Tipus Recurs")])]
+      [_c("small", [_vm._v("Codi Gravetat")])]
     )
   },
   function() {
@@ -41650,9 +41739,22 @@ var staticRenderFns = [
       "label",
       {
         staticClass: "col-12 col-form-label pl-1",
-        attrs: { for: "afectat_codigravetat" }
+        attrs: { for: "afectat_recursosid" }
       },
-      [_c("small", [_vm._v("Codi Gravetat")])]
+      [_c("small", [_vm._v("Recurs")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_destialertantid" }
+      },
+      [_c("small", [_vm._v("Destins")])]
     )
   },
   function() {
@@ -41690,6 +41792,42 @@ var staticRenderFns = [
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
         [_vm._v("Videos per Valoració")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "videoButtonsBox" } }, [
+      _c(
+        "button",
+        { staticClass: "ctrlsBtn", attrs: { id: "homButton", type: "button" } },
+        [_vm._v("init")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "ctrlsBtn", attrs: { id: "rewButton", type: "button" } },
+        [_vm._v("rew")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "ctrlsBtn", attrs: { id: "plyButton", type: "button" } },
+        [_vm._v("play/pause")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "ctrlsBtn", attrs: { id: "fwrButton", type: "button" } },
+        [_vm._v("fwr")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "ctrlsBtn", attrs: { id: "endButton", type: "button" } },
+        [_vm._v("end")]
       )
     ])
   }

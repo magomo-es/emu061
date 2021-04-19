@@ -158,8 +158,10 @@
             <div class="form-group row" id="app"
                 data-pafectats='{!! "[]" !!}'
                 data-palertants='{!! ($alertantsAry)?str_replace("'", '´', $alertantsAry->toJson()):"[]" !!}'
+                data-pdestins='{!! ($destinsAry)?str_replace("'", '´', $destinsAry->toJson()):"[]" !!}'
                 data-psexes='{!! ($sexesAry)?str_replace("'", '´', $sexesAry->toJson()):"[]" !!}'
                 data-ptipusrecursos='{!! ($tipusrecursosAry)?str_replace("'", '´', $tipusrecursosAry->toJson()):"[]" !!}'
+                data-precursos='{!! ($recursosAry)?str_replace("'", '´', $recursosAry->toJson()):"[]" !!}'
                 data-pcodisgravetat='{!! ($codisgravetatAry)?str_replace("'", '´', $codisgravetatAry->toJson()):'[]' !!}'
                 data-pcodisvaloracions='{!! ($codisvaloracionsAry)?str_replace("'", '´', $codisvaloracionsAry->toJson()):'[]' !!}'
                 data-pvdsvideos='{!! ($vdsvideosAry)?str_replace("'", '´', $vdsvideosAry->toJson()):'[]' !!}'

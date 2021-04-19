@@ -101,19 +101,19 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="row px-1">
                                 <label for="afectat_cip" class="col-12 col-form-label pl-1"><small>CIP</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_edat" class="col-12 col-form-label pl-1"><small>Edat</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_sexesid" class="col-12 col-form-label pl-1"><small>Sexe</small></label>
                                 <select class="col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexes_id">
@@ -121,22 +121,32 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-5">
+                            <div class="row px-1">
+                                <label for="afectat_codigravetat" class="col-12 col-form-label pl-1"><small>Codi Gravetat</small></label>
+                                <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat">
+                                    <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="form-group row">
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_tipusrecursosid" class="col-12 col-form-label pl-1"><small>Tipus Recurs</small></label>
-                                <select class="col-12 custom-select" id="afectat_tipusrecursosid" v-model="afectat.tipus_recursos_id">
-                                    <option v-for="(item) in tipusrecursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.tipus }}</option>
+                                <label for="afectat_recursosid" class="col-12 col-form-label pl-1"><small>Recurs</small></label>
+                                <select class="col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id">
+                                    <option v-for="(item) in recursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.codi + ' - ' + item.tipus_recurso.tipus }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_codigravetat" class="col-12 col-form-label pl-1"><small>Codi Gravetat</small></label>
-                                <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat">
-                                    <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
+                                <label for="afectat_destialertantid" class="col-12 col-form-label pl-1"><small>Destins</small></label>
+                                <select class="col-12 custom-select" id="afectat_destialertantid" v-model="afectat.desti_alertant_id">
+                                    <option v-for="(item) in destins" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
                             </div>
                         </div>
@@ -161,7 +171,7 @@
                                         <div class="col-4 mb-2 px-2" v-for="(item, index) in hlpsimtomes" v-bind:key="item.id" style="border-left: 1px dotted #0b0a0b;">
 
                                             <p class="w-100 p-1 m-0" style="background-color: #fff;">
-                                                <input class="" type="checkbox" v-bind:id="('simptoma'+item.id)" v-bind:data-simptoma="item.id" v-bind:data-codi="item.codi" v-bind:data-ind="index" @click="checkboxSimptomes($event)">
+                                                <input class="" type="checkbox" v-bind:id="('simptoma'+item.id)" v-bind:data-simptoma="item.id" v-bind:data-ind="index" @click="checkboxSimptomes($event)">
                                                 <small>{{ item.pregunta }}</small>
                                             </p>
                                             <p class="w-100 p-1 m-0" style="background-color: rgb(244, 241, 51);"><small>{{ item.translation }}</small></p>
@@ -205,10 +215,15 @@
                 </div>
                 <div class="modal-body" style="position: relative">
 
-                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto;" onclick="this.play()"></video>
-                    <button id="rewButton" type="button" class="ctrlsBtn">rew</button>
+                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto;"></video>
                     <div id="timeBox">00:00</div>
-                    <button id="fwrButton" type="button" class="ctrlsBtn">fow</button>
+                    <div id="videoButtonsBox">
+                        <button id="homButton" type="button" class="ctrlsBtn">init</button>
+                        <button id="rewButton" type="button" class="ctrlsBtn">rew</button>
+                        <button id="plyButton" type="button" class="ctrlsBtn">play/pause</button>
+                        <button id="fwrButton" type="button" class="ctrlsBtn">fwr</button>
+                        <button id="endButton" type="button" class="ctrlsBtn">end</button>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -223,9 +238,9 @@
 </template>
 
 <style>
-    .ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px; }
-    #rewButton { left: 10px; }
-    #fwrButton { right: 10px; }
+    #videoButtonsBox { position: absolute; bottom: 10px; left: 10px; right: 10px; padding: 10px; padding: 3px; background-color: rgba(0,0,0,.5); display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 50px; }
+    .ctrlsBtn { background-color: rgba(0,0,0,5); color: #fff; cursor: pointer; border-radius: 3px; border-color: transparent; }
     #timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center; }
     .valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99; }
 
@@ -261,14 +276,17 @@
 
                 videoId: 0,
 
-                play_video: '',
-
-
+                videoPlayingTime: 0,
+                videoPositionStar: 0,
+                videoPositionEnd: 0,
+                videoPlayEvents: false,
 
                 afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' },
 
                 afectats: [],
                 sexes: [],
+                recursos: [],
+                destins: [],
                 tipusrecursos: [],
                 codisgravetat: [],
                 codisvaloracions: [],
@@ -373,7 +391,8 @@
                 console.log( 'checkboxSimtomes -> ev.target.id: '+ ev.currentTarget.id );
 
                 if (ev.currentTarget.checked) {
-                    this.simptomesSelected.set( ev.currentTarget.dataset.simptoma, ev.currentTarget.dataset.codi );
+                    this.simptomesSelected.set( ev.currentTarget.dataset.simptoma, ev.currentTarget.dataset.ind );
+                    console.log( 'map added element key ' +  ev.currentTarget.dataset.simptoma + ' = ' + ev.currentTarget.dataset.ind );
                 } else {
                     this.simptomesSelected.delete( ev.currentTarget.dataset.simptoma );
                 }
@@ -382,9 +401,29 @@
             // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: showablesValoracio =>
             showablesValoracio() {
 
-                for (let [key, value] of this.simptomesSelected) {
-                    console.log( key + ' -> ' + value );
-                    //document.getElementById('v_'+index+'_'+item.codi)
+                var selectobj = document.getElementById('afectat_codivaloracio')
+
+                var showThis = true;
+
+                for (var i=0; i<selectobj.options.length; i++) {
+
+                    for (let [key, value] of this.simptomesSelected) {
+
+                        if (!(key in selectobj.options[i].dataset)) { showThis = false; }
+
+                    }
+
+                    if (showThis) {
+
+                        selectobj.options[i].style.display = 'block';
+
+                    } else {
+
+                        selectobj.options[i].style.display = 'none';
+
+                    }
+
+                    showThis = true;
 
                 }
 
@@ -457,26 +496,62 @@
                     console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename )
                     this.play_video = '/videos/'+encodeURI(this.vdsvideos[this.videoid].filename)
 
+                    console.log( 'start script ->' );
+                    var videoValoracio = document.getElementById('videoValoracio');
+                    var timeBox = document.getElementById('timeBox');
+                    // variables de video
+                    this.videoPlayingTime = 0
+                    this.videoPositionStar = this.vdsvideos[this.videoid].start
+                    this.videoPositionEnd = this.vdsvideos[this.videoid].ends
+                    this.videoPlayEvents = this.vdsvideos[this.videoid].playevent
+                    // eventos de botones de video
+                    document.getElementById('homButton').onclick = function () {
+                        videoValoracio.currentTime = this.videoPositionStar;
+                    }
+                    document.getElementById('rewButton').onclick = function () {
+                        if ( (videoValoracio.currentTime-10) < this.videoPositionStar ) { videoValoracio.currentTime = this.videoPositionStar; }
+                        else { videoValoracio.currentTime -= 10; }
+                    }
+                    document.getElementById('plyButton').onclick = function () {
 
 
-                        console.log( 'start script ->' );
-                        var videoValoracio = document.getElementById('videoValoracio');
-                        var timeBox = document.getElementById('timeBox');
-                        var rewButton = document.getElementById('rewButton').onclick = function () { videoValoracio.currentTime -= 10; };
-                        var fwrButton = document.getElementById('fwrButton').onclick = function () { videoValoracio.currentTime += 10; };
-                        // videoValoracio.canplaythrough = function() { videoValoracioInit(); };
-                        // videoValoracio.play = function() { console.log( 'start script -> play' ); };
-                        // videoValoracio.playing = function() { console.log( 'start script -> playing' ); };
-                        videoValoracio.ontimeupdate = function() { console.log( 'start script -> ontimeupdate' ); videoValoracioPlayingmy(); };
-                        function videoValoracioInit() { console.log( 'videoValoracioPlayingmy ->' ); }
-                        function videoValoracioPlayingmy() {
-                            timeBox.innerHTML = parseInt( videoValoracio.duration - videoValoracio.currentTime );
-                            let percentualElapsedTime = ( ( ( videoValoracio.currentTime ) * 100 ) / videoValoracio.duration );
-                            if ( percentualElapsedTime > 90 ) { timeBox.style.backgroundColor = "#FF3300"; }
-                            else if ( percentualElapsedTime > 80 ) { timeBox.style.backgroundColor = "#c5d304"; }
-                            else { timeBox.style.backgroundColor = "#07ad07"; }
-                            console.log( 'videoValoracioPlayingmy -> percentualElapsedTime: ' +percentualElapsedTime );
+                        videoValoracio.play();
+
+
+
+                    }
+                    document.getElementById('fwrButton').onclick = function () {
+                        if ( (videoValoracio.currentTime+10) < this.videoPositionEnd ) { videoValoracio.currentTime = this.videoPositionEnd; }
+                        else { videoValoracio.currentTime += 10; }
+                    }
+                    document.getElementById('endButton').onclick = function () {
+                        videoValoracio.currentTime = this.videoPositionEnd;
+                    }
+                    // videoValoracio.canplaythrough = function() { videoValoracioInit(); };
+                    // videoValoracio.play = function() { console.log( 'start script -> play' ); };
+                    // videoValoracio.playing = function() { console.log( 'start script -> playing' ); };
+                    videoValoracio.ontimeupdate = function() { console.log( 'start script -> ontimeupdate' ); videoValoracioPlayingmy(); };
+                    //function videoValoracioInit() { console.log( 'videoValoracioPlayingmy ->' ); }
+                    function videoValoracioPlayingmy() {
+                        // imprime tiempo de ejecucion de video
+                        let calctmp = videoValoracio.currentTime - this.videoPositionStar;
+                        timeBox.innerHTML = parseInt(calctmp/60)+':'+(calctmp%60);
+                        // pausa si fin
+                        if ( videoValoracio.currentTime >= this.videoPositionEnd ) {
+                            videoValoracio.currentTime = this.videoPositionEnd;
+                            videoValoracio.pause();
                         }
+                    }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -537,8 +612,10 @@
         created() {
             let apptag = document.getElementById('app');
             this.afectats = JSON.parse( apptag.dataset.pafectats )
+            this.destins = JSON.parse( apptag.dataset.pdestins )
             this.sexes = JSON.parse( apptag.dataset.psexes )
             this.tipusrecursos = JSON.parse( apptag.dataset.ptipusrecursos )
+            this.recursos = JSON.parse( apptag.dataset.precursos )
             this.codisgravetat = JSON.parse( apptag.dataset.pcodisgravetat )
             this.codisvaloracions = JSON.parse( apptag.dataset.pcodisvaloracions )
             this.vdsvideos = JSON.parse( apptag.dataset.pvdsvideos )

@@ -84,6 +84,7 @@ class IncidenciaController extends Controller
         echo '<script>console.log("create method")</script>';
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+        $destinsAry = Alertant::where('tipus_alertants_id','=','1')->orderBy('cognoms')->orderBy('nom')->get();
 
         $usuarisAry = Usuari::orderBy('username')->get();
 
@@ -94,7 +95,7 @@ class IncidenciaController extends Controller
 
         $usuarisAry = Usuari::orderBy('username')->get();
 
-        $recursosAry = Recurs::orderBy('codi')->get();
+        $recursosAry = Recurs::with('tipus_recurso')->orderBy('codi')->get();
 
         $sexesAry = Sexe::orderBy('sexe')->get();
 
@@ -109,7 +110,7 @@ class IncidenciaController extends Controller
         $hlpsimptomesAry = HlpSimptomes::orderBy('pregunta')->get();
         $hlpvaloraciohassimptomesAry = HlpValoracioHasSimptomes::orderBy('codi_valoracio')->get();
 
-        return view( 'admin.incidencia.create', compact('tipusAry','alertantsAry','usuarisAry','tipusalertantAry','tipusrecursosAry','municipisAry','usuarisAry','recursosAry','sexesAry','codisgravetatAry','codisvaloracionsAry','vdsvideosAry','vdseventsAry','vdsplayAry','hlpvaloracionsAry','hlpsimptomesAry','hlpvaloraciohassimptomesAry') );
+        return view( 'admin.incidencia.create', compact('tipusAry','alertantsAry','destinsAry','usuarisAry','tipusalertantAry','tipusrecursosAry','municipisAry','usuarisAry','recursosAry','sexesAry','codisgravetatAry','codisvaloracionsAry','vdsvideosAry','vdseventsAry','vdsplayAry','hlpvaloracionsAry','hlpsimptomesAry','hlpvaloraciohassimptomesAry') );
 
     }
 
@@ -259,6 +260,7 @@ alertant_tipusalertantsid=3
 
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
+        $destinsAry = Alertant::where('tipus_alertants_id','=','1')->orderBy('cognoms')->orderBy('nom')->get();
 
         $usuarisAry = Usuari::orderBy('username')->get();
 
@@ -284,7 +286,7 @@ alertant_tipusalertantsid=3
         $hlpsimptomesAry = HlpSimptomes::orderBy('pregunta')->get();
         $hlpvaloraciohassimptomesAry = HlpValoracioHasSimptomes::orderBy('codi_valoracio')->get();
 
-        return view('admin.incidencia.edit', compact('tipusAry','alertantsAry','usuarisAry','tipusalertantAry','tipusrecursosAry','municipisAry','usuarisAry','recursosAry','sexesAry','codisgravetatAry','codisvaloracionsAry','vdsvideosAry','vdseventsAry','vdsplayAry','hlpvaloracionsAry','hlpsimptomesAry','hlpvaloraciohassimptomesAry') );
+        return view('admin.incidencia.edit', compact('tipusAry','alertantsAry','destinsAry','usuarisAry','tipusalertantAry','tipusrecursosAry','municipisAry','usuarisAry','recursosAry','sexesAry','codisgravetatAry','codisvaloracionsAry','vdsvideosAry','vdseventsAry','vdsplayAry','hlpvaloracionsAry','hlpsimptomesAry','hlpvaloraciohassimptomesAry') );
 
     }
 
