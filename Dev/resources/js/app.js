@@ -23,6 +23,7 @@ Vue.component('magomo-component', require('./components/magomoComponent.vue').de
 Vue.component('incidencies-component', require('./components/incidenciesComponent.vue').default);
 Vue.component('tabla-afectados-component', require('./components/tablaAfectadosComponent.vue').default);
 Vue.component('alertant-component', require('./components/alertantComponent.vue').default);
+Vue.component('mobil-component', require('./components/mobilComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
