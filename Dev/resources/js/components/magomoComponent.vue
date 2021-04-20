@@ -26,6 +26,7 @@
                 <td>{{ afectat.edat }}</td>
                 <td>{{ sexes[afectat.sexe] }}</td>
                 <td class="text-right">
+
                     <input type="hidden" v-bind:id="'afectat['+index+'][id]'" v-bind:name="'afectat['+index+'][id]'" />
                     <input type="hidden" v-bind:id="'afectat['+index+'][nom]'" v-bind:name="'afectat['+index+'][nom]'" />
                     <input type="hidden" v-bind:id="'afectat['+index+'][cognoms]'" v-bind:name="'afectat['+index+'][cognoms]'" />
@@ -34,9 +35,15 @@
                     <input type="hidden" v-bind:id="'afectat['+index+'][edat]'" v-bind:name="'afectat['+index+'][edat]'" />
                     <input type="hidden" v-bind:id="'afectat['+index+'][sexe]'" v-bind:name="'afectat['+index+'][sexe]'" />
                     <input type="hidden" v-bind:id="'afectat['+index+'][descripcio]'" v-bind:name="'afectat['+index+'][descripcio]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][tipus_recursos_id]'" v-bind:name="'afectat['+index+'][tipus_recursos_id]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][recursos_id]'" v-bind:name="'afectat['+index+'][recursos_id]'" />
                     <input type="hidden" v-bind:id="'afectat['+index+'][codi_gravetat]'" v-bind:name="'afectat['+index+'][codi_gravetat]'" />
                     <input type="hidden" v-bind:id="'afectat['+index+'][codi_valoracio]'" v-bind:name="'afectat['+index+'][codi_valoracio]'" />
+
+                    <input type="hidden" v-bind:id="'afectat['+index+'][recursos_id]'" v-bind:name="'afectat['+index+'][recursos_id]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][prioritat]'" v-bind:name="'afectat['+index+'][prioritat]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][desti]'" v-bind:name="'afectat['+index+'][desti]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][desti_alertant_id]'" v-bind:name="'afectat['+index+'][desti_alertant_id]'" />
+
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-warning btn-sm" @click="openEditAfectat(afectat, index)">
                             <i class="fas fa-edit"></i> Editar
@@ -270,7 +277,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 displayHelp: false,
 
-                key_tmp: 0,
+                key_tmp: -1,
 
                 valoracionCodi: '',
 
@@ -286,7 +293,24 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                 videoPositionEnd: 0,
                 videoPlayEvents: false,
 
-                afectat: { id: 0, telefon: 0, cip: '', nom: '', cognoms: '', edat: '', te_cip: 0, sexes_id: 0, descripcio: '', tipus_recursos_id: 0, codi_gravetat: '', codi_valoracio: '' },
+                afectat: {
+                    id: 0,
+                    telefon: 0,
+                    cip: '',
+                    nom: '',
+                    cognoms: '',
+                    edat: '',
+                    te_cip: 0,
+                    sexes_id: 0,
+                    descripcio: '',
+                    tipus_recursos_id: 0,
+                    codi_gravetat: '',
+                    codi_valoracio: '',
+                    recursos_id: 0,
+                    prioritat: 0,
+                    desti: '',
+                    desti_alertant_id: 0
+                },
 
                 afectats: [],
                 sexes: [],
@@ -311,7 +335,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
             emptyAfectat() {
                 return {
-                    id: '',
+                    id: 0,
                     telefon: 0,
                     cip: '',
                     nom: '',
@@ -322,7 +346,11 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                     descripcio: '',
                     tipus_recursos_id: 0,
                     codi_gravetat: '',
-                    codi_valoracio: ''
+                    codi_valoracio: '',
+                    recursos_id: 0,
+                    prioritat: 0,
+                    desti: '',
+                    desti_alertant_id: 0
                 }
             },
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: confirmDeleteAfectat =>
@@ -337,18 +365,22 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: openEditAfectat =>
             openEditAfectat( afectat, keyindex ) {
 
-                console.log( 'open modal x edit afectat id ' + (keyindex+1) )
+                console.log( 'open modal x edit afectat id ' + keyindex )
+
                 this.key_tmp = keyindex
-                //this.afectat = afectat
-                Object.assign(this.afectat, afectat);
+
+                this.afectat = _.cloneDeep(afectat)
+
                 $('#modalEditAfectat').modal('show')
 
             },
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: deleteAfectat =>
             deleteAfectat() {
 
-                console.log( 'delete afectat id ' + (this.key_tmp+1) )
-                this.afectats.splice(this.work_key, 1);
+                console.log( 'delete afectat id ' + this.key_tmp )
+
+                this.afectats.splice(this.work_key, 1)
+
                 $('#modalAfectatDelete').modal('hide')
 
             },
@@ -357,17 +389,35 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 if ( this.key_tmp >= 0 && this.afectats[this.key_tmp] ) {
 
-                    console.log( 'updated afectat id ' + (this.key_tmp+1) )
-                    this.afectats[this.key_tmp] = this.afectat
+                    console.log( 'updated afectat id ' + this.key_tmp )
+                    // afectat data
+                    this.afectats[this.key_tmp].telefon = this.afectat.telefon
+                    this.afectats[this.key_tmp].cip = this.afectat.cip
+                    this.afectats[this.key_tmp].nom = this.afectat.nom
+                    this.afectats[this.key_tmp].cognoms = this.afectat.cognoms
+                    this.afectats[this.key_tmp].edat = this.afectat.edat
+                    this.afectats[this.key_tmp].te_cip = this.afectat.te_cip
+                    this.afectats[this.key_tmp].sexes_id = this.afectat.sexes_id
+                    this.afectats[this.key_tmp].descripcio = this.afectat.descripcio
+                    this.afectats[this.key_tmp].tipus_recursos_id = this.afectat.tipus_recursos_id
+                    this.afectats[this.key_tmp].codi_gravetat = this.afectat.codi_gravetat
+                    this.afectats[this.key_tmp].codi_valoracio = this.afectat.codi_valoracio
+                    // extra data
+                    this.afectats[this.key_tmp].recursos_id = this.afectat.recursos_id
+                    this.afectats[this.key_tmp].prioritat = this.afectat.codi_gravetat
+                    this.afectats[this.key_tmp].desti = this.afectat.desti
+                    this.afectats[this.key_tmp].desti_alertant_id = this.afectat.desti_alertant_id
 
                 } else {
 
-                    console.log( 'added afectat id ' + (this.key_tmp+1) )
-                    this.afectats.push( this.afectat )
+                    console.log( 'added afectat id ' + this.key_tmp )
+                    this.afectats.push( _.cloneDeep(this.afectat) )
 
                 }
 
                 $('#modalEditAfectat').modal('hide')
+
+                this.afectat = emptyAfectat()
 
             },
             // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: checkboxSimptomes =>
@@ -560,6 +610,14 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                     function videoValoracioPlayingmy(me) {
                         var videoValoracio = document.getElementById('videoValoracio');
+
+                        // pausa si fin
+                        if ( videoValoracio.currentTime >= parseInt(videoValoracio.dataset.end) ) {
+                            videoValoracio.pause();
+                            videoValoracio.currentTime = parseInt(videoValoracio.dataset.end);
+                            console.log( 'videoValoracioPlayingmy -> endlimit ('+parseInt(videoValoracio.dataset.end)+')' );
+                        }
+
                         // imprime tiempo de ejecucion de video
                         var calctmp = videoValoracio.currentTime - parseInt(videoValoracio.dataset.start);
                         var timeBox = document.getElementById('timeBox');
@@ -570,12 +628,6 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                         ' / parseInt(calctmp%60): ' + parseInt(calctmp%60)
                         );
 
-                        // pausa si fin
-                        if ( videoValoracio.currentTime >= parseInt(videoValoracio.dataset.end) ) {
-                            videoValoracio.currentTime = parseInt(videoValoracio.dataset.end);
-                            videoValoracio.pause();
-                            console.log( 'videoValoracioPlayingmy -> endlimit ('+parseInt(videoValoracio.dataset.end)+')' );
-                        }
                     }
 
                     $('#modalVideoValoracio').modal('show')

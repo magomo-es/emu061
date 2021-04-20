@@ -2533,12 +2533,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
     return {
       displayHelp: false,
-      key_tmp: 0,
+      key_tmp: -1,
       valoracionCodi: '',
       appurl: '',
       simptomesSelected: new Map(),
@@ -2561,7 +2568,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         descripcio: '',
         tipus_recursos_id: 0,
         codi_gravetat: '',
-        codi_valoracio: ''
+        codi_valoracio: '',
+        recursos_id: 0,
+        prioritat: 0,
+        desti: '',
+        desti_alertant_id: 0
       },
       afectats: [],
       sexes: [],
@@ -2583,7 +2594,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: emptyAfectat =>
     emptyAfectat: function emptyAfectat() {
       return {
-        id: '',
+        id: 0,
         telefon: 0,
         cip: '',
         nom: '',
@@ -2594,7 +2605,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         descripcio: '',
         tipus_recursos_id: 0,
         codi_gravetat: '',
-        codi_valoracio: ''
+        codi_valoracio: '',
+        recursos_id: 0,
+        prioritat: 0,
+        desti: '',
+        desti_alertant_id: 0
       };
     },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: confirmDeleteAfectat =>
@@ -2606,29 +2621,45 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: openEditAfectat =>
     openEditAfectat: function openEditAfectat(afectat, keyindex) {
-      console.log('open modal x edit afectat id ' + (keyindex + 1));
-      this.key_tmp = keyindex; //this.afectat = afectat
-
-      Object.assign(this.afectat, afectat);
+      console.log('open modal x edit afectat id ' + keyindex);
+      this.key_tmp = keyindex;
+      this.afectat = _.cloneDeep(afectat);
       $('#modalEditAfectat').modal('show');
     },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: deleteAfectat =>
     deleteAfectat: function deleteAfectat() {
-      console.log('delete afectat id ' + (this.key_tmp + 1));
+      console.log('delete afectat id ' + this.key_tmp);
       this.afectats.splice(this.work_key, 1);
       $('#modalAfectatDelete').modal('hide');
     },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: registerAfectat =>
     registerAfectat: function registerAfectat() {
       if (this.key_tmp >= 0 && this.afectats[this.key_tmp]) {
-        console.log('updated afectat id ' + (this.key_tmp + 1));
-        this.afectats[this.key_tmp] = this.afectat;
+        console.log('updated afectat id ' + this.key_tmp); // afectat data
+
+        this.afectats[this.key_tmp].telefon = this.afectat.telefon;
+        this.afectats[this.key_tmp].cip = this.afectat.cip;
+        this.afectats[this.key_tmp].nom = this.afectat.nom;
+        this.afectats[this.key_tmp].cognoms = this.afectat.cognoms;
+        this.afectats[this.key_tmp].edat = this.afectat.edat;
+        this.afectats[this.key_tmp].te_cip = this.afectat.te_cip;
+        this.afectats[this.key_tmp].sexes_id = this.afectat.sexes_id;
+        this.afectats[this.key_tmp].descripcio = this.afectat.descripcio;
+        this.afectats[this.key_tmp].tipus_recursos_id = this.afectat.tipus_recursos_id;
+        this.afectats[this.key_tmp].codi_gravetat = this.afectat.codi_gravetat;
+        this.afectats[this.key_tmp].codi_valoracio = this.afectat.codi_valoracio; // extra data
+
+        this.afectats[this.key_tmp].recursos_id = this.afectat.recursos_id;
+        this.afectats[this.key_tmp].prioritat = this.afectat.codi_gravetat;
+        this.afectats[this.key_tmp].desti = this.afectat.desti;
+        this.afectats[this.key_tmp].desti_alertant_id = this.afectat.desti_alertant_id;
       } else {
-        console.log('added afectat id ' + (this.key_tmp + 1));
-        this.afectats.push(this.afectat);
+        console.log('added afectat id ' + this.key_tmp);
+        this.afectats.push(_.cloneDeep(this.afectat));
       }
 
       $('#modalEditAfectat').modal('hide');
+      this.afectat = emptyAfectat();
     },
     // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: checkboxSimptomes =>
     checkboxSimptomes: function checkboxSimptomes(ev) {
@@ -2747,18 +2778,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       if (this.videoIndex >= 0) {
         //function videoValoracioInit() { console.log( 'videoValoracioPlayingmy ->' ); }
         var videoValoracioPlayingmy = function videoValoracioPlayingmy(me) {
-          var videoValoracio = document.getElementById('videoValoracio'); // imprime tiempo de ejecucion de video
+          var videoValoracio = document.getElementById('videoValoracio'); // pausa si fin
+
+          if (videoValoracio.currentTime >= parseInt(videoValoracio.dataset.end)) {
+            videoValoracio.pause();
+            videoValoracio.currentTime = parseInt(videoValoracio.dataset.end);
+            console.log('videoValoracioPlayingmy -> endlimit (' + parseInt(videoValoracio.dataset.end) + ')');
+          } // imprime tiempo de ejecucion de video
+
 
           var calctmp = videoValoracio.currentTime - parseInt(videoValoracio.dataset.start);
           var timeBox = document.getElementById('timeBox');
           timeBox.innerHTML = parseInt(calctmp / 60) + ':' + (parseInt(calctmp % 60) < 10 ? '0' : '') + parseInt(calctmp % 60);
-          console.log('videoValoracioPlayingmy -> calctmp: ' + calctmp + ' / parseInt(calctmp/60): ' + parseInt(calctmp / 60) + ' / parseInt(calctmp%60): ' + parseInt(calctmp % 60)); // pausa si fin
-
-          if (videoValoracio.currentTime >= parseInt(videoValoracio.dataset.end)) {
-            videoValoracio.currentTime = parseInt(videoValoracio.dataset.end);
-            videoValoracio.pause();
-            console.log('videoValoracioPlayingmy -> endlimit (' + parseInt(videoValoracio.dataset.end) + ')');
-          }
+          console.log('videoValoracioPlayingmy -> calctmp: ' + calctmp + ' / parseInt(calctmp/60): ' + parseInt(calctmp / 60) + ' / parseInt(calctmp%60): ' + parseInt(calctmp % 60));
         };
 
         console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoIndex].filename);
@@ -40884,8 +40916,8 @@ var render = function() {
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "afectat[" + index + "][tipus_recursos_id]",
-                  name: "afectat[" + index + "][tipus_recursos_id]"
+                  id: "afectat[" + index + "][recursos_id]",
+                  name: "afectat[" + index + "][recursos_id]"
                 }
               }),
               _vm._v(" "),
@@ -40902,6 +40934,38 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][codi_valoracio]",
                   name: "afectat[" + index + "][codi_valoracio]"
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  id: "afectat[" + index + "][recursos_id]",
+                  name: "afectat[" + index + "][recursos_id]"
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  id: "afectat[" + index + "][prioritat]",
+                  name: "afectat[" + index + "][prioritat]"
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  id: "afectat[" + index + "][desti]",
+                  name: "afectat[" + index + "][desti]"
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "hidden",
+                  id: "afectat[" + index + "][desti_alertant_id]",
+                  name: "afectat[" + index + "][desti_alertant_id]"
                 }
               }),
               _vm._v(" "),
