@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    ## magomo: check if the file exists in "videos" and, if found, stop and display it
+    RewriteCond  %{DOCUMENT_ROOT}/videos/$1 -f
+    RewriteRule  ^(.*)$  /videos/$1  [L,QSA]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

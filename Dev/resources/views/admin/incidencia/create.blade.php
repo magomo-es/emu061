@@ -170,6 +170,7 @@
                 data-phlpvaloracions='{!! ($hlpvaloracionsAry)?str_replace("'", '´', $hlpvaloracionsAry->toJson()):'[]' !!}'
                 data-phlpsimptomes='{!! ($hlpsimptomesAry)?str_replace("'", '´', $hlpsimptomesAry->toJson()):'[]' !!}'
                 data-phlpvaloraciohassimptomes='{!! ($hlpvaloraciohassimptomesAry)?str_replace("'", '´', $hlpvaloraciohassimptomesAry->toJson()):'[]' !!}'
+                data-pappurl='{!! url('/videos') !!}'
             ><magomo-component></magomo-component></div>
             <!-- Afectats Table VUE -->
 

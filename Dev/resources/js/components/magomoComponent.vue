@@ -215,7 +215,9 @@
                 </div>
                 <div class="modal-body" style="position: relative">
 
-                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto; background-color: #1b2631;"></video>
+                    <video id="videoValoracio" data-start="" data-end="" data-playevent=""
+                        v-bind:src="play_video"
+                        style="width: 100%; height; auto; background-color: #1b2631;"></video>
                     <div id="timeBox">00:00</div>
                     <div id="videoButtonsBox">
                         <button id="homButton" type="button" class="videoCtrlsBtn">init</button>
@@ -272,12 +274,15 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 valoracionCodi: '',
 
+                appurl: '',
+
                 simptomesSelected:  new Map(),
 
-                videoId: 0,
+                videoIndex: 0,
+                playIndex: 0,
                 play_video: '',
                 videoPlayingTime: 0,
-                videoPositionStar: 0,
+                videoPositionStart: 0,
                 videoPositionEnd: 0,
                 videoPlayEvents: false,
 
@@ -489,72 +494,89 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 console.log( 'openVideoValoracio ' + this.valoracionCodi )
 
-                this.videoid = this.findVideoFileById( this.findVideoIdByCodiValoracio( this.valoracionCodi ) )
+                this.playIndex = this.findPlayIndexByCodiValoracio( this.valoracionCodi )
 
-                if( this.videoid>=0 ) {
+                this.videoIndex = this.findVideoIndexByPlayIndex( this.vdsplay[this.playIndex].id_video )
 
-                    console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoid].filename )
-                    this.play_video = '/videos/'+encodeURI(this.vdsvideos[this.videoid].filename)
+                if ( this.videoIndex>=0 ) {
+
+                    console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoIndex].filename )
+                    this.play_video = this.appurl + '/'+encodeURI(this.vdsvideos[this.videoIndex].filename)
 
                     console.log( 'start script ->' );
                     var videoValoracio = document.getElementById('videoValoracio');
-                    var timeBox = document.getElementById('timeBox');
+
+                    console.log(' - videoid: ' + this.videoIndex +
+                                ' -> start: '+ this.vdsplay[this.playIndex].start +
+                                ' / ends: '+ this.vdsplay[this.playIndex].ends +
+                                ' / playevent: '+ this.vdsplay[this.playIndex].playevent
+                    )
+
                     // variables de video
                     this.videoPlayingTime = 0
-                    this.videoPositionStar = this.vdsvideos[this.videoid].start
-                    this.videoPositionEnd = this.vdsvideos[this.videoid].ends
-                    this.videoPlayEvents = this.vdsvideos[this.videoid].playevent
+                    this.videoPositionStart = this.vdsplay[this.playIndex].start
+                    this.videoPositionEnd = this.vdsplay[this.playIndex].ends
+                    this.videoPlayEvents = this.vdsplay[this.playIndex].playevent
+
+                    // set video start position
+                    videoValoracio.currentTime = this.videoPositionStart
+                    videoValoracio.dataset.start = this.videoPositionStart
+                    videoValoracio.dataset.end = this.videoPositionEnd
+                    videoValoracio.dataset.playevent = ((this.videoPlayEvents)?'1':'0')
+
                     // eventos de botones de video
-                    document.getElementById('homButton').onclick = function () {
-                        videoValoracio.currentTime = this.videoPositionStar;
-                    }
-                    document.getElementById('rewButton').onclick = function () {
-                        if ( (videoValoracio.currentTime-10) < this.videoPositionStar ) { videoValoracio.currentTime = this.videoPositionStar; }
+                    document.getElementById('homButton').onclick = function (ev) {
+                        console.log(' - HomeButton click event -> this.videoPositionStart: ' + this.videoPositionStart )
+                        var videoValoracio = document.getElementById('videoValoracio');
+                        videoValoracio.currentTime = this.videoPositionStart;
+                    }.bind(this)
+                    document.getElementById('rewButton').onclick = function (ev) {
+                        var videoValoracio = document.getElementById('videoValoracio');
+                        if ( (videoValoracio.currentTime-10) < this.videoPositionStart ) { videoValoracio.currentTime = this.videoPositionStart; }
                         else { videoValoracio.currentTime -= 10; }
-                    }
-                    document.getElementById('plyButton').onclick = function () {
-
-
-                        videoValoracio.play();
-
-
-
-                    }
-                    document.getElementById('fwrButton').onclick = function () {
-                        if ( (videoValoracio.currentTime+10) < this.videoPositionEnd ) { videoValoracio.currentTime = this.videoPositionEnd; }
+                    }.bind(this)
+                    document.getElementById('plyButton').onclick = function (ev) {
+                        var videoValoracio = document.getElementById('videoValoracio');
+                        if (!videoValoracio.paused) { videoValoracio.pause(); }
+                        else { videoValoracio.play(); }
+                    }.bind(this)
+                    document.getElementById('fwrButton').onclick = function (ev) {
+                        var videoValoracio = document.getElementById('videoValoracio');
+                        if ( (videoValoracio.currentTime+10) > this.videoPositionEnd ) { videoValoracio.currentTime = this.videoPositionEnd; }
                         else { videoValoracio.currentTime += 10; }
-                    }
-                    document.getElementById('endButton').onclick = function () {
+                    }.bind(this)
+                    document.getElementById('endButton').onclick = function (ev) {
+                        console.log(' - EndButton click event -> this.videoPositionEnd: ' + this.videoPositionEnd )
+                        var videoValoracio = document.getElementById('videoValoracio');
                         videoValoracio.currentTime = this.videoPositionEnd;
-                    }
+                    }.bind(this)
+
                     // videoValoracio.canplaythrough = function() { videoValoracioInit(); };
                     // videoValoracio.play = function() { console.log( 'start script -> play' ); };
                     // videoValoracio.playing = function() { console.log( 'start script -> playing' ); };
-                    videoValoracio.ontimeupdate = function() { console.log( 'start script -> ontimeupdate' ); videoValoracioPlayingmy(); };
+
+                    videoValoracio.ontimeupdate = function(me) { console.log( 'start script -> ontimeupdate' ); videoValoracioPlayingmy(me); }.bind(this);
                     //function videoValoracioInit() { console.log( 'videoValoracioPlayingmy ->' ); }
-                    function videoValoracioPlayingmy() {
+
+                    function videoValoracioPlayingmy(me) {
+                        var videoValoracio = document.getElementById('videoValoracio');
                         // imprime tiempo de ejecucion de video
-                        let calctmp = videoValoracio.currentTime - this.videoPositionStar;
-                        timeBox.innerHTML = parseInt(calctmp/60)+':'+(calctmp%60);
+                        var calctmp = videoValoracio.currentTime - parseInt(videoValoracio.dataset.start);
+                        var timeBox = document.getElementById('timeBox');
+                        timeBox.innerHTML = parseInt(calctmp/60)+':'+((parseInt(calctmp%60)<10)?'0':'')+parseInt(calctmp%60);
+
+                        console.log( 'videoValoracioPlayingmy -> calctmp: ' + calctmp +
+                        ' / parseInt(calctmp/60): ' + parseInt(calctmp/60) +
+                        ' / parseInt(calctmp%60): ' + parseInt(calctmp%60)
+                        );
+
                         // pausa si fin
-                        if ( videoValoracio.currentTime >= this.videoPositionEnd ) {
-                            videoValoracio.currentTime = this.videoPositionEnd;
+                        if ( videoValoracio.currentTime >= parseInt(videoValoracio.dataset.end) ) {
+                            videoValoracio.currentTime = parseInt(videoValoracio.dataset.end);
                             videoValoracio.pause();
+                            console.log( 'videoValoracioPlayingmy -> endlimit ('+parseInt(videoValoracio.dataset.end)+')' );
                         }
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     $('#modalVideoValoracio').modal('show')
 
@@ -573,25 +595,25 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                 this.play_video = ''
 
             },
-            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoIdByCodiValoracio =>
-            findVideoIdByCodiValoracio( code ) {
+            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findPlayIndexByCodiValoracio =>
+            findPlayIndexByCodiValoracio( code ) {
 
                 var i = -1, foud = -1;
                 if (code.length>0) {
                     while (foud<0 && ++i<this.vdsplay.length) {
-                        if (this.vdsplay[i].id_caller==code) { foud = this.vdsplay[i].id_video; }
+                        if (this.vdsplay[i].id_caller==code) { foud = i; }
                     }
                 }
                 return foud
 
             },
-            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoFileById =>
-            findVideoFileById( id ) {
+            // - - - - - - - - - - - - - - - - - - - - - VIDEO VALORACIO: findVideoIndexByPlayIndex =>
+            findVideoIndexByPlayIndex( videoid ) {
 
                 var i = -1, foud = -1;
-                if (id>=0) {
+                if (videoid>=0) {
                     while (foud<0 && ++i<this.vdsplay.length) {
-                        if (this.vdsvideos[i].id==id) { foud = i; }
+                        if (this.vdsvideos[i].id==videoid) { foud = i; }
                     }
                  }
                 return foud
@@ -625,6 +647,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             this.hlpsimtomes = JSON.parse( apptag.dataset.phlpsimptomes )
             this.byid_hlpsimtomes = this.generateArrayById( this.hlpsimtomes )
             this.hlpvaloraciohassimptomes = JSON.parse( apptag.dataset.phlpvaloraciohassimptomes )
+            this.appurl = apptag.dataset.pappurl
         },
 
         mounted() {
