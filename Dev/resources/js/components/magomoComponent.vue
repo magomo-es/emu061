@@ -215,14 +215,14 @@
                 </div>
                 <div class="modal-body" style="position: relative">
 
-                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto;"></video>
+                    <video id="videoValoracio" v-bind:src="play_video" style="width: 100%; height; auto; background-color: #1b2631;"></video>
                     <div id="timeBox">00:00</div>
                     <div id="videoButtonsBox">
-                        <button id="homButton" type="button" class="ctrlsBtn">init</button>
-                        <button id="rewButton" type="button" class="ctrlsBtn">rew</button>
-                        <button id="plyButton" type="button" class="ctrlsBtn">play/pause</button>
-                        <button id="fwrButton" type="button" class="ctrlsBtn">fwr</button>
-                        <button id="endButton" type="button" class="ctrlsBtn">end</button>
+                        <button id="homButton" type="button" class="videoCtrlsBtn">init</button>
+                        <button id="rewButton" type="button" class="videoCtrlsBtn">rew</button>
+                        <button id="plyButton" type="button" class="videoCtrlsBtn">play/pause</button>
+                        <button id="fwrButton" type="button" class="videoCtrlsBtn">fwr</button>
+                        <button id="endButton" type="button" class="videoCtrlsBtn">end</button>
                     </div>
 
                 </div>
@@ -238,9 +238,9 @@
 </template>
 
 <style>
-    #videoButtonsBox { position: absolute; bottom: 10px; left: 10px; right: 10px; padding: 10px; padding: 3px; background-color: rgba(0,0,0,.5); display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 50px; }
-    .ctrlsBtn { background-color: rgba(0,0,0,5); color: #fff; cursor: pointer; border-radius: 3px; border-color: transparent; }
+    #videoButtonsBox { position: absolute; bottom: 20px; left: 20px; right: 20px; padding: 10px; padding: 3px; background-color: transparent; display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
+    .videoCtrlsBtn { background-color: rgba(0,0,0,.4); color: #fff; font-weight: bold; cursor: pointer; border-color: transparent; border-left: solid 3px #333; }
     #timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center; }
     .valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99; }
 
@@ -275,7 +275,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 50px; }
                 simptomesSelected:  new Map(),
 
                 videoId: 0,
-
+                play_video: '',
                 videoPlayingTime: 0,
                 videoPositionStar: 0,
                 videoPositionEnd: 0,

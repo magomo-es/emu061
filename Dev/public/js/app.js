@@ -2540,6 +2540,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       valoracionCodi: '',
       simptomesSelected: new Map(),
       videoId: 0,
+      play_video: '',
       videoPlayingTime: 0,
       videoPositionStar: 0,
       videoPositionEnd: 0,
@@ -7921,7 +7922,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group\n{\n    margin-bottom: 0.5rem !important;\n}\n.form-group label\n{\n    margin-bottom: 0rem !important;\n}\n.form-control-sm\n{\n    box-shadow: 0px 1px 0.1px grey !important;\n}\n.label\n{\n    font-size: 85%;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group\r\n{\r\n    margin-bottom: 0.5rem !important;\n}\n.form-group label\r\n{\r\n    margin-bottom: 0rem !important;\n}\n.form-control-sm\r\n{\r\n    box-shadow: 0px 1px 0.1px grey !important;\n}\n.label\r\n{\r\n    font-size: 85%;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7945,7 +7946,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#videoButtonsBox { position: absolute; bottom: 10px; left: 10px; right: 10px; padding: 10px; padding: 3px; background-color: rgba(0,0,0,.5); display: grid;\ngrid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 50px;\n}\n.ctrlsBtn { background-color: rgba(0,0,0,5); color: #fff; cursor: pointer; border-radius: 3px; border-color: transparent;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#videoButtonsBox { position: absolute; bottom: 20px; left: 20px; right: 20px; padding: 10px; padding: 3px; background-color: transparent; display: grid;\ngrid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px;\n}\n.videoCtrlsBtn { background-color: rgba(0,0,0,.4); color: #fff; font-weight: bold; cursor: pointer; border-color: transparent; border-left: solid 3px #333;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -40891,7 +40892,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-edit" }),
-                      _vm._v(" Editar\r\n                        ")
+                      _vm._v(" Editar\n                        ")
                     ]
                   )
                 ]
@@ -40914,7 +40915,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-trash" }),
-                      _vm._v(" Esborrar\r\n                        ")
+                      _vm._v(" Esborrar\n                        ")
                     ]
                   )
                 ]
@@ -41661,7 +41662,10 @@ var render = function() {
                 },
                 [
                   _c("video", {
-                    staticStyle: { width: "100%" },
+                    staticStyle: {
+                      width: "100%",
+                      "background-color": "#1b2631"
+                    },
                     attrs: { id: "videoValoracio", src: _vm.play_video }
                   }),
                   _vm._v(" "),
@@ -41950,31 +41954,46 @@ var staticRenderFns = [
     return _c("div", { attrs: { id: "videoButtonsBox" } }, [
       _c(
         "button",
-        { staticClass: "ctrlsBtn", attrs: { id: "homButton", type: "button" } },
+        {
+          staticClass: "videoCtrlsBtn",
+          attrs: { id: "homButton", type: "button" }
+        },
         [_vm._v("init")]
       ),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "ctrlsBtn", attrs: { id: "rewButton", type: "button" } },
+        {
+          staticClass: "videoCtrlsBtn",
+          attrs: { id: "rewButton", type: "button" }
+        },
         [_vm._v("rew")]
       ),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "ctrlsBtn", attrs: { id: "plyButton", type: "button" } },
+        {
+          staticClass: "videoCtrlsBtn",
+          attrs: { id: "plyButton", type: "button" }
+        },
         [_vm._v("play/pause")]
       ),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "ctrlsBtn", attrs: { id: "fwrButton", type: "button" } },
+        {
+          staticClass: "videoCtrlsBtn",
+          attrs: { id: "fwrButton", type: "button" }
+        },
         [_vm._v("fwr")]
       ),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "ctrlsBtn", attrs: { id: "endButton", type: "button" } },
+        {
+          staticClass: "videoCtrlsBtn",
+          attrs: { id: "endButton", type: "button" }
+        },
         [_vm._v("end")]
       )
     ])
