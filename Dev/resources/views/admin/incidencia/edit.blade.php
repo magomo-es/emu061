@@ -21,7 +21,7 @@
 
                 <div class="col-4">
                     <div class="row">
-                        <label for="numincident" class="col-3 col-form-label"><small>Id Incident</small></label>
+                        <label for="numincident" class="col-3 col-form-label"><small>Id Incidencia</small></label>
                         <div class="col-9">
                             <input type="text" class="form-control" id="numincident" name="numincident" value="{{ $theobj->num_incident }}">
                         </div>

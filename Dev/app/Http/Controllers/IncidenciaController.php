@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sexe;
 use App\Models\Recurs;
 use App\Models\Usuari;
+use App\Models\Afectat;
 use App\Models\VdsPlay;
 use App\Classes\Utility;
 use App\Models\Alertant;
@@ -19,9 +20,11 @@ use Illuminate\Http\Request;
 use App\Models\CodisGravetat;
 use App\Models\TipusAlertant;
 use App\Models\CodisValoracio;
-use App\Models\HlpValoracioHasSimptomes;
 use App\Models\TipusIncidencia;
+use Illuminate\Support\Facades\DB;
+use App\Models\IncidenciesHasRecursos;
 use Illuminate\Database\QueryException;
+use App\Models\HlpValoracioHasSimptomes;
 
 class IncidenciaController extends Controller
 {
@@ -125,103 +128,140 @@ class IncidenciaController extends Controller
 
         echo '<script>console.log("store method")</script>';
 
+
+//var_dump($request);
+//exit(0);
+
+
         if ( !empty( $request->numincident )
             && !empty( $request->data )
             && !empty( $request->hora )
             && !empty( $request->telefonalertant )
             && !empty( $request->descripcio ) ) {
 
-            $theobj = new Incidencia;
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Almacenar =>
 
-            $theobj->num_incident = $request->numincident;
-            $theobj->data = $request->data;
-            $theobj->hora = $request->hora;
-            $theobj->telefon_alertant = $request->telefonalertant;
-            $theobj->adreca = $request->adreca;
-            $theobj->adreca_complement = $request->adrecacomplement;
-            $theobj->descripcio = $request->descripcio;
-            $theobj->nom_metge = $request->nommetge;
-            $theobj->tipus_incidencies_id = $request->tipusincidenciesid;
-            $theobj->alertants_id = $request->alertantsid;
-            $theobj->municipis_id = $request->municipisid;
-            $theobj->usuaris_id = $request->usuarisid;
+            $saveError = false;
 
-
-
-
-/*
-numincident=2&
-
-data=2021-04-14&
-
-hora=06%3A20&
-
-telefonalertant=&
-
-adreca=Rosario+del+Ramirro+1%2C+2%2C+3&
-
-adrecacomplement=Bariio&
-
-municipisid=93&
-
-descripcio=Esta+descripcio+en+medio+tata&
-
-nommetge=Gomezrius&
-
-tipusincidenciesid=4&usuarisid=5&
-
-afectat%5B0%5D%5Bid%5D=&
-afectat%5B0%5D%5Bnom%5D=&
-afectat%5B0%5D%5Bcognoms%5D=&
-afectat%5B0%5D%5Bcip%5D=&
-afectat%5B0%5D%5Btelefon%5D=&
-afectat%5B0%5D%5Bedat%5D=&
-afectat%5B0%5D%5Bsexe%5D=&
-afectat%5B0%5D%5Bdescripcio%5D=&
-afectat%5B0%5D%5Btipus_recursos_id%5D=&
-afectat%5B0%5D%5Bcodi_gravetat%5D=&
-afectat%5B0%5D%5Bcodi_valoracio%5D=&
-
-afectat%5B1%5D%5Bid%5D=&
-afectat%5B1%5D%5Bnom%5D=&
-afectat%5B1%5D%5Bcognoms%5D=&
-afectat%5B1%5D%5Bcip%5D=&
-afectat%5B1%5D%5Btelefon%5D=&
-afectat%5B1%5D%5Bedat%5D=&
-afectat%5B1%5D%5Bsexe%5D=&
-afectat%5B1%5D%5Bdescripcio%5D=&
-afectat%5B1%5D%5Btipus_recursos_id%5D=&
-afectat%5B1%5D%5Bcodi_gravetat%5D=&
-afectat%5B1%5D%5Bcodi_valoracio%5D=&
-
-alertant_nom=Marcelo+E&
-alertant_cognoms=Goncales&
-alertant_adreca=Pinciruci&
-alertant_municipisid=91&
-alertant_tipusalertantsid=3
-*/
-
-
-
-
-
-
-
-
-
-
-
-
+            // - - - - - - - - - - - - - - - - - - - - - alertants
+            $objAlertant = new Alertant;
+            // $objAlertant.id = $request->alertantid;
+            $objAlertant->telefon = $request->telefonalertant;
+            $objAlertant->nom = $request->alertant_nom;
+            $objAlertant->cognoms = $request->alertant_cognoms;
+            $objAlertant->adreca = $request->alertant_adreca;
+            $objAlertant->municipis_id = $request->alertant_municipisid;
+            $objAlertant->tipus_alertants_id = $request->alertant_tipusalertantsid;
 
             try {
-                $theobj->save();
+
+                $objAlertant->save();
+
+                // - - - - - - - - - - - - - - - - - - - - - incidencies
+                $objIncidencia = new Incidencia;
+                // $objIncidencia.id = $request->incidenciaid
+                $objIncidencia->num_incident = $request->numincident;
+                $objIncidencia->data = $request->data;
+                $objIncidencia->hora = $request->hora;
+                $objIncidencia->telefon_alertant = $request->telefonalertant;
+                $objIncidencia->adreca = $request->adreca;
+                $objIncidencia->adreca_complement = $request->adrecacomplement;
+                $objIncidencia->descripcio = $request->descripcio;
+                $objIncidencia->nom_metge = $request->nommetge;
+                $objIncidencia->tipus_incidencies_id = $request->tipusincidenciesid;
+                $objIncidencia->alertants_id = $objAlertant->id;
+                $objIncidencia->municipis_id = $request->municipisid;
+                $objIncidencia->usuaris_id = $request->usuarisid;
+
+                try {
+
+                    $objIncidencia->save();
+
+                    for ( $i=0; $i< count($request->afectat); $i++ ) {
+
+                        // - - - - - - - - - - - - - - - - - - - - - afectats
+                        $objAfectat = new Afectat;
+                        // $objAfectat->id = $request->afectat[$i]['id'];
+                        $objAfectat->telefon = $request->afectat[$i]['telefon'];
+                        $objAfectat->cip = $request->afectat[$i]['cip'];
+                        $objAfectat->nom = $request->afectat[$i]['nom'];
+                        $objAfectat->cognoms = $request->afectat[$i]['cognoms'];
+                        $objAfectat->edat = $request->afectat[$i]['edat'];
+                        // $objAfectat->te_cip = $request->afectat[$i]['te_cip'];
+                        $objAfectat->sexes_id = $request->afectat[$i]['sexes_id'];
+                        $objAfectat->descripcio = $request->afectat[$i]['descripcio'];
+                        // $objAfectat->tipus_recursos_id = $request->afectat[$i]['tipus_rrecursos_id'];
+                        $objAfectat->codi_gravetat = $request->afectat[$i]['codi_gravetat'];
+                        $objAfectat->codi_valoracio = $request->afectat[$i]['codi_valoracio'];
+
+                        try {
+
+                            $objAfectat->save();
+
+                            // - - - - - - - - - - - - - - - - - - - - - incidencies_has_recursos
+                            $objHasRecursos = new IncidenciesHasRecursos;
+                            $objHasRecursos->incidencies_id = $objIncidencia->id;
+                            $objHasRecursos->recursos_id = $request->afectat[$i]['recursos_id'];
+                            $objHasRecursos->afectats_id = $objAfectat->id;
+                            $objHasRecursos->hora_activacio = '0';
+                            $objHasRecursos->hora_mobilitzacio = '0';
+                            $objHasRecursos->hora_assistencia = '0';
+                            $objHasRecursos->hora_transport = '0';
+                            $objHasRecursos->hora_arribada_hospital = '0';
+                            $objHasRecursos->hora_transferencia = '0';
+                            $objHasRecursos->hora_finalitzacio = '0';
+                            $objHasRecursos->prioritat = $request->afectat[$i]['prioritat'];
+                            $objHasRecursos->desti = $request->afectat[$i]['desti'];
+                            $objHasRecursos->desti_alertant_id = $request->afectat[$i]['desti_alertant_id'];
+
+                            try {
+
+                                $objHasRecursos->save();
+
+                            } catch( QueryException $ex ) {
+
+                                $saveError = true;
+
+                            }
+
+                        } catch( QueryException $ex ) {
+
+                            $saveError = true;
+
+                        }
+
+                    }
+
+                } catch( QueryException $ex ) {
+
+                    $saveError = true;
+
+                }
+
+            } catch( QueryException $ex ) {
+
+                $saveError = true;
+
+            }
+
+            if (!$saveError) {
+
+                DB::commit();
+
                 $request->session()->flash('mensaje', 'Registre emmagatzemat correctament' );
                 $response = redirect()->action( [IncidenciaController::class, 'index'] );
-            } catch( QueryException $ex ) {
+
+            } else {
+
+                DB::rollBack();
+
                 $mensaje = Utility::errorMessage($ex);
                 $request->session()->flash('error', $mensaje );
                 $response = redirect()->action( [IncidenciaController::class, 'create'] )->withInput();
+
             }
+
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Almacenar //
 
         } else {
 

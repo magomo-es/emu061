@@ -2540,6 +2540,34 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
@@ -2614,7 +2642,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     // - - - - - - - - - - - - - - - - - - - - - AFECTAT: confirmDeleteAfectat =>
     confirmDeleteAfectat: function confirmDeleteAfectat(afectat, keyindex) {
-      console.log('open modal delete x afectat id ' + (keyindex + 1));
+      console.log('open modal delete x afectat id ' + keyindex);
       this.key_tmp = keyindex;
       this.afectat = afectat;
       $('#modalAfectatDelete').modal('show');
@@ -2658,8 +2686,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         this.afectats.push(_.cloneDeep(this.afectat));
       }
 
-      $('#modalEditAfectat').modal('hide');
-      this.afectat = emptyAfectat();
+      $('#modalEditAfectat').modal('hide'); //this.afectat = new emptyAfectat()
+    },
+    // - - - - - - - - - - - - - - - - - - - - - SELECT DESTI: onChangeDesti =>
+    onChangeDesti: function onChangeDesti(ev) {
+      if (ev.currentTarget.selectedIndex > 0) {
+        console.log('onChangeDesti selected index > 0 (' + ev.currentTarget.selectedIndex + ')');
+        this.afectat.desti = ev.currentTarget.options[ev.currentTarget.selectedIndex].innerHTML;
+      } else {
+        console.log('onChangeDesti selected index <= 0 (' + ev.currentTarget.selectedIndex + ')');
+        this.afectat.desti = '';
+      }
     },
     // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: checkboxSimptomes =>
     checkboxSimptomes: function checkboxSimptomes(ev) {
@@ -40846,7 +40883,7 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(afectat.edat))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(_vm.sexes[afectat.sexe]))]),
+            _c("td", [_vm._v(_vm._s(_vm.sexes[afectat.sexes_id]))]),
             _vm._v(" "),
             _c("td", { staticClass: "text-right" }, [
               _c("input", {
@@ -40854,7 +40891,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][id]",
                   name: "afectat[" + index + "][id]"
-                }
+                },
+                domProps: { value: afectat.id }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40862,7 +40900,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][nom]",
                   name: "afectat[" + index + "][nom]"
-                }
+                },
+                domProps: { value: afectat.nom }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40870,7 +40909,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][cognoms]",
                   name: "afectat[" + index + "][cognoms]"
-                }
+                },
+                domProps: { value: afectat.cognoms }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40878,7 +40918,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][cip]",
                   name: "afectat[" + index + "][cip]"
-                }
+                },
+                domProps: { value: afectat.cip }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40886,7 +40927,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][telefon]",
                   name: "afectat[" + index + "][telefon]"
-                }
+                },
+                domProps: { value: afectat.telefon }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40894,15 +40936,17 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][edat]",
                   name: "afectat[" + index + "][edat]"
-                }
+                },
+                domProps: { value: afectat.edat }
               }),
               _vm._v(" "),
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "afectat[" + index + "][sexe]",
-                  name: "afectat[" + index + "][sexe]"
-                }
+                  id: "afectat[" + index + "][sexes_id]",
+                  name: "afectat[" + index + "][sexes_id]"
+                },
+                domProps: { value: afectat.sexes_id }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40910,7 +40954,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][descripcio]",
                   name: "afectat[" + index + "][descripcio]"
-                }
+                },
+                domProps: { value: afectat.descripcio }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40918,7 +40963,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][recursos_id]",
                   name: "afectat[" + index + "][recursos_id]"
-                }
+                },
+                domProps: { value: afectat.recursos_id }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40926,7 +40972,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][codi_gravetat]",
                   name: "afectat[" + index + "][codi_gravetat]"
-                }
+                },
+                domProps: { value: afectat.codi_gravetat }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40934,15 +40981,17 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][codi_valoracio]",
                   name: "afectat[" + index + "][codi_valoracio]"
-                }
+                },
+                domProps: { value: afectat.codi_valoracio }
               }),
               _vm._v(" "),
               _c("input", {
                 attrs: {
                   type: "hidden",
-                  id: "afectat[" + index + "][recursos_id]",
-                  name: "afectat[" + index + "][recursos_id]"
-                }
+                  id: "afectat[" + index + "][tipus_recursos_id]",
+                  name: "afectat[" + index + "][tipus_recursos_id]"
+                },
+                domProps: { value: afectat.tipus_recursos_id }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40950,7 +40999,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][prioritat]",
                   name: "afectat[" + index + "][prioritat]"
-                }
+                },
+                domProps: { value: afectat.prioritat }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40958,7 +41008,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][desti]",
                   name: "afectat[" + index + "][desti]"
-                }
+                },
+                domProps: { value: afectat.desti }
               }),
               _vm._v(" "),
               _c("input", {
@@ -40966,7 +41017,8 @@ var render = function() {
                   type: "hidden",
                   id: "afectat[" + index + "][desti_alertant_id]",
                   name: "afectat[" + index + "][desti_alertant_id]"
-                }
+                },
+                domProps: { value: afectat.desti_alertant_id }
               }),
               _vm._v(" "),
               _c(
@@ -41154,9 +41206,41 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "col-4" }, [
                     _c("div", { staticClass: "row px-1" }, [
                       _vm._m(11),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.telefon,
+                            expression: "afectat.telefon"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { type: "number", id: "afectat_telefon" },
+                        domProps: { value: _vm.afectat.telefon },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.afectat,
+                              "telefon",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(12),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41184,7 +41268,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-2" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(12),
+                      _vm._m(13),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -41196,7 +41280,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { type: "text", id: "afectat_edat" },
+                        attrs: { type: "number", id: "afectat_edat" },
                         domProps: { value: _vm.afectat.edat },
                         on: {
                           input: function($event) {
@@ -41212,7 +41296,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-2" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(13),
+                      _vm._m(14),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41257,11 +41341,13 @@ var render = function() {
                         0
                       )
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-5" }, [
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(14),
+                      _vm._m(15),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41306,13 +41392,11 @@ var render = function() {
                         0
                       )
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(15),
+                      _vm._m(16),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41363,11 +41447,41 @@ var render = function() {
                         0
                       )
                     ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "row px-1" }, [
+                      _vm._m(17),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.afectat.desti,
+                            expression: "afectat.desti"
+                          }
+                        ],
+                        staticClass: "col-12 form-control",
+                        attrs: { type: "text", id: "afectat_desti" },
+                        domProps: { value: _vm.afectat.desti },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.afectat, "desti", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(16),
+                      _vm._m(18),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -41383,33 +41497,44 @@ var render = function() {
                           staticClass: "col-12 custom-select",
                           attrs: { id: "afectat_destialertantid" },
                           on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.afectat,
-                                "desti_alertant_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.afectat,
+                                  "desti_alertant_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                              function($event) {
+                                return _vm.onChangeDesti($event)
+                              }
+                            ]
                           }
                         },
-                        _vm._l(_vm.destins, function(item) {
-                          return _c(
-                            "option",
-                            { key: item.id, domProps: { value: item.codi } },
-                            [_vm._v(_vm._s(item.nom))]
-                          )
-                        }),
-                        0
+                        [
+                          _c("option", { attrs: { value: "0" } }, [
+                            _vm._v("Seleccioneu destí")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.destins, function(item) {
+                            return _c(
+                              "option",
+                              { key: item.id, domProps: { value: item.id } },
+                              [_vm._v(_vm._s(item.nom))]
+                            )
+                          })
+                        ],
+                        2
                       )
                     ])
                   ])
@@ -41425,7 +41550,7 @@ var render = function() {
                   [
                     _c("div", { staticClass: "col-12" }, [
                       _c("div", { staticClass: "row px-1 mb-3" }, [
-                        _vm._m(17),
+                        _vm._m(19),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -41671,7 +41796,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group row" }, [
                   _c("div", { staticClass: "col-12" }, [
                     _c("div", { staticClass: "row px-1" }, [
-                      _vm._m(18),
+                      _vm._m(20),
                       _vm._v(" "),
                       _c("textarea", {
                         directives: [
@@ -41746,7 +41871,7 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(19),
+              _vm._m(21),
               _vm._v(" "),
               _c(
                 "div",
@@ -41771,7 +41896,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { attrs: { id: "timeBox" } }, [_vm._v("00:00")]),
                   _vm._v(" "),
-                  _vm._m(20)
+                  _vm._m(22)
                 ]
               ),
               _vm._v(" "),
@@ -41939,6 +42064,19 @@ var staticRenderFns = [
       "label",
       {
         staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_telefon" }
+      },
+      [_c("small", [_vm._v("Telefon")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
         attrs: { for: "afectat_cip" }
       },
       [_c("small", [_vm._v("CIP")])]
@@ -41994,6 +42132,19 @@ var staticRenderFns = [
         attrs: { for: "afectat_recursosid" }
       },
       [_c("small", [_vm._v("Recurs")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col-12 col-form-label pl-1",
+        attrs: { for: "afectat_desti" }
+      },
+      [_c("small", [_vm._v("Destí")])]
     )
   },
   function() {

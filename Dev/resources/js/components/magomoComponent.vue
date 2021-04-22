@@ -24,25 +24,25 @@
                 <td>{{ afectat.cip }}</td>
                 <td>{{ afectat.telefon }}</td>
                 <td>{{ afectat.edat }}</td>
-                <td>{{ sexes[afectat.sexe] }}</td>
+                <td>{{ sexes[afectat.sexes_id] }}</td>
                 <td class="text-right">
 
-                    <input type="hidden" v-bind:id="'afectat['+index+'][id]'" v-bind:name="'afectat['+index+'][id]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][nom]'" v-bind:name="'afectat['+index+'][nom]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][cognoms]'" v-bind:name="'afectat['+index+'][cognoms]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][cip]'" v-bind:name="'afectat['+index+'][cip]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][telefon]'" v-bind:name="'afectat['+index+'][telefon]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][edat]'" v-bind:name="'afectat['+index+'][edat]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][sexe]'" v-bind:name="'afectat['+index+'][sexe]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][descripcio]'" v-bind:name="'afectat['+index+'][descripcio]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][recursos_id]'" v-bind:name="'afectat['+index+'][recursos_id]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][codi_gravetat]'" v-bind:name="'afectat['+index+'][codi_gravetat]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][codi_valoracio]'" v-bind:name="'afectat['+index+'][codi_valoracio]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][id]'" v-bind:name="'afectat['+index+'][id]'" v-bind:value="afectat.id" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][nom]'" v-bind:name="'afectat['+index+'][nom]'" v-bind:value="afectat.nom" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][cognoms]'" v-bind:name="'afectat['+index+'][cognoms]'" v-bind:value="afectat.cognoms" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][cip]'" v-bind:name="'afectat['+index+'][cip]'" v-bind:value="afectat.cip" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][telefon]'" v-bind:name="'afectat['+index+'][telefon]'" v-bind:value="afectat.telefon" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][edat]'" v-bind:name="'afectat['+index+'][edat]'" v-bind:value="afectat.edat" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][sexes_id]'" v-bind:name="'afectat['+index+'][sexes_id]'" v-bind:value="afectat.sexes_id" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][descripcio]'" v-bind:name="'afectat['+index+'][descripcio]'" v-bind:value="afectat.descripcio" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][recursos_id]'" v-bind:name="'afectat['+index+'][recursos_id]'" v-bind:value="afectat.recursos_id" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][codi_gravetat]'" v-bind:name="'afectat['+index+'][codi_gravetat]'" v-bind:value="afectat.codi_gravetat" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][codi_valoracio]'" v-bind:name="'afectat['+index+'][codi_valoracio]'" v-bind:value="afectat.codi_valoracio" />
 
-                    <input type="hidden" v-bind:id="'afectat['+index+'][recursos_id]'" v-bind:name="'afectat['+index+'][recursos_id]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][prioritat]'" v-bind:name="'afectat['+index+'][prioritat]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][desti]'" v-bind:name="'afectat['+index+'][desti]'" />
-                    <input type="hidden" v-bind:id="'afectat['+index+'][desti_alertant_id]'" v-bind:name="'afectat['+index+'][desti_alertant_id]'" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][tipus_recursos_id]'" v-bind:name="'afectat['+index+'][tipus_recursos_id]'" v-bind:value="afectat.tipus_recursos_id" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][prioritat]'" v-bind:name="'afectat['+index+'][prioritat]'" v-bind:value="afectat.prioritat" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][desti]'" v-bind:name="'afectat['+index+'][desti]'" v-bind:value="afectat.desti" />
+                    <input type="hidden" v-bind:id="'afectat['+index+'][desti_alertant_id]'" v-bind:name="'afectat['+index+'][desti_alertant_id]'" v-bind:value="afectat.desti_alertant_id" />
 
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-warning btn-sm" @click="openEditAfectat(afectat, index)">
@@ -93,6 +93,7 @@
                 <div class="modal-body px-5">
 
                     <div class="form-group row">
+
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_nom" class="col-12 col-form-label pl-1"><small>Nom</small></label>
@@ -105,10 +106,18 @@
                                 <input type="text" class="col-12 form-control" id="afectat_cognoms" v-model="afectat.cognoms">
                             </div>
                         </div>
+
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-3">
+
+                        <div class="col-4">
+                            <div class="row px-1">
+                                <label for="afectat_telefon" class="col-12 col-form-label pl-1"><small>Telefon</small></label>
+                                <input type="number" class="col-12 form-control" id="afectat_telefon" v-model="afectat.telefon">
+                            </div>
+                        </div>
+                        <div class="col-4">
                             <div class="row px-1">
                                 <label for="afectat_cip" class="col-12 col-form-label pl-1"><small>CIP</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip">
@@ -117,7 +126,7 @@
                         <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_edat" class="col-12 col-form-label pl-1"><small>Edat</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat">
+                                <input type="number" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat">
                             </div>
                         </div>
                         <div class="col-2">
@@ -129,7 +138,11 @@
                             </div>
                         </div>
 
-                        <div class="col-5">
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_codigravetat" class="col-12 col-form-label pl-1"><small>Codi Gravetat</small></label>
                                 <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat">
@@ -138,9 +151,6 @@
                             </div>
                         </div>
 
-                    </div>
-
-                    <div class="form-group row">
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_recursosid" class="col-12 col-form-label pl-1"><small>Recurs</small></label>
@@ -149,17 +159,32 @@
                                 </select>
                             </div>
                         </div>
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-6">
+                            <div class="row px-1">
+                                <label for="afectat_desti" class="col-12 col-form-label pl-1"><small>Destí</small></label>
+                                <input type="text" class="col-12 form-control" id="afectat_desti" v-model="afectat.desti">
+                            </div>
+                        </div>
+
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_destialertantid" class="col-12 col-form-label pl-1"><small>Destins</small></label>
-                                <select class="col-12 custom-select" id="afectat_destialertantid" v-model="afectat.desti_alertant_id">
-                                    <option v-for="(item) in destins" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
+                                <select class="col-12 custom-select" id="afectat_destialertantid" @change="onChangeDesti($event)" v-model="afectat.desti_alertant_id">
+                                    <option value="0">Seleccioneu destí</option>
+                                    <option v-for="(item) in destins" v-bind:key="item.id" v-bind:value="item.id">{{ item.nom }}</option>
                                 </select>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="form-group row" id="boxValoracio" v-bind:class="{ 'valoracio-box': displayHelp }">
+
                         <div class="col-12">
                             <div class="row px-1 mb-3">
                                 <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1"><small>Codi Valoracio</small></label>
@@ -191,15 +216,18 @@
                             </div>
                         </div>
                         <button type="button" class="btn btn-secondary" @click="closeBoxValoracio()" v-show="(displayHelp)" style="position: absolute; bottom: 30px; right: 30px;">Tarcar</button>
+
                     </div>
 
                     <div class="form-group row">
+
                         <div class="col-12">
                             <div class="row px-1">
                                 <label for="afectat_descripcio" class="col-12 col-form-label pl-1"><small>Descripcio</small></label>
                                 <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
@@ -356,7 +384,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             // - - - - - - - - - - - - - - - - - - - - - AFECTAT: confirmDeleteAfectat =>
             confirmDeleteAfectat( afectat, keyindex ) {
 
-                console.log( 'open modal delete x afectat id ' + (keyindex+1) )
+                console.log( 'open modal delete x afectat id ' + keyindex )
                 this.key_tmp = keyindex
                 this.afectat = afectat
                 $('#modalAfectatDelete').modal('show')
@@ -417,7 +445,23 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 $('#modalEditAfectat').modal('hide')
 
-                this.afectat = emptyAfectat()
+                //this.afectat = new emptyAfectat()
+
+            },
+            // - - - - - - - - - - - - - - - - - - - - - SELECT DESTI: onChangeDesti =>
+            onChangeDesti( ev ) {
+
+                if ( ev.currentTarget.selectedIndex > 0) {
+
+                    console.log( 'onChangeDesti selected index > 0 (' + ev.currentTarget.selectedIndex +')')
+                    this.afectat.desti = ev.currentTarget.options[ev.currentTarget.selectedIndex].innerHTML
+
+                } else {
+
+                    console.log( 'onChangeDesti selected index <= 0 (' + ev.currentTarget.selectedIndex +')')
+                    this.afectat.desti = ''
+
+                }
 
             },
             // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: checkboxSimptomes =>

@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Nou Incidencia | CEP')
+@section('pageTitle', 'Nova Incidencia | CEP')
 
 @section('pageContent')
 
@@ -8,7 +8,7 @@
 
 <div class="card">
 
-    <div class="card-header">Nou Incidencia</div>
+    <div class="card-header">Nova Incidencia</div>
 
     <div class="card-body">
 
@@ -105,7 +105,7 @@
 
                         <div class="col">
                             <div class="row">
-                                <label for="descripcio" class="col-12 col-form-label pr-1"><small>Descripcio</small></label>
+                                <label for="descripcio" class="col-12 col-form-label pr-1"><small>Descripció</small></label>
                                 <div class="col-12">
                                     <textarea rows="4" class="form-control" id="descripcio" name="descripcio">{{ old('descripcio') }}</textarea>
                                 </div>

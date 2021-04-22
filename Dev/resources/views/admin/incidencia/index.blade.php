@@ -1,6 +1,6 @@
 @extends('_layouts.admin')
 
-@section('pageTitle', 'Incidencies list | Administració emu061 - Emulador de Sistema d\'Emergències 061')
+@section('pageTitle', 'Incidències list | Administració emu061 - Emulador de Sistema d\'Emergències 061')
 
 @section('pageContent')
 
@@ -79,14 +79,14 @@
 
 <div class="card">
 
-    <div class="card-header bg-white">Incidencies</div>
+    <div class="card-header bg-white">Incidències</div>
 
     <div class="card-body">
 
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col"># Incidente</th>
+                <th scope="col"># Incidencia</th>
                 <th scope="col">Data/Hora</th>
                 <th scope="col">Adreça</th>
                 <th scope="col">Tipus</th>
