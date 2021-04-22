@@ -86,6 +86,8 @@
             <input class="btn btn-primary" type="submit" value="Confirmar Incidencia">
 
             <input class="btn btn-secondary" type="submit" value="Cancel·lar">
+
+            <btn-format-component></btn-format-component>
         </div>
 
     </form>

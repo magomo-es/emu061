@@ -24,6 +24,8 @@ Vue.component('incidencies-component', require('./components/incidenciesComponen
 Vue.component('tabla-afectados-component', require('./components/tablaAfectadosComponent.vue').default);
 Vue.component('alertant-component', require('./components/alertantComponent.vue').default);
 Vue.component('mobil-component', require('./components/mobilComponent.vue').default);
+Vue.component('btn-format-component', require('./components/btnFormatComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
