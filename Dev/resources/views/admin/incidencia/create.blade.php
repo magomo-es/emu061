@@ -25,7 +25,7 @@
                             <div class="row">
                                 <label for="numincident" class="col-12 col-form-label"><small>Id Incidencia</small></label>
                                 <div class="col-12">
-                                    <input type="text" class="form-control" id="numincident" name="numincident" value="{{ old('numincident') }}">
+                                    <input type="text" class="form-control" id="numincident" name="numincident" value="{{ (old('numincident'))?old('numincident'):rand(10000,10000000) }}" required>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             <div class="row">
                                 <label for="telefonalertant" class="col-12 col-form-label"><small>Telefon</small></label>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ old('telefonalertant') }}">
+                                    <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ old('telefonalertant') }}" pattern="[0-9]{9}" minlength="9" maxlength="9">
                                 </div>
                                 <div class="col-4">
                                     <button id="addAlertant" type="button" class="btn btn-primary w-100 px-3" data-toggle="modal" data-target="#modalAlertant">Alertant</button>
@@ -70,7 +70,7 @@
 
                         <label for="adreca" class="col-12 col-form-label"><small>Adreça</small></label>
                         <div class="col-12">
-                            <input type="text" class="form-control" id="adreca" name="adreca" value="{{ old('adreca') }}">
+                            <input type="text" class="form-control" id="adreca" name="adreca" value="{{ old('adreca') }}" required>
                         </div>
 
                     </div>
@@ -107,7 +107,7 @@
                             <div class="row">
                                 <label for="descripcio" class="col-12 col-form-label pr-1"><small>Descripció</small></label>
                                 <div class="col-12">
-                                    <textarea rows="4" class="form-control" id="descripcio" name="descripcio">{{ old('descripcio') }}</textarea>
+                                    <textarea rows="4" class="form-control" id="descripcio" name="descripcio" required>{{ old('descripcio') }}</textarea>
                                 </div>
                             </div>
                         </div>

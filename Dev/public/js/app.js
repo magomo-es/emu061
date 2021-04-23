@@ -2716,7 +2716,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       appurl: '',
       simptomesSelected: new Map(),
       videoIndex: 0,
-      playIndex: 0,
+      playIndex: -1,
       play_video: '',
       videoPlayingTime: 0,
       videoPositionStart: 0,
@@ -2948,9 +2948,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     openVideoValoracio: function openVideoValoracio() {
       console.log('openVideoValoracio ' + this.valoracionCodi);
       this.playIndex = this.findPlayIndexByCodiValoracio(this.valoracionCodi);
-      this.videoIndex = this.findVideoIndexByPlayIndex(this.vdsplay[this.playIndex].id_video);
 
-      if (this.videoIndex >= 0) {
+      if (this.playIndex >= 0) {
         //function videoValoracioInit() { console.log( 'videoValoracioPlayingmy ->' ); }
         var videoValoracioPlayingmy = function videoValoracioPlayingmy(me) {
           var videoValoracio = document.getElementById('videoValoracio'); // pausa si fin
@@ -2968,6 +2967,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           console.log('videoValoracioPlayingmy -> calctmp: ' + calctmp + ' / parseInt(calctmp/60): ' + parseInt(calctmp / 60) + ' / parseInt(calctmp%60): ' + parseInt(calctmp % 60));
         };
 
+        this.videoIndex = this.findVideoIndexByPlayIndex(this.vdsplay[this.playIndex].id_video);
         console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoIndex].filename);
         this.play_video = this.appurl + '/' + encodeURI(this.vdsvideos[this.videoIndex].filename);
         console.log('start script ->');
