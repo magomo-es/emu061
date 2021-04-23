@@ -33,7 +33,7 @@
 
                 <div class="col">
                     <label for="munics"><small>Municipi:</small></label>
-                    <select class="form-control form-control-sm" id="munics" v-model="munics">
+                    <select class="form-control form-control-sm select-form " id="munics" v-model="munics">
                         <option v-for="munic in munics" :key='munic' v-bind:value="munic.id">{{ munic.nom }}</option>
                     </select>
                 </div>
@@ -41,14 +41,14 @@
 
                 <div class="col">
                     <label for="comarcas"><small>Comarca:</small></label>
-                    <select class="form-control form-control-sm" name="comarcas" id="comarcas" v-model="comarcas">
+                    <select class="form-control form-control-sm select-form " name="comarcas" id="comarcas" v-model="comarcas">
                         <option v-for="comarca in comarcas" :key='comarca'>{{ comarca }}</option>
                     </select>
                 </div>
 
                 <div class="col">
                     <label for="provincia"><small>Provincia:</small></label>
-                    <select class="form-control form-control-sm" name="provincia" id="provincia"
+                    <select class="form-control form-control-sm select-form " name="provincia" id="provincia"
                         v-model="provincia">
                         <option v-for="prov in provincia" :key='prov'>{{ prov }}</option>
                     </select>

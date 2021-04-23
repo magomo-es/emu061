@@ -6,7 +6,7 @@
                 <div class="row g-3 align-items-center">
 
                     <div class="col-auto">
-                        <label for="tel_alertante" class="col-form-label">Telèfon:</label>
+                        <label for="tel_alertante" class="col-form-label"><small>Telèfon:</small></label>
                     </div>
 
                     <div class="col-auto">
@@ -16,7 +16,7 @@
                     <div class="col-auto cont-vip">
                         <a href="" data-toggle="modal" data-target="#exampleModal2">
                             <div class="circle"></div>
-                            <span>VIP</span>
+                            <span><small>VIP</small></span>
                         </a>
                     </div>
 
