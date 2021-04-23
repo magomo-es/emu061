@@ -314,7 +314,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                 simptomesSelected:  new Map(),
 
                 videoIndex: 0,
-                playIndex: 0,
+                playIndex: -1,
                 play_video: '',
                 videoPlayingTime: 0,
                 videoPositionStart: 0,
@@ -590,9 +590,9 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 this.playIndex = this.findPlayIndexByCodiValoracio( this.valoracionCodi )
 
-                this.videoIndex = this.findVideoIndexByPlayIndex( this.vdsplay[this.playIndex].id_video )
+                if ( this.playIndex>=0 ) {
 
-                if ( this.videoIndex>=0 ) {
+                    this.videoIndex = this.findVideoIndexByPlayIndex( this.vdsplay[this.playIndex].id_video )
 
                     console.log(' codi valoracion in playvideos ' + this.vdsvideos[this.videoIndex].filename )
                     this.play_video = this.appurl + '/'+encodeURI(this.vdsvideos[this.videoIndex].filename)
