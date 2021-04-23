@@ -23,7 +23,7 @@
                     <div class="row">
                         <label for="numincident" class="col-3 col-form-label"><small>Id Incidencia</small></label>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ $theobj->num_incident }}">
+                            <input type="text" class="form-control" id="numincident" name="numincident" value="{{ $theobj->num_incident }}" required />
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                         <div class="col-8">
                             <input type="date" class="form-control" id="data" name="data"
                             min="{{ date('Y-m-d',time()-86400) }}" max="{{ date('Y-m-d',time()+86400) }}"
-                            value="{{ $theobj->data }}">
+                            value="{{ $theobj->data }}" required />
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                     <div class="row">
                         <label for="hora" class="col-4 col-form-label"><small>Hora</small></label>
                         <div class="col-8">
-                            <input type="time" class="form-control" id="hora" name="hora" value="{{ $theobj->hora }}">
+                            <input type="time" class="form-control" id="hora" name="hora" value="{{ $theobj->hora }}" required />
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="row">
                         <label for="telefonalertant" class="col-4 col-form-label"><small>Telefon</small></label>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ $theobj->telefon_alertant }}">
+                            <input type="text" class="form-control" id="telefonalertant" name="telefonalertant" value="{{ $theobj->telefon_alertant }}" required />
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
 
                 <label for="adreca" class="col-1 col-form-label"><small>Adreça</small></label>
                 <div class="col-11">
-                    <input type="text" class="form-control" id="adreca" name="adreca" value="{{ $theobj->adreca }}">
+                    <input type="text" class="form-control" id="adreca" name="adreca" value="{{ $theobj->adreca }}" required />
                 </div>
 
             </div>
@@ -83,7 +83,7 @@
                     <div class="row">
                         <label for="municipisid" class="col-2 col-form-label"><small>Municipi</small></label>
                         <div class="col-10">
-                            <select class="custom-select" id="municipisid" name="municipisid">
+                            <select class="custom-select" id="municipisid" name="municipisid" required>
                                 @foreach ($municipisAry as $municipi)
                                 <option value="{{ $municipi->id }}" {{ (($theobj->municipis_id==$municipi->id)?'selected':'') }}>{{ $municipi->nom }}</option>
                                 @endforeach
@@ -100,7 +100,7 @@
                     <div class="row">
                         <label for="descripcio" class="col-1 col-form-label pr-1"><small>Descripcio</small></label>
                         <div class="col-11">
-                            <textarea rows="6" class="form-control" id="descripcio" name="descripcio">{{ $theobj->descripcio }}</textarea>
+                            <textarea rows="6" class="form-control" id="descripcio" name="descripcio" required>{{ $theobj->descripcio }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                     <div class="row">
                         <label for="tipusincidenciesid" class="col-3 col-form-label"><small>Tipus</small></label>
                         <div class="col-9">
-                            <select class="custom-select" id="tipusincidenciesid" name="tipusincidenciesid">
+                            <select class="custom-select" id="tipusincidenciesid" name="tipusincidenciesid" required>
                                 @foreach ($tipusAry as $tipus)
                                 <option value="{{ $tipus->id }}" {{ (($theobj->tipus_incidencies_id==$tipus->id)?'selected':'') }}>{{ $tipus->tipus }}</option>
                                 @endforeach
@@ -148,7 +148,7 @@
                     <div class="row">
                         <label for="usuarisid" class="col-3 col-form-label"><small>Usuari</small></label>
                         <div class="col-9">
-                            <select class="custom-select" id="usuarisid" name="usuarisid">
+                            <select class="custom-select" id="usuarisid" name="usuarisid" required>
                                 @foreach ($usuarisAry as $usuari)
                                 <option value="{{ $usuari->id }}" {{ (($theobj->usuaris_id==$usuari->id)?'selected':'') }}>{{ $usuari->nom }}</option>
                                 @endforeach

@@ -317,7 +317,7 @@ class UsuariController extends Controller
 
         $request->session()->flash('error', 'Agraïm la seva elecció ... Fins ara !');
 
-        return redirect('/');
+        return redirect('login');
 
     }
 

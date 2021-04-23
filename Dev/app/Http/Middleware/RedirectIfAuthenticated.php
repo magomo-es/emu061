@@ -26,7 +26,20 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
 
                 //echo '<script>console.log("RedirectIfAuthenticated.php -> handle -> redirect")</script>';
-                //return redirect(RouteServiceProvider::HOME);
+
+                switch(Auth::user()->rols_id) {
+                    case 1: // Admin
+                        return redirect(RouteServiceProvider::ADMIN);
+                        break;
+                    case 2: // CECOS
+                        return redirect(RouteServiceProvider::CECOS);
+                        break;
+                    case 3: // Recurs
+                        return redirect(RouteServiceProvider::RECURS);
+                        break;
+                    default: // to login
+                        return redirect(RouteServiceProvider::LOGIN);
+                }
 
             }
         }

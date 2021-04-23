@@ -145,7 +145,7 @@ class IncidenciaController extends Controller
 
             // - - - - - - - - - - - - - - - - - - - - - alertants
             $objAlertant = new Alertant;
-            // $objAlertant.id = $request->alertantid;
+            $objAlertant->id = $request->alertantid = 0;
             $objAlertant->telefon = $request->telefonalertant;
             $objAlertant->nom = $request->alertant_nom;
             $objAlertant->cognoms = $request->alertant_cognoms;
@@ -155,11 +155,11 @@ class IncidenciaController extends Controller
 
             try {
 
-                $objAlertant->save();
+                if ( !empty($objAlertant->nom) && !empty($objAlertant->cognoms) ) { $objAlertant->save(); }
 
                 // - - - - - - - - - - - - - - - - - - - - - incidencies
                 $objIncidencia = new Incidencia;
-                // $objIncidencia.id = $request->incidenciaid
+                $objIncidencia->id = $request->incidenciaid = 0;
                 $objIncidencia->num_incident = $request->numincident;
                 $objIncidencia->data = $request->data;
                 $objIncidencia->hora = $request->hora;
@@ -177,46 +177,54 @@ class IncidenciaController extends Controller
 
                     $objIncidencia->save();
 
-                    for ( $i=0; $i< count($request->afectat); $i++ ) {
+                    if (!empty($request->afectat)) {
 
-                        // - - - - - - - - - - - - - - - - - - - - - afectats
-                        $objAfectat = new Afectat;
-                        // $objAfectat->id = $request->afectat[$i]['id'];
-                        $objAfectat->telefon = $request->afectat[$i]['telefon'];
-                        $objAfectat->cip = $request->afectat[$i]['cip'];
-                        $objAfectat->nom = $request->afectat[$i]['nom'];
-                        $objAfectat->cognoms = $request->afectat[$i]['cognoms'];
-                        $objAfectat->edat = $request->afectat[$i]['edat'];
-                        // $objAfectat->te_cip = $request->afectat[$i]['te_cip'];
-                        $objAfectat->sexes_id = $request->afectat[$i]['sexes_id'];
-                        $objAfectat->descripcio = $request->afectat[$i]['descripcio'];
-                        // $objAfectat->tipus_recursos_id = $request->afectat[$i]['tipus_rrecursos_id'];
-                        $objAfectat->codi_gravetat = $request->afectat[$i]['codi_gravetat'];
-                        $objAfectat->codi_valoracio = $request->afectat[$i]['codi_valoracio'];
+                        for ( $i=0; $i< count($request->afectat); $i++ ) {
 
-                        try {
-
-                            $objAfectat->save();
-
-                            // - - - - - - - - - - - - - - - - - - - - - incidencies_has_recursos
-                            $objHasRecursos = new IncidenciesHasRecursos;
-                            $objHasRecursos->incidencies_id = $objIncidencia->id;
-                            $objHasRecursos->recursos_id = $request->afectat[$i]['recursos_id'];
-                            $objHasRecursos->afectats_id = $objAfectat->id;
-                            $objHasRecursos->hora_activacio = '0';
-                            $objHasRecursos->hora_mobilitzacio = '0';
-                            $objHasRecursos->hora_assistencia = '0';
-                            $objHasRecursos->hora_transport = '0';
-                            $objHasRecursos->hora_arribada_hospital = '0';
-                            $objHasRecursos->hora_transferencia = '0';
-                            $objHasRecursos->hora_finalitzacio = '0';
-                            $objHasRecursos->prioritat = $request->afectat[$i]['prioritat'];
-                            $objHasRecursos->desti = $request->afectat[$i]['desti'];
-                            $objHasRecursos->desti_alertant_id = $request->afectat[$i]['desti_alertant_id'];
+                            // - - - - - - - - - - - - - - - - - - - - - afectats
+                            $objAfectat = new Afectat;
+                            $objAfectat->id = $request->afectat[$i]['id'] = 0;
+                            $objAfectat->telefon = $request->afectat[$i]['telefon'];
+                            $objAfectat->cip = $request->afectat[$i]['cip'];
+                            $objAfectat->nom = $request->afectat[$i]['nom'];
+                            $objAfectat->cognoms = $request->afectat[$i]['cognoms'];
+                            $objAfectat->edat = $request->afectat[$i]['edat'];
+                            // $objAfectat->te_cip = $request->afectat[$i]['te_cip'];
+                            $objAfectat->sexes_id = $request->afectat[$i]['sexes_id'];
+                            $objAfectat->descripcio = $request->afectat[$i]['descripcio'];
+                            // $objAfectat->tipus_recursos_id = $request->afectat[$i]['tipus_rrecursos_id'];
+                            $objAfectat->codi_gravetat = $request->afectat[$i]['codi_gravetat'];
+                            $objAfectat->codi_valoracio = $request->afectat[$i]['codi_valoracio'];
 
                             try {
 
-                                $objHasRecursos->save();
+                                $objAfectat->save();
+
+                                // - - - - - - - - - - - - - - - - - - - - - incidencies_has_recursos
+                                $objHasRecursos = new IncidenciesHasRecursos;
+                                $objHasRecursos->incidencies_id = $objIncidencia->id;
+                                $objHasRecursos->recursos_id = $request->afectat[$i]['recursos_id'];
+                                $objHasRecursos->afectats_id = $objAfectat->id;
+                                $objHasRecursos->hora_activacio = '0';
+                                $objHasRecursos->hora_mobilitzacio = '0';
+                                $objHasRecursos->hora_assistencia = '0';
+                                $objHasRecursos->hora_transport = '0';
+                                $objHasRecursos->hora_arribada_hospital = '0';
+                                $objHasRecursos->hora_transferencia = '0';
+                                $objHasRecursos->hora_finalitzacio = '0';
+                                $objHasRecursos->prioritat = $request->afectat[$i]['prioritat'];
+                                $objHasRecursos->desti = $request->afectat[$i]['desti'];
+                                $objHasRecursos->desti_alertant_id = $request->afectat[$i]['desti_alertant_id'];
+
+                                try {
+
+                                    $objHasRecursos->save();
+
+                                } catch( QueryException $ex ) {
+
+                                    $saveError = true;
+
+                                }
 
                             } catch( QueryException $ex ) {
 
@@ -224,12 +232,7 @@ class IncidenciaController extends Controller
 
                             }
 
-                        } catch( QueryException $ex ) {
-
-                            $saveError = true;
-
                         }
-
                     }
 
                 } catch( QueryException $ex ) {

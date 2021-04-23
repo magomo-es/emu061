@@ -91,7 +91,7 @@
                             <select class="custom-select" id="xrecursosid" name="xrecursosid">
                                 <option value="">Sin recurso</option>
                                 @foreach ($recursosAry as $recurs)
-                                <option value="{{ $recurs->id }}" {{ ((old('xrecursosid')==$recurs->id)?'selected':'') }}>{{ $recurs->nom }}</option>
+                                <option value="{{ $recurs->id }}" {{ ((old('xrecursosid')==$recurs->id)?'selected':'') }}>{{ $recurs->codi }}</option>
                                 @endforeach
                             </select>
                         </div>
