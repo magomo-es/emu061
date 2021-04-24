@@ -140,7 +140,7 @@
 
 
 <a href="{{ action([App\Http\Controllers\IncidenciaController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
-    <i class="fas fa-plus"></i> Nou Incidencia</button>
+    <i class="fas fa-plus"></i> Nova Incidencia</button>
 </a>
 
 

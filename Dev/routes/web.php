@@ -32,7 +32,31 @@ Route::get('/login', [UsuariController::class, 'showLogin'])->name('login');
 Route::post('/login', [UsuariController::class, 'login'] );
 Route::get('/logout', [UsuariController::class, 'logout'])->name('logout');
 
-Route::get('/', function () { return redirect()->route('login'); });
+Route::get('/', function () {
+
+    if (Auth::check()) {
+
+        //echo '<script>console.log("RedirectIfAuthenticated.php -> handle -> redirect")</script>';
+
+        switch(Auth::user()->rols_id) {
+            case 1: // Admin
+                return redirect()->route('admin');
+                break;
+            case 2: // CECOS
+                return redirect()->route('operator');
+                break;
+            case 3: // Recurs
+                return redirect()->route('mobile');
+                break;
+            default: // to login
+                return redirect()->route('login');
+        }
+
+    }
+
+
+
+});
 
 //Route::middleware(['auth'])->group( function() {
 Route::group(['middleware' => ['web']], function () {
@@ -76,10 +100,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('admin/help/formelements', HlpFormElementsController::class)->parameters(['formelements' => 'theobj']);
 
 
-    Route::get('operator', function () { return view('operator.index'); });
+    Route::get('operator', function () { return view('operator.index'); })->name('operator');
 
 
-    Route::get('mobile', function () { return view('mobile.index'); });
+    Route::get('mobile', function () { return view('mobile.index'); })->name('mobile');
 
 
 });

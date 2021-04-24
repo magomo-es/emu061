@@ -2706,6 +2706,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['pafectats', 'psexes', 'ptipusrecursos', 'pcodisgravetat', 'pcodisvaloracions', 'pvdsvideos', 'pvdsevents', 'pvdsplay', 'phlpvaloracions', 'phlpsimptomes'],
   data: function data() {
@@ -2722,6 +2723,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       videoPositionStart: 0,
       videoPositionEnd: 0,
       videoPlayEvents: false,
+      default_codirecurso: '',
+      default_codigravetat: '',
+      default_codivaloracio: '',
       afectat: {
         id: 0,
         telefon: 0,
@@ -2767,12 +2771,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         cognoms: '',
         edat: '',
         te_cip: 0,
-        sexes_id: 0,
+        sexes_id: 1,
         descripcio: '',
-        tipus_recursos_id: 0,
-        codi_gravetat: '',
-        codi_valoracio: '',
-        recursos_id: 0,
+        tipus_recursos_id: '',
+        codi_gravetat: this.default_codigravetat,
+        codi_valoracio: 0,
+        recursos_id: this.default_codirecurso,
         prioritat: 0,
         desti: '',
         desti_alertant_id: 0
@@ -2883,7 +2887,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 key = _step$value[0],
                 value = _step$value[1];
 
-            if (!(key in selectobj.options[i].dataset)) {
+            if (!(key in selectobj.options[i].dataset) && selectobj.options[i].value != 0) {
               showThis = false;
             }
           }
@@ -2901,6 +2905,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
         showThis = true;
       }
+
+      console.log('showablesValoracio -> selected value = ' + selectobj.selectedIndex);
+      selectobj.selectedIndex = 0;
     },
     // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: openBoxValoracio =>
     openBoxValoracio: function openBoxValoracio() {
@@ -2914,7 +2921,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     onChangeValoracio: function onChangeValoracio(ev) {
       this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value;
     },
-    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: addValoracioDataset =>
     addValoracioDataset: function addValoracioDataset() {
       var optionobj;
 
@@ -2929,7 +2936,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }
       }
     },
-    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+    // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: addValoracioSimptomes =>
     addValoracioSimptomes: function addValoracioSimptomes() {
       var optionobj;
 
@@ -3105,6 +3112,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.byid_hlpsimtomes = this.generateArrayById(this.hlpsimtomes);
     this.hlpvaloraciohassimptomes = JSON.parse(apptag.dataset.phlpvaloraciohassimptomes);
     this.appurl = apptag.dataset.pappurl;
+
+    if (this.recursos.length > 0) {
+      this.default_codirecurso = this.recursos[0].id;
+    }
+
+    if (this.codisgravetat.length > 0) {
+      this.default_codigravetat = this.codisgravetat[0].codi;
+    }
+
+    if (this.codisvaloracions.length > 0) {
+      this.default_codivaloracio = this.codisvaloracions[0].codi;
+    }
   },
   mounted: function mounted() {
     console.log('Component mounted...');
@@ -41999,7 +42018,13 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { type: "number", id: "afectat_telefon" },
+                        attrs: {
+                          type: "text",
+                          id: "afectat_telefon",
+                          pattern: "[0-9]{9}",
+                          minlength: "9",
+                          maxlength: "9"
+                        },
                         domProps: { value: _vm.afectat.telefon },
                         on: {
                           input: function($event) {
@@ -42059,7 +42084,13 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { type: "number", id: "afectat_edat" },
+                        attrs: {
+                          type: "text",
+                          id: "afectat_edat",
+                          pattern: "[0-9]{3}",
+                          minlength: "1",
+                          maxlength: "3"
+                        },
                         domProps: { value: _vm.afectat.edat },
                         on: {
                           input: function($event) {
@@ -42140,7 +42171,10 @@ var render = function() {
                             }
                           ],
                           staticClass: "col-12 custom-select",
-                          attrs: { id: "afectat_codigravetat" },
+                          attrs: {
+                            id: "afectat_codigravetat",
+                            title: "Pick One"
+                          },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -42189,7 +42223,10 @@ var render = function() {
                             }
                           ],
                           staticClass: "col-12 custom-select",
-                          attrs: { id: "afectat_recursosid" },
+                          attrs: {
+                            id: "afectat_recursosid",
+                            title: "Pick One"
+                          },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -42370,18 +42407,24 @@ var render = function() {
                               ]
                             }
                           },
-                          _vm._l(_vm.codisvaloracions, function(item, index) {
-                            return _c(
-                              "option",
-                              {
-                                key: item.id,
-                                attrs: { id: "v_" + index + "_" + item.codi },
-                                domProps: { value: item.codi }
-                              },
-                              [_vm._v(_vm._s(item.nom))]
-                            )
-                          }),
-                          0
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Seleccioneu valoració")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.codisvaloracions, function(item, index) {
+                              return _c(
+                                "option",
+                                {
+                                  key: item.id,
+                                  attrs: { id: "v_" + index + "_" + item.codi },
+                                  domProps: { value: item.codi }
+                                },
+                                [_vm._v(_vm._s(item.nom))]
+                              )
+                            })
+                          ],
+                          2
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-2 p-0 m-0 pl-4" }, [
