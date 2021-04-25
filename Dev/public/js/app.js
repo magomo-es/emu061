@@ -3475,6 +3475,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {};
@@ -8891,7 +8902,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\n{\n    background-color: rgb(27, 220, 27);\n    border-radius: 50%;\n    width: 10px;\n    height: 10px;\n    margin-top: 14px;\n    margin-left: -25px;\n}\n.cont-vip\n{\n    width: 40px;\n    height: 37px;\n    margin-left: 20px;\n}\n.cont-vip span\n{\n    color: black;\n    float: right;\n    margin-top: -17px;\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: rgb(27, 220, 27);\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\r\n    margin-left: -25px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\r\n    margin-left: 20px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41268,7 +41279,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-2" }, [
       _c("button", { staticClass: "btn btn-dark", attrs: { type: "button" } }, [
-        _vm._v("\n                    Generar Trucada\n                ")
+        _vm._v("\r\n                    Generar Trucada\r\n                ")
       ])
     ])
   },
@@ -42743,7 +42754,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-edit" }),
-                      _vm._v(" Editar\n                        ")
+                      _vm._v(" Editar\r\n                        ")
                     ]
                   )
                 ]
@@ -42766,7 +42777,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-trash" }),
-                      _vm._v(" Esborrar\n                        ")
+                      _vm._v(" Esborrar\r\n                        ")
                     ]
                   )
                 ]
@@ -44064,11 +44075,45 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "button" } },
-            [_vm._v("HORA")]
-          )
+          _vm._m(2),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.destino,
+                      expression: "destino"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  attrs: {
+                    id: "destino",
+                    type: "text",
+                    name: "num",
+                    value: "0",
+                    disabled: ""
+                  },
+                  domProps: { value: _vm.destino },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.destino = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ])
         ]
       )
     ]
@@ -44110,6 +44155,40 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "destino" } }, [
       _c("small", [_vm._v("DESTINO:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticStyle: {
+          display: "flex",
+          "justify-content": "center",
+          "align-items": "center"
+        }
+      },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            staticStyle: { width: "500px", height: "360px" },
+            attrs: { type: "button" }
+          },
+          [_vm._v("SET")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "destino" } }, [
+      _c("small", [_vm._v("HORA:")])
     ])
   }
 ]

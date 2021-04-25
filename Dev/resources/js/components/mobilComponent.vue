@@ -29,8 +29,20 @@
                 </div>
             </div>
         </div>
-
-        <button type="button" class="btn btn-primary">HORA</button>
+        <br>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <button type="button" class="btn btn-primary" style="width: 500px; height: 360px;">SET</button>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="destino"><small>HORA:</small></label>
+                    <input class="form-control form-control-sm" id="destino" v-model="destino" type="text" name="num"
+                        value="0" disabled>
+                </div>
+            </div>
+        </div>
     </form>
 
   </div>
