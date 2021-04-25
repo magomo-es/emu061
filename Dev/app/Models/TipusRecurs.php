@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TipusRecurs extends Model
 {
@@ -25,7 +26,7 @@ class TipusRecurs extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function recursos() //: HasMany
+    public function recursos(): HasMany
     {
         return $this->hasMany(Recurs::class, 'tipus_recursos_id');
     }

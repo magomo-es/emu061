@@ -1989,7 +1989,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var me = this;
-      axios.get('/alertant').then(function (response) {
+      axios.get('http://app.emu061.es/api/alertants').then(function (response) {
         me.alertant = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -2001,8 +2001,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var me = this;
-      axios.get('/municipi').then(function (response) {
-        me.munics = response.data;
+      axios.get('http://app.emu061.es/api/municipis').then(function (response) {
+        me.municipis = response.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -2013,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var me = this;
-      axios.get('/tipus_alertants').then(function (response) {
+      axios.get('http://app.emu061.es/api/tipus_alertants').then(function (response) {
         me.tipus_alertants = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -2021,6 +2021,11 @@ __webpack_require__.r(__webpack_exports__);
         return _this3.loading = false;
       });
     }
+  },
+  created: function created() {
+    this.getAlertant();
+    this.getMunicipis();
+    this.getTipus_alertants();
   }
 });
 
@@ -4410,8 +4415,8 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // FALTA TEST
+//window.axios.default.baseURL =  'http://app.emu061.es/api';
 
-window.axios["default"].baseURL = 'http://app.emu061.es/api';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

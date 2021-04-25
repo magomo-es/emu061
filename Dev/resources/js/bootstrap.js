@@ -23,7 +23,7 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // FALTA TEST
-window.axios.default.baseURL =  'http://app.emu061.es/api';
+//window.axios.default.baseURL =  'http://app.emu061.es/api';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

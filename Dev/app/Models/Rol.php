@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Rol extends Model
 {
@@ -25,7 +26,7 @@ class Rol extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function usuaris() //: HasMany
+    public function usuaris(): HasMany
     {
         return $this->hasMany(Usuari::class, 'rols_id');
     }

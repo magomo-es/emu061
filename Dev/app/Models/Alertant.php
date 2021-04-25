@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Alertant extends Model
 {
@@ -25,7 +27,7 @@ class Alertant extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tipus_alertant() //: BelongsTo
+    public function tipus_alertant(): BelongsTo
     {
         return $this->belongsTo(TipusAlertant::class, 'tipus_alertants_id');
     }
@@ -35,7 +37,7 @@ class Alertant extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function municipi() //: BelongsTo
+    public function municipi(): BelongsTo
     {
         return $this->belongsTo(Municipi::class, 'municipis_id');
     }
@@ -45,7 +47,7 @@ class Alertant extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function incidencies() //: HasMany
+    public function incidencies(): HasMany
     {
         return $this->hasMany(Incidencia::class, 'alertants_id');
     }

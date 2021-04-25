@@ -130,7 +130,7 @@
 </style>
 
 <script>
-    export default {
+export default {
 
     data() {
         return {
@@ -139,12 +139,13 @@
             tipus_alertants: []
         }
     },
+
     methods: {
         getAlertant()
         {
             let me = this;
             axios
-                .get('/alertant')
+                .get('http://app.emu061.es/api/alertants')
                 .then(response => {
                     me.alertant = response.data;
                 })
@@ -158,9 +159,9 @@
         {
             let me = this;
             axios
-                .get('/municipi')
+                .get('http://app.emu061.es/api/municipis')
                 .then(response => {
-                    me.munics = response.data;
+                    me.municipis = response.data;
                 })
                 .catch( error => {
                     console.log(error)
@@ -172,7 +173,7 @@
         {
             let me = this;
             axios
-                .get('/tipus_alertants')
+                .get('http://app.emu061.es/api/tipus_alertants')
                 .then(response => {
                     me.tipus_alertants = response.data;
                 })
@@ -181,6 +182,17 @@
                 })
                 .finally(() => this.loading = false)
         }
+    },
+
+    created() {
+
+        this.getAlertant()
+
+        this.getMunicipis()
+
+        this.getTipus_alertants()
+
     }
-  }
+
+}
 </script>

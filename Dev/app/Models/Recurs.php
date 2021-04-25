@@ -38,9 +38,9 @@ class Recurs extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function usuaris(): HasMany
+    public function usuaris(): belongsTo
     {
-        return $this->hasMany(Usuari::class, 'recursos_id');
+        return $this->belongsTo(Usuari::class, 'recursos_id');
     }
 
     /**

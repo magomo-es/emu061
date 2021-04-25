@@ -2,10 +2,11 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 //class Usuari extends Model
 //{
@@ -28,24 +29,32 @@ class Usuari extends Authenticatable
     public $timestamps = false;
 
     /**
+     * Get the rol that owns the Usuari
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function rol()
+    public function rol(): BelongsTo
     {
-        return $this->hasOne(Rol::class, 'id', 'rols_id');
+        return $this->belongsTo(Rol::class, 'rols_id');
     }
 
     /**
+     * Get the rol that owns the Usuari
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function recurso()
+    public function recurso(): BelongsTo
     {
-        return $this->hasOne(Recurs::class, 'id', 'recursos_id');
+        return $this->belongsTo(Recurs::class, 'id', 'recursos_id');
     }
 
     /**
+     * Get the rol that owns the Usuari
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function incidencies()
+    public function incidencies(): BelongsTo
     {
-        return $this->hasMany(Incidencia::class, 'id', 'usuaris_id');
+        return $this->belongsTo(Incidencia::class, 'id', 'usuaris_id');
     }
-
 }

@@ -52,9 +52,11 @@ Route::get('/', function () {
                 return redirect()->route('login');
         }
 
+    } else {
+
+        return redirect()->route('login');
+
     }
-
-
 
 });
 

@@ -41,7 +41,12 @@ class RedirectIfAuthenticated
                         return redirect(RouteServiceProvider::LOGIN);
                 }
 
+            } else {
+
+                return redirect(RouteServiceProvider::LOGIN);
+
             }
+
         }
 
         return $next($request);

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TipusAlertant extends Model
 {
@@ -25,7 +26,7 @@ class TipusAlertant extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function alertants() //: HasMany
+    public function alertants(): HasMany
     {
         return $this->hasMany(Alertant::class, 'tipus_alertants_id');
     }
