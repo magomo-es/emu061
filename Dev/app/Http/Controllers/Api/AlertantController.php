@@ -113,4 +113,35 @@ class AlertantController extends Controller
 
 
 
+
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullalertants()
+    {
+        $objectsAry = Alertant::with('tipus_alertant','municipi','incidencies')->orderBy('nom')->get();
+        return AlertantResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function thealertant(Alertant $theobj)
+    {
+        $objectsAry = Alertant::with('tipus_alertant','municipi','incidencies')->find($theobj->id);
+        return (new AlertantResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

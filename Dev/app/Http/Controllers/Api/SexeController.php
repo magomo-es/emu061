@@ -101,4 +101,34 @@ class SexeController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullsexes()
+    {
+        $objectsAry = Sexe::with('afectats')->orderBy('sexe')->get();
+        return SexeResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function thesexe(Sexe $theobj)
+    {
+        $objectsAry = Sexe::with('afectats')->find($theobj->id);
+        return (new SexeResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

@@ -100,4 +100,32 @@ class RolController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+        // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullrols()
+    {
+        $objectsAry = Rol::with('usuaris')->orderBy('nom')->get();
+        return RolResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function therol(Rol $theobj)
+    {
+        $objectsAry = Rol::with('usuaris')->find($theobj->id);
+        return (new RolResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

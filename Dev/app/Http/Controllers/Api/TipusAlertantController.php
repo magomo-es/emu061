@@ -100,4 +100,34 @@ class TipusAlertantController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fulltipusalertants()
+    {
+        $objectsAry = TipusAlertant::with('alertants')->orderBy('tipus')->get();
+        return TipusAlertantResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function thetipusalertant(TipusAlertant $theobj)
+    {
+        $objectsAry = TipusAlertant::with('alertants')->find($theobj->id);
+        return (new TipusAlertantResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

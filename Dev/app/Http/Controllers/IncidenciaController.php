@@ -128,11 +128,6 @@ class IncidenciaController extends Controller
 
         echo '<script>console.log("store method")</script>';
 
-
-//var_dump($request);
-//exit(0);
-
-
         if ( !empty( $request->numincident )
             && !empty( $request->data )
             && !empty( $request->hora )
@@ -145,7 +140,8 @@ class IncidenciaController extends Controller
 
             // - - - - - - - - - - - - - - - - - - - - - alertants
             $objAlertant = new Alertant;
-            $objAlertant->id = $request->alertantid = 0;
+            $objAlertant->id = 0;
+            // $objAlertant->id = $request->alertantid;
             $objAlertant->telefon = $request->telefonalertant;
             $objAlertant->nom = $request->alertant_nom;
             $objAlertant->cognoms = $request->alertant_cognoms;
@@ -155,11 +151,13 @@ class IncidenciaController extends Controller
 
             try {
 
-                if ( !empty($objAlertant->nom) && !empty($objAlertant->cognoms) ) { $objAlertant->save(); }
+                //if ( !empty($objAlertant->nom) && !empty($objAlertant->cognoms) ) { $objAlertant->save(); }
+                $objAlertant->save();
 
                 // - - - - - - - - - - - - - - - - - - - - - incidencies
                 $objIncidencia = new Incidencia;
-                $objIncidencia->id = $request->incidenciaid = 0;
+                $objIncidencia->id = 0;
+                // $objIncidencia->id = $request->incidenciaid;
                 $objIncidencia->num_incident = $request->numincident;
                 $objIncidencia->data = $request->data;
                 $objIncidencia->hora = $request->hora;
@@ -183,7 +181,8 @@ class IncidenciaController extends Controller
 
                             // - - - - - - - - - - - - - - - - - - - - - afectats
                             $objAfectat = new Afectat;
-                            $objAfectat->id = $request->afectat[$i]['id'] = 0;
+                            $objAfectat->id = 0;
+                            // $objAfectat->id = $request->afectat[$i]['id'];
                             $objAfectat->telefon = $request->afectat[$i]['telefon'];
                             $objAfectat->cip = $request->afectat[$i]['cip'];
                             $objAfectat->nom = $request->afectat[$i]['nom'];
@@ -205,13 +204,13 @@ class IncidenciaController extends Controller
                                 $objHasRecursos->incidencies_id = $objIncidencia->id;
                                 $objHasRecursos->recursos_id = $request->afectat[$i]['recursos_id'];
                                 $objHasRecursos->afectats_id = $objAfectat->id;
-                                $objHasRecursos->hora_activacio = '0';
-                                $objHasRecursos->hora_mobilitzacio = '0';
-                                $objHasRecursos->hora_assistencia = '0';
-                                $objHasRecursos->hora_transport = '0';
-                                $objHasRecursos->hora_arribada_hospital = '0';
-                                $objHasRecursos->hora_transferencia = '0';
-                                $objHasRecursos->hora_finalitzacio = '0';
+                                $objHasRecursos->hora_activacio = null;
+                                $objHasRecursos->hora_mobilitzacio = null;
+                                $objHasRecursos->hora_assistencia = null;
+                                $objHasRecursos->hora_transport = null;
+                                $objHasRecursos->hora_arribada_hospital = null;
+                                $objHasRecursos->hora_transferencia = null;
+                                $objHasRecursos->hora_finalitzacio = null;
                                 $objHasRecursos->prioritat = $request->afectat[$i]['prioritat'];
                                 $objHasRecursos->desti = $request->afectat[$i]['desti'];
                                 $objHasRecursos->desti_alertant_id = $request->afectat[$i]['desti_alertant_id'];

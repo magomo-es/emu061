@@ -101,4 +101,34 @@ class TipusIncidenciaController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fulltipusincidencies()
+    {
+        $objectsAry = TipusIncidencia::with('incidencies')->orderBy('tipus')->get();
+        return TipusIncidenciaResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function thetipusincidencia(TipusIncidencia $theobj)
+    {
+        $objectsAry = TipusIncidencia::with('incidencies')->find($theobj->id);
+        return (new TipusIncidenciaResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

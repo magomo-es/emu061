@@ -28,33 +28,24 @@ class Usuari extends Authenticatable
     public $timestamps = false;
 
     /**
-     * Get the user that owns the usuaris
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function rol() //: BelongsTo
+    public function rol()
     {
-        return $this->hasOne(Rol::class, 'rols_id');
+        return $this->hasOne(Rol::class, 'id', 'rols_id');
     }
 
     /**
-     * Get the user that owns the usuaris
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function recurso() //: BelongsTo
+    public function recurso()
     {
-        return $this->hasOne(Recurs::class, 'recursos_id');
+        return $this->hasOne(Recurs::class, 'id', 'recursos_id');
     }
 
     /**
-     * Get all of the comments for the usuaris
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function incidencies() //: HasMany
+    public function incidencies()
     {
-        return $this->hasMany(Incidencia::class, 'usuaris_id');
+        return $this->hasMany(Incidencia::class, 'id', 'usuaris_id');
     }
 
 }

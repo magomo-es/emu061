@@ -24,7 +24,7 @@
                 <td>{{ afectat.cip }}</td>
                 <td>{{ afectat.telefon }}</td>
                 <td>{{ afectat.edat }}</td>
-                <td>{{ sexes[afectat.sexes_id] }}</td>
+                <td>{{ sexes.findIndex(item => item.id == afectat.sexes_id).sexe }}</td>
                 <td class="text-right">
 
                     <input type="hidden" v-bind:id="'afectat['+index+'][id]'" v-bind:name="'afectat['+index+'][id]'" v-bind:value="afectat.id" />
@@ -120,13 +120,13 @@
                         <div class="col-4">
                             <div class="row px-1">
                                 <label for="afectat_cip" class="col-12 col-form-label pl-1"><small>CIP</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip">
+                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip" minlength="14" maxlength="16">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_edat" class="col-12 col-form-label pl-1"><small>Edat</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat" pattern="[0-9]{3}" minlength="1" maxlength="3">
+                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat" pattern="[0-9]{1,3}" minlength="1" maxlength="3">
                             </div>
                         </div>
                         <div class="col-2">
@@ -225,7 +225,7 @@
                         <div class="col-12">
                             <div class="row px-1">
                                 <label for="afectat_descripcio" class="col-12 col-form-label pl-1"><small>Descripcio</small></label>
-                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
+                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.descripcio"></textarea>
                             </div>
                         </div>
 
@@ -328,7 +328,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 afectat: {
                     id: 0,
-                    telefon: 0,
+                    telefon: '',
                     cip: '',
                     nom: '',
                     cognoms: '',
@@ -369,13 +369,13 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             emptyAfectat() {
                 return {
                     id: 0,
-                    telefon: 0,
+                    telefon: '',
                     cip: '',
                     nom: '',
                     cognoms: '',
                     edat: '',
                     te_cip: 0,
-                    sexes_id: 1,
+                    sexes_id: 2,
                     descripcio: '',
                     tipus_recursos_id: '',
                     codi_gravetat: this.default_codigravetat,
@@ -437,7 +437,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                     this.afectats[this.key_tmp].codi_valoracio = this.afectat.codi_valoracio
                     // extra data
                     this.afectats[this.key_tmp].recursos_id = this.afectat.recursos_id
-                    this.afectats[this.key_tmp].prioritat = this.afectat.codi_gravetat
+                    this.afectats[this.key_tmp].prioritat = 0
                     this.afectats[this.key_tmp].desti = this.afectat.desti
                     this.afectats[this.key_tmp].desti_alertant_id = this.afectat.desti_alertant_id
 

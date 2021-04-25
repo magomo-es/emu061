@@ -100,4 +100,32 @@ class ProvinciaController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+        // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullprovincies()
+    {
+        $objectsAry = Provincia::with('comarques','municipis')->orderBy('nom')->get();
+        return ProvinciaResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function theprovincia(Provincia $theobj)
+    {
+        $objectsAry = Provincia::with('comarques','municipis')->find($theobj->id);
+        return (new ProvinciaResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

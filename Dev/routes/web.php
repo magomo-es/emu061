@@ -69,8 +69,6 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::resource('admin/incidencies', IncidenciaController::class)->parameters(['incidencies' => 'theobj']);
 
-    Route::resource('admin/incidencies_has_recursos', IncidenciesHasRecursosController::class)->parameters(['incidencies_has_recursos' => 'theobj'])->middleware('auth');
-
     Route::resource('admin/afectats', AfectatController::class)->parameters(['afectats' => 'theobj']);
     Route::resource('admin/alertants', AlertantController::class)->parameters(['alertants' => 'theobj']);
     Route::resource('admin/recursos', RecursController::class)->parameters(['recursos' => 'theobj']);

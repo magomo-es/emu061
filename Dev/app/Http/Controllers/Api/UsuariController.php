@@ -101,4 +101,36 @@ class UsuariController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullusuaris()
+    {
+        $objectsAry = Usuari::with('rol','recurso','incidencies')->orderBy('username')->get();
+        return UsuariResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function theusuari(Usuari $theobj)
+    {
+        $objectsAry = Usuari::with('rol','recurso','incidencies')->find($theobj->id);
+        return (new UsuariResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

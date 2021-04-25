@@ -115,7 +115,7 @@ class MunicipiController extends Controller
      */
     public function fullmunicipis()
     {
-        $objectsAry = Municipi::with(['comarca'])->with(['provincia'])->orderBy('nom')->get();
+        $objectsAry = Municipi::with('comarca','provincia')->orderBy('nom')->get();
         return MunicipiResource::collection($objectsAry);
     }
 
@@ -126,7 +126,7 @@ class MunicipiController extends Controller
      */
     public function themunicipi(Municipi $theobj)
     {
-        $objectsAry = Municipi::with(['comarca'])->with(['provincia'])->find($theobj->id);
+        $objectsAry = Municipi::with('comarca','provincia')->find($theobj->id);
         return (new MunicipiResource($objectsAry))->response()->setStatusCode(200);
     }
 
