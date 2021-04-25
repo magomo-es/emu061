@@ -1,7 +1,6 @@
 <div class="dropdown" style="position: absolute; top: 0;right: 60px;z-index: 99;">
 
     @if (Auth::check())
-
     <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></button>
     <div class="dropdown-menu dropdown-menu-right">
         @if(Auth::user()->rols_id==1)

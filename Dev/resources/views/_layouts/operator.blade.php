@@ -53,6 +53,7 @@
 
         @include('_partials.userbox')
 
+        @include('_partials.videobutton')
 
         <div class="container-fluid mt-3" id="app">@yield('pageContent')</div>
 
@@ -62,6 +63,8 @@
         <script src="{{ asset('js/app.js') }}"></script>
 
         @yield('pageModalScript')
+
+        @include('_partials.mainvideo')
 
     </body>
 

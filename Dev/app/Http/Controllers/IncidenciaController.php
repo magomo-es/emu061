@@ -117,6 +117,23 @@ class IncidenciaController extends Controller
 
     }
 
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function operator()
+    {
+
+        $vdsvideosAry = VdsVideos::orderBy('title')->get();
+        $vdseventsAry = VdsEvents::orderBy('title')->get();
+
+        return view( 'operator.index', compact('vdsvideosAry','vdseventsAry') );
+
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *

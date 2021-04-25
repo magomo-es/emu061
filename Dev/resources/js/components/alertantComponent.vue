@@ -32,10 +32,6 @@
                 </div>
             </div>
 
-            <div class="col-2" style="display: flex; align-items: end; justify-content: flex-end;">
-                <!-- <button type="button" class="col-2 btn btn-outline-secondary ml-3"><i class="bi bi-camera-reels"></i> Video</button> -->
-                <button class="btn btn-outline-secondary">Video</button>
-            </div>
         </div>
 
         <!-- MODAL -->

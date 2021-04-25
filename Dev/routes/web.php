@@ -98,7 +98,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('admin/help/formelements', HlpFormElementsController::class)->parameters(['formelements' => 'theobj']);
 
 
-    Route::get('operator', function () { return view('operator.index'); })->name('operator');
+    Route::get('operator', [IncidenciaController::class, 'operator'])->name('operator');
+    //Route::get('operator', function () { return view('operator.index'); })->name('operator');
 
 
     Route::get('mobile', function () { return view('mobile.index'); })->name('mobile');
