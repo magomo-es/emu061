@@ -147,6 +147,13 @@
     --BoxFontColor: #495057;
 }
 
+.valoracio-box
+{
+    background-color: var(--BackgroundColor) !important;
+    border: 1px solid #fff !important;
+    color: var(--fontColor) !important;
+}
+
 .modal-style
 {
     background-color: var(--BackgroundColor) !important;
