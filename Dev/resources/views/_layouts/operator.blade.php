@@ -53,6 +53,7 @@
 
         @include('_partials.userbox')
 
+
         <div class="container-fluid mt-3" id="app">@yield('pageContent')</div>
 
     </body>

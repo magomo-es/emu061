@@ -1,4 +1,4 @@
-<div class="dropdown" style="position: absolute; top: 0;right: 10px;z-index: 99;">
+<div class="dropdown" style="position: absolute; top: 0;right: 60px;z-index: 99;">
 
     @if (Auth::check())
 

@@ -2,7 +2,13 @@
 <main>
     <div class="container-lg" style="max-width: 1300px;">
         <div class="row">
-            <div class="col-auto">
+            <div class="col-2">
+                <button class="btn btn-dark" type="button">
+                    Generar Trucada
+                </button>
+            </div>
+
+            <div class="col-8" style="display: flex; align-items: center; justify-content: center;">
                 <div class="row g-3 align-items-center">
 
                     <div class="col-auto">
@@ -26,19 +32,9 @@
                 </div>
             </div>
 
-            <div class="col-2" style="flex: 1 !important; max-width: 19.75%; margin-left:42%;">
-                 <div class="row g-3 align-items-center">
-                     <div class="col-auto">
-                        <button class="btn btn-dark" type="button">
-                            Generar Trucada
-                        </button>
-                     </div>
-
-                    <div class="col-auto">
-                        <!-- <button type="button" class="col-2 btn btn-outline-secondary ml-3"><i class="bi bi-camera-reels"></i> Video</button> -->
-                        <button class="btn btn-outline-secondary">Video</button>
-                    </div>
-                 </div>
+            <div class="col-2" style="display: flex; align-items: end; justify-content: flex-end;">
+                <!-- <button type="button" class="col-2 btn btn-outline-secondary ml-3"><i class="bi bi-camera-reels"></i> Video</button> -->
+                <button class="btn btn-outline-secondary">Video</button>
             </div>
         </div>
 
@@ -47,7 +43,7 @@
         <div class="modal fade" id="modalAlertant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content modal-style">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Alertant</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -76,7 +72,7 @@
 
                             <div class="row">
                                 <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
-                                <select class="col-12 custom-select" id="alertant_municipisid" name="alertant_municipisid">
+                                <select class="select-form col-12 custom-select" id="alertant_municipisid" name="alertant_municipisid">
                                     <option v-for="municipi in municipis" :key="municipi.id">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
                                 </select>
@@ -84,7 +80,7 @@
 
                             <div class="row">
                                 <label for="alertant_tipusalertantsid" class="col-12 col-form-label pl-1"><small>Tipus</small></label>
-                                <select class="col-12 custom-select" id="alertant_tipusalertantsid" name="alertant_tipusalertantsid">
+                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" name="alertant_tipusalertantsid">
                                     <option v-for="tipus in tipus_alertants" :key="tipus.id">{{ tipus.tipus }}</option>
                                 </select>
                             </div>

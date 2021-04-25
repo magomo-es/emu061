@@ -46,6 +46,7 @@
         </nav> --}}
 
         @include('_partials.userbox')
+        @include('_partials.config-box')
 
         <div class="container-fluid mt-3" id="app">@yield('pageContent')</div>
 

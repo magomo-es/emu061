@@ -2,7 +2,8 @@
 
     <main>
 
-        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#FormatModal"><i class="fas fa-cog"></i></button>
+
+        <button style="position: absolute; top: 0;right: 10px;z-index: 99;" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#FormatModal"><i class="fas fa-cog"></i></button>
 
         <!-- Modal Ajustes Colores y Formato -->
         <div class="modal fade" id="FormatModal" tabindex="-1" role="dialog" aria-labelledby="FormatModalCenterTitle" aria-hidden="true">
@@ -36,7 +37,7 @@
                             <div class="col-6">
                                 <div class="row px-1">
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Color:</label>
-                                    <input class="col-7 col-form-input" style="height: 37px; padding: 0px;" type="color" v-bind:value="fontColor" @change="onChangeColorFont($event)">
+                                    <input class="col-7 col-form-input" id="fontColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="fontColor" @change="onChangeColorFont($event)">
                                 </div>
                             </div>
                         </div>
@@ -49,7 +50,7 @@
                                     <label for="afectat_cip" class="col-12 col-form-label" style="font-size: 80%; font-weight: 400;">Fons de pantalla:</label>
 
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Color:</label>
-                                    <input class="col-8 col-form-input" style="height: 37px; padding: 0px;" type="color" v-bind:value="screenColor" @change="onChangeBackgroundColor($event)">
+                                    <input class="col-8 col-form-input" id="BackgroundColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="screenColor" @change="onChangeBackgroundColor($event)">
                                 </div>
                             </div>
 
@@ -58,7 +59,7 @@
                                     <label for="afectat_cip" class="col-12 col-form-label" style="font-size: 80%; font-weight: 400;">Caixes:</label>
 
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Fons:</label>
-                                    <input class="col-7 col-form-input" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputBackgroundColor" @change="onChangeBoxBackground($event)">
+                                    <input class="col-7 col-form-input" id="BoxBackground" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputBackgroundColor" @change="onChangeBoxBackground($event)">
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
                             <div class="col-6">
                                 <div class="row px-1">
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Color:</label>
-                                    <input class="col-7 col-form-input" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputColor" @change="onChangeBoxFontColor($event)">
+                                    <input class="col-7 col-form-input" id="BoxFontColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputColor" @change="onChangeBoxFontColor($event)">
                                 </div>
                             </div>
                         </div>
@@ -86,20 +87,41 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-2"></div>
-                            <div class="col-9">
-                                <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
-                                    <input type="radio" name="theme" class="col-1" id="dark">
-                                    <label for="dark" name="theme" class="col-4 col-form-label" @change="onChangeCheck($event)">Dark</label>
+                            <div class="col-12">
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
+                                        <input type="radio" name="theme" id="dark-rb" @change="onChangeCheck($event)" value="dark">
+                                        <label for="dark" name="theme" class="col-form-label" style="margin-left:10px">Dark</label>
+                                    </div>
 
-                                    <input type="radio" class="col-1"  name="theme" id="light" >
-                                    <label for="light" class="col-4 col-form-label">Light</label>
+                                    <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
+                                        <input type="radio" name="theme" id="dark-light-rb" @change="onChangeCheck($event)" value="dark-light">
+                                        <label for="dark-light" name="theme" class="col-form-label" style="margin-left:10px">Dark Light</label>
+                                    </div>
 
-                                    <input type="radio" class="col-1"  name="theme" id="daltonic">
-                                    <label for="daltonic" class="col-4 col-form-label">Daltònic</label>
+                                    <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
+                                        <input type="radio" name="theme" id="light-rb" @change="onChangeCheck($event)" value="light">
+                                        <label for="light" class="col-form-label" style="margin-left:10px">Light</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-2"></div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group row">
+                            <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+                                <input type="checkbox" name="daltonic" id="daltonic" value="false" @change="onChangeDaltonic($event)" disabled>
+                                <label for="daltonic" class="col-form-label" style="margin-left:10px">Mode Daltònic</label>
+                            </div>
+                        </div>
+
+                        <div v-if="daltonicSelected" class="form-group row">
+                            <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+                                <select class="col-8" name="dalt" id="dalt" @change="onChangeSelectDaltonics($event)" aria-placeholder="Selecciona el tipus">
+                                    <option v-for="dalt in daltonics" v-bind:key="dalt" v-bind:value="dalt">{{ dalt }}</option>
+                                </select>
+                            </div>
                         </div>
 
                     </div>
@@ -123,6 +145,25 @@
     --BackgroundColor: #f8fafc;
     --BoxBackground: #ffffff;
     --BoxFontColor: #495057;
+}
+
+.modal-style
+{
+    background-color: var(--BackgroundColor) !important;
+    border: 1px solid #fff !important;
+    color: var(--fontColor) !important;
+}
+
+.table-style
+{
+    background-color: var(--BoxBackground) !important;
+    color: var(--fontColor) !important;
+}
+
+.table-head-style
+{
+    background-color: var(--BackgroundColor) !important;
+    color: var(--fontColor) !important;
 }
 
 small
@@ -178,42 +219,198 @@ export default {
         screenColor: '#f8fafc',
         fontColor: '#212529',
         inputBackgroundColor: '#ffffff',
-        inputColor: '#495057'
+        inputColor: '#495057',
+
+        daltonicSelected: false,
+        daltonics: ['Deuteranopia', 'Protanopia', 'Tritanopia'],
+        radioSelected: null
     }
   },
   methods: {
       onChangeSelect(event)
       {
           document.documentElement.style.setProperty('--fontSize', event.target.value+'px');
-          console.log("Font: " + event.target.value)
-          console.log("FontSelected: " + this.fontSelected)
+          $('#dark-rb').prop("checked", false);
+          $('#dark-light-rb').prop("checked", false);
+          $('#light-rb').prop("checked", false);
+
+          $('#daltonic').attr("disabled", true);
+          this.daltonicSelected = false;
       },
       onChangeColorFont(event)
       {
           document.documentElement.style.setProperty('--fontColor', event.target.value);
-          console.log("Color font: " + event.target.value)
+          $('#dark-rb').prop("checked", false);
+          $('#dark-light-rb').prop("checked", false);
+          $('#light-rb').prop("checked", false);
+
+          $('#daltonic').attr("disabled", true);
+          this.daltonicSelected = false;
       },
       onChangeBackgroundColor(event)
       {
           document.documentElement.style.setProperty('--BackgroundColor', event.target.value);
-          console.log("Color Background: " + event.target.value)
+          $('#dark-rb').prop("checked", false);
+          $('#dark-light-rb').prop("checked", false);
+          $('#light-rb').prop("checked", false);
+
+          $('#daltonic').attr("disabled", true);
+          this.daltonicSelected = false;
       },
       onChangeBoxBackground(event)
       {
           document.documentElement.style.setProperty('--BoxBackground', event.target.value);
-          console.log("Color Background Box: " + event.target.value)
+          $('#dark-rb').prop("checked", false);
+          $('#dark-light-rb').prop("checked", false);
+          $('#light-rb').prop("checked", false);
+
+          $('#daltonic').attr("disabled", true);
+          this.daltonicSelected = false;
       },
       onChangeBoxFontColor(event)
       {
           document.documentElement.style.setProperty('--BoxFontColor', event.target.value);
-          console.log("Color font Box: " + event.target.value)
+          $('#dark-rb').prop("checked", false);
+          $('#dark-light-rb').prop("checked", false);
+          $('#light-rb').prop("checked", false);
+
+          $('#daltonic').attr("disabled", true);
+          this.daltonicSelected = false;
       },
 
-      // CHECKBOX
+      // CHECKBOX'S
       onChangeCheck(event)
       {
-          console.log(event);
+          var optionText = event.target.value;
+          this.radioSelected = event.target.value;
+
+          // -- DARK
+          if (optionText == "dark")
+          {
+              document.documentElement.style.setProperty('--fontSize', '12px');
+              document.documentElement.style.setProperty('--fontColor', '#ffffff');
+              document.documentElement.style.setProperty('--BackgroundColor', '#1a1a1a');
+              document.documentElement.style.setProperty('--BoxBackground', '#3d3d3d');
+              document.documentElement.style.setProperty('--BoxFontColor', '#ffffff');
+
+              $('#fontSize').val('12px');
+              $('#fontColor').val('#ffffff');
+              $('#BackgroundColor').val('#1a1a1a');
+              $('#BoxBackground').val('#3d3d3d');
+              $('#BoxFontColor').val('#ffffff');
+
+              $('#daltonic').removeAttr("disabled");
+          }
+          else if (optionText == "dark-light")
+          {
+              document.documentElement.style.setProperty('--fontSize', '12px');
+              document.documentElement.style.setProperty('--fontColor', '#ffffff');
+              document.documentElement.style.setProperty('--BackgroundColor', '#15202b');
+              document.documentElement.style.setProperty('--BoxBackground', '#94a7b8');
+              document.documentElement.style.setProperty('--BoxFontColor', '#000000');
+
+              $('#fontSize').val('12px');
+              $('#fontColor').val('#ffffff');
+              $('#BackgroundColor').val('#15202b');
+              $('#BoxBackground').val('#94a7b8');
+              $('#BoxFontColor').val('#000000');
+
+              $('#daltonic').removeAttr("disabled");
+
+              // Deuteranopia: #94a7b8 -->  #9ca3b8
+              // Protanopia: #94a7b8 -->  #a0a7b9
+              // Tritanopia: #94a7b8 -->  #8babac
+          }
+          else if (optionText == "light")
+          {
+              document.documentElement.style.setProperty('--fontSize', '12px');
+              document.documentElement.style.setProperty('--fontColor', '#212529');
+              document.documentElement.style.setProperty('--BackgroundColor', '#f8fafc');
+              document.documentElement.style.setProperty('--BoxBackground', '#ffffff');
+              document.documentElement.style.setProperty('--BoxFontColor', '#495057');
+
+              $('#fontSize').val('12px');
+              $('#fontColor').val('#212529');
+              $('#BackgroundColor').val('#f8fafc');
+              $('#BoxBackground').val('#ffffff');
+              $('#BoxFontColor').val('#495057');
+
+              $('#daltonic').removeAttr("disabled");
+
+              // Deuteranopia: #495057 -->  #4c4e57
+              // Protanopia: #495057 -->  #4d5057
+              // Tritanopia: #495057 -->  #465252
+          }
+      },
+
+      onChangeDaltonic(event)
+      {
+          if (event.target.value == "false")
+          {
+            this.daltonicSelected = true;
+            $('#daltonic').val('true');
+          }
+          else if (event.target.value == "true")
+          {
+            this.daltonicSelected = false;
+            $('#daltonic').val('false');
+          }
+      },
+
+      onChangeSelectDaltonics(event)
+      {
+          var optionText = event.target.value;
+
+          if (optionText == "Deuteranopia")
+          {
+              if (this.radioSelected == "dark-light")
+              {
+                  document.documentElement.style.setProperty('--BoxBackground', '#9ca3b8');
+                  $('#BoxBackground').val('#9ca3b8');
+                  console.log("changed");
+              }
+              else if (this.radioSelected == "light")
+              {
+                  document.documentElement.style.setProperty('--BoxFontColor', '#4c4e57');
+                  $('#BoxFontColor').val('#4c4e57');
+                  console.log("changed");
+              }
+          }
+          else if (optionText == "Protanopia")
+          {
+              if (this.radioSelected == "dark-light")
+              {
+                  document.documentElement.style.setProperty('--BoxBackground', '#a0a7b9');
+                  $('#BoxBackground').val('#a0a7b9');
+                  console.log("changed");
+              }
+              else if (this.radioSelected == "light")
+              {
+                  document.documentElement.style.setProperty('--BoxFontColor', '#4d5057');
+                  $('#BoxFontColor').val('#4d5057');
+                  console.log("changed");
+              }
+          }
+          else if (optionText == "Tritanopia")
+          {
+              if (this.radioSelected == "dark-light")
+              {
+                  document.documentElement.style.setProperty('--BoxBackground', '#8babac');
+                  $('#BoxBackground').val('#8babac');
+                  console.log("changed");
+              }
+              else if (this.radioSelected == "light")
+              {
+                  document.documentElement.style.setProperty('--BoxFontColor', '#465252');
+                  $('#BoxFontColor').val('#465252');
+                  console.log("changed");
+              }
+          }
       }
+
+      // -- DARK-LIGHT
+      // -- LIGHT
+      // -- DALTONIC
   }
 }
 
@@ -231,6 +428,13 @@ export default {
     --fontColor: #ffffff;
     --BoxFontColor: #ffffff;
     --BoxBackground: #3d3d3d;
+
+    LIGHT::
+    --fontSize: 12px;
+    --fontColor: #212529;
+    --BackgroundColor: #f8fafc;
+    --BoxBackground: #ffffff;
+    --BoxFontColor: #495057;
 */
 
 </script>

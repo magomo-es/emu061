@@ -6,6 +6,7 @@
 
     <alertant-component></alertant-component>
     <incidencies-component></incidencies-component>
+    <btn-format-component></btn-format-component>
 
 @endsection
 

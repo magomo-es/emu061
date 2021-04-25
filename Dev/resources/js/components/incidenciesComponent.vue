@@ -1,6 +1,12 @@
 <template>
+    <main>
 
-  <div class="container-lg mt-2" style="max-width: 1300px;">
+
+
+
+    <div class="container-lg mt-2" style="max-width: 1300px;">
+
+
 
     <form id="app" @submit.prevent="onSubmit" action="" method="post" novalidate="true">
 
@@ -87,12 +93,13 @@
 
             <input class="btn btn-secondary" type="submit" value="Cancel·lar">
 
-            <btn-format-component></btn-format-component>
+
         </div>
 
     </form>
 
   </div>
+  </main>
 
 </template>
 

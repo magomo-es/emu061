@@ -3,17 +3,17 @@
         <label for="desc"><small>Llista d'afectats:</small></label>
 
         <div class="tableFixHead">
-            <table class="table">
+            <table class="table table-style">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Noms</th>
-                        <th scope="col">Cognoms</th>
-                        <th scope="col">Edat</th>
-                        <th scope="col">CIP</th>
-                        <th scope="col">Sexe</th>
-                        <th scope="col">Telèfon</th>
-                        <th scope="col" class="text-right">
+                        <th scope="col" class="table-head-style" style="border-left: 1px solid white;">ID</th>
+                        <th scope="col" class="table-head-style">Noms</th>
+                        <th scope="col" class="table-head-style">Cognoms</th>
+                        <th scope="col" class="table-head-style">Edat</th>
+                        <th scope="col" class="table-head-style">CIP</th>
+                        <th scope="col" class="table-head-style">Sexe</th>
+                        <th scope="col" class="table-head-style">Telèfon</th>
+                        <th scope="col" class="table-head-style text-right"  style="border-right: 1px solid white;">
                             <div role="group" class="btn-group ml-1">
                                 <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#modalCrearAfectat" @click="openModalAfectat(cleanAfectat(),-1)">
                                     <i class="fas fa-plus"></i> Nou Afectat
@@ -60,7 +60,7 @@
         <!-- MODAL CREAR AFECTADO -->
         <div class="modal fade" id="modalCrearAfectat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div role="document" class="modal-dialog modal-lg">
-                <div class="modal-content">
+                <div class="modal-content modal-style">
                     <div class="modal-header">
                         <h5 id="exampleModalLabel" class="modal-title">Afectats</h5>
                         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
@@ -118,7 +118,7 @@
                                         <small>Sexe</small>
                                     </label>
 
-                                    <select id="afectat_sexesid" class="col-12 custom-select" v-model="afectat.sexe_id">
+                                    <select id="afectat_sexesid" class="select-form col-12 custom-select" v-model="afectat.sexe_id">
                                         <option v-for="sexe in sexes" :key="sexe.id" value="sexe.id">{{ sexe.nom }}</option>
                                     </select>
 
@@ -133,7 +133,7 @@
                                         <small>Tipus Recurs</small>
                                     </label>
 
-                                    <select id="afectat_tipusrecursosid" class="col-12 custom-select">
+                                    <select id="afectat_tipusrecursosid" class="select-form col-12 custom-select">
                                         <option v-for="recurs in tipus_recurs" :key="recurs.id">{{ recurs.nom }}</option>
                                     </select>
                                 </div>
@@ -145,7 +145,7 @@
                                         <small>Codi Gravetat</small>
                                     </label>
 
-                                    <select id="afectat_codigravetat" class="col-12 custom-select">
+                                    <select id="afectat_codigravetat" class="select-form col-12 custom-select">
                                         <option v-for="grav in codis_gravetat" :key="grav.id" value="grav.id">{{ grav.nom }}</option>
                                     </select>
                                 </div>
@@ -159,7 +159,7 @@
                                         <small>Codi Valoracio</small>
                                     </label>
 
-                                    <select id="afectat_codivaloracio" class="col-7 custom-select">
+                                    <select id="afectat_codivaloracio" class="select-form col-7 custom-select">
                                         <option v-for="codi in codis_valoracio" :key="codi.id" value="codi.id">{{ codi.nom }}</option>
                                     </select>
 
@@ -200,7 +200,7 @@
         <!-- MODAL DELETE -->
         <div class="modal" tabindex="-1" id="confirmDelete">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content modal-style">
                     <div class="modal-header">
                         <h5 class="modal-title">Esborrar Afectat</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -209,7 +209,7 @@
                     </div>
 
                     <div class="modal-body">
-                        <p>Estas segur de que vols esborrar l'afectat - {{ (afectat.id + 1) }} - {{ afectat.nom }} {{ afectat.cognoms }}</p> <!--Falta mostrar afectat-->
+                        <p><small>Estas segur de que vols esborrar l'afectat - {{ (afectat.id + 1) }} - {{ afectat.nom }} {{ afectat.cognoms }}</small></p> <!--Falta mostrar afectat-->
                     </div>
 
                     <div class="modal-footer">
