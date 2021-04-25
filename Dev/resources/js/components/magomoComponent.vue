@@ -24,7 +24,7 @@
                 <td>{{ afectat.cip }}</td>
                 <td>{{ afectat.telefon }}</td>
                 <td>{{ afectat.edat }}</td>
-                <td>{{ sexes[afectat.sexes_id] }}</td>
+                <td>{{ sexes.findIndex(item => item.id == afectat.sexes_id).sexe }}</td>
                 <td class="text-right">
 
                     <input type="hidden" v-bind:id="'afectat['+index+'][id]'" v-bind:name="'afectat['+index+'][id]'" v-bind:value="afectat.id" />
@@ -114,19 +114,19 @@
                         <div class="col-4">
                             <div class="row px-1">
                                 <label for="afectat_telefon" class="col-12 col-form-label pl-1"><small>Telefon</small></label>
-                                <input type="number" class="col-12 form-control" id="afectat_telefon" v-model="afectat.telefon">
+                                <input type="text" class="col-12 form-control" id="afectat_telefon" v-model="afectat.telefon" pattern="[0-9]{9}" minlength="9" maxlength="9">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="row px-1">
                                 <label for="afectat_cip" class="col-12 col-form-label pl-1"><small>CIP</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip">
+                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip" minlength="14" maxlength="16">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_edat" class="col-12 col-form-label pl-1"><small>Edat</small></label>
-                                <input type="number" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat">
+                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat" pattern="[0-9]{1,3}" minlength="1" maxlength="3">
                             </div>
                         </div>
                         <div class="col-2">
@@ -145,7 +145,7 @@
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_codigravetat" class="col-12 col-form-label pl-1"><small>Codi Gravetat</small></label>
-                                <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat">
+                                <select class="col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat" title="Pick One">
                                     <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
                             </div>
@@ -154,7 +154,7 @@
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_recursosid" class="col-12 col-form-label pl-1"><small>Recurs</small></label>
-                                <select class="col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id">
+                                <select class="col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id" title="Pick One">
                                     <option v-for="(item) in recursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.codi + ' - ' + item.tipus_recurso.tipus }}</option>
                                 </select>
                             </div>
@@ -189,6 +189,7 @@
                             <div class="row px-1 mb-3">
                                 <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1"><small>Codi Valoracio</small></label>
                                 <select class="col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
+                                    <option value="0">Seleccioneu valoració</option>
                                     <option v-for="(item, index) in codisvaloracions" v-bind:key="item.id" v-bind:id="('v_'+index+'_'+item.codi)" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
                                 <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" @click="openVideoValoracio()"><i class="far fa-play-circle"></i> Video</button></div>
@@ -224,7 +225,7 @@
                         <div class="col-12">
                             <div class="row px-1">
                                 <label for="afectat_descripcio" class="col-12 col-form-label pl-1"><small>Descripcio</small></label>
-                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.tipusrecursosid"></textarea>
+                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.descripcio"></textarea>
                             </div>
                         </div>
 
@@ -321,9 +322,13 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                 videoPositionEnd: 0,
                 videoPlayEvents: false,
 
+                default_codirecurso: '',
+                default_codigravetat: '',
+                default_codivaloracio: '',
+
                 afectat: {
                     id: 0,
-                    telefon: 0,
+                    telefon: '',
                     cip: '',
                     nom: '',
                     cognoms: '',
@@ -364,18 +369,18 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             emptyAfectat() {
                 return {
                     id: 0,
-                    telefon: 0,
+                    telefon: '',
                     cip: '',
                     nom: '',
                     cognoms: '',
                     edat: '',
                     te_cip: 0,
-                    sexes_id: 0,
+                    sexes_id: 2,
                     descripcio: '',
-                    tipus_recursos_id: 0,
-                    codi_gravetat: '',
-                    codi_valoracio: '',
-                    recursos_id: 0,
+                    tipus_recursos_id: '',
+                    codi_gravetat: this.default_codigravetat,
+                    codi_valoracio: 0,
+                    recursos_id: this.default_codirecurso,
                     prioritat: 0,
                     desti: '',
                     desti_alertant_id: 0
@@ -432,7 +437,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                     this.afectats[this.key_tmp].codi_valoracio = this.afectat.codi_valoracio
                     // extra data
                     this.afectats[this.key_tmp].recursos_id = this.afectat.recursos_id
-                    this.afectats[this.key_tmp].prioritat = this.afectat.codi_gravetat
+                    this.afectats[this.key_tmp].prioritat = 0
                     this.afectats[this.key_tmp].desti = this.afectat.desti
                     this.afectats[this.key_tmp].desti_alertant_id = this.afectat.desti_alertant_id
 
@@ -508,7 +513,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                     for (let [key, value] of this.simptomesSelected) {
 
-                        if (!(key in selectobj.options[i].dataset)) { showThis = false; }
+                        if ( !(key in selectobj.options[i].dataset) && selectobj.options[i].value!=0 ) { showThis = false; }
 
                     }
 
@@ -526,6 +531,9 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
                 }
 
+                console.log( 'showablesValoracio -> selected value = ' + selectobj.selectedIndex );
+                selectobj.selectedIndex = 0;
+
             },
             // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: openBoxValoracio =>
             openBoxValoracio() {
@@ -541,7 +549,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                 this.valoracionCodi = ev.currentTarget.options[ev.currentTarget.selectedIndex].value
 
             },
-            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: addValoracioDataset =>
             addValoracioDataset() {
 
                 var optionobj;
@@ -562,7 +570,7 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
                     }
                 }
             },
-            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: onChangeValoracio =>
+            // - - - - - - - - - - - - - - - - - - - - - SELECT VALORACIO: addValoracioSimptomes =>
             addValoracioSimptomes() {
 
                 var optionobj;
@@ -744,6 +752,11 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
             this.byid_hlpsimtomes = this.generateArrayById( this.hlpsimtomes )
             this.hlpvaloraciohassimptomes = JSON.parse( apptag.dataset.phlpvaloraciohassimptomes )
             this.appurl = apptag.dataset.pappurl
+
+            if (this.recursos.length>0) { this.default_codirecurso = this.recursos[0].id; }
+            if (this.codisgravetat.length>0) { this.default_codigravetat = this.codisgravetat[0].codi; }
+            if (this.codisvaloracions.length>0) { this.default_codivaloracio = this.codisvaloracions[0].codi; }
+
         },
 
         mounted() {
@@ -756,17 +769,3 @@ grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 0px; }
 
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

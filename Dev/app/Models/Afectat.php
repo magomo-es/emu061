@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-use App\Http\Resources\TipusRecursResource;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\TipusRecursResource;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Afectat extends Model
 {
@@ -26,7 +29,7 @@ class Afectat extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sexe() //: BelongsTo
+    public function sexe(): BelongsTo
     {
         return $this->belongsTo(Sexe::class, 'sexes_id');
     }
@@ -36,19 +39,9 @@ class Afectat extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tipus_recurs() //: BelongsTo
+    public function tipus_recurs(): BelongsTo
     {
         return $this->belongsTo(TipusRecurs::class, 'tipus_recursos_id');
-    }
-
-    /**
-     * The roles that belong to the afectats
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function incidencies() //: BelongsToMany
-    {
-        return $this->incidencies(Rol::class, 'incidencies_has_afectats', 'afectats_id', 'incidencies_id');
     }
 
     /**
@@ -56,7 +49,7 @@ class Afectat extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function gravetat() //: BelongsTo
+    public function gravetat(): BelongsTo
     {
         return $this->belongsTo(CodisGravetat::class, 'codi_gravetat');
     }
@@ -66,9 +59,19 @@ class Afectat extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function valoracio() //: BelongsTo
+    public function valoracio(): BelongsTo
     {
-        return $this->belongsTo(TipusRecurs::class, 'codi_valoracio');
+        return $this->belongsTo(CodisValoracio::class, 'codi_valoracio');
+    }
+
+     /**
+     * Get all of the alumno_has_modulos for the Alumno
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function incidencies_has_recursos(): HasMany
+    {
+        return $this->hasMany(IncidenciesHasRecursos::class, 'afectats_id');
     }
 
 }

@@ -68,7 +68,7 @@
                 <th scope="col">Teléfon</th>
                 <th scope="col">Edat</th>
                 <th scope="col">Sexe</th>
-
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>

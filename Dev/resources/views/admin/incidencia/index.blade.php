@@ -101,9 +101,9 @@
                 <tr>
                     <td><small>{{ $theobject->num_incident }}</small></td>
                     <td><small>{{ $theobject->data. ' ' . $theobject->hora }}</small></td>
-                    <td><small>{{ $theobject->adreca }} - {{ $theobject->adreca_complement }}</small></td>
+                    <td><small>{{ $theobject->adreca }}</small></td>
                     <td><small>{{ $theobject->tipus_incidencia->tipus }}</small></td>
-                    <td><small>{{ $theobject->alertant->nom }}</small></td>
+                    <td><small>{{ $theobject->alertant->telefon }}</small></td>
                     <td><small>{{ $theobject->municipi->nom }}</small></td>
                     <td><small>{{ $theobject->usuari->username }}</small></td>
                     <td class="text-right">
@@ -140,7 +140,7 @@
 
 
 <a href="{{ action([App\Http\Controllers\IncidenciaController::class, 'create']) }}"><button id="NewButton" type="button" class="btn btn-secondary">
-    <i class="fas fa-plus"></i> Nou Incidencia</button>
+    <i class="fas fa-plus"></i> Nova Incidencia</button>
 </a>
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Incidencia extends Model
 {
@@ -55,19 +57,18 @@ class Incidencia extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function usuari() //: BelongsTo
+    public function usuari(): BelongsTo
     {
         return $this->belongsTo(Usuari::class, 'usuaris_id');
     }
 
-    /**
-     * The roles that belong to the incidencies
+     /**
+     * Get all of the alumno_has_modulos for the Alumno
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function afectats() //: BelongsToMany
+    public function incidencies_has_recursos(): HasMany
     {
-        return $this->belongsToMany(Afectat::class, 'incidencies_has_recursos', 'afectats_id', 'incidencies_id');
+        return $this->hasMany(IncidenciesHasRecursos::class, 'incidencies_id');
     }
-
 }

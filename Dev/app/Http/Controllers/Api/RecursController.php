@@ -101,4 +101,35 @@ class RecursController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullrecursos()
+    {
+        $objectsAry = Recurs::with('tipus_recurso','usuaris','incidencies_has_recursos.incidencia','incidencies_has_recursos.afectat')->orderBy('codi')->get();
+        return RecursResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function therecurso(Recurs $theobj)
+    {
+        $objectsAry = Recurs::with('tipus_recurso','usuaris','incidencies_has_recursos.incidencia','incidencies_has_recursos.afectat')->find($theobj->id);
+        return (new RecursResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

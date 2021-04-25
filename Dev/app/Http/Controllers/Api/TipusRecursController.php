@@ -101,4 +101,32 @@ class TipusRecursController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+        // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fulltipusrecursos()
+    {
+        $objectsAry = TipusRecurs::with('recursos')->orderBy('tipus')->get();
+        return TipusRecursResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function thetipusrecurso(TipusRecurs $theobj)
+    {
+        $objectsAry = TipusRecurs::with('recursos')->find($theobj->id);
+        return (new TipusRecursResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

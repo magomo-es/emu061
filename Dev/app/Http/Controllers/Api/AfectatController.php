@@ -95,4 +95,35 @@ class AfectatController extends Controller
         }
         return $response;
     }
+
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullafectats()
+    {
+        $objectsAry = Afectat::with('sexe','incidencies_has_recursos.incidencia','incidencies_has_recursos.recurs','gravetat','valoracio')->orderBy('cognoms')->orderBy('nom')->get();
+        return AfectatResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function theafectat(Afectat $theobj)
+    {
+        $objectsAry = Afectat::with('sexe','incidencies_has_recursos.incidencia','incidencies_has_recursos.recurs','gravetat','valoracio')->find($theobj->id);
+        return (new AfectatResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

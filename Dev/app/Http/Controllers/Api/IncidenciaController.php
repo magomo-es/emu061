@@ -95,4 +95,37 @@ class IncidenciaController extends Controller
         }
         return $response;
     }
+
+
+
+
+
+
+
+
+    // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullincidencies()
+    {
+        $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi','usuari','incidencies_has_recursos.afectat','incidencies_has_recursos.recurs')->orderBy('data')->orderBy('hora')->get();
+        return IncidenciaResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function theincidencia(Incidencia $theobj)
+    {
+        $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi','usuari','incidencies_has_recursos.afectat','incidencies_has_recursos.recurs')->find($theobj->id);
+        return (new IncidenciaResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

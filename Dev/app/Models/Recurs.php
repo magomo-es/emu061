@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Recurs extends Model
 {
@@ -25,7 +28,7 @@ class Recurs extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tipus_recurso() //: BelongsTo
+    public function tipus_recurso(): BelongsTo
     {
         return $this->belongsTo(TipusRecurs::class, 'tipus_recursos_id');
     }
@@ -35,19 +38,19 @@ class Recurs extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function usuaris() //: HasMany
+    public function usuaris(): HasMany
     {
         return $this->hasMany(Usuari::class, 'recursos_id');
     }
 
     /**
-     * The roles that belong to the recursos
+     * Get all of the alumno_has_modulos for the Alumno
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function incidencies() //: BelongsToMany
+    public function incidencies_has_recursos(): HasMany
     {
-        return $this->belongsToMany(Incidencia::class, 'incidencies_has_recursos', 'recursos_id', 'incidencies_id');
+        return $this->hasMany(IncidenciesHasRecursos::class, 'recursos_id');
     }
 
 }

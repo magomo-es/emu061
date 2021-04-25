@@ -38,7 +38,14 @@ class Provincia extends Model
      */
     public function municipis()
     {
-        return $this->hasManyThrough(Municipi::class, Comarca::class);
+        return $this->hasManyThrough(
+            Comarca::class,
+            Municipi::class,
+            'id', // municipis.id en JOIN
+            'id', // comarques.id as KEY
+            'municipis_id', // Local key on the cars table...
+            'comarques_id' // Local key on the mechanics table...
+        );
     }
 
 }

@@ -36,32 +36,59 @@ use App\Http\Controllers\Api\IncidenciesHasRecursosController;
 
 //Route::middleware(['auth'])->group( function() {
 
-    Route::apiResource('admin/incidencies', IncidenciaController::class)->parameters(['incidencies' => 'theobj']);
+    //Route::apiResource('admin/incidencies', IncidenciaController::class)->parameters(['incidencies' => 'theobj']);
 
-    Route::apiResource('admin/incidencies_has_recursos', IncidenciesHasRecursosController::class)->parameters(['incidencies_has_recursos' => 'theobj']);
+    Route::get('incidencies', [IncidenciaController::class, 'fullincidencies']);
+    Route::get('incidencia/{theobj}', [IncidenciaController::class, 'theincidencia']);
 
-    Route::apiResource('admin/afectats', AfectatController::class)->parameters(['afectats' => 'theobj']);
-    Route::apiResource('admin/alertants', AlertantController::class)->parameters(['alertants' => 'theobj']);
-    Route::apiResource('admin/recursos', RecursController::class)->parameters(['recursos' => 'theobj']);
-    Route::apiResource('admin/usuaris', UsuariController::class)->parameters(['usuaris' => 'theobj']);
+    Route::get('afectats', [AfectatController::class, 'fullafectats']);
+    Route::get('afectat/{theobj}', [AfectatController::class, 'theafectat']);
 
-    Route::apiResource('admin/tipus_alertants', TipusAlertantController::class)->parameters(['tipus_alertants' => 'theobj']);
-    Route::apiResource('admin/tipus_incidencies', TipusIncidenciaController::class)->parameters(['tipus_incidencies' => 'theobj']);
-    Route::apiResource('admin/tipus_recursos', TipusRecursController::class)->parameters(['tipus_recursos' => 'theobj']);
+    Route::get('alertants', [AlertantController::class, 'fullalertants']);
+    Route::get('alertant/{theobj}', [AlertantController::class, 'thealertant']);
 
-    Route::apiResource('admin/rols', RolController::class)->parameters(['rols' => 'theobj']);
-    Route::apiResource('admin/municipis', MunicipiController::class)->parameters(['municipis' => 'theobj']);
-    Route::apiResource('admin/comarques', ComarcaController::class)->parameters(['comarques' => 'theobj']);
-    Route::apiResource('admin/provincies', ProvinciaController::class)->parameters(['provincies' => 'theobj']);
-    Route::apiResource('admin/sexes', SexeController::class)->parameters(['sexes' => 'theobj']);
+    Route::get('recursos', [RecursController::class, 'fullrecursos']);
+    Route::get('recurso/{theobj}', [RecursController::class, 'therecurso']);
 
-//  Route::apiResource('admin/formelements', FormElementsController::class)->parameters(['formelements' => 'theobj']);
-//  Route::apiResource('admin/videos', VideosController::class)->parameters(['videos' => 'theobj']);
-//  Route::apiResource('admin/playvideobycaller', PlayVideoByCallerController::class)->parameters(['playvideobycaller' => 'theobj']);
-//  Route::apiResource('admin/videoevents', VideoEventsController::class)->parameters(['videoevents' => 'theobj']);
+    Route::get('usuaris', [UsuariController::class, 'fullusuaris']);
+    Route::get('usuari/{theobj}', [UsuariController::class, 'theusuari']);
+
+    Route::get('formelements', [FormElementsController::class, 'fullformelements']);
+    Route::get('formelements/{theobj}', [FormElementsController::class, 'theformelement']);
+
+    Route::get('videos', [VideosController::class, 'fullvideos']);
+    Route::get('video/{theobj}', [VideosController::class, 'thevideo']);
+
+    Route::get('playvideobycallers', [PlayVideoByCallerController::class, 'fullplayvideobycallers']);
+    Route::get('playvideobycaller/{theobj}', [PlayVideoByCallerController::class, 'theplayvideobycaller']);
+
+    Route::get('videoevents', [VideoEventsController::class, 'fullvideoevents']);
+    Route::get('videoevents/{theobj}', [VideoEventsController::class, 'thevideoevent']);
+
+    Route::get('tipus_alertants', [TipusAlertantController::class, 'fulltipusalertants']);
+    Route::get('tipus_alertant/{theobj}', [TipusAlertantController::class, 'thetipusalertant']);
+
+    Route::get('tipus_incidencies', [TipusIncidenciaController::class, 'fulltipusincidencies']);
+    Route::get('tipus_incidencia/{theobj}', [TipusIncidenciaController::class, 'thetipusincidencia']);
+
+    Route::get('tipus_recursos', [TipusRecursController::class, 'fulltipusrecursos']);
+    Route::get('tipus_recurso/{theobj}', [TipusRecursController::class, 'thetipusrecurso']);
+
+    Route::get('rols', [RolController::class, 'fullrols']);
+    Route::get('rol/{theobj}', [RolController::class, 'therol']);
+
+    Route::get('comarques', [ComarcaController::class, 'fullcomarques']);
+    Route::get('comarca/{theobj}', [ComarcaController::class, 'thecomarca']);
+
+    Route::get('provincies', [ProvinciaController::class, 'fullprovincies']);
+    Route::get('provincia/{theobj}', [ProvinciaController::class, 'theprovincia']);
+
+    Route::get('sexes', [SexeController::class, 'fullsexes']);
+    Route::get('sexe/{theobj}', [SexeController::class, 'thesexe']);
 
     Route::get( 'municipis', [MunicipiController::class, 'fullmunicipis'] );
     Route::get( 'municipi/{theobj}', [MunicipiController::class, 'themunicipi'] );
+
     Route::get( 'centressanitaris', [AlertantController::class, 'centressanitaris'] );
 
 //});
