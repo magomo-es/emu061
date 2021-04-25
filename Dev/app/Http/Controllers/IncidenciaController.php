@@ -51,7 +51,7 @@ class IncidenciaController extends Controller
 
             echo '<script>console.log("index method -> with srchData")</script>';
 
-            $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi.','usuari','afectats.recursos')->when( $searchIncidente, function ($query, $searchIncidente) { return $query->where( 'num_incident','=', $searchIncidente ); })
+            $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi.','usuari','incidencies_has_recursos.afectat','incidencies_has_recursos.recurs')->when( $searchIncidente, function ($query, $searchIncidente) { return $query->where( 'num_incident','=', $searchIncidente ); })
                 ->when( $searchTipus, function ($query, $searchTipus) { return $query->where( 'tipus_incidencies_id','=', $searchTipus ); })
                 ->when( $searchUsuari, function ($query, $searchUsuari) { return $query->where( 'usuaris_id','=', $searchUsuari ); })
                 ->when( $searchMunicipi, function ($query, $searchMunicipi) { return $query->where( 'municipis_id','=', $searchMunicipi ); })
@@ -60,7 +60,7 @@ class IncidenciaController extends Controller
         } else {
 
             echo '<script>console.log("index method -> NO srchData")</script>';
-            $objectsAry = Incidencia::with(['tipus_incidencia','alertant','municipi','usuari','afectats.recursos'])->orderBy('data')->orderBy('hora')->paginate(10);
+            $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi','usuari','incidencies_has_recursos.afectat','incidencies_has_recursos.recurs')->orderBy('data')->orderBy('hora')->paginate(10);
 
         }
 
@@ -298,7 +298,7 @@ class IncidenciaController extends Controller
 
         echo '<script>console.log("edit method")</script>';
 
-        $objectsAry = Incidencia::with(['tipus_incidencia','alertant','municipi','usuari','afectats.recursos'])->orderBy('data')->orderBy('hora')->get($theobj->id);
+        $objectsAry = Incidencia::with('tipus_incidencia','alertant','municipi','usuari','incidencies_has_recursos.afectat','incidencies_has_recursos.recurs')->orderBy('data')->orderBy('hora')->get($theobj->id);
 
         $tipusAry = TipusIncidencia::orderBy('tipus')->get();
         $alertantsAry = Alertant::orderBy('cognoms')->orderBy('nom')->get();
