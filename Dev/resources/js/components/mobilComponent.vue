@@ -12,7 +12,7 @@
                 <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
                     <div>
                         <label for="codIncidencia"><small>Cod. Incidencia:</small></label>
-                        <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
+                        <input class="form-control form-control-sm" id="" v-model="name" type="text" name="num"value="0" disabled>
                     </div>
                 </div>
             <div class="col-4">
@@ -23,17 +23,17 @@
         <div class="row">
                 <div class="col-6">
                     <label for="afectatNom"><small>Nom i cognoms:</small></label>
-                    <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
+                    <input class="form-control form-control-sm" id="" v-model="name" type="text" name="num" disabled>
 
                     <label for="afectatCip"><small>CIP:</small></label>
-                    <input class="form-control form-control-sm" id="destino" v-model="cip" type="text" name="num"value="0" disabled>
+                    <input class="form-control form-control-sm" id="" v-model="cip" type="text" name="num" disabled>
                 </div>
             <div class="col-6">
                 <label for="afectatNom"><small>Gravetat:</small></label>
-                <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
+                <input class="form-control form-control-sm" id="" v-model="name" type="text" name="num" disabled>
 
                 <label for="afectatCip"><small>Valoració:</small></label>
-                <input class="form-control form-control-sm" id="destino" v-model="cip" type="text" name="num"value="0" disabled>
+                <input class="form-control form-control-sm" id="" v-model="cip" type="text" name="num" disabled>
             </div>
         </div>
         <br>
@@ -60,8 +60,7 @@
         <div class="row">
             <div class="col">
                 <label for="destino"><small>DESTINO:</small></label>
-                <input class="form-control form-control-sm" id="destino" v-model="destino" type="text" name="num"
-                        value="0" disabled>
+                <input class="form-control form-control-sm" id="" v-model="destino" type="text" name="num" value="0" disabled>
             </div>
         </div>
     </div>
