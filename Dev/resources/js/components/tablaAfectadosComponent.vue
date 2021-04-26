@@ -62,7 +62,7 @@
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content modal-style">
                     <div class="modal-header">
-                        <h5 id="exampleModalLabel" class="modal-title">Afectats</h5>
+                        <h5 class="modal-title">Afectats</h5>
                         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
                             <span aria-hidden="true">×</span>
                         </button>

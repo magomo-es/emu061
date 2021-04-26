@@ -37,7 +37,6 @@
         <!-- MODAL -->
 
         <div class="modal fade" id="modalAlertant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-style">
                     <div class="modal-header">
@@ -68,16 +67,16 @@
 
                             <div class="row">
                                 <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_municipisid" name="alertant_municipisid">
-                                    <option v-for="municipi in municipis" :key="municipi.id">{{ municipi.nom }}</option>
+                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis" title="Selecciona un municipi" name="alertant_municipisid">
+                                    <option v-for="municipi in municipis" :key="municipi.id" :value="municipi">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
                                 </select>
                             </div>
 
                             <div class="row">
                                 <label for="alertant_tipusalertantsid" class="col-12 col-form-label pl-1"><small>Tipus</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" name="alertant_tipusalertantsid">
-                                    <option v-for="tipus in tipus_alertants" :key="tipus.id">{{ tipus.tipus }}</option>
+                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="tipus_alertants" name="alertant_tipusalertantsid">
+                                    <option v-for="tipus in tipus_alertants" :key="tipus.id" :value="tipus">{{ tipus.tipus }}</option>
                                 </select>
                             </div>
 
@@ -147,7 +146,7 @@ export default {
             axios
                 .get('http://app.emu061.es/api/alertants')
                 .then(response => {
-                    me.alertant = response.data;
+                    me.alertant = response.data.data;
                 })
                 .catch( error => {
                     console.log(error)
@@ -161,7 +160,7 @@ export default {
             axios
                 .get('http://app.emu061.es/api/municipis')
                 .then(response => {
-                    me.municipis = response.data;
+                    me.municipis = response.data.data;
                 })
                 .catch( error => {
                     console.log(error)
@@ -175,7 +174,7 @@ export default {
             axios
                 .get('http://app.emu061.es/api/tipus_alertants')
                 .then(response => {
-                    me.tipus_alertants = response.data;
+                    me.tipus_alertants = response.data.data;
                 })
                 .catch( error => {
                     console.log(error)
@@ -187,6 +186,7 @@ export default {
     created() {
 
         this.getAlertant()
+        console.log(this.alertant)
 
         this.getMunicipis()
 
