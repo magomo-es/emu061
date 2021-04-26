@@ -85,8 +85,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Tancar</button>
+                        <button type="button" class="btn btn-primary" @click="showMun()">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -140,6 +140,11 @@ export default {
     },
 
     methods: {
+        showMun()
+        {
+            console.log("Munic:" + this.municipis);
+        },
+
         getAlertant()
         {
             let me = this;
@@ -147,6 +152,7 @@ export default {
                 .get('http://app.emu061.es/api/alertants')
                 .then(response => {
                     me.alertant = response.data.data;
+
                 })
                 .catch( error => {
                     console.log(error)
@@ -185,10 +191,9 @@ export default {
 
     created() {
 
-        this.getAlertant()
-        console.log(this.alertant)
-
         this.getMunicipis()
+
+        this.getAlertant()
 
         this.getTipus_alertants()
 
