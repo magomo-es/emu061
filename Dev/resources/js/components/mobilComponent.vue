@@ -1,49 +1,100 @@
 <template>
 <div onload="time()" class="container-lg mt-2" style="max-width: 1300px;">
 
-    <form id="app" @submit.prevent="onSubmit" action="" method="post" novalidate="true">
 
-    <div class="row">
-        <div class="col-4"></div>
-            <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
-                <div class='time-frame'>
-                    <div id='date-part'></div>
-                    <div id='time-part'></div>
+        <div class="row">
+                <div class="col-4">
+                    <label for="afectatNom"><small>Nom i cognoms:</small></label>
+                    <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
+
+                    <label for="afectatCip"><small>CIP:</small></label>
+                    <input class="form-control form-control-sm" id="destino" v-model="cip" type="text" name="num"value="0" disabled>
                 </div>
+                <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
+                    <div class='time-frame'>
+                        <div id='date-part'></div>
+                        <div id='time-part'></div>
+                    </div>
+                </div>
+            <div class="col-4">
+                <label for="afectatNom"><small>Gravetat:</small></label>
+                <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
+
+                <label for="afectatCip"><small>Valoració:</small></label>
+                <input class="form-control form-control-sm" id="destino" v-model="cip" type="text" name="num"value="0" disabled>
             </div>
-        <div class="col-4"></div>
+        </div>
+        <br>
+            <!-- <p v-if="errors.length">
+                <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
+            <ul>
+                <li v-for="error in errors">{{ error }}</li>
+            </ul>
+            </p> -->
+      <p>
+        <a class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Descripció</a>
+        </p>
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card card-body">
+                Descripció
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col">
+                <label for="destino"><small>DESTINO:</small></label>
+                <input class="form-control form-control-sm" id="destino" v-model="destino" type="text" name="num"
+                        value="0" disabled>
+            </div>
+        </div>
     </div>
-        <!-- <p v-if="errors.length">
-            <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
-        <ul>
-            <li v-for="error in errors">{{ error }}</li>
-        </ul>
-        </p> -->
 
-        <div class="form-group">
-            <div class="row">
-                <div class="col">
-                    <label for="destino"><small>DESTINO:</small></label>
-                    <input class="form-control form-control-sm" id="destino" v-model="destino" type="text" name="num"
-                        value="0" disabled>
-                </div>
-            </div>
+        <br>
+        <div>
+            <button type="button" @click="horaAct()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ACTIVACIÓ </button>
         </div>
         <br>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <button type="button" class="btn btn-primary" style="width: 500px; height: 360px;">SET</button>
+
+        <br>
+        <div>
+            <button type="button" @click="horaMob()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA MOBILITZACIÓ </button>
         </div>
         <br>
-        <div class="form-group">
-            <div class="row">
-                <div class="col">
-                    <label for="destino"><small>HORA:</small></label>
-                    <input class="form-control form-control-sm" id="destino" v-model="destino" type="text" name="num"
-                        value="0" disabled>
-                </div>
-            </div>
+
+        <br>
+        <div>
+            <button type="button" @click="horaAsis()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ASISTENCIA </button>
         </div>
-    </form>
+        <br>
+
+        <br>
+        <div>
+            <button type="button" @click="horaTrans()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA TRANSPORTE  </button>
+        </div>
+        <br>
+
+        <br>
+        <div>
+            <button type="button" @click="horaArrib()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ARRIBADA </button>
+        </div>
+        <br>
+
+        <br>
+        <div>
+            <button type="button" @click="horaTarnsf()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA TRANSFERENCIA </button>
+        </div>
+        <br>
+
+        <br>
+        <div>
+            <button type="button" @click="horaFin()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA FINALITZACIÓ </button>
+        </div>
+        <br>
 
   </div>
 
