@@ -86,7 +86,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Tancar</button>
-                        <button type="button" class="btn btn-primary"  @click="showMun()">Guardar</button>
+                        <button type="button" class="btn btn-primary" @click="showMun()">Guardar</button>
                     </div>
                 </div>
             </div>
