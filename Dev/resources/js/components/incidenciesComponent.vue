@@ -21,25 +21,24 @@
             <div class="row">
                 <div class="col" style="max-width: max-content;">
                     <label for="num"><small>Número:</small></label>
-                    <input class="form-control form-control-sm" id="num" v-model="num" type="number" name="num"
-                        value="0" disabled>
+                    <input class="form-control form-control-sm" id="num" v-model="num" type="number" name="num" value="0" disabled  aria-label="Numero d'incidència">
                 </div>
 
                 <div class="col" style="max-width: max-content;">
                     <label for="data"><small>Data:</small></label>
-                    <input class="form-control form-control-sm" id="data" v-model="data" type="date" name="data">
+                    <input class="form-control form-control-sm" id="data" v-model="data" type="date" name="data" aria-label="Data d'incidència">
                 </div>
 
 
                 <div class="col" style="max-width: max-content;">
                     <label for="hora"><small>Hora:</small></label>
-                    <input class="form-control form-control-sm" id="hora" v-model="hora" type="time" name="hora">
+                    <input class="form-control form-control-sm" id="hora" v-model="hora" type="time" name="hora" aria-label="Adreça de la incidència">
                 </div>
 
 
                 <div class="col">
                     <label for="munics"><small>Municipi:</small></label>
-                    <select class="form-control form-control-sm select-form " id="munics" v-model="munics">
+                    <select class="form-control form-control-sm select-form " id="munics" v-model="munics" aria-label="Municipi de la incidència">
                         <option v-for="munic in munics" :key='munic' v-bind:value="munic.id">{{ munic.nom }}</option>
                     </select>
                 </div>
@@ -47,15 +46,14 @@
 
                 <div class="col">
                     <label for="comarcas"><small>Comarca:</small></label>
-                    <select class="form-control form-control-sm select-form " name="comarcas" id="comarcas" v-model="comarcas">
+                    <select class="form-control form-control-sm select-form " name="comarcas" id="comarcas" v-model="comarcas" aria-label="Comarca de la incidència">
                         <option v-for="comarca in comarcas" :key='comarca'>{{ comarca }}</option>
                     </select>
                 </div>
 
                 <div class="col">
                     <label for="provincia"><small>Provincia:</small></label>
-                    <select class="form-control form-control-sm select-form " name="provincia" id="provincia"
-                        v-model="provincia">
+                    <select class="form-control form-control-sm select-form " name="provincia" id="provincia" v-model="provincia" aria-label="Provincia de la incidència">
                         <option v-for="prov in provincia" :key='prov'>{{ prov }}</option>
                     </select>
                 </div>
@@ -67,21 +65,19 @@
             <div class="row">
                 <div class="col">
                     <label for="direcc"><small>Adreça:</small></label>
-                    <input class="form-control form-control-sm" id="direcc" v-model="direcc" type="text"
-                        name="direcc">
+                    <input class="form-control form-control-sm" id="direcc" v-model="direcc" type="text" name="direcc" aria-label="Adreça de la incidència">
                 </div>
 
                 <div class="col">
                     <label for="direcc_compl"><small>Adreça Compl.:</small></label>
-                    <input class="form-control form-control-sm" id="direcc_compl" v-model="direcc_compl" type="text"
-                        name="direcc_compl">
+                    <input class="form-control form-control-sm" id="direcc_compl" v-model="direcc_compl" type="text" name="direcc_compl" aria-label="Adreça de la incidència">
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label for="desc"><small>Descripció:</small></label>
-            <textarea class="form-control form-control-sm" id="desc" v-model="desc" rows="2"></textarea>
+            <textarea class="form-control form-control-sm" id="desc" v-model="desc" rows="2"  aria-label="Descripció de la incidència"></textarea>
         </div>
 
         <hr>
@@ -89,9 +85,9 @@
         <tabla-afectados-component></tabla-afectados-component>
 
         <div class="form-group mt-4">
-            <input class="btn btn-primary" type="submit" value="Confirmar Incidencia">
+            <input class="btn btn-primary" type="submit" value="Confirmar Incidencia" aria-label="Confirmar l'incidència">
 
-            <input class="btn btn-secondary" type="submit" value="Cancel·lar">
+            <input class="btn btn-secondary" type="submit" value="Cancel·lar" aria-label="Cancelar l'incidència">
 
 
         </div>

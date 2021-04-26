@@ -74,13 +74,13 @@
 
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_nom" class="col-12 col-form-label pl-1"><small>Nom</small></label>
+                                <label for="afectat_nom" class="col-12 col-form-label pl-1 letter-spacing"><small>Nom</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_nom" v-model="afectat.nom">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_cognoms" class="col-12 col-form-label pl-1"><small>Congnoms</small></label>
+                                <label for="afectat_cognoms" class="col-12 col-form-label pl-1 letter-spacing"><small>Congnoms</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_cognoms" v-model="afectat.cognoms">
                             </div>
                         </div>
@@ -91,25 +91,25 @@
 
                         <div class="col-4">
                             <div class="row px-1">
-                                <label for="afectat_telefon" class="col-12 col-form-label pl-1"><small>Telefon</small></label>
+                                <label for="afectat_telefon" class="col-12 col-form-label pl-1 letter-spacing"><small>Telefon</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_telefon" v-model="afectat.telefon" pattern="[0-9]{9}" minlength="9" maxlength="9">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="row px-1">
-                                <label for="afectat_cip" class="col-12 col-form-label pl-1"><small>CIP</small></label>
+                                <label for="afectat_cip" class="col-12 col-form-label pl-1 letter-spacing"><small>CIP</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip" minlength="14" maxlength="16">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row px-1">
-                                <label for="afectat_edat" class="col-12 col-form-label pl-1"><small>Edat</small></label>
+                                <label for="afectat_edat" class="col-12 col-form-label pl-1 letter-spacing"><small>Edat</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat" pattern="[0-9]{1,3}" minlength="1" maxlength="3">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row px-1">
-                                <label for="afectat_sexesid" class="col-12 col-form-label pl-1"><small>Sexe</small></label>
+                                <label for="afectat_sexesid" class="col-12 col-form-label pl-1 letter-spacing"><small>Sexe</small></label>
                                 <select class="select-form col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexes_id">
                                     <option v-for="(item) in sexes"  v-bind:key="item.id" v-bind:value="item.id">{{ item.sexe }}</option>
                                 </select>
@@ -122,7 +122,7 @@
 
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_codigravetat" class="col-12 col-form-label pl-1"><small>Codi Gravetat</small></label>
+                                <label for="afectat_codigravetat" class="col-12 col-form-label pl-1 letter-spacing"><small>Codi Gravetat</small></label>
                                 <select class="select-form col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat" title="Pick One">
                                     <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
@@ -131,7 +131,7 @@
 
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_recursosid" class="col-12 col-form-label pl-1"><small>Recurs</small></label>
+                                <label for="afectat_recursosid" class="col-12 col-form-label pl-1 letter-spacing"><small>Recurs</small></label>
                                 <select class="select-form col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id" title="Pick One">
                                     <option v-for="(item) in recursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.codi + ' - ' + item.tipusrecursos.tipus }}</option>
                                 </select>
@@ -144,14 +144,14 @@
 
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_desti" class="col-12 col-form-label pl-1"><small>Destí</small></label>
+                                <label for="afectat_desti" class="col-12 col-form-label pl-1 letter-spacing"><small>Destí</small></label>
                                 <input type="text" class="col-12 form-control" id="afectat_desti" v-model="afectat.desti">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="row px-1">
-                                <label for="afectat_destialertantid" class="col-12 col-form-label pl-1"><small>Destins</small></label>
+                                <label for="afectat_destialertantid" class="col-12 col-form-label pl-1 letter-spacing"><small>Destins</small></label>
                                 <select class="select-form col-12 custom-select" id="afectat_destialertantid" @change="onChangeDesti($event)" v-model="afectat.desti_alertant_id">
                                     <option value="0">Seleccioneu destí</option>
                                     <option v-for="(item) in destins" v-bind:key="item.id" v-bind:value="item.id">{{ item.nom }}</option>
@@ -164,8 +164,8 @@
                     <div class="form-group row" id="boxValoracio" v-bind:class="{ 'valoracio-box': displayHelp }">
 
                         <div class="col-12">
-                            <div class="row px-1 mb-3">
-                                <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1"><small>Codi Valoracio</small></label>
+                            <div class="row px-1">
+                                <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1 letter-spacing"><small>Codi Valoracio</small></label>
                                 <select class="select-form col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
                                     <option value="0">Seleccioneu valoració</option>
                                     <option v-for="(item, index) in codisvaloracions" v-bind:key="item.id" v-bind:id="('v_'+index+'_'+item.codi)" v-bind:value="item.codi">{{ item.nom }}</option>
@@ -173,7 +173,7 @@
                                 <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" @click="openVideoValoracio()"><i class="far fa-play-circle"></i> Video</button></div>
                                 <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)"><i class="far fa-question-circle"></i> Ayuda</button></div>
                             </div>
-                            <div v-show="(displayHelp)" class="row px-1 mb-3">
+                            <div v-show="(displayHelp)" class="row px-1 mb-3 mt-3">
 
                                 <h5>Simptomes</h5>
                                 <div class="container-fluid mt-3 mb-5">
@@ -202,7 +202,7 @@
 
                         <div class="col-12">
                             <div class="row px-1">
-                                <label for="afectat_descripcio" class="col-12 col-form-label pl-1"><small>Descripcio</small></label>
+                                <label for="afectat_descripcio" class="col-12 col-form-label pl-1 letter-spacing"><small>Descripcio</small></label>
                                 <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.descripcio"></textarea>
                             </div>
                         </div>
@@ -301,6 +301,13 @@ th     { background:#eee; padding:0px !important }
 #fwrButton { right: 10px; }
 #timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center; }
 .valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99; }
+
+.letter-spacing
+{
+    padding: 0;
+    margin: 0;
+    padding-left: 0 !important;
+}
 
 </style>
 
