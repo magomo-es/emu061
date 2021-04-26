@@ -147,7 +147,6 @@ export default {
                 .get('http://app.emu061.es/api/alertants')
                 .then(response => {
                     me.alertant = response.data.data;
-                    console.log(response.data);
 
                 })
                 .catch( error => {
@@ -162,8 +161,7 @@ export default {
             axios
                 .get('http://app.emu061.es/api/municipis')
                 .then(response => {
-                    me.municipis = response.data.data.data;
-                    console.log(response.data.data);
+                    me.municipis = response.data.data;
                 })
                 .catch( error => {
                     console.log(error)
@@ -192,7 +190,7 @@ export default {
 
         this.getAlertant()
 
-
+        console.log("Municipis:" + this.municipis )
 
         this.getTipus_alertants()
 
