@@ -162,7 +162,7 @@ export default {
             axios
                 .get('http://app.emu061.es/api/municipis')
                 .then(response => {
-                    me.municipis = response.data.data;
+                    me.municipis = response.data.data.data;
                     console.log(response.data.data);
                 })
                 .catch( error => {
