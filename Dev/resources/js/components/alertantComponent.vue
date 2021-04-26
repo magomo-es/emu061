@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="row">
-                                <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
+                                <label for="alertant_municipisid" class="col-12 col-form-label pl-1" @click="showMun()"><small>Municipi</small></label>
                                 <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis" title="Selecciona un municipi" name="alertant_municipisid">
                                     <option v-for="municipi in municipis" :key="municipi.id" :value="municipi">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
@@ -140,6 +140,11 @@ export default {
     },
 
     methods: {
+        showMun()
+        {
+            console.log("Munic:" + municipis);
+        },
+
         getAlertant()
         {
             let me = this;
@@ -189,8 +194,6 @@ export default {
         this.getMunicipis()
 
         this.getAlertant()
-
-        console.log("Municipis:" + this.municipis )
 
         this.getTipus_alertants()
 
