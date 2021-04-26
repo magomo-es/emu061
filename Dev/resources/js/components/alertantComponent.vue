@@ -67,7 +67,7 @@
 
                             <div class="row">
                                 <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis" title="Selecciona un municipi" name="alertant_municipisid"  @click="showMun()">
+                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis" title="Selecciona un municipi" name="alertant_municipisid">
                                     <option v-for="municipi in municipis" :key="municipi.id" :value="municipi">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
                                 </select>
@@ -85,8 +85,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Tancar</button>
+                        <button type="button" class="btn btn-primary"  @click="showMun()">Guardar</button>
                     </div>
                 </div>
             </div>
