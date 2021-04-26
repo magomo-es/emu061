@@ -1,22 +1,34 @@
 <template>
 <div onload="time()" class="container-lg mt-2" style="max-width: 1300px;">
 
-
         <div class="row">
                 <div class="col-4">
+                    <br>
+                    <div class='time-frame'>
+                        <div id='date-part'></div>
+                        <div id='time-part'></div>
+                    </div>
+                </div>
+                <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
+                    <div>
+                        <label for="codIncidencia"><small>Cod. Incidencia:</small></label>
+                        <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
+                    </div>
+                </div>
+            <div class="col-4">
+            </div>
+        </div>
+
+
+        <div class="row">
+                <div class="col-6">
                     <label for="afectatNom"><small>Nom i cognoms:</small></label>
                     <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
 
                     <label for="afectatCip"><small>CIP:</small></label>
                     <input class="form-control form-control-sm" id="destino" v-model="cip" type="text" name="num"value="0" disabled>
                 </div>
-                <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
-                    <div class='time-frame'>
-                        <div id='date-part'></div>
-                        <div id='time-part'></div>
-                    </div>
-                </div>
-            <div class="col-4">
+            <div class="col-6">
                 <label for="afectatNom"><small>Gravetat:</small></label>
                 <input class="form-control form-control-sm" id="destino" v-model="name" type="text" name="num"value="0" disabled>
 
@@ -58,7 +70,6 @@
         <div>
             <button type="button" @click="horaAct()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ACTIVACIÓ </button>
         </div>
-        <br>
 
         <br>
         <div>
@@ -66,31 +77,26 @@
         </div>
         <br>
 
-        <br>
         <div>
             <button type="button" @click="horaAsis()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ASISTENCIA </button>
         </div>
         <br>
 
-        <br>
         <div>
             <button type="button" @click="horaTrans()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA TRANSPORTE  </button>
         </div>
         <br>
 
-        <br>
         <div>
             <button type="button" @click="horaArrib()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ARRIBADA </button>
         </div>
         <br>
 
-        <br>
         <div>
             <button type="button" @click="horaTarnsf()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA TRANSFERENCIA </button>
         </div>
         <br>
 
-        <br>
         <div>
             <button type="button" @click="horaFin()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA FINALITZACIÓ </button>
         </div>
@@ -103,7 +109,6 @@
         .time-frame {
         background-color: #000000;
         color: #ffffff;
-        width: 300px;
         font-family: Arial;
         }
 
