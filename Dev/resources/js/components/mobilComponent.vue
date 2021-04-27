@@ -68,7 +68,7 @@
         <br>
 
         <div>
-            <button type="button" id="activacion" @click="horaAct()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ACTIVACIÓ </button>
+            <button type="button" @click="horaAct()" id="activacion" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ACTIVACIÓ </button>
         </div>
         <br>
 
