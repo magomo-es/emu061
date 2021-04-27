@@ -53,8 +53,8 @@
 
                 <div class="col">
                     <label for="provincia"><small>Provincia:</small></label>
-                    <select class="form-control form-control-sm select-form " name="provincia" id="provincia" v-model="provincies" aria-label="Provincia de la incidència">
-                        <option v-for="prov in provincies" :key='prov.id' :value="prov.id">{{ prov.nom }}</option>
+                    <select class="form-control form-control-sm select-form " name="provincia-Select" id="provincia-Select" v-model="provincies" aria-label="Provincia de la incidència">
+                        <option v-for="prov in provincies" :key='prov.id' :value="prov.id" id="provincia">{{ prov.nom }}</option>
                     </select>
                 </div>
             </div>
@@ -179,6 +179,7 @@ export default {
             .get('http://app.emu061.es/api/provincies')
             .then(response => {
                 me.provincies = response.data.data;
+                console.log('provincies: ' + me.provincies)
             })
             .catch( error => {
                 console.log(error)
@@ -191,13 +192,12 @@ export default {
         console.log(event.target.value);
 
         var municipi_select = this.municipis.find(municipi => municipi.id = event.target.value);
-        var comarca_select = this.comarques.find(comarca => comarca.id = municipi_select.comarques_id);
-        var provincia_select = this.provincies.find(provincia => provincia.id = municipi_select.provincia.id);
+        console.log("munic_select: " + municipi_select.provincia.nom + " - ID: " + municipi_select.provincia.id);
+        // var comarca_select = this.comarques.find(comarca => comarca.id = municipi_select.comarques_id);
+        // var provincia_select = this.provincies.find(provincia => provincia.id = municipi_select.provincia.id);
 
-array.forEach(element => {
-
-});
-        $('#comarques').value("");
+        //$('#provincia').val(municipi_select.provincia.id);
+        //$('#comarques').val(municipi_select.provincia.nom);
     },
 
     cleanForm() {
