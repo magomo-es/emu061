@@ -111,14 +111,7 @@
 
                         <div class="form-group row">
                             <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
-                                <input type="checkbox" name="daltonic" id="daltonic" value="false" @change="onChangeDaltonic($event)" disabled>
-                                <label for="daltonic" class="col-form-label" style="margin-left:10px">Mode Daltònic</label>
-                            </div>
-                        </div>
-
-                        <div v-if="daltonicSelected" class="form-group row">
-                            <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
-                                <select class="col-8" name="dalt" id="dalt" @change="onChangeSelectDaltonics($event)" aria-placeholder="Selecciona el tipus">
+                                <select class="col-8" name="dalt" id="dalt" @change="onChangeSelectDaltonics($event)" title="Selecciona el tipus" disabled>
                                     <option v-for="dalt in daltonics" v-bind:key="dalt" v-bind:value="dalt">{{ dalt }}</option>
                                 </select>
                             </div>
@@ -241,8 +234,7 @@ export default {
           $('#dark-light-rb').prop("checked", false);
           $('#light-rb').prop("checked", false);
 
-          $('#daltonic').attr("disabled", true);
-          this.daltonicSelected = false;
+          $('#dalt').attr('disabled','disabled');
       },
       onChangeColorFont(event)
       {
@@ -251,8 +243,7 @@ export default {
           $('#dark-light-rb').prop("checked", false);
           $('#light-rb').prop("checked", false);
 
-          $('#daltonic').attr("disabled", true);
-          this.daltonicSelected = false;
+          $('#dalt').attr('disabled','disabled');
       },
       onChangeBackgroundColor(event)
       {
@@ -261,8 +252,7 @@ export default {
           $('#dark-light-rb').prop("checked", false);
           $('#light-rb').prop("checked", false);
 
-          $('#daltonic').attr("disabled", true);
-          this.daltonicSelected = false;
+          $('#dalt').attr('disabled','disabled');
       },
       onChangeBoxBackground(event)
       {
@@ -271,8 +261,7 @@ export default {
           $('#dark-light-rb').prop("checked", false);
           $('#light-rb').prop("checked", false);
 
-          $('#daltonic').attr("disabled", true);
-          this.daltonicSelected = false;
+          $('#dalt').attr('disabled','disabled');
       },
       onChangeBoxFontColor(event)
       {
@@ -281,8 +270,7 @@ export default {
           $('#dark-light-rb').prop("checked", false);
           $('#light-rb').prop("checked", false);
 
-          $('#daltonic').attr("disabled", true);
-          this.daltonicSelected = false;
+          $('#dalt').attr('disabled','disabled');
       },
 
       // CHECKBOX'S
@@ -306,7 +294,8 @@ export default {
               $('#BoxBackground').val('#3d3d3d');
               $('#BoxFontColor').val('#ffffff');
 
-              $('#daltonic').removeAttr("disabled");
+               $('#dalt').attr('disabled','disabled');
+              //$('#dalt').removeAttr("disabled");
           }
           else if (optionText == "dark-light")
           {
@@ -322,7 +311,7 @@ export default {
               $('#BoxBackground').val('#94a7b8');
               $('#BoxFontColor').val('#000000');
 
-              $('#daltonic').removeAttr("disabled");
+              $('#dalt').removeAttr("disabled");
 
               // Deuteranopia: #94a7b8 -->  #9ca3b8
               // Protanopia: #94a7b8 -->  #a0a7b9
@@ -342,25 +331,11 @@ export default {
               $('#BoxBackground').val('#ffffff');
               $('#BoxFontColor').val('#495057');
 
-              $('#daltonic').removeAttr("disabled");
+              $('#dalt').removeAttr("disabled");
 
               // Deuteranopia: #495057 -->  #4c4e57
               // Protanopia: #495057 -->  #4d5057
               // Tritanopia: #495057 -->  #465252
-          }
-      },
-
-      onChangeDaltonic(event)
-      {
-          if (event.target.value == "false")
-          {
-            this.daltonicSelected = true;
-            $('#daltonic').val('true');
-          }
-          else if (event.target.value == "true")
-          {
-            this.daltonicSelected = false;
-            $('#daltonic').val('false');
           }
       },
 
@@ -374,13 +349,11 @@ export default {
               {
                   document.documentElement.style.setProperty('--BoxBackground', '#9ca3b8');
                   $('#BoxBackground').val('#9ca3b8');
-                  console.log("changed");
               }
               else if (this.radioSelected == "light")
               {
                   document.documentElement.style.setProperty('--BoxFontColor', '#4c4e57');
                   $('#BoxFontColor').val('#4c4e57');
-                  console.log("changed");
               }
           }
           else if (optionText == "Protanopia")
@@ -389,13 +362,11 @@ export default {
               {
                   document.documentElement.style.setProperty('--BoxBackground', '#a0a7b9');
                   $('#BoxBackground').val('#a0a7b9');
-                  console.log("changed");
               }
               else if (this.radioSelected == "light")
               {
                   document.documentElement.style.setProperty('--BoxFontColor', '#4d5057');
                   $('#BoxFontColor').val('#4d5057');
-                  console.log("changed");
               }
           }
           else if (optionText == "Tritanopia")
@@ -404,13 +375,11 @@ export default {
               {
                   document.documentElement.style.setProperty('--BoxBackground', '#8babac');
                   $('#BoxBackground').val('#8babac');
-                  console.log("changed");
               }
               else if (this.radioSelected == "light")
               {
                   document.documentElement.style.setProperty('--BoxFontColor', '#465252');
                   $('#BoxFontColor').val('#465252');
-                  console.log("changed");
               }
           }
       }
