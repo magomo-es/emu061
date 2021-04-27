@@ -12,7 +12,7 @@
                 <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
                     <div>
                         <label for="codIncidencia"><small>Cod. Incidencia:</small></label>
-                        <input class="form-control form-control-sm" id="" v-model="name" type="text" name="num"value="0" disabled>
+                        <input class="form-control form-control-sm" id="" v-model="name" type="text" name="num" value="0" disabled>
                     </div>
                 </div>
             <div class="col-4">
@@ -44,7 +44,7 @@
             </ul>
             </p> -->
       <p>
-        <a class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Descripció</a>
+        <a class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Veure Descripció</a>
         </p>
       <div class="row">
         <div class="col">
@@ -60,44 +60,45 @@
         <div class="row">
             <div class="col">
                 <label for="destino"><small>DESTINO:</small></label>
-                <input class="form-control form-control-sm" id="" v-model="destino" type="text" name="num" value="0" disabled>
+                <input class="form-control form-control-sm" id="destino" type="text" name="num" value="CALLE FALSA 123" readonly="readonly">
             </div>
         </div>
     </div>
 
         <br>
-        <div>
-            <button type="button" @click="horaAct()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ACTIVACIÓ </button>
-        </div>
 
-        <br>
         <div>
-            <button type="button" @click="horaMob()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA MOBILITZACIÓ </button>
+            <button type="button" id="activacion" @click="horaAct()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ACTIVACIÓ </button>
         </div>
         <br>
 
         <div>
-            <button type="button" @click="horaAsis()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ASISTENCIA </button>
+            <button type="button" @click="horaMob()" id="mobilizacion" class="btn btn-primary btn-lg w-100" style="height:60px" disabled> HORA MOBILITZACIÓ </button>
         </div>
         <br>
 
         <div>
-            <button type="button" @click="horaTrans()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA TRANSPORTE  </button>
+            <button type="button" @click="horaAsis()" id="asistencia" class="btn btn-primary btn-lg w-100" style="height:60px" disabled> HORA ASISTENCIA </button>
         </div>
         <br>
 
         <div>
-            <button type="button" @click="horaArrib()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA ARRIBADA </button>
+            <button type="button" @click="horaTrans()" id="transporte" class="btn btn-primary btn-lg w-100" style="height:60px" disabled> HORA TRANSPORTE  </button>
         </div>
         <br>
 
         <div>
-            <button type="button" @click="horaTarnsf()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA TRANSFERENCIA </button>
+            <button type="button" @click="horaArrib()" id="llegada" class="btn btn-primary btn-lg w-100" style="height:60px" disabled> HORA ARRIBADA </button>
         </div>
         <br>
 
         <div>
-            <button type="button" @click="horaFin()" class="btn btn-primary btn-lg w-100" style="height:60px"> HORA FINALITZACIÓ </button>
+            <button type="button" @click="horaTransf()" id="transferencia" class="btn btn-primary btn-lg w-100" style="height:60px" disabled> HORA TRANSFERENCIA </button>
+        </div>
+        <br>
+
+        <div>
+            <button type="button" @click="horaFin()" id="finalizacion" class="btn btn-primary btn-lg w-100" style="height:60px" disabled> HORA FINALITZACIÓ </button>
         </div>
         <br>
 
@@ -210,6 +211,107 @@
 
             clockElement2.textContent = fecha.getDate() + " (" + day + ") " + mes + ' '
             + fecha.getFullYear();
+        },
+        horaAct(){
+            var activacion = document.getElementById('activacion');
+            var mobilizacion = document.getElementById('mobilizacion');
+            var array = this.getDate();
+
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            activacion.textContent ="HORA ACTIVACIÓ [" + texto + "]";
+            activacion.disabled = true;
+            mobilizacion.disabled = false;
+        },
+        horaMob(){
+            var asistencia = document.getElementById('asistencia');
+            var mobilizacion = document.getElementById('mobilizacion');
+            var array = this.getDate();
+
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            mobilizacion.textContent ="HORA MOBILITZACIÓ [" + texto + "]";
+            asistencia.disabled = false;
+            mobilizacion.disabled = true;
+        },
+        horaAsis(){
+            var asistencia = document.getElementById('asistencia');
+            var transporte = document.getElementById('transporte');
+            var destino = document.getElementById('destino');
+            var array = this.getDate();
+
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            asistencia.textContent ="HORA ASISTENCIA [" + texto + "]";
+            destino.value = "CALLE HOSPITAL";
+            asistencia.disabled = true;
+            transporte.disabled = false;
+        },
+        horaTrans(){
+            var llegada = document.getElementById('llegada');
+            var transporte = document.getElementById('transporte');
+            var array = this.getDate();
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            transporte.textContent ="HORA TRANSPORT [" + texto + "]";
+            transporte.disabled = true;
+            llegada.disabled = false;
+        },
+        horaArrib(){
+            var llegada = document.getElementById('llegada');
+            var transferencia = document.getElementById('transferencia');
+            var array = this.getDate();
+
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            llegada.textContent ="HORA ARRIBADA [" + texto + "]";
+            llegada.disabled = true;
+            transferencia.disabled = false;
+        },
+        horaTransf(){
+            var transferencia = document.getElementById('transferencia');
+            var fin = document.getElementById('finalizacion');
+            var array = this.getDate();
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            transferencia.textContent ="HORA TRANSFERENCIA [" + texto + "]";
+            transferencia.disabled = true;
+            fin.disabled = false;
+        },
+        horaFin(){
+            var transferencia = document.getElementById('transferencia');
+            var fin = document.getElementById('finalizacion');
+            var array = this.getDate();
+
+            var texto = array[0] + ":" + array[1] + ":" + array[2];
+
+            fin.textContent ="HORA FINALIZACIÓ [" + texto + "]";
+            transferencia.disabled = true;
+            fin.disabled = true;
+
+        }, getDate() {
+            var fecha = new Date();
+            var array = [];
+
+            var segundos = fecha.getSeconds();
+            var minutos = fecha.getMinutes();
+            var horas = fecha.getHours();
+
+            if(horas <= 9){
+               horas = "0" + horas;
+            }
+
+            if(minutos <= 9){
+               minutos = "0" + minutos;
+            }
+
+            if(segundos <= 9){
+               segundos = "0" + segundos;
+            }
+
+            array.push(horas, minutos, segundos);
+
+            return array;
         }
 
     },
