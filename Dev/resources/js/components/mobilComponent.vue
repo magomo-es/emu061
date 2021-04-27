@@ -23,18 +23,17 @@
         <div class="row">
                 <div class="col-6">
                     <label for="afectatNom"><small>Nom i cognoms:</small></label>
-                    <input class="form-control form-control-sm" id="" :value="afectat.nom" type="text" name="num" readonly="readonly">
-                    <h1>{{ afectat.nom }}</h1>
+                    <input class="form-control form-control-sm" id="" :value="afectats[0].nom" type="text" name="num" readonly>
 
                     <label for="afectatCip"><small>CIP:</small></label>
-                    <input class="form-control form-control-sm" id="" type="text" name="num" disabled>
+                    <input class="form-control form-control-sm" id="" :value="afectats[0].cip" type="text" name="num" readonly>
                 </div>
             <div class="col-6">
                 <label for="afectatNom"><small>Gravetat:</small></label>
-                <input class="form-control form-control-sm" id="" type="text" name="num" disabled>
+                <input class="form-control form-control-sm" id="" :value="afectats[0].codi_gravetat" type="text" name="num" readonly>
 
                 <label for="afectatCip"><small>Valoració:</small></label>
-                <input class="form-control form-control-sm" id="" type="text" name="num" disabled>
+                <input class="form-control form-control-sm" id="" :value="afectats[0].codi_valoracio" type="text" name="num" readonly>
             </div>
         </div>
         <br>
@@ -130,24 +129,6 @@
     data() {
         return {
             afectats:[],
-            afectat:{
-                id: 0,
-                    telefon: '',
-                    cip: '',
-                    nom: '',
-                    cognoms: '',
-                    edat: '',
-                    te_cip: 0,
-                    sexes_id: 0,
-                    descripcio: '',
-                    tipus_recursos_id: 0,
-                    codi_gravetat: '',
-                    codi_valoracio: '',
-                    recursos_id: 0,
-                    prioritat: 0,
-                    desti: '',
-                    desti_alertant_id: 0
-            }
 
         }
     }, methods:{
@@ -162,25 +143,6 @@
                     console.log(error)
                 })
                 .finally(() => this.loading = false)
-        },
-        register(){
-                    this.afectats.forEach(af => {af.telefon = this.afectat.telefon
-                    af.cip = this.afectat.cip
-                    af.nom = this.afectat.nom
-                    af.cognoms = this.afectat.cognoms
-                    af.edat = this.afectat.edat
-                    af.te_cip = this.afectat.te_cip
-                    af.sexes_id = this.afectat.sexes_id
-                    af.descripcio = this.afectat.descripcio
-                    af.tipus_recursos_id = this.afectat.tipus_recursos_id
-                    af.codi_gravetat = this.afectat.codi_gravetat
-                    af.codi_valoracio = this.afectat.codi_valoracio
-                    // extra data
-                    af.recursos_id = this.afectat.recursos_id
-                    af.prioritat = 0
-                    af.desti = this.afectat.desti
-                    af.desti_alertant_id = this.afectat.desti_alertant_id})
-
         },
         clock() {
             var clockElement = document.getElementById('time-part');
@@ -372,7 +334,6 @@
     },
     created(){
         this.getAfectat()
-        this.register()
     }
     }
 </script>

@@ -67,16 +67,16 @@
 
                             <div class="row">
                                 <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis" title="Selecciona un municipi" name="alertant_municipisid">
-                                    <option v-for="municipi in municipis" :key="municipi.id" :value="municipi">{{ municipi.nom }}</option>
+                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis.id" title="Selecciona un municipi" name="alertant_municipisid">
+                                    <option v-for="municipi in municipis" :key="municipi.id" :value="municipi.id">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
                                 </select>
                             </div>
 
                             <div class="row">
                                 <label for="alertant_tipusalertantsid" class="col-12 col-form-label pl-1"><small>Tipus</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="tipus_alertants" name="alertant_tipusalertantsid">
-                                    <option v-for="tipus in tipus_alertants" :key="tipus.id" :value="tipus">{{ tipus.tipus }}</option>
+                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="tipus_alertants.id" name="alertant_tipusalertantsid">
+                                    <option v-for="tipus in tipus_alertants" :key="tipus.id" :value="tipus.id">{{ tipus.tipus }}</option>
                                 </select>
                             </div>
 
@@ -86,7 +86,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Tancar</button>
-                        <button type="button" class="btn btn-primary" @click="showMun()">Guardar</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -140,10 +140,6 @@ export default {
     },
 
     methods: {
-        showMun()
-        {
-            console.log("Munic:" + this.municipis);
-        },
 
         getAlertant()
         {

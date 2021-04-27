@@ -38,23 +38,23 @@
 
                 <div class="col">
                     <label for="munics"><small>Municipi:</small></label>
-                    <select class="form-control form-control-sm select-form " id="munics" v-model="munics" aria-label="Municipi de la incidència">
-                        <option v-for="munic in munics" :key='munic' v-bind:value="munic.id">{{ munic.nom }}</option>
+                    <select class="form-control form-control-sm select-form " id="munics" v-model="municipis.id" aria-label="Municipi de la incidència" @change="filtrarMunicipis($event)">
+                        <option v-for="munic in municipis" :key='munic.id' v-bind:value="munic.id">{{ munic.nom }}</option>
                     </select>
                 </div>
 
 
                 <div class="col">
                     <label for="comarcas"><small>Comarca:</small></label>
-                    <select class="form-control form-control-sm select-form " name="comarcas" id="comarcas" v-model="comarcas" aria-label="Comarca de la incidència">
-                        <option v-for="comarca in comarcas" :key='comarca'>{{ comarca }}</option>
+                    <select class="form-control form-control-sm select-form " name="comarcas" id="comarques" v-model="comarques.id" aria-label="Comarca de la incidència">
+                        <option v-for="comarca in comarques" :key='comarca.id' :value="comarca.id">{{ comarca.nom }}</option>
                     </select>
                 </div>
 
                 <div class="col">
                     <label for="provincia"><small>Provincia:</small></label>
-                    <select class="form-control form-control-sm select-form " name="provincia" id="provincia" v-model="provincia" aria-label="Provincia de la incidència">
-                        <option v-for="prov in provincia" :key='prov'>{{ prov }}</option>
+                    <select class="form-control form-control-sm select-form " name="provincia" id="provincia" v-model="provincies" aria-label="Provincia de la incidència">
+                        <option v-for="prov in provincies" :key='prov.id' :value="prov.id">{{ prov.nom }}</option>
                     </select>
                 </div>
             </div>
@@ -133,9 +133,9 @@ export default {
         TablaAfectadosComponent,
         data: null,
         hora: null,
-        munics: [],
-        comarcas: [],
-        provincia: [],
+        municipis: [],
+        comarques: [],
+        provincies: [],
         direcc: null,
         direcc_compl: null,
         desc: null
@@ -144,13 +144,13 @@ export default {
   methods: {
     // getNum()
 
-    getMunicipi()
+    getMunicipis()
     {
         let me = this;
-          axios
+        axios
             .get('http://app.emu061.es/api/municipis')
             .then(response => {
-                me.munics = response.data;
+                me.municipis = response.data.data;
             })
             .catch( error => {
                 console.log(error)
@@ -158,13 +158,13 @@ export default {
             .finally(() => this.loading = false)
     },
 
-    getComarca()
+    getComarques()
     {
         let me = this;
           axios
-            .get('/comarca')
+            .get('http://app.emu061.es/api/comarques')
             .then(response => {
-                me.comarcas = response.data;
+                me.comarques = response.data.data;
             })
             .catch( error => {
                 console.log(error)
@@ -172,18 +172,32 @@ export default {
             .finally(() => this.loading = false)
     },
 
-    getProvincia()
+    getProvincies()
     {
         let me = this;
           axios
-            .get('/provincia')
+            .get('http://app.emu061.es/api/provincies')
             .then(response => {
-                me.provincia = response.data;
+                me.provincies = response.data.data;
             })
             .catch( error => {
                 console.log(error)
             })
             .finally(() => this.loading = false)
+    },
+
+    filtrarMunicipis(event)
+    {
+        console.log(event.target.value);
+
+        var municipi_select = this.municipis.find(municipi => municipi.id = event.target.value);
+        var comarca_select = this.comarques.find(comarca => comarca.id = municipi_select.comarques_id);
+        var provincia_select = this.provincies.find(provincia => provincia.id = municipi_select.provincia.id);
+
+array.forEach(element => {
+
+});
+        $('#comarques').value("");
     },
 
     cleanForm() {
@@ -237,6 +251,16 @@ export default {
           (this.desc = null);
       }
     },
-  }
+  },
+
+  created() {
+
+        this.getProvincies()
+
+        this.getMunicipis()
+
+        this.getComarques()
+
+    }
 };
 </script>
