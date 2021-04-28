@@ -24,28 +24,28 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="(afectat, index) in afectats" v-bind:key="afectat.id">
+                    <tr v-for="(item, index) in afectats" v-bind:key="item.id">
                         <td>{{ index + 1 }}</td>
-                        <td>{{ afectat.nom }}</td>
-                        <td>{{ afectat.cognoms }}</td>
-                        <td>{{ afectat.edat }}</td>
-                        <td>{{ afectat.cip }}</td>
-                        <td>{{ sexes[afectat.sexe].nom }}</td>
-                        <td>{{ afectat.telefon }}</td>
+                        <td>{{ item.nom }}</td>
+                        <td>{{ item.cognoms }}</td>
+                        <td>{{ item.edat }}</td>
+                        <td>{{ item.cip }}</td>
+                        <td>{{ sexes[item.sexe].sexe }}</td>
+                        <td>{{ item.telefon }}</td>
 
                         <td class="text-right">
 
 
                             <!-- FALTA MODAL EDICIÓN -->
                             <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm" @click="openModalAfectat(afectat, index)">
+                                <button type="button" class="btn btn-secondary btn-sm" @click="openModalAfectat(item, index)">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             </div>
 
                             <!-- FALTA ELIMINCACIÓN -->
                             <div role="group" class="btn-group ml-1">
-                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete( afectat, index )">
+                                <button type="button" class="btn btn-danger btn-sm" @click="confirmDelete( item, index )">
                                     <i class="fas fa-trash"></i> Esborrar
                                 </button>
                             </div>
@@ -63,7 +63,7 @@
                 <div class="modal-content modal-style">
                     <div class="modal-header">
                         <h5 class="modal-title">Afectats</h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                        <button type="button" data-dismiss="modal" aria-label="Tancar Registre d'afectat" class="close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -75,13 +75,13 @@
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_nom" class="col-12 col-form-label pl-1 letter-spacing"><small>Nom</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_nom" v-model="afectat.nom">
+                                <input type="text" class="col-12 form-control" id="afectat_nom" v-model="afectat.nom" aria-label="Nom de l'afectat">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_cognoms" class="col-12 col-form-label pl-1 letter-spacing"><small>Congnoms</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_cognoms" v-model="afectat.cognoms">
+                                <input type="text" class="col-12 form-control" id="afectat_cognoms" v-model="afectat.cognoms" aria-label="Cognom de l'afectat">
                             </div>
                         </div>
 
@@ -91,26 +91,27 @@
 
                         <div class="col-4">
                             <div class="row px-1">
-                                <label for="afectat_telefon" class="col-12 col-form-label pl-1 letter-spacing"><small>Telefon</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_telefon" v-model="afectat.telefon" pattern="[0-9]{9}" minlength="9" maxlength="9">
+                                <label for="afectat_telefon" class="col-12 col-form-label pl-1 letter-spacing" aria-label="Telèfon de l'afectat"><small>Telèfon</small></label>
+                                <input type="text" class="col-12 form-control" id="afectat_telefon" v-model="afectat.telefon" pattern="[0-9]{9}" minlength="9" maxlength="9" aria-label="Telèfon de l'afectat">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="row px-1">
                                 <label for="afectat_cip" class="col-12 col-form-label pl-1 letter-spacing"><small>CIP</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip" minlength="14" maxlength="16">
+                                <input type="text" class="col-12 form-control" id="afectat_cip" v-model="afectat.cip" minlength="14" maxlength="16" aria-label="CIP de l'afectat">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_edat" class="col-12 col-form-label pl-1 letter-spacing"><small>Edat</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat" pattern="[0-9]{1,3}" minlength="1" maxlength="3">
+                                <input type="text" class="col-12 form-control" id="afectat_edat" v-model="afectat.edat" pattern="[0-9]{1,3}" minlength="1" maxlength="3"  aria-label="Edat de l'afectat">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_sexesid" class="col-12 col-form-label pl-1 letter-spacing"><small>Sexe</small></label>
-                                <select class="select-form col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexe">
+                                <select class="select-form col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexe"  aria-label="Sexe de l'afectat">
+                                    <!-- <option value="" disabled selected>Selecciona un Sexe</option> -->
                                     <option v-for="(item) in sexes"  v-bind:key="item.id" v-bind:value="item.id">{{ item.sexe }}</option>
                                 </select>
                             </div>
@@ -123,7 +124,8 @@
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_codigravetat" class="col-12 col-form-label pl-1 letter-spacing"><small>Codi Gravetat</small></label>
-                                <select class="select-form col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat" title="Pick One">
+                                <select class="select-form col-12 custom-select" id="afectat_codigravetat" v-model="afectat.codi_gravetat"  aria-label="Codi de gravetat de l'afectat">
+                                    <!-- <option value="" disabled selected>Selecciona un Codi de Gravetat</option> -->
                                     <option v-for="(item) in codisgravetat" v-bind:key="item.id" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
                             </div>
@@ -132,7 +134,8 @@
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_recursosid" class="col-12 col-form-label pl-1 letter-spacing"><small>Recurs</small></label>
-                                <select class="select-form col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id" title="Pick One">
+                                <select class="select-form col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id"  aria-label="Recurs Móbil assignat a l'afectat">
+                                    <!-- <option value="" disabled selected>Selecciona un Recurs Móbil</option> -->
                                     <option v-for="(item) in recursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.codi + ' - ' + item.tipus_recurso.tipus }}</option>
                                 </select>
                             </div>
@@ -145,15 +148,15 @@
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_desti" class="col-12 col-form-label pl-1 letter-spacing"><small>Destí</small></label>
-                                <input type="text" class="col-12 form-control" id="afectat_desti" v-model="afectat.desti">
+                                <input type="text" class="col-12 form-control" id="afectat_desti" v-model="afectat.desti"  aria-label="Destí editable de l'afectat">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="row px-1">
                                 <label for="afectat_destialertantid" class="col-12 col-form-label pl-1 letter-spacing"><small>Destins</small></label>
-                                <select class="select-form col-12 custom-select" id="afectat_destialertantid" @change="onChangeDesti($event)" v-model="afectat.desti_alertant_id">
-                                    <option value="0">Seleccioneu destí</option>
+                                <select class="select-form col-12 custom-select" id="afectat_destialertantid" @change="onChangeDesti($event)" v-model="afectat.desti_alertant_id"  aria-label="Destí de l'afectat">
+                                    <!-- <option value="" disabled selected>Selecciona un Destí</option> -->
                                     <option v-for="(item) in destins" v-bind:key="item.id" v-bind:value="item.id">{{ item.nom }}</option>
                                 </select>
                             </div>
@@ -166,11 +169,11 @@
                         <div class="col-12">
                             <div class="row px-1">
                                 <label for="afectat_codivaloracio" class="col-12 col-form-label pl-1 letter-spacing"><small>Codi Valoracio</small></label>
-                                <select class="select-form col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio">
-                                    <option value="0">Seleccioneu valoració</option>
+                                <select class="select-form col-8 custom-select" id="afectat_codivaloracio" @change="onChangeValoracio($event)" v-model="afectat.codi_valoracio"  aria-label="Codi de valoració de l'afectat">
+                                    <!-- <option value="" disabled selected>Selecciona una valoració</option> -->
                                     <option v-for="(item, index) in codisvaloracions" v-bind:key="item.id" v-bind:id="('v_'+index+'_'+item.codi)" v-bind:value="item.codi">{{ item.nom }}</option>
                                 </select>
-                                <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" @click="openVideoValoracio()"><i class="far fa-play-circle"></i> Video</button></div>
+                                <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" @click="openVideoValoracio()"><i class="far fa-play-circle" ></i> Video</button></div>
                                 <div class="col-2 p-0 m-0 pl-4"><button type="button" class="btn btn-outline-secondary w-100" data-toggle="collapse" @click="openBoxValoracio()" v-show="(!displayHelp)"><i class="far fa-question-circle"></i> Ayuda</button></div>
                             </div>
                             <div v-show="(displayHelp)" class="row px-1 mb-3 mt-3">
@@ -202,8 +205,8 @@
 
                         <div class="col-12">
                             <div class="row px-1">
-                                <label for="afectat_descripcio" class="col-12 col-form-label pl-1 letter-spacing"><small>Descripcio</small></label>
-                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.descripcio"></textarea>
+                                <label for="afectat_descripcio" class="col-12 col-form-label pl-1 letter-spacing"><small>Descripció</small></label>
+                                <textarea rows="2" class="col-12 form-control" id="afectat_descripcio" v-model="afectat.descripcio" aria-label="Descripció de l'afectat"></textarea>
                             </div>
                         </div>
 
@@ -212,8 +215,8 @@
                 </div>
 
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Tarcar</button>
-                        <button type="button" class="btn btn-primary" @click="createAfectat()">Desar</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary" aria-label="Cancelar Registre de l'afectat">Cancel·lar</button>
+                        <button type="button" class="btn btn-primary" @click="createAfectat()" aria-label="Confirmar Registre de l'afectat">Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -335,6 +338,7 @@ export default {
                 desti: '',
                 desti_alertant_id: 0
             },
+
             afectats: [],
             sexes: [],
             tipusrecursos: [],
@@ -368,23 +372,8 @@ export default {
             default_codivaloracio: ''
         }
   },
-  methods: {
-
-      getProvincies()
-      {
-          let me = this;
-
-          axios
-            .get('http://app.emu061.es/api/provincies')
-            .then(response => {
-                me.provincies = response.data.data;
-            })
-            .catch( error => {
-                console.log(error)
-            })
-            .finally(() => this.loading = false)
-        },
-
+  methods:
+  {
       selectAfectats()
       {
           let me = this;
@@ -427,15 +416,14 @@ export default {
             .finally(() => this.loading = false)
       },
 
-        // FALTA API CODIS_GRAVETAT ???
       getCodis_gravetat()
       {
           let me = this;
 
           axios
-            .get('http://app.emu061.es/api/codis_gravetat')
+            .get('http://app.emu061.es/api/gravetats')
             .then(response => {
-                me.provincies = response.data.data;
+                me.codisgravetat = response.data.data;
             })
             .catch( error => {
                 console.log(error)
@@ -473,14 +461,13 @@ export default {
             .finally(() => this.loading = false)
       },
 
-        // FALTA API CODI_VALORACIO ???
       getCodis_valoracio()
       {
           let me = this;
           axios
-            .get('http://app.emu061.es/api/codis_valoracio')
+            .get('http://app.emu061.es/api/valoracions')
             .then(response => {
-                me.codisvaloracions = response.data;
+                me.codisvaloracions = response.data.data;
             })
             .catch( error => {
                 console.log(error)
@@ -503,8 +490,16 @@ export default {
 
       openModalAfectat( afectat, keyindex )
       {
+          console.log( 'open modal x edit afectat id ' + keyindex )
+
           this.key_tmp = keyindex
           this.afectat = afectat
+
+            console.log("This.key_tmp: " + this.key_tmp);
+            console.log("this.afectat.id: " + this.afectat.id);
+            console.log("this.afectat.nom: " + this.afectat.nom);
+            console.log("afectat: " + afectat.nom);
+
           $('#modalCrearAfectat').modal("show")
       },
 
@@ -513,44 +508,68 @@ export default {
           if ( this.key_tmp >= 0 && this.afectats[this.key_tmp])
           {
               this.afectats[this.key_tmp] = this.afectat
+
+                console.log("This.afectats: " + this.afectats[0].nom);
+                console.log("this.afectat: " + this.afectat.nom);
           }
           else
           {
               this.afectats.push(this.afectat)
           }
 
-            // let me = this;
+        // afectat data
+        // if ( this.key_tmp >= 0 && this.afectats[this.key_tmp] ) {
+        //     this.afectats[this.key_tmp].telefon = this.afectat.telefon
+        //     this.afectats[this.key_tmp].cip = this.afectat.cip
+        //     this.afectats[this.key_tmp].nom = this.afectat.nom
+        //     this.afectats[this.key_tmp].cognoms = this.afectat.cognoms
+        //     this.afectats[this.key_tmp].edat = this.afectat.edat
+        //     this.afectats[this.key_tmp].te_cip = this.afectat.te_cip
+        //     this.afectats[this.key_tmp].sexes_id = this.afectat.sexe
+        //     this.afectats[this.key_tmp].descripcio = this.afectat.descripcio
+        //     this.afectats[this.key_tmp].tipus_recursos_id = this.afectat.tipus_recursos_id
+        //     this.afectats[this.key_tmp].codi_gravetat = this.afectat.codi_gravetat
+        //     this.afectats[this.key_tmp].codi_valoracio = this.afectat.codi_valoracio
+        //     // extra data
+        //     this.afectats[this.key_tmp].recursos_id = this.afectat.recursos_id
+        //     this.afectats[this.key_tmp].prioritat = 0
+        //     this.afectats[this.key_tmp].desti = this.afectat.desti
+        //     this.afectats[this.key_tmp].desti_alertant_id = this.afectat.desti_alertant_id
+
+        //     console.log("This.afectats[this.key_tmp]: " + this.afectats[this.key_tmp].nom);
+        //     console.log("this.afectat.telefon: " + this.afectat.telefon);
+        //     console.log("Afectat: " + afectat);
+        // }
+        // else {
+
+        //     console.log( 'added afectat id ' + this.key_tmp )
+        //     console.log( 'this.afectats: ' + this.afectats[this.key_tmp].nom )
+        //     this.afectats.push( _.cloneDeep(this.afectat) )
+
+        // }
 
             $('#modalCrearAfectat').modal("hide")
-
-        //   axios
-        //     .post('/', me.afectat)
-        //     .then(function(response)
-        //     {
-        //         console.log(respose);
-
-        //         me.selectAfectats();
-        //
-        //     }).catch(function(error)
-        //     {
-        //         me.errorMessage = error.response.data.error;
-        //     })
       },
 
       cleanAfectat()
       {
         return {
-            id: 0,
-            telefon: '',
-            cip: '',
-            nom: '',
-            cognoms: '',
-            edat: '',
-            sexe_id: 0,
-            tipus_recursos_id: '',
-            codi_gravetat: '',
-            codi_valoracio: '',
-            descripcio: ''
+                id: 0,
+                telefon: '',
+                cip: '',
+                nom: '',
+                cognoms: '',
+                edat: '',
+                te_cip: 0,
+                sexe: '',
+                tipus_recursos_id: '',
+                codi_gravetat: '',
+                codi_valoracio: '',
+                descripcio: '',
+                recursos_id: 0,
+                prioritat: 0,
+                desti: '',
+                desti_alertant_id: 0
         }
       },
       // - - - - - - - - - - - - - - - - - - - - - SELECT DESTI: onChangeDesti =>
@@ -841,6 +860,8 @@ export default {
       this.getRecurs()
       this.getTipus_recurs()
       this.getDestins()
+      this.getCodis_gravetat()
+      this.getCodis_valoracio()
   }
 };
 </script>

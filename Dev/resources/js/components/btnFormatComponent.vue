@@ -11,7 +11,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalCenterTitle">Opcions de format</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Tancar control de format de pantalla">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -29,7 +29,7 @@
                             <div class="col-6">
                                 <div class="row px-1">
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Tamany:</label>
-                                    <select class="col-8" name="font" id="font" v-model="fontSelected" @change="onChangeSelect($event)">
+                                    <select class="col-8" name="font" id="font" v-model="fontSelected" @change="onChangeSelect($event)" aria-label="Tamany de font">
                                         <option v-for="font in fonts" v-bind:key="font" v-bind:value="font">{{ font }}</option>
                                     </select>
                                 </div>
@@ -37,7 +37,7 @@
                             <div class="col-6">
                                 <div class="row px-1">
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Color:</label>
-                                    <input class="col-7 col-form-input" id="fontColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="fontColor" @change="onChangeColorFont($event)">
+                                    <input class="col-7 col-form-input" id="fontColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="fontColor" @change="onChangeColorFont($event)" aria-label="Color de font">
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                     <label for="afectat_cip" class="col-12 col-form-label" style="font-size: 80%; font-weight: 400;">Fons de pantalla:</label>
 
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Color:</label>
-                                    <input class="col-8 col-form-input" id="BackgroundColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="screenColor" @change="onChangeBackgroundColor($event)">
+                                    <input class="col-8 col-form-input" id="BackgroundColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="screenColor" @change="onChangeBackgroundColor($event)" aria-label="Color de fons de pantalla">
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                                     <label for="afectat_cip" class="col-12 col-form-label" style="font-size: 80%; font-weight: 400;">Caixes:</label>
 
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Fons:</label>
-                                    <input class="col-7 col-form-input" id="BoxBackground" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputBackgroundColor" @change="onChangeBoxBackground($event)">
+                                    <input class="col-7 col-form-input" id="BoxBackground" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputBackgroundColor" @change="onChangeBoxBackground($event)" aria-label="Color de les caixes de dades">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div class="col-6">
                                 <div class="row px-1">
                                     <label class="col-4 col-form-label" style="font-size: 80%; font-weight: 400;">Color:</label>
-                                    <input class="col-7 col-form-input" id="BoxFontColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputColor" @change="onChangeBoxFontColor($event)">
+                                    <input class="col-7 col-form-input" id="BoxFontColor" style="height: 37px; padding: 0px;" type="color" v-bind:value="inputColor" @change="onChangeBoxFontColor($event)" aria-label="Color de la font de les dades de les caixes">
                                 </div>
                             </div>
                         </div>
@@ -90,17 +90,17 @@
                             <div class="col-12">
                                 <div class="row" style="display: flex; justify-content: center; align-items: center;">
                                     <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
-                                        <input type="radio" name="theme" id="dark-rb" @change="onChangeCheck($event)" value="dark">
+                                        <input type="radio" name="theme" id="dark-rb" @change="onChangeCheck($event)" value="dark" aria-label="Aspecte Dark">
                                         <label for="dark" name="theme" class="col-form-label" style="margin-left:10px">Dark</label>
                                     </div>
 
                                     <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
-                                        <input type="radio" name="theme" id="dark-light-rb" @change="onChangeCheck($event)" value="dark-light">
+                                        <input type="radio" name="theme" id="dark-light-rb" @change="onChangeCheck($event)" value="dark-light" aria-label="Aspecte Dark Light">
                                         <label for="dark-light" name="theme" class="col-form-label" style="margin-left:10px">Dark Light</label>
                                     </div>
 
                                     <div class="col-4" style="display: flex; justify-content: center; align-items: center;">
-                                        <input type="radio" name="theme" id="light-rb" @change="onChangeCheck($event)" value="light">
+                                        <input type="radio" name="theme" id="light-rb" @change="onChangeCheck($event)" value="light"  aria-label="Aspecte Light">
                                         <label for="light" class="col-form-label" style="margin-left:10px">Light</label>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
 
                         <div class="form-group row">
                             <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
-                                <select class="col-8" name="dalt" id="dalt" @change="onChangeSelectDaltonics($event)" title="Selecciona el tipus" disabled>
+                                <select class="col-8" name="dalt" id="dalt" @change="onChangeSelectDaltonics($event)" title="Selecciona el tipus" disabled aria-label="Tipus de daltonisme">
                                     <option v-for="dalt in daltonics" v-bind:key="dalt" v-bind:value="dalt">{{ dalt }}</option>
                                 </select>
                             </div>
@@ -120,8 +120,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel·lar</button>
-                        <button type="button" class="btn btn-primary" @click="saveChanges()">Acceptar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Tancar control de format de pantalla">Cancel·lar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="saveChanges()" aria-label="Acceptar i Tancar control de format de pantalla">Acceptar</button>
                     </div>
                 </div>
             </div>

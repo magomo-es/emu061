@@ -27,14 +27,14 @@
 
                 <div class="col" style="max-width: max-content;">
                     <label for="hora"><small>Hora:</small></label>
-                    <input class="form-control form-control-sm" id="hora" v-model="hora" type="time" name="hora" aria-label="Adreça de la incidència">
+                    <input class="form-control form-control-sm" id="hora" v-model="hora" type="time" name="hora" aria-label="Hora de la incidència">
                 </div>
 
 
                 <div class="col">
                     <label for="munics"><small>Municipi:</small></label>
                     <select class="form-control form-control-sm select-form " id="munics" v-model="incidencia.municipi" aria-label="Municipi de la incidència" @change="filtrarMunicipis($event)">
-                        <option v-for="munic in municipis" :key='munic.id' v-bind:value="munic.id">{{ munic.nom }}</option>
+                        <option v-for="munic in municipis" :key='munic.id' v-bind:value="munic.id" :aria-label="munic.nom">{{ munic.nom }}</option>
                     </select>
                 </div>
 
@@ -65,7 +65,7 @@
 
                 <div class="col">
                     <label for="direcc_compl"><small>Adreça Compl.:</small></label>
-                    <input class="form-control form-control-sm" id="direcc_compl" v-model="direcc_compl" type="text" name="direcc_compl" aria-label="Adreça de la incidència">
+                    <input class="form-control form-control-sm" id="direcc_compl" v-model="direcc_compl" type="text" name="direcc_compl" aria-label="Adreça Complementaria de la incidència">
                 </div>
             </div>
         </div>
@@ -80,9 +80,9 @@
         <tabla-afectados-component></tabla-afectados-component>
 
         <div class="form-group mt-4">
-            <input class="btn btn-primary" type="submit" value="Confirmar Incidencia" aria-label="Confirmar l'incidència">
+            <input class="btn btn-primary" type="submit" value="Confirmar Incidencia" aria-label="Confirmar incidència">
 
-            <input class="btn btn-secondary" type="submit" value="Cancel·lar" aria-label="Cancelar l'incidència">
+            <input class="btn btn-secondary" type="submit" value="Cancel·lar" aria-label="Cancelar incidència">
 
 
         </div>

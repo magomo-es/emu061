@@ -16,11 +16,11 @@
                     </div>
 
                     <div class="col-auto">
-                        <input type="text" id="tel_alertante" class="form-control form-control-sm" v-model="alertant.telefon" disabled>
+                        <input type="text" id="tel_alertante" class="form-control form-control-sm" v-model="alertant.telefon" readonly>
                     </div>
 
                     <div class="col-auto cont-vip">
-                        <a href="" data-toggle="modal" data-target="#exampleModal2">
+                        <a href="" data-toggle="modal" data-target="#exampleModal2" disabled>
                             <div class="circle" id="vip_btn"></div>
                             <span><small>VIP</small></span>
                         </a>
@@ -41,7 +41,7 @@
                 <div class="modal-content modal-style">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Alertant</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Tancar dades de l'alertant">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -52,22 +52,22 @@
 
                             <div class="row">
                                 <label for="alertant_nom" class="col-12 col-form-label pl-1"><small>Nom</small></label>
-                                <input type="text" class="col-12 form-control" id="alertant_nom" name="alertant_nom" v-model="alertant.nom">
+                                <input type="text" class="col-12 form-control" id="alertant_nom" name="alertant_nom" v-model="alertant.nom" aria-label="Nom de l'alertant">
                             </div>
 
                             <div class="row">
                                 <label for="alertant_cognoms" class="col-12 col-form-label pl-1"><small>Congnoms</small></label>
-                                <input type="text" class="col-12 form-control" id="alertant_cognoms" name="alertant_cognoms" v-model="alertant.cognoms">
+                                <input type="text" class="col-12 form-control" id="alertant_cognoms" name="alertant_cognoms" v-model="alertant.cognoms" aria-label="Cognoms de l'alertant">
                             </div>
 
                             <div class="row">
                                 <label for="alertant_adreca" class="col-12 col-form-label pl-1"><small>Adreça</small></label>
-                                <input type="text" class="col-12 form-control" id="alertant_adreca" name="alertant_adreca" v-model="alertant.adreca">
+                                <input type="text" class="col-12 form-control" id="alertant_adreca" name="alertant_adreca" v-model="alertant.adreca" aria-label="Adreça de l'alertant">
                             </div>
 
                             <div class="row">
                                 <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="alertant.municipi" title="Selecciona un municipi" name="alertant_municipisid">
+                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="alertant.municipi" title="Selecciona un municipi" name="alertant_municipisid" aria-label="Municipi de l'alertant">
                                     <option v-for="municipi in municipis" :key="municipi.id" :value="municipi.id">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
                                 </select>
@@ -75,7 +75,7 @@
 
                             <div class="row">
                                 <label for="alertant_tipusalertantsid" class="col-12 col-form-label pl-1"><small>Tipus</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="alertant.tipus_alertant" name="alertant_tipusalertantsid">
+                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="alertant.tipus_alertant" name="alertant_tipusalertantsid" aria-label="Tipus d'alertant">
                                     <option v-for="tipus in tipus_alertants" :key="tipus.id" :value="tipus.id">{{ tipus.tipus }}</option>
                                 </select>
                             </div>
@@ -85,8 +85,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Tancar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Tancar finestra d'alertant">Cancel·lar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Confirmar dades de l'alertant">Confirmar</button>
                     </div>
                 </div>
             </div>
