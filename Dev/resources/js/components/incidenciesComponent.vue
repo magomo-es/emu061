@@ -1,12 +1,7 @@
 <template>
     <main>
 
-
-
-
     <div class="container-lg mt-2" style="max-width: 1300px;">
-
-
 
     <form id="app" @submit.prevent="onSubmit" action="" method="post" novalidate="true">
 

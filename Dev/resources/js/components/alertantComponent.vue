@@ -3,7 +3,7 @@
     <div class="container-lg" style="max-width: 1300px;">
         <div class="row">
             <div class="col-2">
-                <button class="btn btn-dark" type="button">
+                <button class="btn btn-dark" type="button" @click="generarLlamada()">
                     Generar Trucada
                 </button>
             </div>
@@ -21,7 +21,7 @@
 
                     <div class="col-auto cont-vip">
                         <a href="" data-toggle="modal" data-target="#exampleModal2">
-                            <div class="circle"></div>
+                            <div class="circle" id="vip_btn"></div>
                             <span><small>VIP</small></span>
                         </a>
                     </div>
@@ -67,7 +67,7 @@
 
                             <div class="row">
                                 <label for="alertant_municipisid" class="col-12 col-form-label pl-1"><small>Municipi</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="municipis.id" title="Selecciona un municipi" name="alertant_municipisid">
+                                <select class="select-form col-12 custom-select" id="alertant_municipisid" v-model="alertant.municipi" title="Selecciona un municipi" name="alertant_municipisid">
                                     <option v-for="municipi in municipis" :key="municipi.id" :value="municipi.id">{{ municipi.nom }}</option>
                                     <!--v-model="alertant.municipis_id"-->
                                 </select>
@@ -75,7 +75,7 @@
 
                             <div class="row">
                                 <label for="alertant_tipusalertantsid" class="col-12 col-form-label pl-1"><small>Tipus</small></label>
-                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="tipus_alertants.id" name="alertant_tipusalertantsid">
+                                <select class="select-form col-12 custom-select" id="alertant_tipusalertantsid" v-model="alertant.tipus_alertant" name="alertant_tipusalertantsid">
                                     <option v-for="tipus in tipus_alertants" :key="tipus.id" :value="tipus.id">{{ tipus.tipus }}</option>
                                 </select>
                             </div>
@@ -101,7 +101,7 @@
 
 .circle
 {
-    background-color: rgb(27, 220, 27);
+    background-color: yellow;
     border-radius: 50%;
     width: 10px;
     height: 10px;
@@ -133,9 +133,19 @@ export default {
 
     data() {
         return {
-            alertant: [],
+            alertants: [],
             municipis: [],
-            tipus_alertants: []
+            tipus_alertants: [],
+
+            alertant:
+            {
+                telefon: '',
+                nom: '',
+                cognoms: '',
+                adreca: '',
+                municipi: '',
+                tipus_alertant: ''
+            }
         }
     },
 
@@ -147,7 +157,7 @@ export default {
             axios
                 .get('http://app.emu061.es/api/alertants')
                 .then(response => {
-                    me.alertant = response.data.data;
+                    me.alertants = response.data.data;
 
                 })
                 .catch( error => {
@@ -182,6 +192,39 @@ export default {
                     console.log(error)
                 })
                 .finally(() => this.loading = false)
+        },
+
+        generarLlamada()
+        {
+            var random_boolean = Math.random() < 0.4;
+            console.log("Random: " + random_boolean);
+            var telefon = '';
+
+            // SI ES TRUE -> BUSCA TELEFONO DE AFECTADOS EN API
+            if ( random_boolean )
+            {
+                var alertant_aux = this.alertants[Math.floor(Math.random() * this.alertants.length)];
+                console.log(alertant_aux)
+                telefon = alertant_aux.telefon;
+
+                this.alertant.nom = alertant_aux.nom;
+                this.alertant.cognoms = alertant_aux.cognoms;
+                this.alertant.adreca = alertant_aux.adreca;
+                this.alertant.municipi = alertant_aux.municipi.id;
+                this.alertant.tipus_alertant = alertant_aux.tipus_alertants_id;
+
+                $('#vip_btn').css('background-color', '#1bdc1b');
+            }
+            // SI ES FALSE -> GENERA UN NUMERO DE TELEFONO ALEATORIO
+            else
+            {
+                telefon = Math.floor(100000000 + Math.random() * 900000000);
+
+                $('#vip_btn').css('background-color', 'red');
+            }
+
+            this.alertant.telefon = telefon;
+
         }
     },
 

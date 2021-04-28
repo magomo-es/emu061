@@ -30,7 +30,7 @@
                         <td>{{ afectat.cognoms }}</td>
                         <td>{{ afectat.edat }}</td>
                         <td>{{ afectat.cip }}</td>
-                        <td>{{ sexes[afectat.sexe] }}</td>
+                        <td>{{ sexes[afectat.sexe].nom }}</td>
                         <td>{{ afectat.telefon }}</td>
 
                         <td class="text-right">
@@ -110,7 +110,7 @@
                         <div class="col-2">
                             <div class="row px-1">
                                 <label for="afectat_sexesid" class="col-12 col-form-label pl-1 letter-spacing"><small>Sexe</small></label>
-                                <select class="select-form col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexes_id">
+                                <select class="select-form col-12 custom-select" id="afectat_sexesid" v-model="afectat.sexe">
                                     <option v-for="(item) in sexes"  v-bind:key="item.id" v-bind:value="item.id">{{ item.sexe }}</option>
                                 </select>
                             </div>
@@ -133,7 +133,7 @@
                             <div class="row px-1">
                                 <label for="afectat_recursosid" class="col-12 col-form-label pl-1 letter-spacing"><small>Recurs</small></label>
                                 <select class="select-form col-12 custom-select" id="afectat_recursosid" v-model="afectat.recursos_id" title="Pick One">
-                                    <option v-for="(item) in recursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.codi + ' - ' + item.tipusrecursos.tipus }}</option>
+                                    <option v-for="(item) in recursos"  v-bind:key="item.id" v-bind:value="item.id">{{ item.codi + ' - ' + item.tipus_recurso.tipus }}</option>
                                 </select>
                             </div>
                         </div>
@@ -325,7 +325,7 @@ export default {
                 cognoms: '',
                 edat: '',
                 te_cip: 0,
-                sexe_id: 0,
+                sexe: '',
                 tipus_recursos_id: '',
                 codi_gravetat: '',
                 codi_valoracio: '',
@@ -370,6 +370,21 @@ export default {
   },
   methods: {
 
+      getProvincies()
+      {
+          let me = this;
+
+          axios
+            .get('http://app.emu061.es/api/provincies')
+            .then(response => {
+                me.provincies = response.data.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+        },
+
       selectAfectats()
       {
           let me = this;
@@ -388,9 +403,9 @@ export default {
       {
           let me = this;
           axios
-            .get('/sexes')
+            .get('http://app.emu061.es/api/sexes')
             .then(response => {
-                me.sexes = response.data;
+                me.sexes = response.data.data;
             })
             .catch( error => {
                 console.log(error)
@@ -402,7 +417,7 @@ export default {
       {
           let me = this;
           axios
-            .get('/recurs')
+            .get('http://app.emu061.es/api/tipus_recursos')
             .then(response => {
                 me.tipusrecursos = response.data;
             })
@@ -412,13 +427,15 @@ export default {
             .finally(() => this.loading = false)
       },
 
+        // FALTA API CODIS_GRAVETAT ???
       getCodis_gravetat()
       {
           let me = this;
+
           axios
-            .get('/codis_gravetat')
+            .get('http://app.emu061.es/api/codis_gravetat')
             .then(response => {
-                me.codisgravetat = response.data;
+                me.provincies = response.data.data;
             })
             .catch( error => {
                 console.log(error)
@@ -426,11 +443,42 @@ export default {
             .finally(() => this.loading = false)
       },
 
+      getRecurs()
+      {
+          let me = this;
+
+          axios
+            .get('http://app.emu061.es/api/recursos')
+            .then(response => {
+                me.recursos = response.data.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+      getDestins()
+      {
+          let me = this;
+
+          axios
+            .get('http://app.emu061.es/api/centressanitaris')
+            .then(response => {
+                me.destins = response.data.data;
+            })
+            .catch( error => {
+                console.log(error)
+            })
+            .finally(() => this.loading = false)
+      },
+
+        // FALTA API CODI_VALORACIO ???
       getCodis_valoracio()
       {
           let me = this;
           axios
-            .get('/codis_valoracio')
+            .get('http://app.emu061.es/api/codis_valoracio')
             .then(response => {
                 me.codisvaloracions = response.data;
             })
@@ -508,16 +556,14 @@ export default {
       // - - - - - - - - - - - - - - - - - - - - - SELECT DESTI: onChangeDesti =>
         onChangeDesti( ev ) {
 
-            if ( ev.currentTarget.selectedIndex > 0) {
-
-                console.log( 'onChangeDesti selected index > 0 (' + ev.currentTarget.selectedIndex +')')
+            if ( ev.currentTarget.selectedIndex > 0)
+            {
                 this.afectat.desti = ev.currentTarget.options[ev.currentTarget.selectedIndex].innerHTML
 
-            } else {
-
-                console.log( 'onChangeDesti selected index <= 0 (' + ev.currentTarget.selectedIndex +')')
+            }
+            else
+            {
                 this.afectat.desti = ''
-
             }
 
         },
@@ -788,6 +834,13 @@ export default {
   },
   mounted() {
       console.log('Component mounted')
+  },
+  created()
+  {
+      this.getSexes()
+      this.getRecurs()
+      this.getTipus_recurs()
+      this.getDestins()
   }
 };
 </script>
