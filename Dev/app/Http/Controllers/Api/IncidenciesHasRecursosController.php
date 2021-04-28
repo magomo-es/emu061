@@ -98,4 +98,40 @@ class IncidenciesHasRecursosController extends Controller
         return $response;
 */      return \response()->json(['error'=>'Página no econtrada'], 404);
     }
+
+
+
+
+
+
+
+
+
+
+
+        // - - - - - - - - - - -
+    // - - - - - - - - - - -
+    // - - - - - - - - - - - SPECIALS APIS
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fullhasrecursos()
+    {
+        $objectsAry = IncidenciesHasRecursos::orderBy('nom')->get();
+        return IncidenciesHasRecursosResource::collection($objectsAry);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function thehasrecurso(IncidenciesHasRecursos $theobj)
+    {
+        $objectsAry = IncidenciesHasRecursos::find($theobj->id);
+        return (new IncidenciesHasRecursosResource($objectsAry))->response()->setStatusCode(200);
+    }
 }

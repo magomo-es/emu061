@@ -60,14 +60,24 @@ Route::get('/', function () {
 
 });
 
-//Route::middleware(['auth'])->group( function() {
-Route::group(['middleware' => ['web']], function () {
+/*Route::middleware(['auth'])->group(function () {
+
+        Route::get('/home', function () {
+           $user = Auth::user();
+           return view('home', compact('user'));
+        });
+
+    });
+*/
+
+
+Route::middleware(['auth'])->group( function() {
+    //Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', function () { return view('home'); });
 
     Route::view('/admin', 'admin.index')->name('admin');
     //get('/admin', function () { return view('/admin','admin', [Auth::user()]); })->name('admin');
-
 
     Route::resource('admin/incidencies', IncidenciaController::class)->parameters(['incidencies' => 'theobj']);
 

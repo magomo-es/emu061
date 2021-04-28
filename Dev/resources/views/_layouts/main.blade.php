@@ -38,7 +38,7 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link text-white"  href="{{ url('/admin') }}" role="button">Adminintració</a>
+                    <a class="nav-link text-white"  href="{{ url('/admin') }}" role="button">Administració</a>
 
                 </li>
 

@@ -117,9 +117,9 @@ class UsuariController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function fullusuaris()
+    public function getalluserdata()
     {
-        $objectsAry = Usuari::with('rol','recurso','incidencies')->orderBy('username')->get();
+        $objectsAry = Usuari::with('rol')->orderBy('username')->get();
         return UsuariResource::collection($objectsAry);
     }
 
@@ -128,9 +128,34 @@ class UsuariController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function theusuari(Usuari $theobj)
+    public function getuserdata(Usuari $theobj)
     {
-        $objectsAry = Usuari::with('rol','recurso','incidencies')->find($theobj->id);
+        $objectsAry = Usuari::with('rol')->find($theobj->id);
         return (new UsuariResource($objectsAry))->response()->setStatusCode(200);
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateconfig(Request $request, Usuari $theobj) {
+
+        $theobj->configjson = $request->configjson;
+
+        try {
+
+            $theobj->save();
+            $response = (new UsuariResource($theobj))->response()->setStatusCode(201);
+
+        } catch( QueryException $ex ) {
+
+            $mensaje = Utility::errorMessage($ex);
+            $response = \response()->json(['error'=>$mensaje], 400);
+
+        }
+        return $response;
+
     }
 }

@@ -266,8 +266,9 @@ class UsuariController extends Controller
 
         if ( $user != null && Hash::check($contrasenya, $user->contrasenya)) {
 
-            Auth::login($user, $remember = true);
+            //Auth::login($user, $remember = true);
             //Auth::attempt($user);
+            Auth::login($user);
 
             echo '<script>console.log("Usuari Controller -> login -> user: '.$user->nom.' '.$user->cognoms.' ('.$user->email.')")</script>';
 

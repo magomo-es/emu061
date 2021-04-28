@@ -197,10 +197,10 @@
                             </div>
                             <div v-show="(displayHelp)" class="row px-1 mb-3">
 
-                                <h5>Simptomes</h5>
-                                <div class="container-fluid mt-3 mb-5">
+                                <h6>Simptomes</h6>
+                                <div class="container-fluid mb-5">
 
-                                    <div class="row">
+                                    <div class="row" style="height: 60vh; overflow: auto">
                                         <div class="col-4 mb-2 px-2" v-for="(item, index) in hlpsimtomes" v-bind:key="item.id" style="border-left: 1px dotted #0b0a0b;">
 
                                             <p class="w-100 p-1 m-0" style="background-color: #fff;">

@@ -16,7 +16,9 @@ use App\Http\Controllers\Api\IncidenciaController;
 use App\Http\Controllers\Api\TipusRecursController;
 use App\Http\Controllers\Api\VideoEventsController;
 use App\Http\Controllers\Api\FormElementsController;
+use App\Http\Controllers\Api\CodisGravetatController;
 use App\Http\Controllers\Api\TipusAlertantController;
+use App\Http\Controllers\Api\CodisValoracioController;
 use App\Http\Controllers\Api\TipusIncidenciaController;
 use App\Http\Controllers\Api\PlayVideoByCallerController;
 use App\Http\Controllers\Api\IncidenciesHasRecursosController;
@@ -90,5 +92,17 @@ use App\Http\Controllers\Api\IncidenciesHasRecursosController;
     Route::get( 'municipi/{theobj}', [MunicipiController::class, 'themunicipi'] );
 
     Route::get( 'centressanitaris', [AlertantController::class, 'centressanitaris'] );
+
+    Route::post( 'usuari/config/{theobj}', [UsuariController::class, 'updateconfig'] );
+    Route::get( 'usuari/{theobj}', [UsuariController::class, 'getuserdata'] );
+    Route::get( 'usuaris', [UsuariController::class, 'getalluserdata'] );
+
+    Route::get('valoracions', [CodisValoracioController::class, 'fullvaloracions']);
+    Route::get('valoracio/{theobj}', [CodisValoracioController::class, 'thevaloracio']);
+
+    Route::get('gravetats', [CodisGravetatController::class, 'fullgravetats']);
+    Route::get('gravetat/{theobj}', [CodisGravetatController::class, 'thegravetat']);
+
+
 
 //});
