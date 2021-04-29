@@ -147,12 +147,12 @@
         clock() {
             var clockElement = document.getElementById('time-part');
             var clockElement2 = document.getElementById('date-part');
-            var fecha2 = new Date();
-            var segundos = fecha2.getSeconds();
-            var minutos = fecha2.getMinutes();
-            var horas = fecha2.getHours();
-            var day = fecha2.getDay();
-            var mes = fecha2.getMonth();
+            var fecha = new Date();
+            var segundos = fecha.getSeconds();
+            var minutos = fecha.getMinutes();
+            var horas = fecha.getHours();
+            var day = fecha.getDay();
+            var mes = fecha.getMonth();
 
             switch(day) {
                 case 0:
@@ -167,7 +167,7 @@
                 case 3:
                     day = "Mie"
                     break;
-                case 3:
+                case 4:
                     day = "Jue"
                     break;
                 case 5:
@@ -191,7 +191,7 @@
                 case 3:
                 mes = "Abril"
                     break;
-                case 3:
+                case 4:
                 mes = "Mayo"
                     break;
                 case 5:
@@ -221,8 +221,8 @@
                 + (( minutos <= 9) ? '0' : '') + minutos + ':'
                 + (( segundos <= 9) ? '0' : '') + segundos;
 
-            clockElement2.textContent = fecha2.getDate() + " (" + day + ") " + mes + ' '
-            + fecha2.getFullYear();
+            clockElement2.textContent = fecha.getDate() + " (" + day + ") " + mes + ' '
+            + fecha.getFullYear();
         },
         horaAct(){
             var activacion = document.getElementById('activacion');
