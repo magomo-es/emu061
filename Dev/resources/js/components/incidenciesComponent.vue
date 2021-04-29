@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col" style="max-width: max-content;">
                     <label for="num"><small>Número:</small></label>
-                    <input class="form-control form-control-sm" id="num" v-model="num" type="number" name="num" value="0" disabled  aria-label="Numero d'incidència">
+                    <input class="form-control form-control-sm" id="num" v-model="numIncidencia" type="number" name="num" value="0" readonly  aria-label="Numero d'incidència">
                 </div>
 
                 <div class="col" style="max-width: max-content;">
@@ -138,8 +138,10 @@ export default {
         incidencia: {
             municipi: '',
             comarca: '',
-            provincia: '',
-        }
+            provincia: ''
+        },
+
+        numIncidencia: ''
     }
   },
   methods: {
@@ -211,6 +213,10 @@ export default {
         this.incidencia.comarca = "";
     },
 
+    generateNumIncidencia()
+    {
+        this.numIncidencia = Math.floor(100000000 + Math.random() * 900000000);
+    },
 
     cleanForm() {
         return {
@@ -272,6 +278,8 @@ export default {
         this.getMunicipis()
 
         this.getComarques()
+
+        this.generateNumIncidencia()
 
     }
 };

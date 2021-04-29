@@ -204,7 +204,6 @@ export default {
             if ( random_boolean )
             {
                 var alertant_aux = this.alertants[Math.floor(Math.random() * this.alertants.length)];
-                console.log(alertant_aux)
                 telefon = alertant_aux.telefon;
 
                 this.alertant.nom = alertant_aux.nom;
