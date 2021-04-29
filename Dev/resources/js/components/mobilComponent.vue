@@ -1,5 +1,5 @@
 <template>
-<div onload="time()" class="container-lg mt-2" style="max-width: 1300px;">
+<div onload="clock()" class="container-lg mt-2" style="max-width: 1300px;">
 
         <div class="row">
                 <div class="col-4">
@@ -167,7 +167,7 @@
                 case 3:
                     day = "Mie"
                     break;
-                case 3:
+                case 4:
                     day = "Jue"
                     break;
                 case 5:
@@ -191,7 +191,7 @@
                 case 3:
                 mes = "Abril"
                     break;
-                case 3:
+                case 4:
                 mes = "Mayo"
                     break;
                 case 5:
@@ -328,7 +328,7 @@
     },
     mounted(){
 
-        this.clock();
+
         setInterval(this.clock, 1000);
 
     },
