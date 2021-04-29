@@ -1,5 +1,5 @@
 <template>
-<div onload="time()" class="container-lg mt-2" style="max-width: 1300px;">
+<div onload="clock()" class="container-lg mt-2" style="max-width: 1300px;">
 
         <div class="row">
                 <div class="col-4">
@@ -147,12 +147,12 @@
         clock() {
             var clockElement = document.getElementById('time-part');
             var clockElement2 = document.getElementById('date-part');
-            var fecha = new Date();
-            var segundos = fecha.getSeconds();
-            var minutos = fecha.getMinutes();
-            var horas = fecha.getHours();
-            var day = fecha.getDay();
-            var mes = fecha.getMonth();
+            var fecha2 = new Date();
+            var segundos = fecha2.getSeconds();
+            var minutos = fecha2.getMinutes();
+            var horas = fecha2.getHours();
+            var day = fecha2.getDay();
+            var mes = fecha2.getMonth();
 
             switch(day) {
                 case 0:
@@ -221,8 +221,8 @@
                 + (( minutos <= 9) ? '0' : '') + minutos + ':'
                 + (( segundos <= 9) ? '0' : '') + segundos;
 
-            clockElement2.textContent = fecha.getDate() + " (" + day + ") " + mes + ' '
-            + fecha.getFullYear();
+            clockElement2.textContent = fecha2.getDate() + " (" + day + ") " + mes + ' '
+            + fecha2.getFullYear();
         },
         horaAct(){
             var activacion = document.getElementById('activacion');
@@ -328,7 +328,7 @@
     },
     mounted(){
 
-        this.clock();
+
         setInterval(this.clock, 1000);
 
     },
