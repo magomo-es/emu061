@@ -71,7 +71,7 @@ Route::get('/', function () {
 */
 
 
-Route::middleware(['auth'])->group( function() {
+//Route::middleware(['auth'])->group( function() {
     //Route::group(['middleware' => ['web']], function () {
 
     Route::get('/home', function () { return view('home'); });
@@ -117,7 +117,7 @@ Route::middleware(['auth'])->group( function() {
     Route::get('mobile', function () { return view('mobile.index'); })->name('mobile');
 
 
-});
+//});
 
 Route::get('/clearcache', function() {
 

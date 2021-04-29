@@ -1978,9 +1978,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      alertant: [],
+      alertants: [],
       municipis: [],
-      tipus_alertants: []
+      tipus_alertants: [],
+      alertant: {
+        telefon: '',
+        nom: '',
+        cognoms: '',
+        adreca: '',
+        municipi: '',
+        tipus_alertant: ''
+      }
     };
   },
   methods: {
@@ -1989,7 +1997,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var me = this;
       axios.get('http://app.emu061.es/api/alertants').then(function (response) {
-        me.alertant = response.data.data;
+        me.alertants = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
@@ -2019,12 +2027,34 @@ __webpack_require__.r(__webpack_exports__);
       })["finally"](function () {
         return _this3.loading = false;
       });
+    },
+    generarLlamada: function generarLlamada() {
+      var random_boolean = Math.random() < 0.4;
+      console.log("Random: " + random_boolean);
+      var telefon = ''; // SI ES TRUE -> BUSCA TELEFONO DE AFECTADOS EN API
+
+      if (random_boolean) {
+        var alertant_aux = this.alertants[Math.floor(Math.random() * this.alertants.length)];
+        console.log(alertant_aux);
+        telefon = alertant_aux.telefon;
+        this.alertant.nom = alertant_aux.nom;
+        this.alertant.cognoms = alertant_aux.cognoms;
+        this.alertant.adreca = alertant_aux.adreca;
+        this.alertant.municipi = alertant_aux.municipi.id;
+        this.alertant.tipus_alertant = alertant_aux.tipus_alertants_id;
+        $('#vip_btn').css('background-color', '#1bdc1b');
+      } // SI ES FALSE -> GENERA UN NUMERO DE TELEFONO ALEATORIO
+      else {
+          telefon = Math.floor(100000000 + Math.random() * 900000000);
+          $('#vip_btn').css('background-color', 'red');
+        }
+
+      this.alertant.telefon = telefon;
     }
   },
   created: function created() {
-    this.getAlertant();
-    console.log(this.alertant);
     this.getMunicipis();
+    this.getAlertant();
     this.getTipus_alertants();
   }
 });
@@ -2042,13 +2072,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2280,40 +2303,35 @@ __webpack_require__.r(__webpack_exports__);
       $('#dark-rb').prop("checked", false);
       $('#dark-light-rb').prop("checked", false);
       $('#light-rb').prop("checked", false);
-      $('#daltonic').attr("disabled", true);
-      this.daltonicSelected = false;
+      $('#dalt').attr('disabled', 'disabled');
     },
     onChangeColorFont: function onChangeColorFont(event) {
       document.documentElement.style.setProperty('--fontColor', event.target.value);
       $('#dark-rb').prop("checked", false);
       $('#dark-light-rb').prop("checked", false);
       $('#light-rb').prop("checked", false);
-      $('#daltonic').attr("disabled", true);
-      this.daltonicSelected = false;
+      $('#dalt').attr('disabled', 'disabled');
     },
     onChangeBackgroundColor: function onChangeBackgroundColor(event) {
       document.documentElement.style.setProperty('--BackgroundColor', event.target.value);
       $('#dark-rb').prop("checked", false);
       $('#dark-light-rb').prop("checked", false);
       $('#light-rb').prop("checked", false);
-      $('#daltonic').attr("disabled", true);
-      this.daltonicSelected = false;
+      $('#dalt').attr('disabled', 'disabled');
     },
     onChangeBoxBackground: function onChangeBoxBackground(event) {
       document.documentElement.style.setProperty('--BoxBackground', event.target.value);
       $('#dark-rb').prop("checked", false);
       $('#dark-light-rb').prop("checked", false);
       $('#light-rb').prop("checked", false);
-      $('#daltonic').attr("disabled", true);
-      this.daltonicSelected = false;
+      $('#dalt').attr('disabled', 'disabled');
     },
     onChangeBoxFontColor: function onChangeBoxFontColor(event) {
       document.documentElement.style.setProperty('--BoxFontColor', event.target.value);
       $('#dark-rb').prop("checked", false);
       $('#dark-light-rb').prop("checked", false);
       $('#light-rb').prop("checked", false);
-      $('#daltonic').attr("disabled", true);
-      this.daltonicSelected = false;
+      $('#dalt').attr('disabled', 'disabled');
     },
     // CHECKBOX'S
     onChangeCheck: function onChangeCheck(event) {
@@ -2331,7 +2349,7 @@ __webpack_require__.r(__webpack_exports__);
         $('#BackgroundColor').val('#1a1a1a');
         $('#BoxBackground').val('#3d3d3d');
         $('#BoxFontColor').val('#ffffff');
-        $('#daltonic').removeAttr("disabled");
+        $('#dalt').attr('disabled', 'disabled'); //$('#dalt').removeAttr("disabled");
       } else if (optionText == "dark-light") {
         document.documentElement.style.setProperty('--fontSize', '12px');
         document.documentElement.style.setProperty('--fontColor', '#ffffff');
@@ -2343,7 +2361,7 @@ __webpack_require__.r(__webpack_exports__);
         $('#BackgroundColor').val('#15202b');
         $('#BoxBackground').val('#94a7b8');
         $('#BoxFontColor').val('#000000');
-        $('#daltonic').removeAttr("disabled"); // Deuteranopia: #94a7b8 -->  #9ca3b8
+        $('#dalt').removeAttr("disabled"); // Deuteranopia: #94a7b8 -->  #9ca3b8
         // Protanopia: #94a7b8 -->  #a0a7b9
         // Tritanopia: #94a7b8 -->  #8babac
       } else if (optionText == "light") {
@@ -2357,18 +2375,9 @@ __webpack_require__.r(__webpack_exports__);
         $('#BackgroundColor').val('#f8fafc');
         $('#BoxBackground').val('#ffffff');
         $('#BoxFontColor').val('#495057');
-        $('#daltonic').removeAttr("disabled"); // Deuteranopia: #495057 -->  #4c4e57
+        $('#dalt').removeAttr("disabled"); // Deuteranopia: #495057 -->  #4c4e57
         // Protanopia: #495057 -->  #4d5057
         // Tritanopia: #495057 -->  #465252
-      }
-    },
-    onChangeDaltonic: function onChangeDaltonic(event) {
-      if (event.target.value == "false") {
-        this.daltonicSelected = true;
-        $('#daltonic').val('true');
-      } else if (event.target.value == "true") {
-        this.daltonicSelected = false;
-        $('#daltonic').val('false');
       }
     },
     onChangeSelectDaltonics: function onChangeSelectDaltonics(event) {
@@ -2378,31 +2387,25 @@ __webpack_require__.r(__webpack_exports__);
         if (this.radioSelected == "dark-light") {
           document.documentElement.style.setProperty('--BoxBackground', '#9ca3b8');
           $('#BoxBackground').val('#9ca3b8');
-          console.log("changed");
         } else if (this.radioSelected == "light") {
           document.documentElement.style.setProperty('--BoxFontColor', '#4c4e57');
           $('#BoxFontColor').val('#4c4e57');
-          console.log("changed");
         }
       } else if (optionText == "Protanopia") {
         if (this.radioSelected == "dark-light") {
           document.documentElement.style.setProperty('--BoxBackground', '#a0a7b9');
           $('#BoxBackground').val('#a0a7b9');
-          console.log("changed");
         } else if (this.radioSelected == "light") {
           document.documentElement.style.setProperty('--BoxFontColor', '#4d5057');
           $('#BoxFontColor').val('#4d5057');
-          console.log("changed");
         }
       } else if (optionText == "Tritanopia") {
         if (this.radioSelected == "dark-light") {
           document.documentElement.style.setProperty('--BoxBackground', '#8babac');
           $('#BoxBackground').val('#8babac');
-          console.log("changed");
         } else if (this.radioSelected == "light") {
           document.documentElement.style.setProperty('--BoxFontColor', '#465252');
           $('#BoxFontColor').val('#465252');
-          console.log("changed");
         }
       }
     } // -- DARK-LIGHT
@@ -2568,15 +2571,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2586,51 +2580,75 @@ __webpack_require__.r(__webpack_exports__);
       TablaAfectadosComponent: _tablaAfectadosComponent_vue__WEBPACK_IMPORTED_MODULE_0__.default,
       data: null,
       hora: null,
-      munics: [],
-      comarcas: [],
-      provincia: [],
+      municipis: [],
+      comarques: [],
+      provincies: [],
       direcc: null,
       direcc_compl: null,
-      desc: null
+      desc: null,
+      incidencia: {
+        municipi: '',
+        comarca: '',
+        provincia: ''
+      }
     };
   },
   methods: {
     // getNum()
-    getMunicipi: function getMunicipi() {
+    getMunicipis: function getMunicipis() {
       var _this = this;
 
       var me = this;
       axios.get('http://app.emu061.es/api/municipis').then(function (response) {
-        me.munics = response.data;
+        me.municipis = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         return _this.loading = false;
       });
     },
-    getComarca: function getComarca() {
+    getComarques: function getComarques() {
       var _this2 = this;
 
       var me = this;
-      axios.get('/comarca').then(function (response) {
-        me.comarcas = response.data;
+      axios.get('http://app.emu061.es/api/comarques').then(function (response) {
+        me.comarques = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         return _this2.loading = false;
       });
     },
-    getProvincia: function getProvincia() {
+    getProvincies: function getProvincies() {
       var _this3 = this;
 
       var me = this;
-      axios.get('/provincia').then(function (response) {
-        me.provincia = response.data;
+      axios.get('http://app.emu061.es/api/provincies').then(function (response) {
+        me.provincies = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         return _this3.loading = false;
       });
+    },
+    filtrarMunicipis: function filtrarMunicipis(event) {
+      var municipi_select = this.municipis.find(function (municipi) {
+        return municipi.id == event.target.value;
+      });
+      this.incidencia.comarca = municipi_select.comarca.id;
+      this.incidencia.provincia = municipi_select.provincia.id;
+    },
+    filtrarComarques: function filtrarComarques(event) {
+      var comarca_select = this.comarques.find(function (comarca) {
+        return comarca.id == event.target.value;
+      });
+      this.incidencia.municipi = "";
+      this.incidencia.provincia = comarca_select.provincia.id;
+    },
+    filtrarProvincies: function filtrarProvincies(event) {
+      //let provincia_select = this.comarques.find(comarca => comarca.id == event.target.value);
+      this.incidencia.municipi = "";
+      this.incidencia.comarca = "";
     },
     cleanForm: function cleanForm() {
       return {
@@ -2664,6 +2682,11 @@ __webpack_require__.r(__webpack_exports__);
         this.num = null, this.data = null, this.hora = null, this.munics = null, this.comarcas = null, this.provincia = null, this.direcc_compl = null, this.direcc = null, this.desc = null;
       }
     }
+  },
+  created: function created() {
+    this.getProvincies();
+    this.getMunicipis();
+    this.getComarques();
   }
 });
 
@@ -3540,11 +3563,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      afectats: []
+    };
   },
   methods: {
+    getAfectat: function getAfectat() {
+      var _this = this;
+
+      var me = this;
+      axios.get('http://app.emu061.es/api/afectats').then(function (response) {
+        me.afectats = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
     clock: function clock() {
       var clockElement = document.getElementById('time-part');
       var clockElement2 = document.getElementById('date-part');
@@ -3637,11 +3677,101 @@ __webpack_require__.r(__webpack_exports__);
 
       clockElement.textContent = (horas <= 9 ? '0' : '') + horas + ':' + (minutos <= 9 ? '0' : '') + minutos + ':' + (segundos <= 9 ? '0' : '') + segundos;
       clockElement2.textContent = fecha.getDate() + " (" + day + ") " + mes + ' ' + fecha.getFullYear();
+    },
+    horaAct: function horaAct() {
+      var activacion = document.getElementById('activacion');
+      var mobilizacion = document.getElementById('mobilizacion');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      activacion.textContent = "HORA ACTIVACIÓ [" + texto + "]";
+      activacion.disabled = true;
+      mobilizacion.disabled = false;
+    },
+    horaMob: function horaMob() {
+      var asistencia = document.getElementById('asistencia');
+      var mobilizacion = document.getElementById('mobilizacion');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      mobilizacion.textContent = "HORA MOBILITZACIÓ [" + texto + "]";
+      asistencia.disabled = false;
+      mobilizacion.disabled = true;
+    },
+    horaAsis: function horaAsis() {
+      var asistencia = document.getElementById('asistencia');
+      var transporte = document.getElementById('transporte');
+      var destino = document.getElementById('destino');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      asistencia.textContent = "HORA ASISTENCIA [" + texto + "]";
+      destino.value = "CALLE HOSPITAL";
+      asistencia.disabled = true;
+      transporte.disabled = false;
+    },
+    horaTrans: function horaTrans() {
+      var llegada = document.getElementById('llegada');
+      var transporte = document.getElementById('transporte');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      transporte.textContent = "HORA TRANSPORT [" + texto + "]";
+      transporte.disabled = true;
+      llegada.disabled = false;
+    },
+    horaArrib: function horaArrib() {
+      var llegada = document.getElementById('llegada');
+      var transferencia = document.getElementById('transferencia');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      llegada.textContent = "HORA ARRIBADA [" + texto + "]";
+      llegada.disabled = true;
+      transferencia.disabled = false;
+    },
+    horaTransf: function horaTransf() {
+      var transferencia = document.getElementById('transferencia');
+      var fin = document.getElementById('finalizacion');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      transferencia.textContent = "HORA TRANSFERENCIA [" + texto + "]";
+      transferencia.disabled = true;
+      fin.disabled = false;
+    },
+    horaFin: function horaFin() {
+      var transferencia = document.getElementById('transferencia');
+      var fin = document.getElementById('finalizacion');
+      var array = this.getDate();
+      var texto = array[0] + ":" + array[1] + ":" + array[2];
+      fin.textContent = "HORA FINALIZACIÓ [" + texto + "]";
+      transferencia.disabled = true;
+      fin.disabled = true;
+    },
+    getDate: function getDate() {
+      var fecha = new Date();
+      var array = [];
+      var segundos = fecha.getSeconds();
+      var minutos = fecha.getMinutes();
+      var horas = fecha.getHours();
+
+      if (horas <= 9) {
+        horas = "0" + horas;
+      }
+
+      if (minutos <= 9) {
+        minutos = "0" + minutos;
+      }
+
+      if (segundos <= 9) {
+        segundos = "0" + segundos;
+      }
+
+      array.push(horas, minutos, segundos);
+      return array;
     }
   },
   mounted: function mounted() {
     this.clock();
     setInterval(this.clock, 1000);
+  },
+  created: function created() {
+    this.getAfectat();
   }
 });
 
@@ -3978,6 +4108,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3990,7 +4127,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         cognoms: '',
         edat: '',
         te_cip: 0,
-        sexe_id: 0,
+        sexe: '',
         tipus_recursos_id: '',
         codi_gravetat: '',
         codi_valoracio: '',
@@ -4030,8 +4167,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     };
   },
   methods: {
-    selectAfectats: function selectAfectats() {
+    getProvincies: function getProvincies() {
       var _this = this;
+
+      var me = this;
+      axios.get('http://app.emu061.es/api/provincies').then(function (response) {
+        me.provincies = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this.loading = false;
+      });
+    },
+    selectAfectats: function selectAfectats() {
+      var _this2 = this;
 
       var me = this;
       axios.get('/afectats').then(function (response) {
@@ -4039,55 +4188,81 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this.loading = false;
-      });
-    },
-    getSexes: function getSexes() {
-      var _this2 = this;
-
-      var me = this;
-      axios.get('/sexes').then(function (response) {
-        me.sexes = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      })["finally"](function () {
         return _this2.loading = false;
       });
     },
-    getTipus_recurs: function getTipus_recurs() {
+    getSexes: function getSexes() {
       var _this3 = this;
 
       var me = this;
-      axios.get('/recurs').then(function (response) {
-        me.tipusrecursos = response.data;
+      axios.get('http://app.emu061.es/api/sexes').then(function (response) {
+        me.sexes = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         return _this3.loading = false;
       });
     },
-    getCodis_gravetat: function getCodis_gravetat() {
+    getTipus_recurs: function getTipus_recurs() {
       var _this4 = this;
 
       var me = this;
-      axios.get('/codis_gravetat').then(function (response) {
-        me.codisgravetat = response.data;
+      axios.get('http://app.emu061.es/api/tipus_recursos').then(function (response) {
+        me.tipusrecursos = response.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         return _this4.loading = false;
       });
     },
-    getCodis_valoracio: function getCodis_valoracio() {
+    // FALTA API CODIS_GRAVETAT ???
+    getCodis_gravetat: function getCodis_gravetat() {
       var _this5 = this;
 
       var me = this;
-      axios.get('/codis_valoracio').then(function (response) {
-        me.codisvaloracions = response.data;
+      axios.get('http://app.emu061.es/api/codis_gravetat').then(function (response) {
+        me.provincies = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         return _this5.loading = false;
+      });
+    },
+    getRecurs: function getRecurs() {
+      var _this6 = this;
+
+      var me = this;
+      axios.get('http://app.emu061.es/api/recursos').then(function (response) {
+        me.recursos = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this6.loading = false;
+      });
+    },
+    getDestins: function getDestins() {
+      var _this7 = this;
+
+      var me = this;
+      axios.get('http://app.emu061.es/api/centressanitaris').then(function (response) {
+        me.destins = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this7.loading = false;
+      });
+    },
+    // FALTA API CODI_VALORACIO ???
+    getCodis_valoracio: function getCodis_valoracio() {
+      var _this8 = this;
+
+      var me = this;
+      axios.get('http://app.emu061.es/api/codis_valoracio').then(function (response) {
+        me.codisvaloracions = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        return _this8.loading = false;
       });
     },
     confirmDelete: function confirmDelete(afectat, keyindex) {
@@ -4142,10 +4317,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     // - - - - - - - - - - - - - - - - - - - - - SELECT DESTI: onChangeDesti =>
     onChangeDesti: function onChangeDesti(ev) {
       if (ev.currentTarget.selectedIndex > 0) {
-        console.log('onChangeDesti selected index > 0 (' + ev.currentTarget.selectedIndex + ')');
         this.afectat.desti = ev.currentTarget.options[ev.currentTarget.selectedIndex].innerHTML;
       } else {
-        console.log('onChangeDesti selected index <= 0 (' + ev.currentTarget.selectedIndex + ')');
         this.afectat.desti = '';
       }
     },
@@ -4405,6 +4578,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   mounted: function mounted() {
     console.log('Component mounted');
+  },
+  created: function created() {
+    this.getSexes();
+    this.getRecurs();
+    this.getTipus_recurs();
+    this.getDestins();
   }
 });
 
@@ -8956,7 +9135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: rgb(27, 220, 27);\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\r\n    margin-left: -25px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\r\n    margin-left: 20px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.circle\r\n{\r\n    background-color: yellow;\r\n    border-radius: 50%;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: 14px;\r\n    margin-left: -25px;\n}\n.cont-vip\r\n{\r\n    width: 40px;\r\n    height: 37px;\r\n    margin-left: 20px;\n}\n.cont-vip span\r\n{\r\n    color: black;\r\n    float: right;\r\n    margin-top: -17px;\r\n    margin-left: 15px;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9052,7 +9231,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.time-frame {\nbackground-color: #000000;\ncolor: #ffffff;\nwidth: 300px;\nfont-family: Arial;\n}\n.time-frame > div {\n    width: 100%;\n    text-align: center;\n}\n#date-part {\n    font-size: 1.2em;\n}\n#time-part {\n    font-size: 2em;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.time-frame {\nbackground-color: #000000;\ncolor: #ffffff;\nfont-family: Arial;\n}\n.time-frame > div {\n    width: 100%;\n    text-align: center;\n}\n#date-part {\n    font-size: 1.2em;\n}\n#time-part {\n    font-size: 2em;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9076,7 +9255,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\r\n{\r\n    border-bottom: 0px !important;\r\n    padding-left: 15px !important;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tableFixHead          { overflow: auto; height: 200px; box-shadow: 0px 1px 0.1px grey;}\n.tableFixHead thead th { position: sticky; top: -1px; z-index: 1;\n}\r\n\r\n/* Just common table stuff. Really. */\ntable  { border-collapse: collapse; width: 100%;\n}\nth, td { padding: 8px 16px;\n}\nth     { background:#eee; padding:0px !important\n}\n.table thead th\r\n{\r\n    border-bottom: 0px !important;\r\n    padding-left: 15px !important;\n}\n.table th, td\r\n{\r\n    font-size: 85%;\r\n    vertical-align: middle !important;\n}\n.ctrlsBtn { position: absolute; top: 10px; padding: 10px; background-color: #eff2ef; color: #333; cursor: pointer; border-radius: 5px; box-shadow: 1px 1px 2px;\n}\n#rewButton { left: 10px;\n}\n#fwrButton { right: 10px;\n}\n#timeBox { position: absolute; box-sizing: border-box; top: 10px; width: 100px; margin-left: calc( 50% - 50px ); padding: 10px; background-color: #07ad07; color: #fff; text-align: center;\n}\n.valoracio-box { position: fixed; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 20px; background-color: #fff; z-index: 99;\n}\n.letter-spacing\r\n{\r\n    padding: 0;\r\n    margin: 0;\r\n    padding-left: 0 !important;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41104,7 +41283,25 @@ var render = function() {
       { staticClass: "container-lg", staticStyle: { "max-width": "1300px" } },
       [
         _c("div", { staticClass: "row" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "col-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-dark",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.generarLlamada()
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\r\n                    Generar Trucada\r\n                "
+                )
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -41118,7 +41315,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "row g-3 align-items-center" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-auto" }, [
                   _c("input", {
@@ -41144,9 +41341,9 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ])
             ]
           )
@@ -41170,12 +41367,12 @@ var render = function() {
               { staticClass: "modal-dialog", attrs: { role: "document" } },
               [
                 _c("div", { staticClass: "modal-content modal-style" }, [
-                  _vm._m(4),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
                     _c("div", { staticClass: "form-group px-3" }, [
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(5),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -41205,7 +41402,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(6),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -41239,7 +41436,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(7),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -41273,7 +41470,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(8),
+                        _vm._m(7),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -41282,8 +41479,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.municipis,
-                                expression: "municipis"
+                                value: _vm.alertant.municipi,
+                                expression: "alertant.municipi"
                               }
                             ],
                             staticClass: "select-form col-12 custom-select",
@@ -41302,9 +41499,13 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.municipis = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
+                                _vm.$set(
+                                  _vm.alertant,
+                                  "municipi",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
                               }
                             }
                           },
@@ -41313,7 +41514,7 @@ var render = function() {
                               "option",
                               {
                                 key: municipi.id,
-                                domProps: { value: municipi }
+                                domProps: { value: municipi.id }
                               },
                               [_vm._v(_vm._s(municipi.nom))]
                             )
@@ -41323,7 +41524,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _vm._m(9),
+                        _vm._m(8),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -41332,8 +41533,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.tipus_alertants,
-                                expression: "tipus_alertants"
+                                value: _vm.alertant.tipus_alertant,
+                                expression: "alertant.tipus_alertant"
                               }
                             ],
                             staticClass: "select-form col-12 custom-select",
@@ -41351,16 +41552,20 @@ var render = function() {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.tipus_alertants = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
+                                _vm.$set(
+                                  _vm.alertant,
+                                  "tipus_alertant",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
                               }
                             }
                           },
                           _vm._l(_vm.tipus_alertants, function(tipus) {
                             return _c(
                               "option",
-                              { key: tipus.id, domProps: { value: tipus } },
+                              { key: tipus.id, domProps: { value: tipus.id } },
                               [_vm._v(_vm._s(tipus.tipus))]
                             )
                           }),
@@ -41370,7 +41575,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(10)
+                  _vm._m(9)
                 ])
               ]
             )
@@ -41381,16 +41586,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c("button", { staticClass: "btn btn-dark", attrs: { type: "button" } }, [
-        _vm._v("\r\n                    Generar Trucada\r\n                ")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -41418,7 +41613,7 @@ var staticRenderFns = [
           }
         },
         [
-          _c("div", { staticClass: "circle" }),
+          _c("div", { staticClass: "circle", attrs: { id: "vip_btn" } }),
           _vm._v(" "),
           _c("span", [_c("small", [_vm._v("VIP")])])
         ]
@@ -41954,75 +42149,34 @@ var render = function() {
                       }
                     },
                     [
-                      _c("input", {
-                        attrs: {
-                          type: "checkbox",
-                          name: "daltonic",
-                          id: "daltonic",
-                          value: "false",
-                          disabled: ""
-                        },
-                        on: {
-                          change: function($event) {
-                            return _vm.onChangeDaltonic($event)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
                       _c(
-                        "label",
+                        "select",
                         {
-                          staticClass: "col-form-label",
-                          staticStyle: { "margin-left": "10px" },
-                          attrs: { for: "daltonic" }
+                          staticClass: "col-8",
+                          attrs: {
+                            name: "dalt",
+                            id: "dalt",
+                            title: "Selecciona el tipus",
+                            disabled: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.onChangeSelectDaltonics($event)
+                            }
+                          }
                         },
-                        [_vm._v("Mode Daltònic")]
+                        _vm._l(_vm.daltonics, function(dalt) {
+                          return _c(
+                            "option",
+                            { key: dalt, domProps: { value: dalt } },
+                            [_vm._v(_vm._s(dalt))]
+                          )
+                        }),
+                        0
                       )
                     ]
                   )
-                ]),
-                _vm._v(" "),
-                _vm.daltonicSelected
-                  ? _c("div", { staticClass: "form-group row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-12",
-                          staticStyle: {
-                            display: "flex",
-                            "justify-content": "center",
-                            "align-items": "center"
-                          }
-                        },
-                        [
-                          _c(
-                            "select",
-                            {
-                              staticClass: "col-8",
-                              attrs: {
-                                name: "dalt",
-                                id: "dalt",
-                                "aria-placeholder": "Selecciona el tipus"
-                              },
-                              on: {
-                                change: function($event) {
-                                  return _vm.onChangeSelectDaltonics($event)
-                                }
-                              }
-                            },
-                            _vm._l(_vm.daltonics, function(dalt) {
-                              return _c(
-                                "option",
-                                { key: dalt, domProps: { value: dalt } },
-                                [_vm._v(_vm._s(dalt))]
-                              )
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    ])
-                  : _vm._e()
+                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
@@ -42231,7 +42385,8 @@ var render = function() {
                         type: "number",
                         name: "num",
                         value: "0",
-                        disabled: ""
+                        disabled: "",
+                        "aria-label": "Numero d'incidència"
                       },
                       domProps: { value: _vm.num },
                       on: {
@@ -42265,7 +42420,12 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control form-control-sm",
-                      attrs: { id: "data", type: "date", name: "data" },
+                      attrs: {
+                        id: "data",
+                        type: "date",
+                        name: "data",
+                        "aria-label": "Data d'incidència"
+                      },
                       domProps: { value: _vm.data },
                       on: {
                         input: function($event) {
@@ -42298,7 +42458,12 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control form-control-sm",
-                      attrs: { id: "hora", type: "time", name: "hora" },
+                      attrs: {
+                        id: "hora",
+                        type: "time",
+                        name: "hora",
+                        "aria-label": "Adreça de la incidència"
+                      },
                       domProps: { value: _vm.hora },
                       on: {
                         input: function($event) {
@@ -42322,32 +42487,44 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.munics,
-                          expression: "munics"
+                          value: _vm.incidencia.municipi,
+                          expression: "incidencia.municipi"
                         }
                       ],
                       staticClass: "form-control form-control-sm select-form ",
-                      attrs: { id: "munics" },
+                      attrs: {
+                        id: "munics",
+                        "aria-label": "Municipi de la incidència"
+                      },
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.munics = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.incidencia,
+                              "municipi",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.filtrarMunicipis($event)
+                          }
+                        ]
                       }
                     },
-                    _vm._l(_vm.munics, function(munic) {
+                    _vm._l(_vm.municipis, function(munic) {
                       return _c(
                         "option",
-                        { key: munic, domProps: { value: munic.id } },
+                        { key: munic.id, domProps: { value: munic.id } },
                         [_vm._v(_vm._s(munic.nom))]
                       )
                     }),
@@ -42365,32 +42542,51 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.comarcas,
-                          expression: "comarcas"
+                          value: _vm.incidencia.comarca,
+                          expression: "incidencia.comarca"
                         }
                       ],
                       staticClass: "form-control form-control-sm select-form ",
-                      attrs: { name: "comarcas", id: "comarcas" },
+                      attrs: {
+                        name: "comarcas",
+                        id: "comarques-select",
+                        "aria-label": "Comarca de la incidència"
+                      },
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.comarcas = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.incidencia,
+                              "comarca",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.filtrarComarques($event)
+                          }
+                        ]
                       }
                     },
-                    _vm._l(_vm.comarcas, function(comarca) {
-                      return _c("option", { key: comarca }, [
-                        _vm._v(_vm._s(comarca))
-                      ])
+                    _vm._l(_vm.comarques, function(comarca) {
+                      return _c(
+                        "option",
+                        {
+                          key: comarca.id,
+                          attrs: { id: "comarques" },
+                          domProps: { value: comarca.id }
+                        },
+                        [_vm._v(_vm._s(comarca.nom))]
+                      )
                     }),
                     0
                   )
@@ -42406,30 +42602,51 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.provincia,
-                          expression: "provincia"
+                          value: _vm.incidencia.provincia,
+                          expression: "incidencia.provincia"
                         }
                       ],
                       staticClass: "form-control form-control-sm select-form ",
-                      attrs: { name: "provincia", id: "provincia" },
+                      attrs: {
+                        name: "provincia-Select",
+                        id: "provincia-Select",
+                        "aria-label": "Provincia de la incidència"
+                      },
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.provincia = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.incidencia,
+                              "provincia",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                          function($event) {
+                            return _vm.filtrarProvincies($event)
+                          }
+                        ]
                       }
                     },
-                    _vm._l(_vm.provincia, function(prov) {
-                      return _c("option", { key: prov }, [_vm._v(_vm._s(prov))])
+                    _vm._l(_vm.provincies, function(prov) {
+                      return _c(
+                        "option",
+                        {
+                          key: prov.id,
+                          attrs: { id: "provincia" },
+                          domProps: { value: prov.id }
+                        },
+                        [_vm._v(_vm._s(prov.nom))]
+                      )
                     }),
                     0
                   )
@@ -42452,7 +42669,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control form-control-sm",
-                    attrs: { id: "direcc", type: "text", name: "direcc" },
+                    attrs: {
+                      id: "direcc",
+                      type: "text",
+                      name: "direcc",
+                      "aria-label": "Adreça de la incidència"
+                    },
                     domProps: { value: _vm.direcc },
                     on: {
                       input: function($event) {
@@ -42481,7 +42703,8 @@ var render = function() {
                     attrs: {
                       id: "direcc_compl",
                       type: "text",
-                      name: "direcc_compl"
+                      name: "direcc_compl",
+                      "aria-label": "Adreça de la incidència"
                     },
                     domProps: { value: _vm.direcc_compl },
                     on: {
@@ -42510,7 +42733,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control form-control-sm",
-                attrs: { id: "desc", rows: "2" },
+                attrs: {
+                  id: "desc",
+                  rows: "2",
+                  "aria-label": "Descripció de la incidència"
+                },
                 domProps: { value: _vm.desc },
                 on: {
                   input: function($event) {
@@ -42615,12 +42842,20 @@ var staticRenderFns = [
     return _c("div", { staticClass: "form-group mt-4" }, [
       _c("input", {
         staticClass: "btn btn-primary",
-        attrs: { type: "submit", value: "Confirmar Incidencia" }
+        attrs: {
+          type: "submit",
+          value: "Confirmar Incidencia",
+          "aria-label": "Confirmar l'incidència"
+        }
       }),
       _vm._v(" "),
       _c("input", {
         staticClass: "btn btn-secondary",
-        attrs: { type: "submit", value: "Cancel·lar" }
+        attrs: {
+          type: "submit",
+          value: "Cancel·lar",
+          "aria-label": "Cancelar l'incidència"
+        }
       })
     ])
   }
@@ -42862,7 +43097,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-edit" }),
-                      _vm._v(" Editar\r\n                        ")
+                      _vm._v(" Editar\n                        ")
                     ]
                   )
                 ]
@@ -42885,7 +43120,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-trash" }),
-                      _vm._v(" Esborrar\r\n                        ")
+                      _vm._v(" Esborrar\n                        ")
                     ]
                   )
                 ]
@@ -43524,95 +43759,98 @@ var render = function() {
                           staticClass: "row px-1 mb-3"
                         },
                         [
-                          _c("h5", [_vm._v("Simptomes")]),
+                          _c("h6", [_vm._v("Simptomes")]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "container-fluid mt-3 mb-5" },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "row" },
-                                _vm._l(_vm.hlpsimtomes, function(item, index) {
-                                  return _c(
-                                    "div",
-                                    {
-                                      key: item.id,
-                                      staticClass: "col-4 mb-2 px-2",
-                                      staticStyle: {
-                                        "border-left": "1px dotted #0b0a0b"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass: "w-100 p-1 m-0",
-                                          staticStyle: {
-                                            "background-color": "#fff"
-                                          }
-                                        },
-                                        [
-                                          _c("input", {
-                                            attrs: {
-                                              type: "checkbox",
-                                              id: "simptoma" + item.id,
-                                              "data-simptoma": item.id,
-                                              "data-ind": index
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.checkboxSimptomes(
-                                                  $event
-                                                )
-                                              }
+                          _c("div", { staticClass: "container-fluid mb-5" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "row",
+                                staticStyle: {
+                                  height: "60vh",
+                                  overflow: "auto"
+                                }
+                              },
+                              _vm._l(_vm.hlpsimtomes, function(item, index) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: item.id,
+                                    staticClass: "col-4 mb-2 px-2",
+                                    staticStyle: {
+                                      "border-left": "1px dotted #0b0a0b"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "w-100 p-1 m-0",
+                                        staticStyle: {
+                                          "background-color": "#fff"
+                                        }
+                                      },
+                                      [
+                                        _c("input", {
+                                          attrs: {
+                                            type: "checkbox",
+                                            id: "simptoma" + item.id,
+                                            "data-simptoma": item.id,
+                                            "data-ind": index
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.checkboxSimptomes(
+                                                $event
+                                              )
                                             }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("small", [
-                                            _vm._v(_vm._s(item.pregunta))
-                                          ])
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass: "w-100 p-1 m-0",
-                                          staticStyle: {
-                                            "background-color":
-                                              "rgb(244, 241, 51)"
                                           }
-                                        },
-                                        [
-                                          _c("small", [
-                                            _vm._v(_vm._s(item.translation))
-                                          ])
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
-                                        {
-                                          staticClass: "w-100 p-1 m-0",
-                                          staticStyle: {
-                                            "background-color":
-                                              "rgb(148, 244, 51)"
-                                          }
-                                        },
-                                        [
-                                          _c("small", [
-                                            _vm._v(_vm._s(item.soundlike))
-                                          ])
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                }),
-                                0
-                              )
-                            ]
-                          )
+                                        }),
+                                        _vm._v(" "),
+                                        _c("small", [
+                                          _vm._v(_vm._s(item.pregunta))
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "w-100 p-1 m-0",
+                                        staticStyle: {
+                                          "background-color":
+                                            "rgb(244, 241, 51)"
+                                        }
+                                      },
+                                      [
+                                        _c("small", [
+                                          _vm._v(_vm._s(item.translation))
+                                        ])
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "w-100 p-1 m-0",
+                                        staticStyle: {
+                                          "background-color":
+                                            "rgb(148, 244, 51)",
+                                          "letter-spacing": "1px"
+                                        }
+                                      },
+                                      [
+                                        _c("small", [
+                                          _vm._v(_vm._s(item.soundlike))
+                                        ])
+                                      ]
+                                    )
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          ])
                         ]
                       )
                     ]),
@@ -44133,130 +44371,42 @@ var render = function() {
       attrs: { onload: "time()" }
     },
     [
+      _vm._m(0),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-4" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.name,
-                expression: "name"
-              }
-            ],
-            staticClass: "form-control form-control-sm",
-            attrs: {
-              id: "destino",
-              type: "text",
-              name: "num",
-              value: "0",
-              disabled: ""
-            },
-            domProps: { value: _vm.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.name = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
+        _c("div", { staticClass: "col-6" }, [
           _vm._m(1),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.cip,
-                expression: "cip"
-              }
-            ],
             staticClass: "form-control form-control-sm",
-            attrs: {
-              id: "destino",
-              type: "text",
-              name: "num",
-              value: "0",
-              disabled: ""
-            },
-            domProps: { value: _vm.cip },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.cip = $event.target.value
-              }
-            }
+            attrs: { id: "", type: "text", name: "num", readonly: "" },
+            domProps: { value: _vm.afectats[0].nom }
+          }),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control form-control-sm",
+            attrs: { id: "", type: "text", name: "num", readonly: "" },
+            domProps: { value: _vm.afectats[0].cip }
           })
         ]),
         _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-4" }, [
+        _c("div", { staticClass: "col-6" }, [
           _vm._m(3),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.name,
-                expression: "name"
-              }
-            ],
             staticClass: "form-control form-control-sm",
-            attrs: {
-              id: "destino",
-              type: "text",
-              name: "num",
-              value: "0",
-              disabled: ""
-            },
-            domProps: { value: _vm.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.name = $event.target.value
-              }
-            }
+            attrs: { id: "", type: "text", name: "num", readonly: "" },
+            domProps: { value: _vm.afectats[0].codi_gravetat }
           }),
           _vm._v(" "),
           _vm._m(4),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.cip,
-                expression: "cip"
-              }
-            ],
             staticClass: "form-control form-control-sm",
-            attrs: {
-              id: "destino",
-              type: "text",
-              name: "num",
-              value: "0",
-              disabled: ""
-            },
-            domProps: { value: _vm.cip },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.cip = $event.target.value
-              }
-            }
+            attrs: { id: "", type: "text", name: "num", readonly: "" },
+            domProps: { value: _vm.afectats[0].codi_valoracio }
           })
         ])
       ]),
@@ -44267,41 +44417,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(6),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col" }, [
-            _vm._m(7),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.destino,
-                  expression: "destino"
-                }
-              ],
-              staticClass: "form-control form-control-sm",
-              attrs: {
-                id: "destino",
-                type: "text",
-                name: "num",
-                value: "0",
-                disabled: ""
-              },
-              domProps: { value: _vm.destino },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.destino = $event.target.value
-                }
-              }
-            })
-          ])
-        ])
-      ]),
+      _vm._m(7),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
@@ -44311,7 +44427,7 @@ var render = function() {
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "activacion" },
             on: {
               click: function($event) {
                 return _vm.horaAct()
@@ -44324,15 +44440,13 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("div", [
         _c(
           "button",
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "mobilizacion", disabled: "" },
             on: {
               click: function($event) {
                 return _vm.horaMob()
@@ -44345,15 +44459,13 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("div", [
         _c(
           "button",
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "asistencia", disabled: "" },
             on: {
               click: function($event) {
                 return _vm.horaAsis()
@@ -44366,15 +44478,13 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("div", [
         _c(
           "button",
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "transporte", disabled: "" },
             on: {
               click: function($event) {
                 return _vm.horaTrans()
@@ -44387,15 +44497,13 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("div", [
         _c(
           "button",
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "llegada", disabled: "" },
             on: {
               click: function($event) {
                 return _vm.horaArrib()
@@ -44408,18 +44516,16 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("div", [
         _c(
           "button",
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "transferencia", disabled: "" },
             on: {
               click: function($event) {
-                return _vm.horaTarnsf()
+                return _vm.horaTransf()
               }
             }
           },
@@ -44429,15 +44535,13 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("div", [
         _c(
           "button",
           {
             staticClass: "btn btn-primary btn-lg w-100",
             staticStyle: { height: "60px" },
-            attrs: { type: "button" },
+            attrs: { type: "button", id: "finalizacion", disabled: "" },
             on: {
               click: function($event) {
                 return _vm.horaFin()
@@ -44457,6 +44561,54 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-4" }, [
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "time-frame" }, [
+          _c("div", { attrs: { id: "date-part" } }),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "time-part" } })
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-4",
+          staticStyle: {
+            display: "flex",
+            "justify-content": "center",
+            "align-items": "center"
+          }
+        },
+        [
+          _c("div", [
+            _c("label", { attrs: { for: "codIncidencia" } }, [
+              _c("small", [_vm._v("Cod. Incidencia:")])
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control form-control-sm",
+              attrs: {
+                id: "",
+                type: "text",
+                name: "num",
+                value: "0",
+                disabled: ""
+              }
+            })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "afectatNom" } }, [
       _c("small", [_vm._v("Nom i cognoms:")])
     ])
@@ -44468,29 +44620,6 @@ var staticRenderFns = [
     return _c("label", { attrs: { for: "afectatCip" } }, [
       _c("small", [_vm._v("CIP:")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "col-4",
-        staticStyle: {
-          display: "flex",
-          "justify-content": "center",
-          "align-items": "center"
-        }
-      },
-      [
-        _c("div", { staticClass: "time-frame" }, [
-          _c("div", { attrs: { id: "date-part" } }),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "time-part" } })
-        ])
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -44525,7 +44654,7 @@ var staticRenderFns = [
             "aria-controls": "multiCollapseExample1"
           }
         },
-        [_vm._v("Descripció")]
+        [_vm._v("Veure Descripció")]
       )
     ])
   },
@@ -44543,7 +44672,7 @@ var staticRenderFns = [
           },
           [
             _c("div", { staticClass: "card card-body" }, [
-              _vm._v("\n                Descripció\n            ")
+              _vm._v("\r\n                Descripció\r\n            ")
             ])
           ]
         )
@@ -44554,8 +44683,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "destino" } }, [
-      _c("small", [_vm._v("DESTINO:")])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("label", { attrs: { for: "destino" } }, [
+            _c("small", [_vm._v("DESTINO:")])
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control form-control-sm",
+            attrs: {
+              id: "destino",
+              type: "text",
+              name: "num",
+              value: "CALLE FALSA 123",
+              readonly: "readonly"
+            }
+          })
+        ])
+      ])
     ])
   }
 ]
@@ -44687,7 +44833,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(afectat.cip))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.sexes[afectat.sexe]))]),
+              _c("td", [_vm._v(_vm._s(_vm.sexes[afectat.sexe].nom))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(afectat.telefon))]),
               _vm._v(" "),
@@ -44945,8 +45091,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.afectat.sexes_id,
-                              expression: "afectat.sexes_id"
+                              value: _vm.afectat.sexe,
+                              expression: "afectat.sexe"
                             }
                           ],
                           staticClass: "select-form col-12 custom-select",
@@ -44963,7 +45109,7 @@ var render = function() {
                                 })
                               _vm.$set(
                                 _vm.afectat,
-                                "sexes_id",
+                                "sexe",
                                 $event.target.multiple
                                   ? $$selectedVal
                                   : $$selectedVal[0]
@@ -45084,7 +45230,7 @@ var render = function() {
                             [
                               _vm._v(
                                 _vm._s(
-                                  item.codi + " - " + item.tipusrecursos.tipus
+                                  item.codi + " - " + item.tipus_recurso.tipus
                                 )
                               )
                             ]
@@ -45195,7 +45341,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "row px-1 mb-3" }, [
+                      _c("div", { staticClass: "row px-1" }, [
                         _vm._m(12),
                         _vm._v(" "),
                         _c(
@@ -45320,7 +45466,7 @@ var render = function() {
                               expression: "(displayHelp)"
                             }
                           ],
-                          staticClass: "row px-1 mb-3"
+                          staticClass: "row px-1 mb-3 mt-3"
                         },
                         [
                           _c("h5", [_vm._v("Simptomes")]),
@@ -45662,7 +45808,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_nom" }
       },
       [_c("small", [_vm._v("Nom")])]
@@ -45675,7 +45821,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_cognoms" }
       },
       [_c("small", [_vm._v("Congnoms")])]
@@ -45688,7 +45834,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_telefon" }
       },
       [_c("small", [_vm._v("Telefon")])]
@@ -45701,7 +45847,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_cip" }
       },
       [_c("small", [_vm._v("CIP")])]
@@ -45714,7 +45860,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_edat" }
       },
       [_c("small", [_vm._v("Edat")])]
@@ -45727,7 +45873,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_sexesid" }
       },
       [_c("small", [_vm._v("Sexe")])]
@@ -45740,7 +45886,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_codigravetat" }
       },
       [_c("small", [_vm._v("Codi Gravetat")])]
@@ -45753,7 +45899,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_recursosid" }
       },
       [_c("small", [_vm._v("Recurs")])]
@@ -45766,7 +45912,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_desti" }
       },
       [_c("small", [_vm._v("Destí")])]
@@ -45779,7 +45925,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_destialertantid" }
       },
       [_c("small", [_vm._v("Destins")])]
@@ -45792,7 +45938,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_codivaloracio" }
       },
       [_c("small", [_vm._v("Codi Valoracio")])]
@@ -45805,7 +45951,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "col-12 col-form-label pl-1",
+        staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_descripcio" }
       },
       [_c("small", [_vm._v("Descripcio")])]

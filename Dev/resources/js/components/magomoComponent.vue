@@ -208,7 +208,7 @@
                                                 <small>{{ item.pregunta }}</small>
                                             </p>
                                             <p class="w-100 p-1 m-0" style="background-color: rgb(244, 241, 51);"><small>{{ item.translation }}</small></p>
-                                            <p class="w-100 p-1 m-0" style="background-color: rgb(148, 244, 51);"><small>{{ item.soundlike }}</small></p>
+                                            <p class="w-100 p-1 m-0" style="background-color: rgb(148, 244, 51); letter-spacing: 1px;"><small>{{ item.soundlike }}</small></p>
 
                                         </div>
                                     </div>
