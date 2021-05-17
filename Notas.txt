@@ -1,0 +1,3 @@
+El video no se ejecuta con el php artisan serve porque no lo encuentra
+
+Para poder acceder es necesario hacerlo por xampp

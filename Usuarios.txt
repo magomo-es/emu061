@@ -1,0 +1,19 @@
+user: magomo
+pass: admin
+
+user: rufuus
+pass: admin
+
+user: cptmario
+pass: admin
+
+user: movil01
+pass: admin
+
+user: operador01
+pass: admin
+
+user: admin
+pass: admin
+
+

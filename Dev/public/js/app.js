@@ -2035,7 +2035,6 @@ __webpack_require__.r(__webpack_exports__);
 
       if (random_boolean) {
         var alertant_aux = this.alertants[Math.floor(Math.random() * this.alertants.length)];
-        console.log(alertant_aux);
         telefon = alertant_aux.telefon;
         this.alertant.nom = alertant_aux.nom;
         this.alertant.cognoms = alertant_aux.cognoms;
@@ -2590,7 +2589,8 @@ __webpack_require__.r(__webpack_exports__);
         municipi: '',
         comarca: '',
         provincia: ''
-      }
+      },
+      numIncidencia: ''
     };
   },
   methods: {
@@ -2650,6 +2650,9 @@ __webpack_require__.r(__webpack_exports__);
       this.incidencia.municipi = "";
       this.incidencia.comarca = "";
     },
+    generateNumIncidencia: function generateNumIncidencia() {
+      this.numIncidencia = Math.floor(100000000 + Math.random() * 900000000);
+    },
     cleanForm: function cleanForm() {
       return {
         errors: [],
@@ -2687,6 +2690,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getProvincies();
     this.getMunicipis();
     this.getComarques();
+    this.generateNumIncidencia();
   }
 });
 
@@ -3612,7 +3616,7 @@ __webpack_require__.r(__webpack_exports__);
           day = "Mie";
           break;
 
-        case 3:
+        case 4:
           day = "Jue";
           break;
 
@@ -3642,7 +3646,7 @@ __webpack_require__.r(__webpack_exports__);
           mes = "Abril";
           break;
 
-        case 3:
+        case 4:
           mes = "Mayo";
           break;
 
@@ -3767,7 +3771,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.clock();
     setInterval(this.clock, 1000);
   },
   created: function created() {
@@ -3802,6 +3805,9 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
+//
+//
 //
 //
 //
@@ -4167,20 +4173,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     };
   },
   methods: {
-    getProvincies: function getProvincies() {
-      var _this = this;
-
-      var me = this;
-      axios.get('http://app.emu061.es/api/provincies').then(function (response) {
-        me.provincies = response.data.data;
-      })["catch"](function (error) {
-        console.log(error);
-      })["finally"](function () {
-        return _this.loading = false;
-      });
-    },
     selectAfectats: function selectAfectats() {
-      var _this2 = this;
+      var _this = this;
 
       var me = this;
       axios.get('/afectats').then(function (response) {
@@ -4188,11 +4182,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this2.loading = false;
+        return _this.loading = false;
       });
     },
     getSexes: function getSexes() {
-      var _this3 = this;
+      var _this2 = this;
 
       var me = this;
       axios.get('http://app.emu061.es/api/sexes').then(function (response) {
@@ -4200,11 +4194,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this3.loading = false;
+        return _this2.loading = false;
       });
     },
     getTipus_recurs: function getTipus_recurs() {
-      var _this4 = this;
+      var _this3 = this;
 
       var me = this;
       axios.get('http://app.emu061.es/api/tipus_recursos').then(function (response) {
@@ -4212,24 +4206,23 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this4.loading = false;
+        return _this3.loading = false;
       });
     },
-    // FALTA API CODIS_GRAVETAT ???
     getCodis_gravetat: function getCodis_gravetat() {
-      var _this5 = this;
+      var _this4 = this;
 
       var me = this;
-      axios.get('http://app.emu061.es/api/codis_gravetat').then(function (response) {
-        me.provincies = response.data.data;
+      axios.get('http://app.emu061.es/api/gravetats').then(function (response) {
+        me.codisgravetat = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this5.loading = false;
+        return _this4.loading = false;
       });
     },
     getRecurs: function getRecurs() {
-      var _this6 = this;
+      var _this5 = this;
 
       var me = this;
       axios.get('http://app.emu061.es/api/recursos').then(function (response) {
@@ -4237,11 +4230,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this6.loading = false;
+        return _this5.loading = false;
       });
     },
     getDestins: function getDestins() {
-      var _this7 = this;
+      var _this6 = this;
 
       var me = this;
       axios.get('http://app.emu061.es/api/centressanitaris').then(function (response) {
@@ -4249,20 +4242,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this7.loading = false;
+        return _this6.loading = false;
       });
     },
-    // FALTA API CODI_VALORACIO ???
     getCodis_valoracio: function getCodis_valoracio() {
-      var _this8 = this;
+      var _this7 = this;
 
       var me = this;
-      axios.get('http://app.emu061.es/api/codis_valoracio').then(function (response) {
-        me.codisvaloracions = response.data;
+      axios.get('http://app.emu061.es/api/valoracions').then(function (response) {
+        me.codisvaloracions = response.data.data;
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        return _this8.loading = false;
+        return _this7.loading = false;
       });
     },
     confirmDelete: function confirmDelete(afectat, keyindex) {
@@ -4275,29 +4267,52 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       $('#confirmDelete').modal("hide");
     },
     openModalAfectat: function openModalAfectat(afectat, keyindex) {
+      console.log('open modal x edit afectat id ' + keyindex);
       this.key_tmp = keyindex;
       this.afectat = afectat;
+      console.log("This.key_tmp: " + this.key_tmp);
+      console.log("this.afectat.id: " + this.afectat.id);
+      console.log("this.afectat.nom: " + this.afectat.nom);
+      console.log("afectat: " + afectat.nom);
       $('#modalCrearAfectat').modal("show");
     },
     createAfectat: function createAfectat() {
       if (this.key_tmp >= 0 && this.afectats[this.key_tmp]) {
         this.afectats[this.key_tmp] = this.afectat;
+        console.log("This.afectats: " + this.afectats[0].nom);
+        console.log("this.afectat: " + this.afectat.nom);
       } else {
         this.afectats.push(this.afectat);
-      } // let me = this;
+      } // afectat data
+      // if ( this.key_tmp >= 0 && this.afectats[this.key_tmp] ) {
+      //     this.afectats[this.key_tmp].telefon = this.afectat.telefon
+      //     this.afectats[this.key_tmp].cip = this.afectat.cip
+      //     this.afectats[this.key_tmp].nom = this.afectat.nom
+      //     this.afectats[this.key_tmp].cognoms = this.afectat.cognoms
+      //     this.afectats[this.key_tmp].edat = this.afectat.edat
+      //     this.afectats[this.key_tmp].te_cip = this.afectat.te_cip
+      //     this.afectats[this.key_tmp].sexes_id = this.afectat.sexe
+      //     this.afectats[this.key_tmp].descripcio = this.afectat.descripcio
+      //     this.afectats[this.key_tmp].tipus_recursos_id = this.afectat.tipus_recursos_id
+      //     this.afectats[this.key_tmp].codi_gravetat = this.afectat.codi_gravetat
+      //     this.afectats[this.key_tmp].codi_valoracio = this.afectat.codi_valoracio
+      //     // extra data
+      //     this.afectats[this.key_tmp].recursos_id = this.afectat.recursos_id
+      //     this.afectats[this.key_tmp].prioritat = 0
+      //     this.afectats[this.key_tmp].desti = this.afectat.desti
+      //     this.afectats[this.key_tmp].desti_alertant_id = this.afectat.desti_alertant_id
+      //     console.log("This.afectats[this.key_tmp]: " + this.afectats[this.key_tmp].nom);
+      //     console.log("this.afectat.telefon: " + this.afectat.telefon);
+      //     console.log("Afectat: " + afectat);
+      // }
+      // else {
+      //     console.log( 'added afectat id ' + this.key_tmp )
+      //     console.log( 'this.afectats: ' + this.afectats[this.key_tmp].nom )
+      //     this.afectats.push( _.cloneDeep(this.afectat) )
+      // }
 
 
-      $('#modalCrearAfectat').modal("hide"); //   axios
-      //     .post('/', me.afectat)
-      //     .then(function(response)
-      //     {
-      //         console.log(respose);
-      //         me.selectAfectats();
-      //
-      //     }).catch(function(error)
-      //     {
-      //         me.errorMessage = error.response.data.error;
-      //     })
+      $('#modalCrearAfectat').modal("hide");
     },
     cleanAfectat: function cleanAfectat() {
       return {
@@ -4307,11 +4322,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         nom: '',
         cognoms: '',
         edat: '',
-        sexe_id: 0,
+        te_cip: 0,
+        sexe: '',
         tipus_recursos_id: '',
         codi_gravetat: '',
         codi_valoracio: '',
-        descripcio: ''
+        descripcio: '',
+        recursos_id: 0,
+        prioritat: 0,
+        desti: '',
+        desti_alertant_id: 0
       };
     },
     // - - - - - - - - - - - - - - - - - - - - - SELECT DESTI: onChangeDesti =>
@@ -4584,6 +4604,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.getRecurs();
     this.getTipus_recurs();
     this.getDestins();
+    this.getCodis_gravetat();
+    this.getCodis_valoracio();
   }
 });
 
@@ -41328,7 +41350,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control form-control-sm",
-                    attrs: { type: "text", id: "tel_alertante", disabled: "" },
+                    attrs: { type: "text", id: "tel_alertante", readonly: "" },
                     domProps: { value: _vm.alertant.telefon },
                     on: {
                       input: function($event) {
@@ -41387,7 +41409,8 @@ var render = function() {
                           attrs: {
                             type: "text",
                             id: "alertant_nom",
-                            name: "alertant_nom"
+                            name: "alertant_nom",
+                            "aria-label": "Nom de l'alertant"
                           },
                           domProps: { value: _vm.alertant.nom },
                           on: {
@@ -41417,7 +41440,8 @@ var render = function() {
                           attrs: {
                             type: "text",
                             id: "alertant_cognoms",
-                            name: "alertant_cognoms"
+                            name: "alertant_cognoms",
+                            "aria-label": "Cognoms de l'alertant"
                           },
                           domProps: { value: _vm.alertant.cognoms },
                           on: {
@@ -41451,7 +41475,8 @@ var render = function() {
                           attrs: {
                             type: "text",
                             id: "alertant_adreca",
-                            name: "alertant_adreca"
+                            name: "alertant_adreca",
+                            "aria-label": "Adreça de l'alertant"
                           },
                           domProps: { value: _vm.alertant.adreca },
                           on: {
@@ -41487,7 +41512,8 @@ var render = function() {
                             attrs: {
                               id: "alertant_municipisid",
                               title: "Selecciona un municipi",
-                              name: "alertant_municipisid"
+                              name: "alertant_municipisid",
+                              "aria-label": "Municipi de l'alertant"
                             },
                             on: {
                               change: function($event) {
@@ -41540,7 +41566,8 @@ var render = function() {
                             staticClass: "select-form col-12 custom-select",
                             attrs: {
                               id: "alertant_tipusalertantsid",
-                              name: "alertant_tipusalertantsid"
+                              name: "alertant_tipusalertantsid",
+                              "aria-label": "Tipus d'alertant"
                             },
                             on: {
                               change: function($event) {
@@ -41609,7 +41636,8 @@ var staticRenderFns = [
           attrs: {
             href: "",
             "data-toggle": "modal",
-            "data-target": "#exampleModal2"
+            "data-target": "#exampleModal2",
+            disabled: ""
           }
         },
         [
@@ -41650,7 +41678,7 @@ var staticRenderFns = [
           attrs: {
             type: "button",
             "data-dismiss": "modal",
-            "aria-label": "Close"
+            "aria-label": "Tancar dades de l'alertant"
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
@@ -41731,15 +41759,26 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Tancar finestra d'alertant"
+          }
         },
-        [_vm._v("Tancar")]
+        [_vm._v("Cancel·lar")]
       ),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Guardar")]
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Confirmar dades de l'alertant"
+          }
+        },
+        [_vm._v("Confirmar")]
       )
     ])
   }
@@ -41822,7 +41861,11 @@ var render = function() {
                             }
                           ],
                           staticClass: "col-8",
-                          attrs: { name: "font", id: "font" },
+                          attrs: {
+                            name: "font",
+                            id: "font",
+                            "aria-label": "Tamany de font"
+                          },
                           on: {
                             change: [
                               function($event) {
@@ -41873,7 +41916,11 @@ var render = function() {
                       _c("input", {
                         staticClass: "col-7 col-form-input",
                         staticStyle: { height: "37px", padding: "0px" },
-                        attrs: { id: "fontColor", type: "color" },
+                        attrs: {
+                          id: "fontColor",
+                          type: "color",
+                          "aria-label": "Color de font"
+                        },
                         domProps: { value: _vm.fontColor },
                         on: {
                           change: function($event) {
@@ -41918,7 +41965,11 @@ var render = function() {
                       _c("input", {
                         staticClass: "col-8 col-form-input",
                         staticStyle: { height: "37px", padding: "0px" },
-                        attrs: { id: "BackgroundColor", type: "color" },
+                        attrs: {
+                          id: "BackgroundColor",
+                          type: "color",
+                          "aria-label": "Color de fons de pantalla"
+                        },
                         domProps: { value: _vm.screenColor },
                         on: {
                           change: function($event) {
@@ -41959,7 +42010,11 @@ var render = function() {
                       _c("input", {
                         staticClass: "col-7 col-form-input",
                         staticStyle: { height: "37px", padding: "0px" },
-                        attrs: { id: "BoxBackground", type: "color" },
+                        attrs: {
+                          id: "BoxBackground",
+                          type: "color",
+                          "aria-label": "Color de les caixes de dades"
+                        },
                         domProps: { value: _vm.inputBackgroundColor },
                         on: {
                           change: function($event) {
@@ -41991,7 +42046,12 @@ var render = function() {
                       _c("input", {
                         staticClass: "col-7 col-form-input",
                         staticStyle: { height: "37px", padding: "0px" },
-                        attrs: { id: "BoxFontColor", type: "color" },
+                        attrs: {
+                          id: "BoxFontColor",
+                          type: "color",
+                          "aria-label":
+                            "Color de la font de les dades de les caixes"
+                        },
                         domProps: { value: _vm.inputColor },
                         on: {
                           change: function($event) {
@@ -42036,7 +42096,8 @@ var render = function() {
                                 type: "radio",
                                 name: "theme",
                                 id: "dark-rb",
-                                value: "dark"
+                                value: "dark",
+                                "aria-label": "Aspecte Dark"
                               },
                               on: {
                                 change: function($event) {
@@ -42073,7 +42134,8 @@ var render = function() {
                                 type: "radio",
                                 name: "theme",
                                 id: "dark-light-rb",
-                                value: "dark-light"
+                                value: "dark-light",
+                                "aria-label": "Aspecte Dark Light"
                               },
                               on: {
                                 change: function($event) {
@@ -42110,7 +42172,8 @@ var render = function() {
                                 type: "radio",
                                 name: "theme",
                                 id: "light-rb",
-                                value: "light"
+                                value: "light",
+                                "aria-label": "Aspecte Light"
                               },
                               on: {
                                 change: function($event) {
@@ -42157,7 +42220,8 @@ var render = function() {
                             name: "dalt",
                             id: "dalt",
                             title: "Selecciona el tipus",
-                            disabled: ""
+                            disabled: "",
+                            "aria-label": "Tipus de daltonisme"
                           },
                           on: {
                             change: function($event) {
@@ -42184,7 +42248,11 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Tancar control de format de pantalla"
+                    }
                   },
                   [_vm._v("Cancel·lar")]
                 ),
@@ -42193,7 +42261,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label":
+                        "Acceptar i Tancar control de format de pantalla"
+                    },
                     on: {
                       click: function($event) {
                         return _vm.saveChanges()
@@ -42255,7 +42328,7 @@ var staticRenderFns = [
           attrs: {
             type: "button",
             "data-dismiss": "modal",
-            "aria-label": "Close"
+            "aria-label": "Tancar control de format de pantalla"
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
@@ -42375,8 +42448,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.num,
-                          expression: "num"
+                          value: _vm.numIncidencia,
+                          expression: "numIncidencia"
                         }
                       ],
                       staticClass: "form-control form-control-sm",
@@ -42385,16 +42458,16 @@ var render = function() {
                         type: "number",
                         name: "num",
                         value: "0",
-                        disabled: "",
+                        readonly: "",
                         "aria-label": "Numero d'incidència"
                       },
-                      domProps: { value: _vm.num },
+                      domProps: { value: _vm.numIncidencia },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.num = $event.target.value
+                          _vm.numIncidencia = $event.target.value
                         }
                       }
                     })
@@ -42462,7 +42535,7 @@ var render = function() {
                         id: "hora",
                         type: "time",
                         name: "hora",
-                        "aria-label": "Adreça de la incidència"
+                        "aria-label": "Hora de la incidència"
                       },
                       domProps: { value: _vm.hora },
                       on: {
@@ -42524,7 +42597,11 @@ var render = function() {
                     _vm._l(_vm.municipis, function(munic) {
                       return _c(
                         "option",
-                        { key: munic.id, domProps: { value: munic.id } },
+                        {
+                          key: munic.id,
+                          attrs: { "aria-label": munic.nom },
+                          domProps: { value: munic.id }
+                        },
                         [_vm._v(_vm._s(munic.nom))]
                       )
                     }),
@@ -42704,7 +42781,7 @@ var render = function() {
                       id: "direcc_compl",
                       type: "text",
                       name: "direcc_compl",
-                      "aria-label": "Adreça de la incidència"
+                      "aria-label": "Adreça Complementaria de la incidència"
                     },
                     domProps: { value: _vm.direcc_compl },
                     on: {
@@ -42845,7 +42922,7 @@ var staticRenderFns = [
         attrs: {
           type: "submit",
           value: "Confirmar Incidencia",
-          "aria-label": "Confirmar l'incidència"
+          "aria-label": "Confirmar incidència"
         }
       }),
       _vm._v(" "),
@@ -42854,7 +42931,7 @@ var staticRenderFns = [
         attrs: {
           type: "submit",
           value: "Cancel·lar",
-          "aria-label": "Cancelar l'incidència"
+          "aria-label": "Cancelar incidència"
         }
       })
     ])
@@ -44368,7 +44445,7 @@ var render = function() {
     {
       staticClass: "container-lg mt-2",
       staticStyle: { "max-width": "1300px" },
-      attrs: { onload: "time()" }
+      attrs: { onload: "clock()" }
     },
     [
       _vm._m(0),
@@ -44821,21 +44898,21 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.afectats, function(afectat, index) {
-            return _c("tr", { key: afectat.id }, [
+          _vm._l(_vm.afectats, function(item, index) {
+            return _c("tr", { key: item.id }, [
               _c("td", [_vm._v(_vm._s(index + 1))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(afectat.nom))]),
+              _c("td", [_vm._v(_vm._s(item.nom))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(afectat.cognoms))]),
+              _c("td", [_vm._v(_vm._s(item.cognoms))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(afectat.edat))]),
+              _c("td", [_vm._v(_vm._s(item.edat))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(afectat.cip))]),
+              _c("td", [_vm._v(_vm._s(item.cip))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.sexes[afectat.sexe].nom))]),
+              _c("td", [_vm._v(_vm._s(_vm.sexes[item.sexe].sexe))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(afectat.telefon))]),
+              _c("td", [_vm._v(_vm._s(item.telefon))]),
               _vm._v(" "),
               _c("td", { staticClass: "text-right" }, [
                 _c(
@@ -44849,7 +44926,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.openModalAfectat(afectat, index)
+                            return _vm.openModalAfectat(item, index)
                           }
                         }
                       },
@@ -44872,7 +44949,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            return _vm.confirmDelete(afectat, index)
+                            return _vm.confirmDelete(item, index)
                           }
                         }
                       },
@@ -44927,7 +45004,11 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { type: "text", id: "afectat_nom" },
+                        attrs: {
+                          type: "text",
+                          id: "afectat_nom",
+                          "aria-label": "Nom de l'afectat"
+                        },
                         domProps: { value: _vm.afectat.nom },
                         on: {
                           input: function($event) {
@@ -44955,7 +45036,11 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { type: "text", id: "afectat_cognoms" },
+                        attrs: {
+                          type: "text",
+                          id: "afectat_cognoms",
+                          "aria-label": "Cognom de l'afectat"
+                        },
                         domProps: { value: _vm.afectat.cognoms },
                         on: {
                           input: function($event) {
@@ -44994,7 +45079,8 @@ var render = function() {
                           id: "afectat_telefon",
                           pattern: "[0-9]{9}",
                           minlength: "9",
-                          maxlength: "9"
+                          maxlength: "9",
+                          "aria-label": "Telèfon de l'afectat"
                         },
                         domProps: { value: _vm.afectat.telefon },
                         on: {
@@ -45031,7 +45117,8 @@ var render = function() {
                           type: "text",
                           id: "afectat_cip",
                           minlength: "14",
-                          maxlength: "16"
+                          maxlength: "16",
+                          "aria-label": "CIP de l'afectat"
                         },
                         domProps: { value: _vm.afectat.cip },
                         on: {
@@ -45065,7 +45152,8 @@ var render = function() {
                           id: "afectat_edat",
                           pattern: "[0-9]{1,3}",
                           minlength: "1",
-                          maxlength: "3"
+                          maxlength: "3",
+                          "aria-label": "Edat de l'afectat"
                         },
                         domProps: { value: _vm.afectat.edat },
                         on: {
@@ -45096,7 +45184,10 @@ var render = function() {
                             }
                           ],
                           staticClass: "select-form col-12 custom-select",
-                          attrs: { id: "afectat_sexesid" },
+                          attrs: {
+                            id: "afectat_sexesid",
+                            "aria-label": "Sexe de l'afectat"
+                          },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -45149,7 +45240,7 @@ var render = function() {
                           staticClass: "select-form col-12 custom-select",
                           attrs: {
                             id: "afectat_codigravetat",
-                            title: "Pick One"
+                            "aria-label": "Codi de gravetat de l'afectat"
                           },
                           on: {
                             change: function($event) {
@@ -45201,7 +45292,7 @@ var render = function() {
                           staticClass: "select-form col-12 custom-select",
                           attrs: {
                             id: "afectat_recursosid",
-                            title: "Pick One"
+                            "aria-label": "Recurs Móbil assignat a l'afectat"
                           },
                           on: {
                             change: function($event) {
@@ -45257,7 +45348,11 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { type: "text", id: "afectat_desti" },
+                        attrs: {
+                          type: "text",
+                          id: "afectat_desti",
+                          "aria-label": "Destí editable de l'afectat"
+                        },
                         domProps: { value: _vm.afectat.desti },
                         on: {
                           input: function($event) {
@@ -45287,7 +45382,10 @@ var render = function() {
                             }
                           ],
                           staticClass: "select-form col-12 custom-select",
-                          attrs: { id: "afectat_destialertantid" },
+                          attrs: {
+                            id: "afectat_destialertantid",
+                            "aria-label": "Destí de l'afectat"
+                          },
                           on: {
                             change: [
                               function($event) {
@@ -45313,20 +45411,14 @@ var render = function() {
                             ]
                           }
                         },
-                        [
-                          _c("option", { attrs: { value: "0" } }, [
-                            _vm._v("Seleccioneu destí")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.destins, function(item) {
-                            return _c(
-                              "option",
-                              { key: item.id, domProps: { value: item.id } },
-                              [_vm._v(_vm._s(item.nom))]
-                            )
-                          })
-                        ],
-                        2
+                        _vm._l(_vm.destins, function(item) {
+                          return _c(
+                            "option",
+                            { key: item.id, domProps: { value: item.id } },
+                            [_vm._v(_vm._s(item.nom))]
+                          )
+                        }),
+                        0
                       )
                     ])
                   ])
@@ -45356,7 +45448,10 @@ var render = function() {
                               }
                             ],
                             staticClass: "select-form col-8 custom-select",
-                            attrs: { id: "afectat_codivaloracio" },
+                            attrs: {
+                              id: "afectat_codivaloracio",
+                              "aria-label": "Codi de valoració de l'afectat"
+                            },
                             on: {
                               change: [
                                 function($event) {
@@ -45383,24 +45478,18 @@ var render = function() {
                               ]
                             }
                           },
-                          [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("Seleccioneu valoració")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.codisvaloracions, function(item, index) {
-                              return _c(
-                                "option",
-                                {
-                                  key: item.id,
-                                  attrs: { id: "v_" + index + "_" + item.codi },
-                                  domProps: { value: item.codi }
-                                },
-                                [_vm._v(_vm._s(item.nom))]
-                              )
-                            })
-                          ],
-                          2
+                          _vm._l(_vm.codisvaloracions, function(item, index) {
+                            return _c(
+                              "option",
+                              {
+                                key: item.id,
+                                attrs: { id: "v_" + index + "_" + item.codi },
+                                domProps: { value: item.codi }
+                              },
+                              [_vm._v(_vm._s(item.nom))]
+                            )
+                          }),
+                          0
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-2 p-0 m-0 pl-4" }, [
@@ -45606,7 +45695,11 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-12 form-control",
-                        attrs: { rows: "2", id: "afectat_descripcio" },
+                        attrs: {
+                          rows: "2",
+                          id: "afectat_descripcio",
+                          "aria-label": "Descripció de l'afectat"
+                        },
                         domProps: { value: _vm.afectat.descripcio },
                         on: {
                           input: function($event) {
@@ -45631,23 +45724,30 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Cancelar Registre de l'afectat"
+                    }
                   },
-                  [_vm._v("Tarcar")]
+                  [_vm._v("Cancel·lar")]
                 ),
                 _vm._v(" "),
                 _c(
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: {
+                      type: "button",
+                      "aria-label": "Confirmar Registre de l'afectat"
+                    },
                     on: {
                       click: function($event) {
                         return _vm.createAfectat()
                       }
                     }
                   },
-                  [_vm._v("Desar")]
+                  [_vm._v("Confirmar")]
                 )
               ])
             ])
@@ -45794,7 +45894,7 @@ var staticRenderFns = [
           attrs: {
             type: "button",
             "data-dismiss": "modal",
-            "aria-label": "Close"
+            "aria-label": "Tancar Registre d'afectat"
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
@@ -45835,9 +45935,9 @@ var staticRenderFns = [
       "label",
       {
         staticClass: "col-12 col-form-label pl-1 letter-spacing",
-        attrs: { for: "afectat_telefon" }
+        attrs: { for: "afectat_telefon", "aria-label": "Telèfon de l'afectat" }
       },
-      [_c("small", [_vm._v("Telefon")])]
+      [_c("small", [_vm._v("Telèfon")])]
     )
   },
   function() {
@@ -45954,7 +46054,7 @@ var staticRenderFns = [
         staticClass: "col-12 col-form-label pl-1 letter-spacing",
         attrs: { for: "afectat_descripcio" }
       },
-      [_c("small", [_vm._v("Descripcio")])]
+      [_c("small", [_vm._v("Descripció")])]
     )
   },
   function() {
